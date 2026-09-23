@@ -134,9 +134,16 @@
   .numero-curto p { margin: 4px 0 0; font-size: .88rem; color: var(--texto-suave); }
 
   /* ===== FAIXA DE MARCAS ===== */
-  .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--branco); overflow: hidden; padding: 20px 0; margin-top: 48px; }
-  .marcas-track { display: flex; gap: 64px; width: max-content; animation: rolar 26s linear infinite; }
-  .marcas-track span { font-weight: 700; color: var(--texto-suave); font-size: 1.05rem; white-space: nowrap; opacity: .75; }
+  .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 48px; }
+  .marcas-legenda { text-align: center; color: var(--texto-suave); font-weight: 700; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 18px; }
+  .marcas-faixa-mascara { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); }
+  .marcas-track { display: flex; align-items: center; gap: 18px; width: max-content; animation: rolar 30s linear infinite; }
+  .marcas-track span {
+    display: flex; align-items: center; justify-content: center; white-space: nowrap;
+    font-weight: 700; color: var(--texto-suave); font-size: 1rem;
+    background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
+    padding: 14px 28px; box-shadow: var(--sombra);
+  }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ===== SOBRE ===== */
@@ -374,7 +381,10 @@
   </section>
 
   <div class="marcas-faixa" aria-label="Marcas que já atendi">
-    <div class="marcas-track" id="marcas-track"></div>
+    <p class="marcas-legenda">Marcas que confiam no meu trabalho</p>
+    <div class="marcas-faixa-mascara">
+      <div class="marcas-track" id="marcas-track"></div>
+    </div>
   </div>
 
   <!-- ===== 2. SOBRE MIM ===== -->
@@ -540,7 +550,9 @@
      DADOS — EDITE AQUI (nenhuma outra parte do código precisa mudar)
      ===================================================================== */
 
-  // Marcas que já atendeu — aparecem na faixa deslizante da capa
+  // Marcas que já atendeu — aparecem nos cards deslizantes entre a capa e o "sobre mim".
+  // Cada nome vira um card branco arredondado. Se tiver os logos em PNG/SVG, troque o
+  // texto de cada card no CSS ".marcas-track span" por uma <img> dentro do array abaixo.
   const MARCAS = [
     "Lippi", "Caffeine Army", "Tia Sônia", "Norte Sul Chile",
     "RQ Stay", "Parksnet", "CityPlan"
