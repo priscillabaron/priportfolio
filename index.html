@@ -142,8 +142,9 @@
     display: flex; align-items: center; justify-content: center; white-space: nowrap;
     font-weight: 700; color: var(--texto-suave); font-size: 1rem;
     background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
-    padding: 14px 28px; box-shadow: var(--sombra);
+    padding: 14px 28px; box-shadow: var(--sombra); min-height: 60px;
   }
+  .marcas-track span img { height: 28px; max-width: 130px; width: auto; object-fit: contain; display: block; border-radius: 6px; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ===== SOBRE ===== */
@@ -551,11 +552,18 @@
      ===================================================================== */
 
   // Marcas que já atendeu — aparecem nos cards deslizantes entre a capa e o "sobre mim".
-  // Cada nome vira um card branco arredondado. Se tiver os logos em PNG/SVG, troque o
-  // texto de cada card no CSS ".marcas-track span" por uma <img> dentro do array abaixo.
+  // Cada item vira um card branco arredondado. Se tiver o logo, coloque o arquivo dentro
+  // da pasta "logos" (já existe nessa pasta) e informe o caminho em "logo": "logos/arquivo.png".
+  // Sem logo, deixe "logo: null" e o nome da marca aparece como texto no card.
   const MARCAS = [
-    "Lippi", "Caffeine Army", "Tia Sônia", "Norte Sul Chile",
-    "RQ Stay", "Parksnet", "CityPlan"
+    { nome: "Lippi", logo: "logos/Lippi.jpeg" },
+    { nome: "Caffeine Army", logo: null },
+    { nome: "Tia Sônia", logo: null },
+    { nome: "Norte Sul Chile", logo: "logos/NorteSulChile.jpeg" },
+    { nome: "RQ Stay", logo: null },
+    { nome: "Parksnet", logo: null },
+    { nome: "CityPlan", logo: null },
+    { nome: "Shein", logo: "logos/Shein.png" }
   ];
 
   // Conteúdos de destaque (seção 3). Para cada item:
@@ -686,7 +694,15 @@
   const marcasDobradas = MARCAS.concat(MARCAS);
   marcasDobradas.forEach(function (marca, indice) {
     const span = document.createElement("span");
-    span.textContent = marca;
+    if (marca.logo) {
+      const img = document.createElement("img");
+      img.src = marca.logo;
+      img.alt = marca.nome;
+      img.loading = "lazy";
+      span.appendChild(img);
+    } else {
+      span.textContent = marca.nome;
+    }
     if (indice >= MARCAS.length) span.setAttribute("aria-hidden", "true");
     marcasTrackEl.appendChild(span);
   });
