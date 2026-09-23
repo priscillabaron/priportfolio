@@ -137,15 +137,15 @@
   .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 48px; }
   .marcas-legenda { text-align: center; color: var(--texto-suave); font-weight: 700; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 18px; }
   .marcas-faixa-mascara { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); }
-  .marcas-track { display: flex; align-items: center; gap: 18px; width: max-content; animation: rolar 30s linear infinite; }
+  .marcas-track { display: flex; align-items: center; gap: 14px; width: max-content; animation: rolar 30s linear infinite; }
   .marcas-track span {
     display: flex; align-items: center; justify-content: center; white-space: nowrap;
-    font-weight: 700; color: var(--texto-suave); font-size: 1rem;
+    font-weight: 700; color: var(--texto-suave); font-size: .85rem;
     background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
-    padding: 14px 28px; box-shadow: var(--sombra); min-height: 60px;
+    padding: 10px 20px; box-shadow: var(--sombra); min-height: 44px;
   }
   .marcas-track span.tem-logo {
-    width: 108px; height: 108px; padding: 16px; border-radius: 50%; flex-shrink: 0;
+    width: 64px; height: 64px; padding: 9px; border-radius: 50%; flex-shrink: 0;
   }
   .marcas-track span.tem-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -559,14 +559,15 @@
   // da pasta "logos" (já existe nessa pasta) e informe o caminho em "logo": "logos/arquivo.png".
   // Sem logo, deixe "logo: null" e o nome da marca aparece como texto no card.
   const MARCAS = [
-    { nome: "Lippi", logo: "logos/Lippi.jpeg" },
-    { nome: "Caffeine Army", logo: null },
-    { nome: "Tia Sônia", logo: null },
-    { nome: "Norte Sul Chile", logo: "logos/NorteSulChile.jpeg" },
-    { nome: "RQ Stay", logo: null },
+    { nome: "Lippi", logo: "logos/lippi_ULTIMO_500.png" },
+    { nome: "Caffeine Army", logo: "logos/caffeine_army_ULTIMO_500.png" },
+    { nome: "Tia Sônia", logo: "logos/tia_sonia_ULTIMO_500.png" },
+    { nome: "Norte Sul Chile", logo: "logos/norte_sul_ULTIMO_500.png" },
+    { nome: "RQ Stay", logo: "logos/rq_stay_ULTIMO_500.png" },
     { nome: "Parksnet", logo: null },
-    { nome: "CityPlan", logo: null },
-    { nome: "Shein", logo: "logos/Shein.png" }
+    { nome: "CityPlan", logo: "logos/cityplan_go_ULTIMO_500.png" },
+    { nome: "Shein", logo: "logos/shein_ULTIMO_500.png" },
+    { nome: "Sublyme", logo: "logos/sublyme_ULTIMO_500.png" }
   ];
 
   // Conteúdos de destaque (seção 3). Para cada item:
