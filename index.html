@@ -191,6 +191,7 @@
   .filtro-btn:hover { border-color: var(--azul); color: var(--azul); }
   .filtro-btn[aria-pressed="true"] { background: var(--azul); border-color: var(--azul); color: #fff; }
   .trabalhos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .aviso-em-breve { grid-column: 1 / -1; text-align: center; color: var(--texto-suave); background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 40px 24px; font-size: .95rem; }
   .trabalho-card {
     background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio);
     overflow: hidden; box-shadow: var(--sombra); display: flex; flex-direction: column;
@@ -546,6 +547,8 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/banco.js"></script>
 <script>
 (function () {
   "use strict";
@@ -570,46 +573,9 @@
     { nome: "Sublyme", logo: "logos/sublyme_BALANCE_500.png" }
   ];
 
-  // Conteúdos de destaque (seção 3). Para cada item:
-  //  - "link"  -> URL do vídeo (Instagram, TikTok, YouTube etc.)
-  //  - "capa"  -> URL de uma imagem vertical 9:16 (deixe null para manter o degradê)
-  const DESTAQUES = [
-    {
-      titulo: "Título do conteúdo 01",
-      contexto: "Escreva aqui uma linha curta de contexto sobre esse vídeo.",
-      numero: "+000K",
-      rotulo: "views no reels",
-      link: "#", // TROQUE pelo link do vídeo
-      capa: null // TROQUE pela URL da imagem de capa vertical 9:16
-    },
-    {
-      titulo: "Título do conteúdo 02",
-      contexto: "Escreva aqui uma linha curta de contexto sobre esse vídeo.",
-      numero: "+000K",
-      rotulo: "visualizações no TikTok",
-      link: "#", // TROQUE pelo link do vídeo
-      capa: null // TROQUE pela URL da imagem de capa vertical 9:16
-    },
-    {
-      titulo: "Título do conteúdo 03",
-      contexto: "Escreva aqui uma linha curta de contexto sobre esse vídeo.",
-      numero: "+000K",
-      rotulo: "alcance no Reels",
-      link: "#", // TROQUE pelo link do vídeo
-      capa: null // TROQUE pela URL da imagem de capa vertical 9:16
-    }
-  ];
-
-  // Trabalhos por nicho (seção 4). "categoria" define o filtro.
-  const TRABALHOS = [
-    { cliente: "Lippi", categoria: "Categoria 01", titulo: "Vídeo UGC para Lippi", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: true },
-    { cliente: "Caffeine Army", categoria: "Categoria 02", titulo: "Conteúdo para Caffeine Army", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: true },
-    { cliente: "Tia Sônia", categoria: "Categoria 01", titulo: "UGC para Tia Sônia", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: false },
-    { cliente: "Norte Sul Chile", categoria: "Categoria 03", titulo: "Conteúdo para Norte Sul Chile", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: false },
-    { cliente: "RQ Stay", categoria: "Categoria 03", titulo: "Vídeo para RQ Stay", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: false },
-    { cliente: "Parksnet", categoria: "Categoria 02", titulo: "UGC para Parksnet", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: false },
-    { cliente: "CityPlan", categoria: "Categoria 01", titulo: "Conteúdo para CityPlan", descricao: "Descreva aqui o trabalho feito para essa marca.", novo: false }
-  ];
+  // Os "Conteúdos de destaque" e os "Trabalhos por nicho" não ficam mais
+  // fixos aqui: eles vêm da tabela "videos" no Supabase, editada pelo painel
+  // em /admin. Veja a função carregarVideosDoSite(), mais abaixo.
 
   // Serviços oferecidos (seção 5)
   const SERVICOS = [
@@ -712,9 +678,13 @@
     marcasTrackEl.appendChild(span);
   });
 
-  // Destaques
+  // Elementos onde os vídeos entram (preenchidos por carregarVideosDoSite,
+  // mais abaixo, depois que a página busca os dados no Supabase)
   const destaquesGridEl = document.getElementById("destaques-grid");
-  DESTAQUES.forEach(function (item) {
+  const trabalhosGridEl = document.getElementById("trabalhos-grid");
+  const filtrosEl = document.getElementById("filtros");
+
+  function montarCardDestaque(item) {
     const card = criarEl("a", "destaque-card reveal");
     card.href = item.link || "#";
     card.target = "_blank";
@@ -722,55 +692,26 @@
     card.setAttribute("aria-label", item.titulo + " — assistir vídeo");
 
     const capa = criarEl("div", "destaque-capa");
-    if (item.capa) {
-      capa.style.background = "url('" + item.capa + "') center/cover no-repeat";
-    }
-    capa.appendChild(criarEl("span", "legenda-formato", item.capa ? "" : "Capa vertical 9:16"));
+    capa.appendChild(criarEl("span", "legenda-formato", item.formato ? ("Capa " + item.formato) : "Capa vertical 9:16"));
     const play = criarEl("span", "play-botao");
     play.setAttribute("aria-hidden", "true");
     capa.appendChild(play);
     card.appendChild(capa);
 
     const info = criarEl("div", "destaque-info");
-    info.appendChild(criarEl("span", "destaque-numero", item.numero));
-    info.appendChild(criarEl("p", "destaque-rotulo", item.rotulo));
+    info.appendChild(criarEl("span", "destaque-numero", item.destaque));
     info.appendChild(criarEl("p", "destaque-titulo", item.titulo));
-    info.appendChild(criarEl("p", "destaque-contexto", item.contexto));
+    if (item.marca) info.appendChild(criarEl("p", "destaque-contexto", item.marca));
     card.appendChild(info);
+    return card;
+  }
 
-    destaquesGridEl.appendChild(card);
-  });
-
-  // Trabalhos + filtros
-  const trabalhosGridEl = document.getElementById("trabalhos-grid");
-  const filtrosEl = document.getElementById("filtros");
-  const categorias = ["Todos"].concat(
-    Array.from(new Set(TRABALHOS.map(function (t) { return t.categoria; })))
-  );
-
-  categorias.forEach(function (categoria, indice) {
-    const btn = criarEl("button", "filtro-btn", categoria);
-    btn.type = "button";
-    btn.dataset.categoria = categoria;
-    btn.setAttribute("aria-pressed", indice === 0 ? "true" : "false");
-    btn.addEventListener("click", function () {
-      Array.from(filtrosEl.children).forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-      btn.setAttribute("aria-pressed", "true");
-      filtrarTrabalhos(categoria);
-    });
-    filtrosEl.appendChild(btn);
-  });
-
-  TRABALHOS.forEach(function (item) {
+  function montarCardTrabalho(item) {
     const card = criarEl("article", "trabalho-card reveal");
-    card.dataset.categoria = item.categoria;
+    card.dataset.categoria = item.nicho || "Geral";
 
     const capa = criarEl("div", "trabalho-capa");
-    capa.appendChild(criarEl("span", "legenda-formato", "Foto do trabalho — 4:5"));
-    if (item.novo) {
-      const selo = criarEl("span", "selo-novo", "novo");
-      capa.appendChild(selo);
-    }
+    capa.appendChild(criarEl("span", "legenda-formato", item.formato ? ("Foto do trabalho — " + item.formato) : "Foto do trabalho"));
     card.appendChild(capa);
 
     const corpo = criarEl("div", "trabalho-corpo");
@@ -779,8 +720,7 @@
     estrelas.setAttribute("aria-label", "Avaliação 5 de 5 estrelas");
     corpo.appendChild(estrelas);
     corpo.appendChild(criarEl("h3", "trabalho-titulo", item.titulo));
-    corpo.appendChild(criarEl("p", "trabalho-cliente", item.cliente + " · " + item.categoria));
-    corpo.appendChild(criarEl("p", "trabalho-descricao", item.descricao));
+    corpo.appendChild(criarEl("p", "trabalho-cliente", [item.marca, item.nicho].filter(Boolean).join(" · ")));
 
     const rodape = criarEl("div", "trabalho-rodape");
     rodape.appendChild(criarEl("span", "etiqueta-consulta", "sob consulta"));
@@ -790,13 +730,83 @@
     corpo.appendChild(rodape);
 
     card.appendChild(corpo);
-    trabalhosGridEl.appendChild(card);
-  });
+    return card;
+  }
+
+  function mensagemVazia(texto) {
+    const p = criarEl("p", "aviso-em-breve", texto);
+    return p;
+  }
 
   function filtrarTrabalhos(categoria) {
     Array.from(trabalhosGridEl.children).forEach(function (card) {
+      if (!card.dataset) return;
       const mostrar = categoria === "Todos" || card.dataset.categoria === categoria;
       card.classList.toggle("escondido", !mostrar);
+    });
+  }
+
+  // Busca os vídeos visíveis no Supabase e monta as seções de Destaques e
+  // Trabalhos por nicho. Se algo falhar (sem internet, banco fora do ar),
+  // mostra um aviso simples em vez de quebrar a página.
+  async function carregarVideosDoSite() {
+    let videos = [];
+    try {
+      if (!window.bancoCliente) throw new Error("Supabase não carregou");
+      const resultado = await window.bancoCliente
+        .from("videos")
+        .select("*")
+        .eq("visivel", true)
+        .order("ordem", { ascending: true });
+      if (resultado.error) throw resultado.error;
+      videos = resultado.data || [];
+    } catch (erro) {
+      console.error("Não consegui carregar os vídeos do portfólio:", erro);
+    }
+
+    // ---- Destaques: só os vídeos com o campo "destaque" preenchido, até 3
+    const destaques = videos.filter(function (v) { return v.destaque; }).slice(0, 3);
+    destaquesGridEl.innerHTML = "";
+    if (destaques.length === 0) {
+      destaquesGridEl.appendChild(mensagemVazia("Em breve, os vídeos de destaque aparecem aqui."));
+    } else {
+      destaques.forEach(function (item) {
+        const card = montarCardDestaque(item);
+        destaquesGridEl.appendChild(card);
+        observer.observe(card);
+      });
+    }
+
+    // ---- Trabalhos por nicho: todos os vídeos visíveis
+    trabalhosGridEl.innerHTML = "";
+    filtrosEl.innerHTML = "";
+    if (videos.length === 0) {
+      filtrosEl.style.display = "none";
+      trabalhosGridEl.appendChild(mensagemVazia("Em breve, novos trabalhos aparecem por aqui."));
+      return;
+    }
+    filtrosEl.style.display = "";
+
+    const categorias = ["Todos"].concat(
+      Array.from(new Set(videos.map(function (v) { return v.nicho || "Geral"; })))
+    );
+    categorias.forEach(function (categoria, indice) {
+      const btn = criarEl("button", "filtro-btn", categoria);
+      btn.type = "button";
+      btn.dataset.categoria = categoria;
+      btn.setAttribute("aria-pressed", indice === 0 ? "true" : "false");
+      btn.addEventListener("click", function () {
+        Array.from(filtrosEl.children).forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+        btn.setAttribute("aria-pressed", "true");
+        filtrarTrabalhos(categoria);
+      });
+      filtrosEl.appendChild(btn);
+    });
+
+    videos.forEach(function (item) {
+      const card = montarCardTrabalho(item);
+      trabalhosGridEl.appendChild(card);
+      observer.observe(card);
     });
   }
 
@@ -947,18 +957,71 @@
 
   document.querySelectorAll(".reveal").forEach(function (el) { observer.observe(el); });
 
+  // Só agora busca os vídeos: o observer já existe pra animar a entrada deles.
+  carregarVideosDoSite();
+
   /* =====================================================================
-     FORMULÁRIO DE CONTATO
+     FORMULÁRIO DE CONTATO — grava um lead novo na tabela "marcas"
      ===================================================================== */
 
   const formContato = document.getElementById("form-contato");
   const confirmacaoEnvio = document.getElementById("confirmacao-envio");
-  formContato.addEventListener("submit", function (e) {
+  formContato.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (!formContato.checkValidity()) { formContato.reportValidity(); return; }
-    confirmacaoEnvio.classList.add("visivel");
-    formContato.reset();
+
+    const nome = document.getElementById("campo-nome").value.trim();
+    const email = document.getElementById("campo-email").value.trim();
+    const mensagem = document.getElementById("campo-mensagem").value.trim();
+
+    const botaoEnviar = formContato.querySelector("button[type=submit]");
+    botaoEnviar.disabled = true;
+
+    try {
+      if (!window.bancoCliente) throw new Error("Supabase não carregou");
+      const resultado = await window.bancoCliente.from("marcas").insert({
+        nome: nome,
+        email: email,
+        obs: mensagem,
+        situacao: "lead",
+        ultimo_contato: new Date().toISOString().slice(0, 10)
+      });
+      if (resultado.error) throw resultado.error;
+      confirmacaoEnvio.style.background = "";
+      confirmacaoEnvio.style.color = "";
+      confirmacaoEnvio.textContent = "Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!";
+      confirmacaoEnvio.classList.add("visivel");
+      formContato.reset();
+    } catch (erro) {
+      console.error("Não consegui salvar sua mensagem:", erro);
+      confirmacaoEnvio.style.background = "#fbe9e7";
+      confirmacaoEnvio.style.color = "#c0392b";
+      confirmacaoEnvio.textContent = "Não consegui enviar agora. Tenta de novo em instantes ou me chama direto pelo WhatsApp.";
+      confirmacaoEnvio.classList.add("visivel");
+    } finally {
+      botaoEnviar.disabled = false;
+    }
   });
+
+  /* =====================================================================
+     REGISTRO DE VISITA — um registro simples, sem serviço externo
+     ===================================================================== */
+  (async function registrarVisita() {
+    try {
+      if (!window.bancoCliente) return;
+      let origem = "direto";
+      if (document.referrer) {
+        try { origem = new URL(document.referrer).hostname.replace(/^www\./, ""); }
+        catch (e) { origem = "direto"; }
+      }
+      await window.bancoCliente.from("visitas").insert({
+        pagina: "portfolio",
+        origem: origem
+      });
+    } catch (erro) {
+      // Sem internet ou banco fora do ar: a visita simplesmente não é contada.
+    }
+  })();
 
   /* =====================================================================
      CARD DE CAPTURA (mídia kit)

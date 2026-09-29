@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrar — Priscilla Baron</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-vivo: #A3BBD7;
+    --azul: #3e5e82;
+    --azul-escuro: #2c465f;
+    --azul-claro: #eaf0f7;
+    --gelo: #f6f7f5;
+    --texto: #1b1f1d;
+    --texto-suave: #5b645f;
+    --branco: #ffffff;
+    --borda: #e3e6e2;
+    --raio: 20px;
+    --raio-pequeno: 12px;
+    --sombra: 0 10px 30px rgba(20, 30, 45, 0.08);
+    --sombra-forte: 0 18px 40px rgba(20, 30, 45, 0.14);
+    --vermelho: #c0392b;
+    --vermelho-claro: #fbe9e7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: var(--gelo); color: var(--texto); font-family: 'Manrope', system-ui, sans-serif;
+    padding: 24px;
+  }
+  .cartao {
+    width: 100%; max-width: 380px; background: var(--branco); border: 1px solid var(--borda);
+    border-radius: var(--raio); box-shadow: var(--sombra-forte); padding: 36px 32px;
+  }
+  .logo { font-weight: 800; font-size: 1.2rem; text-align: center; margin-bottom: 4px; }
+  .logo em { font-style: normal; color: var(--azul); }
+  .subtitulo { text-align: center; color: var(--texto-suave); font-size: .88rem; margin: 0 0 28px; }
+  .campo { display: grid; gap: 6px; margin-bottom: 16px; }
+  .campo label { font-weight: 700; font-size: .85rem; }
+  .campo input {
+    padding: 12px 14px; border: 1px solid var(--borda); border-radius: var(--raio-pequeno);
+    font-family: inherit; font-size: .92rem; background: var(--gelo); color: var(--texto);
+  }
+  .campo input:focus { outline: none; border-color: var(--azul); background: var(--branco); box-shadow: 0 0 0 3px var(--azul-claro); }
+  .btn-entrar {
+    width: 100%; padding: 13px; border: none; border-radius: 100px; background: var(--azul);
+    color: #fff; font-weight: 700; font-size: .92rem; cursor: pointer; margin-top: 6px;
+    transition: background .15s ease;
+  }
+  .btn-entrar:hover { background: var(--azul-escuro); }
+  .btn-entrar:disabled { opacity: .6; cursor: default; }
+  .faixa-erro {
+    display: none; background: var(--vermelho-claro); color: var(--vermelho); font-weight: 600;
+    font-size: .85rem; padding: 10px 14px; border-radius: var(--raio-pequeno); margin-bottom: 16px;
+  }
+  .faixa-erro.visivel { display: block; }
+  .faixa-aviso {
+    display: none; background: var(--azul-claro); color: var(--azul-escuro); font-weight: 600;
+    font-size: .85rem; padding: 10px 14px; border-radius: var(--raio-pequeno); margin-bottom: 16px;
+  }
+  .faixa-aviso.visivel { display: block; }
+  .esqueci { display: block; text-align: center; margin-top: 18px; font-size: .82rem; color: var(--azul); text-decoration: none; background: none; border: none; cursor: pointer; font-family: inherit; width: 100%; }
+  .esqueci:hover { text-decoration: underline; }
+  a, button:focus-visible, input:focus-visible { outline-color: var(--azul); }
+</style>
+</head>
+<body>
+  <div class="cartao">
+    <p class="logo">Priscilla <em>Baron</em></p>
+    <p class="subtitulo">Painel administrativo</p>
+
+    <p class="faixa-erro" id="faixa-erro" role="alert"></p>
+    <p class="faixa-aviso" id="faixa-aviso" role="status"></p>
+
+    <form id="form-login" novalidate>
+      <div class="campo">
+        <label for="campo-email">E-mail</label>
+        <input type="email" id="campo-email" name="email" autocomplete="username" required>
+      </div>
+      <div class="campo">
+        <label for="campo-senha">Senha</label>
+        <input type="password" id="campo-senha" name="senha" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-entrar" id="btn-entrar">Entrar</button>
+      <button type="button" class="esqueci" id="btn-esqueci">Esqueci minha senha</button>
+    </form>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/banco.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var form = document.getElementById("form-login");
+  var btnEntrar = document.getElementById("btn-entrar");
+  var faixaErro = document.getElementById("faixa-erro");
+  var faixaAviso = document.getElementById("faixa-aviso");
+  var btnEsqueci = document.getElementById("btn-esqueci");
+
+  function mostrarErro(texto) {
+    faixaAviso.classList.remove("visivel");
+    faixaErro.textContent = texto;
+    faixaErro.classList.add("visivel");
+  }
+  function mostrarAviso(texto) {
+    faixaErro.classList.remove("visivel");
+    faixaAviso.textContent = texto;
+    faixaAviso.classList.add("visivel");
+  }
+
+  // Se já tiver sessão aberta, manda direto pro admin.
+  async function conferirSessaoInicial() {
+    try {
+      var resultado = await window.bancoCliente.auth.getSession();
+      if (resultado.data && resultado.data.session) {
+        window.location.href = "../admin/";
+      }
+    } catch (erro) {
+      // segue normalmente pro formulário de login
+    }
+  }
+  conferirSessaoInicial();
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    faixaErro.classList.remove("visivel");
+    faixaAviso.classList.remove("visivel");
+    btnEntrar.disabled = true;
+    btnEntrar.textContent = "Entrando...";
+
+    var email = document.getElementById("campo-email").value.trim();
+    var senha = document.getElementById("campo-senha").value;
+
+    try {
+      var resultado = await window.bancoCliente.auth.signInWithPassword({ email: email, password: senha });
+      if (resultado.error) {
+        mostrarErro("E-mail ou senha incorretos.");
+        btnEntrar.disabled = false;
+        btnEntrar.textContent = "Entrar";
+        return;
+      }
+      window.location.href = "../admin/";
+    } catch (erro) {
+      mostrarErro("Não consegui conectar agora. Tente de novo em instantes.");
+      btnEntrar.disabled = false;
+      btnEntrar.textContent = "Entrar";
+    }
+  });
+
+  btnEsqueci.addEventListener("click", async function () {
+    var email = document.getElementById("campo-email").value.trim();
+    if (!email) {
+      mostrarErro("Preencha seu e-mail acima primeiro.");
+      return;
+    }
+    try {
+      await window.bancoCliente.auth.resetPasswordForEmail(email);
+      mostrarAviso("Se esse e-mail estiver cadastrado, mandei um link de recuperação pra caixa de entrada.");
+    } catch (erro) {
+      mostrarErro("Não consegui enviar agora. Tente de novo em instantes.");
+    }
+  });
+})();
+</script>
+</body>
+</html>

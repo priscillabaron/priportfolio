@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel — Priscilla Baron</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- Tela de carregamento: fica visível até a sessão ser conferida -->
+<div id="tela-carregando" style="position:fixed;inset:0;background:#f6f7f5;display:flex;align-items:center;justify-content:center;z-index:999;font-family:'Manrope',sans-serif;color:#5b645f;font-size:.9rem;">
+  Carregando...
+</div>
+
+<div class="admin-wrap" id="admin-wrap" style="display:none;">
+
+  <button class="hamburger-admin" id="btn-abrir-menu" aria-label="Abrir menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="overlay-admin" id="overlay-menu"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-topo">
+      <p class="sidebar-logo">Priscilla <span>Baron</span></p>
+    </div>
+    <nav class="sidebar-nav">
+      <p class="nav-grupo-titulo">Meu site</p>
+      <button class="nav-item ativo" data-aba="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Portfólio
+      </button>
+      <button class="nav-item" data-aba="marcas">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Marcas
+      </button>
+      <p class="nav-grupo-titulo">Minha rotina</p>
+      <button class="nav-item" data-aba="calendario">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Calendário
+      </button>
+      <button class="nav-item" data-aba="campanhas">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Campanhas
+      </button>
+      <button class="nav-item" data-aba="checklist">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Checklist
+      </button>
+    </nav>
+    <div class="sidebar-rodape">
+      <p class="sidebar-email" id="sidebar-email">carregando...</p>
+      <button class="btn-sair" id="btn-sair">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <main class="conteudo">
+    <div id="aviso-tabelas" style="display:none;" class="aviso-erro"></div>
+
+    <!-- ===================== ABA 1: PORTFÓLIO ===================== -->
+    <section class="aba ativa" id="aba-portfolio">
+      <div class="conteudo-topo">
+        <div>
+          <h1 class="conteudo-titulo">Portfólio</h1>
+          <p class="conteudo-sub">Os vídeos e números do seu site público</p>
+        </div>
+        <button class="btn btn-primario" id="btn-novo-video">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo vídeo
+        </button>
+      </div>
+
+      <div class="grade-stats" id="stats-portfolio"></div>
+
+      <div class="form-linha" style="align-items:stretch;">
+        <div class="painel">
+          <p class="painel-titulo">Visitas nos últimos 14 dias</p>
+          <div id="grafico-visitas"></div>
+        </div>
+        <div class="painel">
+          <p class="painel-titulo">De onde as pessoas vêm</p>
+          <div id="lista-origens"></div>
+        </div>
+      </div>
+
+      <div class="painel">
+        <p class="painel-titulo">Meus vídeos</p>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Título</th>
+                <th>Marca</th>
+                <th>Nicho</th>
+                <th>Destaque</th>
+                <th>Visível</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela-videos"></tbody>
+          </table>
+        </div>
+        <div id="aviso-videos-vazio" class="aviso-vazio" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ABA 2: MARCAS ===================== -->
+    <section class="aba" id="aba-marcas">
+      <div class="conteudo-topo">
+        <div>
+          <h1 class="conteudo-titulo">Marcas</h1>
+          <p class="conteudo-sub">Sua base de contatos de empresas</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-outline" id="btn-baixar-marcas">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar CSV
+          </button>
+          <button class="btn btn-primario" id="btn-nova-marca">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nova marca
+          </button>
+        </div>
+      </div>
+
+      <div class="barra-filtros">
+        <div class="campo-busca">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="busca-marcas" placeholder="Buscar por nome, @ ou e-mail">
+        </div>
+        <select class="filtro-select" id="filtro-situacao">
+          <option value="">Todas as situações</option>
+          <option value="lead">Lead</option>
+          <option value="conversando">Conversando</option>
+          <option value="cliente">Cliente</option>
+          <option value="parada">Parada</option>
+        </select>
+      </div>
+
+      <div class="painel">
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Marca</th>
+                <th>Instagram</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Situação</th>
+                <th>Último contato</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela-marcas"></tbody>
+          </table>
+        </div>
+        <div id="aviso-marcas-vazio" class="aviso-vazio" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ABA 3: CALENDÁRIO ===================== -->
+    <section class="aba" id="aba-calendario">
+      <div class="conteudo-topo">
+        <div>
+          <h1 class="conteudo-titulo">Calendário</h1>
+          <p class="conteudo-sub">Gravar, editar e postar</p>
+        </div>
+        <button class="btn btn-primario" id="btn-novo-evento">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo item
+        </button>
+      </div>
+
+      <div class="calendario-topo">
+        <div class="calendario-nav">
+          <button class="btn btn-icone" id="btn-mes-anterior"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <p class="calendario-mes-nome" id="calendario-mes-nome"></p>
+          <button class="btn btn-icone" id="btn-mes-seguinte"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <button class="btn btn-outline" id="btn-mes-hoje">Este mês</button>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="chip-filtro ativo" data-tipo-cal="">Todos</button>
+          <button class="chip-filtro" data-tipo-cal="gravar">Gravar</button>
+          <button class="chip-filtro" data-tipo-cal="editar">Editar</button>
+          <button class="chip-filtro" data-tipo-cal="postar">Postar</button>
+        </div>
+      </div>
+
+      <div class="grade-calendario" id="grade-calendario"></div>
+
+      <div class="painel" style="margin-top:20px;">
+        <p class="painel-titulo">Ficou pra trás</p>
+        <div id="lista-atrasados-cal"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ABA 4: CAMPANHAS ===================== -->
+    <section class="aba" id="aba-campanhas">
+      <div class="conteudo-topo">
+        <div>
+          <h1 class="conteudo-titulo">Campanhas</h1>
+          <p class="conteudo-sub">Do briefing até o pagamento</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-outline" id="btn-baixar-campanhas">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar CSV
+          </button>
+          <button class="btn btn-primario" id="btn-nova-campanha">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nova campanha
+          </button>
+        </div>
+      </div>
+
+      <div class="grade-stats" id="stats-campanhas"></div>
+
+      <div class="barra-filtros">
+        <button class="chip-filtro ativo" data-filtro-camp="todas">Todas</button>
+        <button class="chip-filtro" data-filtro-camp="ativas">Ativas</button>
+        <button class="chip-filtro" data-filtro-camp="finalizadas">Finalizadas</button>
+        <div class="campo-busca">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="busca-campanhas" placeholder="Buscar campanha ou cliente">
+        </div>
+      </div>
+
+      <div class="painel">
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr id="cabecalho-campanhas">
+                <th data-col="favorita"></th>
+                <th class="ordenavel" data-col="campanha">Campanha<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="cliente">Cliente<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="tipo">Tipo<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="status">Status<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="qtd">Qtd<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="valor">Valor<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="prazo">Prazo<span class="seta-ordem">↕</span></th>
+                <th class="ordenavel" data-col="pagamento">Pagamento<span class="seta-ordem">↕</span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela-campanhas"></tbody>
+          </table>
+        </div>
+        <div id="aviso-campanhas-vazio" class="aviso-vazio" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ABA 5: CHECKLIST ===================== -->
+    <section class="aba" id="aba-checklist">
+      <div class="conteudo-topo">
+        <div>
+          <h1 class="conteudo-titulo">Checklist do portfólio</h1>
+          <p class="conteudo-sub">Guia e referências pra construir um portfólio que converte</p>
+        </div>
+      </div>
+
+      <div class="sub-abas">
+        <button class="sub-aba-btn ativa" data-sub="check">Checklist do portfólio</button>
+        <button class="sub-aba-btn" data-sub="referencias">Referências de vídeo</button>
+        <button class="sub-aba-btn" data-sub="roteiros">Roteiros</button>
+        <button class="sub-aba-btn" data-sub="nichos">Ideias por nicho</button>
+        <button class="sub-aba-btn" data-sub="revisar">Revisar meu roteiro</button>
+      </div>
+
+      <div class="sub-conteudo ativa" id="sub-check">
+        <div class="progresso-geral">
+          <div style="display:flex; justify-content:space-between; align-items:baseline;">
+            <p class="painel-titulo" style="margin:0;">Progresso geral</p>
+            <p id="progresso-geral-texto" style="font-weight:800; color:var(--azul-escuro);"></p>
+          </div>
+          <div class="barra-progresso"><div class="barra-progresso-preenchida" id="barra-progresso-geral" style="width:0%;"></div></div>
+        </div>
+        <div id="lista-secoes-checklist"></div>
+      </div>
+
+      <div class="sub-conteudo" id="sub-referencias">
+        <div class="grade-referencias" id="grade-referencias"></div>
+      </div>
+
+      <div class="sub-conteudo" id="sub-roteiros">
+        <div id="lista-tipos"></div>
+      </div>
+
+      <div class="sub-conteudo" id="sub-nichos">
+        <div id="lista-nichos"></div>
+      </div>
+
+      <div class="sub-conteudo" id="sub-revisar">
+        <p class="painel-titulo">Cole seu roteiro aqui</p>
+        <textarea class="revisao-textarea" id="texto-revisao" placeholder="Cole aqui o roteiro que você escreveu, pra ler enquanto confere os pontos abaixo..."></textarea>
+        <div id="lista-revisao"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAIS ===================== -->
+
+<div class="modal-fundo" id="modal-video">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-video">Novo vídeo</p>
+      <button class="modal-fechar" data-fechar-modal="modal-video"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-video">
+      <input type="hidden" id="video-id">
+      <div class="campo-f"><label for="video-titulo">Título</label><input type="text" id="video-titulo" required></div>
+      <div class="campo-f"><label for="video-link">Link do vídeo</label><input type="url" id="video-link" placeholder="https://..."></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="video-nicho">Nicho</label><input type="text" id="video-nicho" placeholder="Ex: Beleza"></div>
+        <div class="campo-f"><label for="video-formato">Formato</label><input type="text" id="video-formato" placeholder="Ex: 9:16"></div>
+      </div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="video-marca">Marca</label><input type="text" id="video-marca"></div>
+        <div class="campo-f"><label for="video-destaque">Destaque (opcional)</label><input type="text" id="video-destaque" placeholder="Ex: 2,4M views"></div>
+      </div>
+      <label class="campo-check"><input type="checkbox" id="video-visivel" checked> Mostrar esse vídeo no site</label>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="btn-apagar-video" style="display:none;">Apagar</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-video">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-marca">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-marca">Nova marca</p>
+      <button class="modal-fechar" data-fechar-modal="modal-marca"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-marca">
+      <input type="hidden" id="marca-id">
+      <div class="campo-f"><label for="marca-nome">Nome da marca</label><input type="text" id="marca-nome" required></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="marca-instagram">Instagram</label><input type="text" id="marca-instagram" placeholder="@marca"></div>
+        <div class="campo-f"><label for="marca-telefone">Telefone</label><input type="text" id="marca-telefone" placeholder="11999999999"></div>
+      </div>
+      <div class="campo-f"><label for="marca-email">E-mail</label><input type="email" id="marca-email"></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="marca-situacao">Situação</label>
+          <select id="marca-situacao">
+            <option value="lead">Lead</option>
+            <option value="conversando">Conversando</option>
+            <option value="cliente">Cliente</option>
+            <option value="parada">Parada</option>
+          </select>
+        </div>
+        <div class="campo-f"><label for="marca-ultimo-contato">Último contato</label><input type="date" id="marca-ultimo-contato"></div>
+      </div>
+      <div class="campo-f"><label for="marca-obs">Observação</label><textarea id="marca-obs" rows="3"></textarea></div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="btn-apagar-marca" style="display:none;">Apagar</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-marca">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-evento">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-evento">Novo item</p>
+      <button class="modal-fechar" data-fechar-modal="modal-evento"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-evento">
+      <input type="hidden" id="evento-id">
+      <div class="campo-f"><label for="evento-titulo">Título</label><input type="text" id="evento-titulo" required></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="evento-marca">Marca</label><input type="text" id="evento-marca"></div>
+        <div class="campo-f"><label for="evento-tipo">Tipo</label>
+          <select id="evento-tipo">
+            <option value="gravar">Gravar</option>
+            <option value="editar">Editar</option>
+            <option value="postar">Postar</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="evento-data">Data</label><input type="date" id="evento-data" required></div>
+        <div class="campo-f"><label for="evento-status">Status</label>
+          <select id="evento-status">
+            <option value="a_fazer">A fazer</option>
+            <option value="feito">Feito</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="btn-apagar-evento" style="display:none;">Apagar</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-evento">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-campanha">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-campanha">Nova campanha</p>
+      <button class="modal-fechar" data-fechar-modal="modal-campanha"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-campanha">
+      <input type="hidden" id="campanha-id">
+      <div class="campo-f"><label for="campanha-nome">Campanha</label><input type="text" id="campanha-nome" required></div>
+      <div class="campo-f"><label for="campanha-cliente">Cliente</label><input type="text" id="campanha-cliente"></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="campanha-tipo">Tipo</label>
+          <select id="campanha-tipo">
+            <option value="Conteúdo">Conteúdo</option>
+            <option value="Publicidade">Publicidade</option>
+          </select>
+        </div>
+        <div class="campo-f"><label for="campanha-status">Status</label>
+          <select id="campanha-status">
+            <option>Briefing</option>
+            <option>Roteiro</option>
+            <option>Aprovação Roteiro</option>
+            <option>Gravação</option>
+            <option>Edição</option>
+            <option>Aprovado</option>
+            <option>Entregue</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="campanha-qtd">Quantidade</label><input type="number" id="campanha-qtd" min="1" value="1"></div>
+        <div class="campo-f"><label for="campanha-valor">Valor (R$)</label><input type="number" id="campanha-valor" min="0" step="0.01" value="0"></div>
+      </div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="campanha-prazo">Prazo</label><input type="date" id="campanha-prazo"></div>
+        <div class="campo-f"><label for="campanha-pagamento">Pagamento</label>
+          <select id="campanha-pagamento">
+            <option value="pendente">Pendente</option>
+            <option value="pago">Pago</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; gap:18px;">
+        <label class="campo-check"><input type="checkbox" id="campanha-ativa" checked> Ativa</label>
+        <label class="campo-check"><input type="checkbox" id="campanha-favorita"> Favorita</label>
+      </div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="btn-apagar-campanha" style="display:none;">Apagar</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-campanha">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-referencia">
+  <div class="modal-caixa modal-larga">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-referencia"></p>
+      <button class="modal-fechar" data-fechar-modal="modal-referencia"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="corpo-modal-referencia"></div>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-dia-cal">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="titulo-modal-dia-cal"></p>
+      <button class="modal-fechar" data-fechar-modal="modal-dia-cal"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="corpo-modal-dia-cal"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/banco.js"></script>
+<script src="../js/biblioteca.js"></script>
+<script src="js/util.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/marcas.js"></script>
+<script src="js/calendario.js"></script>
+<script src="js/campanhas.js"></script>
+<script src="js/checklist.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
