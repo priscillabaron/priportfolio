@@ -12,22 +12,22 @@
   /* ===== RESET E BASE ===== */
   *, *::before, *::after { box-sizing: border-box; }
   :root {
-    --gelo: #f6f7f5;
-    --cor-clara: #D3E1E2;
-    --cor-azul: #93A3C6;
-    --cor-azul-forte: #8C6578;
-    --cor-mauve: #644051;
-    --cor-coral: #E25C63;
-    --cor-coral-escuro: #872327;
-    --cor-pessego: #F4A48D;
+    --gelo: #F5EFEB;
+    --cor-clara: #C8D9E6;
+    --cor-azul: #8FAAB9;
+    --cor-azul-forte: #2F4156;
+    --cor-mauve: #567C8D;
+    --cor-coral: #567C8D;
+    --cor-coral-escuro: #2F4156;
+    --cor-pessego: #F5EFEB;
     --texto: #1b1f1d;
     --texto-suave: #5b645f;
     --branco: #ffffff;
     --borda: #e3e6e2;
     --raio: 20px;
     --raio-pequeno: 12px;
-    --sombra: 0 10px 30px rgba(50, 30, 42, 0.08);
-    --sombra-forte: 0 18px 40px rgba(50, 30, 42, 0.14);
+    --sombra: 0 10px 30px rgba(30, 40, 55, 0.08);
+    --sombra-forte: 0 18px 40px rgba(30, 40, 55, 0.14);
     --header-h: 100px;
     --container: 1180px;
   }
@@ -119,11 +119,13 @@
   .hero-buttons { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
   .hero-photo { position: relative; }
   .foto-placeholder {
-    aspect-ratio: 4 / 5; border-radius: var(--raio); background: linear-gradient(150deg, var(--cor-clara) 0%, var(--cor-azul) 30%, var(--cor-mauve) 65%, var(--cor-coral) 95%, var(--cor-pessego) 130%);
+    aspect-ratio: 4 / 5; border-radius: var(--raio); background: linear-gradient(150deg, var(--gelo) 0%, var(--cor-clara) 35%, var(--cor-azul) 65%, var(--cor-azul-forte) 130%);
     display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px;
     box-shadow: var(--sombra-forte); color: #fff; font-weight: 700; position: relative; overflow: hidden;
   }
   .foto-placeholder span { background: rgba(0,0,0,.22); padding: 8px 16px; border-radius: 100px; font-size: .85rem; }
+  /* A capa principal usa a textura de seda de verdade, em vez do degradê */
+  .hero-photo .foto-placeholder { background-image: url('imagens/textura-seda-azul.jpg'); background-size: cover; background-position: center; }
   .tag-selo {
     position: absolute; top: 18px; right: -10px; background: var(--branco); color: var(--texto);
     padding: 8px 16px; border-radius: 100px; font-weight: 700; font-size: .78rem; box-shadow: var(--sombra);
@@ -168,7 +170,7 @@
     border: 1px solid var(--borda); box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease;
   }
   .destaque-card:hover { transform: translateY(-6px); box-shadow: var(--sombra-forte); }
-  .destaque-capa { position: relative; aspect-ratio: 9 / 16; background: linear-gradient(160deg, var(--cor-clara) 0%, var(--cor-azul) 28%, var(--cor-mauve) 58%, var(--cor-coral) 88%, var(--cor-pessego) 120%); display: flex; align-items: flex-end; padding: 16px; }
+  .destaque-capa { position: relative; aspect-ratio: 9 / 16; background: linear-gradient(160deg, var(--gelo) 0%, var(--cor-clara) 32%, var(--cor-azul) 62%, var(--cor-azul-forte) 100%, var(--cor-mauve) 135%); display: flex; align-items: flex-end; padding: 16px; }
   .destaque-capa .legenda-formato { color: #fff; font-size: .78rem; font-weight: 700; background: rgba(0,0,0,.28); padding: 6px 12px; border-radius: 100px; }
   .play-botao {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -270,17 +272,17 @@
   .canal-sub { display: block; font-weight: 500; color: var(--texto-suave); font-size: .82rem; }
 
   /* ===== RODAPÉ ===== */
-  .rodape { background: #26171E; color: #e3d6da; padding: 48px 0 28px; }
+  .rodape { background: #212D3C; color: #d7e3ec; padding: 48px 0 28px; }
   .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
   .rodape-nome { font-weight: 800; font-size: 1.15rem; color: #fff; }
   .rodape-redes { display: flex; gap: 18px; flex-wrap: wrap; }
   .rodape-redes a { font-weight: 600; font-size: .9rem; }
   .rodape-redes a:hover { color: var(--cor-pessego); }
-  .rodape-copyright { font-size: .8rem; color: #b79aa3; width: 100%; text-align: center; margin-top: 28px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; }
+  .rodape-copyright { font-size: .8rem; color: #8fa3b3; width: 100%; text-align: center; margin-top: 28px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; }
 
   /* ===== MODAL DE CAPTURA ===== */
   .modal-overlay {
-    position: fixed; inset: 0; background: rgba(28, 16, 22, .55); display: flex; align-items: center;
+    position: fixed; inset: 0; background: rgba(20, 28, 38, .55); display: flex; align-items: center;
     justify-content: center; z-index: 2000; padding: 20px;
   }
   .modal-overlay[hidden] { display: none; }
