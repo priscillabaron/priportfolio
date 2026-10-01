@@ -47,7 +47,7 @@
     return marcasAtuais.filter(function (m) {
       if (filtroSituacao && m.situacao !== filtroSituacao) return false;
       if (termoBusca) {
-        var alvo = ((m.nome || "") + " " + (m.instagram || "") + " " + (m.email || "")).toLowerCase();
+        var alvo = ((m.nome || "") + " " + (m.instagram || "") + " " + (m.email || "") + " " + (m.contato_nome || "") + " " + (m.pais || "")).toLowerCase();
         if (alvo.indexOf(termoBusca) === -1) return false;
       }
       return true;
@@ -83,6 +83,14 @@
       }
       tr.appendChild(tdNome);
 
+      var tdContatoNome = document.createElement("td");
+      tdContatoNome.textContent = marca.contato_nome || "—";
+      tr.appendChild(tdContatoNome);
+
+      var tdPais = document.createElement("td");
+      tdPais.textContent = marca.pais || "—";
+      tr.appendChild(tdPais);
+
       var tdInsta = document.createElement("td");
       if (marca.instagram) {
         var linkInsta = document.createElement("a");
@@ -103,13 +111,14 @@
       tr.appendChild(tdEmail);
 
       var tdTel = document.createElement("td");
+      tdTel.style.whiteSpace = "nowrap";
       if (marca.telefone) {
         var linkWpp = document.createElement("a");
         var numeroLimpo = String(marca.telefone).replace(/\D/g, "");
         linkWpp.href = "https://wa.me/" + (numeroLimpo.length <= 11 ? "55" + numeroLimpo : numeroLimpo);
         linkWpp.target = "_blank";
         linkWpp.rel = "noopener";
-        linkWpp.style.cssText = "display:inline-flex; align-items:center; gap:5px; color:var(--verde);";
+        linkWpp.style.cssText = "display:inline-flex; align-items:center; gap:5px; color:var(--verde); white-space:nowrap;";
         linkWpp.innerHTML = U.icone("whatsapp") + U.escapar(marca.telefone);
         linkWpp.addEventListener("click", function (e) { e.stopPropagation(); });
         tdTel.appendChild(linkWpp);
@@ -145,6 +154,8 @@
     form.reset();
     document.getElementById("marca-id").value = marca ? marca.id : "";
     document.getElementById("marca-nome").value = marca ? (marca.nome || "") : "";
+    document.getElementById("marca-contato-nome").value = marca ? (marca.contato_nome || "") : "";
+    document.getElementById("marca-pais").value = marca ? (marca.pais || "") : "";
     document.getElementById("marca-instagram").value = marca ? (marca.instagram || "") : "";
     document.getElementById("marca-telefone").value = marca ? (marca.telefone || "") : "";
     document.getElementById("marca-email").value = marca ? (marca.email || "") : "";
@@ -161,6 +172,8 @@
     var id = document.getElementById("marca-id").value;
     var dados = {
       nome: document.getElementById("marca-nome").value.trim(),
+      contato_nome: document.getElementById("marca-contato-nome").value.trim() || null,
+      pais: document.getElementById("marca-pais").value.trim() || null,
       instagram: document.getElementById("marca-instagram").value.trim() || null,
       telefone: document.getElementById("marca-telefone").value.trim() || null,
       email: document.getElementById("marca-email").value.trim() || null,
@@ -195,6 +208,8 @@
     var lista = marcasFiltradas();
     U.baixarCSV("marcas.csv", [
       { rotulo: "Nome", valor: function (m) { return m.nome; } },
+      { rotulo: "Pessoa de contato", valor: function (m) { return m.contato_nome; } },
+      { rotulo: "País", valor: function (m) { return m.pais; } },
       { rotulo: "Instagram", valor: function (m) { return m.instagram; } },
       { rotulo: "E-mail", valor: function (m) { return m.email; } },
       { rotulo: "Telefone", valor: function (m) { return m.telefone; } },
