@@ -43,6 +43,7 @@ create table if not exists public.marcas (
   nome            text not null,
   contato_nome    text,     -- nome da pessoa com quem você conversou nessa marca
   pais            text,     -- país da marca ou da pessoa de contato
+  nicho           text,     -- nicho da marca (ex: beleza, casa, pet)
   instagram       text,
   email           text,
   telefone        text,
@@ -57,6 +58,7 @@ create table if not exists public.marcas (
 -- novas sem apagar nada do que já está cadastrado.
 alter table public.marcas add column if not exists contato_nome text;
 alter table public.marcas add column if not exists pais text;
+alter table public.marcas add column if not exists nicho text;
 
 insert into public.marcas (nome, instagram, email, situacao, obs)
 select 'Exemplo: apague esta linha', '@exemplo', 'exemplo@email.com', 'lead', 'Contato de exemplo'

@@ -47,7 +47,7 @@
     return marcasAtuais.filter(function (m) {
       if (filtroSituacao && m.situacao !== filtroSituacao) return false;
       if (termoBusca) {
-        var alvo = ((m.nome || "") + " " + (m.instagram || "") + " " + (m.email || "") + " " + (m.contato_nome || "") + " " + (m.pais || "")).toLowerCase();
+        var alvo = ((m.nome || "") + " " + (m.instagram || "") + " " + (m.email || "") + " " + (m.contato_nome || "") + " " + (m.pais || "") + " " + (m.nicho || "")).toLowerCase();
         if (alvo.indexOf(termoBusca) === -1) return false;
       }
       return true;
@@ -90,6 +90,10 @@
       var tdPais = document.createElement("td");
       tdPais.textContent = marca.pais || "—";
       tr.appendChild(tdPais);
+
+      var tdNicho = document.createElement("td");
+      tdNicho.textContent = marca.nicho || "—";
+      tr.appendChild(tdNicho);
 
       var tdInsta = document.createElement("td");
       if (marca.instagram) {
@@ -156,6 +160,7 @@
     document.getElementById("marca-nome").value = marca ? (marca.nome || "") : "";
     document.getElementById("marca-contato-nome").value = marca ? (marca.contato_nome || "") : "";
     document.getElementById("marca-pais").value = marca ? (marca.pais || "") : "";
+    document.getElementById("marca-nicho").value = marca ? (marca.nicho || "") : "";
     document.getElementById("marca-instagram").value = marca ? (marca.instagram || "") : "";
     document.getElementById("marca-telefone").value = marca ? (marca.telefone || "") : "";
     document.getElementById("marca-email").value = marca ? (marca.email || "") : "";
@@ -174,6 +179,7 @@
       nome: document.getElementById("marca-nome").value.trim(),
       contato_nome: document.getElementById("marca-contato-nome").value.trim() || null,
       pais: document.getElementById("marca-pais").value.trim() || null,
+      nicho: document.getElementById("marca-nicho").value.trim() || null,
       instagram: document.getElementById("marca-instagram").value.trim() || null,
       telefone: document.getElementById("marca-telefone").value.trim() || null,
       email: document.getElementById("marca-email").value.trim() || null,
@@ -210,6 +216,7 @@
       { rotulo: "Nome", valor: function (m) { return m.nome; } },
       { rotulo: "Pessoa de contato", valor: function (m) { return m.contato_nome; } },
       { rotulo: "País", valor: function (m) { return m.pais; } },
+      { rotulo: "Nicho", valor: function (m) { return m.nicho; } },
       { rotulo: "Instagram", valor: function (m) { return m.instagram; } },
       { rotulo: "E-mail", valor: function (m) { return m.email; } },
       { rotulo: "Telefone", valor: function (m) { return m.telefone; } },
