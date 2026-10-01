@@ -43,6 +43,12 @@
     renderizarTabela();
   }
 
+  async function alternarFavorita(marca) {
+    marca.favorita = !marca.favorita;
+    renderizarTabela();
+    await U.consulta("marcas", window.bancoCliente.from("marcas").update({ favorita: marca.favorita }).eq("id", marca.id));
+  }
+
   function marcasFiltradas() {
     return marcasAtuais.filter(function (m) {
       if (filtroSituacao && m.situacao !== filtroSituacao) return false;
@@ -74,7 +80,16 @@
 
     lista.forEach(function (marca) {
       var tr = document.createElement("tr");
-      tr.className = "linha-clicavel";
+      tr.className = "linha-clicavel" + (marca.favorita ? " linha-favorita" : "");
+
+      var tdEstrela = document.createElement("td");
+      var btnEstrela = document.createElement("button");
+      btnEstrela.className = "btn-icone";
+      btnEstrela.style.color = marca.favorita ? "var(--amarelo-escuro)" : "var(--texto-suave)";
+      btnEstrela.innerHTML = U.icone(marca.favorita ? "estrelaCheia" : "estrelaVazia");
+      btnEstrela.addEventListener("click", function (e) { e.stopPropagation(); alternarFavorita(marca); });
+      tdEstrela.appendChild(btnEstrela);
+      tr.appendChild(tdEstrela);
 
       var tdNome = document.createElement("td");
       tdNome.innerHTML = "<b>" + U.escapar(marca.nome) + "</b>";

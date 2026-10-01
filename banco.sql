@@ -51,14 +51,16 @@ create table if not exists public.marcas (
                     check (situacao in ('lead', 'conversando', 'cliente', 'parada')),
   obs             text,
   ultimo_contato  date,
+  favorita        boolean not null default false,
   criado_em       timestamptz not null default now()
 );
 
--- Caso a tabela já exista de uma vez anterior, isso adiciona as duas colunas
+-- Caso a tabela já exista de uma vez anterior, isso adiciona as colunas
 -- novas sem apagar nada do que já está cadastrado.
 alter table public.marcas add column if not exists contato_nome text;
 alter table public.marcas add column if not exists pais text;
 alter table public.marcas add column if not exists nicho text;
+alter table public.marcas add column if not exists favorita boolean not null default false;
 
 insert into public.marcas (nome, instagram, email, situacao, obs)
 select 'Exemplo: apague esta linha', '@exemplo', 'exemplo@email.com', 'lead', 'Contato de exemplo'
