@@ -96,8 +96,9 @@
   .ribbon-72h strong { font-weight: 800; }
   .navbar { background: rgba(246,247,245,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borda); }
   .nav-inner { max-width: var(--container); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { display: flex; align-items: center; }
-  .logo img { height: 56px; width: auto; display: block; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo img { height: 46px; width: auto; display: block; }
+  .logo-nome { font-size: .64rem; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; line-height: 1.55; color: #3a2a34; }
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a { font-weight: 600; font-size: .95rem; padding: 6px 2px; border-bottom: 2px solid transparent; }
   .nav-links a:hover { border-color: var(--cor-azul-forte); }
@@ -281,7 +282,9 @@
   /* ===== RODAPÉ ===== */
   .rodape { background: #212D3C; color: #d7e3ec; padding: 48px 0 28px; }
   .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
-  .rodape-nome img { height: 64px; width: auto; display: block; }
+  .rodape-nome { display: flex; align-items: center; gap: 12px; }
+  .rodape-nome img { height: 53px; width: auto; display: block; }
+  .rodape-nome .logo-nome { font-size: .7rem; color: #f4e9e2; }
   .rodape-redes { display: flex; gap: 18px; flex-wrap: wrap; }
   .rodape-redes a { font-weight: 600; font-size: .9rem; }
   .rodape-redes a:hover { color: var(--cor-pessego); }
@@ -355,7 +358,7 @@
   <div class="ribbon-72h">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
   <nav class="navbar" aria-label="Menu principal">
     <div class="nav-inner">
-      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/logo-pb-150.png" srcset="imagens/marca/logo-pb-150.png 150w, imagens/marca/logo-pb-225.png 225w, imagens/marca/logo-pb-300.png 300w" sizes="73px" alt="Priscilla Baron" width="73" height="56"></a>
+      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/simbolo-pb-140.png" srcset="imagens/marca/simbolo-pb-140.png 140w, imagens/marca/simbolo-pb-210.png 210w, imagens/marca/simbolo-pb-280.png 280w" sizes="72px" alt="" width="72" height="46"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></a>
       <button class="hamburger" id="botao-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
@@ -530,7 +533,7 @@
 <!-- ===== 8. RODAPÉ ===== -->
 <footer class="rodape">
   <div class="container rodape-inner">
-    <span class="rodape-nome"><img src="imagens/marca/logo-pb-branco-170.png" srcset="imagens/marca/logo-pb-branco-170.png 170w, imagens/marca/logo-pb-branco-255.png 255w, imagens/marca/logo-pb-branco-340.png 340w" sizes="82px" alt="Priscilla Baron" width="82" height="64" loading="lazy"></span>
+    <span class="rodape-nome" aria-label="Priscilla Baron"><img src="imagens/marca/simbolo-pb-branco-140.png" srcset="imagens/marca/simbolo-pb-branco-140.png 140w, imagens/marca/simbolo-pb-branco-210.png 210w, imagens/marca/simbolo-pb-branco-280.png 280w" sizes="84px" alt="" width="84" height="53" loading="lazy"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></span>
     <div class="rodape-redes" id="rodape-redes"></div>
     <p class="rodape-copyright">© <span id="ano-atual"></span> Priscilla Baron — Sua Cidade. Todos os direitos reservados.</p>
   </div>
