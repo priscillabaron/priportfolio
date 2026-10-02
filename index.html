@@ -9,7 +9,7 @@
 <meta name="description" content="Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /* ===== RESET E BASE ===== */
   *, *::before, *::after { box-sizing: border-box; }
@@ -196,32 +196,44 @@
   #trabalhos { padding: 100px 0; }
   .aviso-em-breve { grid-column: 1 / -1; text-align: center; color: var(--texto-suave); background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 40px 24px; font-size: .95rem; }
 
-  /* ===== NICHOS EM CARROSSEL ===== */
-  .nichos-lista { display: grid; gap: 56px; }
-  .nicho-topo { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-  .nicho-titulo { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0; letter-spacing: -.01em; }
-  .nicho-azul { color: #6E88B0; }
-  .nicho-rosa { color: #E25D6A; }
-  .nicho-neutro { color: var(--texto); }
-  .nicho-contagem { font-size: .8rem; font-weight: 800; color: var(--texto-suave); margin-left: 10px; vertical-align: middle; }
-  .nicho-setas { display: flex; gap: 10px; flex-shrink: 0; }
-  .nicho-seta { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); display: flex; align-items: center; justify-content: center; transition: border-color .15s ease, transform .15s ease; }
-  .nicho-seta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .nicho-seta:hover:not(:disabled) { border-color: var(--cor-azul-forte); transform: translateY(-2px); }
-  .nicho-seta:disabled { opacity: .35; cursor: default; }
-  .nicho-faixa { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 4px; padding: 4px 4px 18px; margin: 0 -4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .nicho-faixa::-webkit-scrollbar { display: none; }
-  .nicho-cartao { position: relative; flex: 0 0 auto; width: 270px; aspect-ratio: 9 / 16; border-radius: 24px; overflow: hidden; scroll-snap-align: start; display: block; color: #fff; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
-  a.nicho-cartao:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
-  .nicho-chips { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; flex-wrap: wrap; gap: 6px; z-index: 2; }
-  .nicho-chip { background: rgba(255,255,255,.93); color: var(--texto); font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 6px 11px; border-radius: 100px; }
-  .nicho-chip-destaque { background: var(--cor-azul-forte); color: #fff; }
-  .nicho-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,.93); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra-forte); z-index: 2; }
-  .nicho-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #7B5068; margin-left: 4px; }
-  .nicho-cartao-rodape { position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 16px 16px; background: linear-gradient(to top, rgba(32,20,30,.74), rgba(32,20,30,0)); z-index: 1; }
-  .nicho-cartao-titulo { display: block; font-weight: 800; font-size: 1.05rem; line-height: 1.2; }
-  .nicho-cartao-rotulo { display: block; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; opacity: .82; margin-top: 5px; }
-  .nicho-cartao.em-breve .nicho-play { background: rgba(255,255,255,.6); }
+  /* ===== VITRINE DE NICHOS ===== */
+  .vitrine { --ameixa: #7A5068; --azul-vitrine: #7F96B6; --azul-rotulo: #5F7BA3; --tinta: #3B2B36; --suave: #6B5A64; --linha: #E3DAD3; font-family: 'Raleway', sans-serif; }
+  .vitrine-cab { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 24px 64px; align-items: end; margin-bottom: 48px; }
+  .vitrine-eyebrow { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--azul-rotulo); margin-bottom: 16px; }
+  .vitrine-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--azul-rotulo); }
+  .vitrine h2 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(52px, 7vw, 96px); line-height: .92; letter-spacing: -.02em; color: var(--tinta); }
+  .vitrine h2 em { font-style: italic; color: var(--ameixa); }
+  .vitrine-intro { margin: 0; font-size: 16px; line-height: 1.7; color: var(--suave); max-width: 30em; text-wrap: pretty; }
+  .vitrine-abas { display: flex; flex-wrap: wrap; gap: 4px 32px; border-bottom: 1px solid var(--linha); margin-bottom: 48px; }
+  .vitrine-aba { display: flex; align-items: baseline; gap: 8px; padding: 14px 0; margin-bottom: -1px; background: none; border: 0; border-bottom: 1.5px solid transparent; color: #8C7E86; font-family: inherit; font-size: 15px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color .15s ease; }
+  .vitrine-aba:hover { color: var(--tinta); }
+  .vitrine-aba[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--ameixa); }
+  .vitrine-aba-numero { font-size: 11px; letter-spacing: .12em; color: var(--azul-rotulo); }
+  .vitrine-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .vitrine-identificacao { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .vitrine-numero { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 28px; color: var(--azul-rotulo); }
+  .vitrine-titulo { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -.01em; }
+  .vitrine-azul { color: var(--azul-vitrine); }
+  .vitrine-ameixa { font-style: italic; color: var(--ameixa); }
+  .vitrine-setas { display: flex; gap: 10px; }
+  .vitrine-seta { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #CFC4BC; background: transparent; color: var(--tinta); display: grid; place-items: center; font-family: inherit; font-size: 18px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+  .vitrine-seta:hover:not(:disabled) { background: var(--ameixa); color: #FFFCFA; border-color: var(--ameixa); }
+  .vitrine-seta:disabled { opacity: .35; cursor: default; }
+  .vitrine-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, calc((100% - 60px) / 4)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .vitrine-faixa::-webkit-scrollbar { display: none; }
+  .vitrine-cartao { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; }
+  .vitrine-capa { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; }
+  a.vitrine-capa { transition: transform .2s ease, box-shadow .2s ease; }
+  a.vitrine-capa:hover { transform: translateY(-4px); box-shadow: var(--sombra-forte); }
+  .vitrine-chips { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; flex-wrap: wrap; gap: 6px; z-index: 2; pointer-events: none; }
+  .vitrine-chip { font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: rgba(255,252,250,.9); color: var(--tinta); }
+  .vitrine-chip-destaque { background: var(--ameixa); color: #FFFCFA; }
+  .vitrine-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255,252,250,.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra); }
+  .vitrine-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--ameixa); margin-left: 4px; }
+  .vitrine-marca-dagua { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 44px; color: var(--ameixa); opacity: .3; pointer-events: none; }
+  .vitrine-legenda { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--linha); padding-top: 12px; }
+  .vitrine-legenda-titulo { font-size: 15px; font-weight: 500; color: var(--tinta); }
+  .vitrine-legenda-formato { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--azul-rotulo); white-space: nowrap; }
 
   /* ===== SERVIÇOS ===== */
   #servicos { padding: 100px 0; background: var(--branco); }
@@ -329,9 +341,11 @@
     .contato-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) {
-    .nicho-cartao { width: 220px; border-radius: 20px; }
-    .nicho-seta { width: 38px; height: 38px; }
-    .nichos-lista { gap: 44px; }
+    .vitrine-abas { flex-wrap: nowrap; overflow-x: auto; gap: 24px; scrollbar-width: none; }
+    .vitrine-abas::-webkit-scrollbar { display: none; }
+    .vitrine-faixa { grid-auto-columns: 68%; }
+    .vitrine-seta { width: 42px; height: 42px; }
+    .vitrine-cab, .vitrine-abas, .vitrine-topo { margin-bottom: 32px; }
     :root { --header-h: 92px; }
     .hamburger { display: flex; }
     .nav-links {
@@ -444,14 +458,16 @@
   </section>
 
   <!-- ===== 4. TRABALHOS POR NICHO ===== -->
-  <section id="trabalhos">
+  <section id="trabalhos" class="vitrine">
     <div class="container">
-      <div class="secao-titulo reveal">
-        <span class="eyebrow">Vitrine</span>
-        <h2>Meus <em>nichos</em></h2>
-        <p>Conteúdos que já criei, separados por nicho. Use as setas ou arraste para ver mais.</p>
-      </div>
-      <div class="nichos-lista" id="nichos-lista"></div>
+      <header class="vitrine-cab reveal">
+        <div>
+          <span class="vitrine-eyebrow">Vitrine</span>
+          <h2>Meus <em>nichos</em></h2>
+        </div>
+        <p class="vitrine-intro">Conteúdos que já criei, separados por nicho. Use as setas ou arraste para ver mais.</p>
+      </header>
+      <div id="nichos-lista"></div>
     </div>
   </section>
 
@@ -721,24 +737,15 @@
     const p = criarEl("p", "aviso-em-breve", texto);
     return p;
   }
-  // ---- Nichos em carrossel -----------------------------------------------------------
-  // Os nichos aparecem nesta ordem. Cada vídeo entra no carrossel do nicho que tiver o
-  // mesmo nome no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
+  // ---- Vitrine de nichos -------------------------------------------------------------
+  // Os nichos aparecem nesta ordem, um por aba. Cada vídeo entra na aba do nicho que tiver
+  // o mesmo nome no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
   const NICHOS = [
     "Casa & Decoração", "Gastronomia", "Saúde e Fitness", "Beleza & Autocuidado",
     "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
     "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
   ];
-  const CONECTORES = ["&", "e", "em", "de", "do", "da", "para"];
-  const FUNDOS_CARTAO = [
-    "linear-gradient(165deg, #C9DEE4 0%, #93A4C3 48%, #7B5068 120%)",
-    "linear-gradient(165deg, #93A4C3 0%, #7B5068 55%, #E25D6A 130%)",
-    "linear-gradient(165deg, #F4A08E 0%, #E25D6A 50%, #7B5068 125%)"
-  ];
-  const ICONE_SETA = {
-    anterior: '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg>',
-    proximo: '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg>'
-  };
+  const FUNDOS_CARTAO = ["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
 
   function chaveNicho(t) {
     return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -747,96 +754,141 @@
 
   function criarTexto(tag, classe, texto) {
     const el = document.createElement(tag);
-    el.className = classe;
+    if (classe) el.className = classe;
     el.textContent = texto;
     return el;
   }
 
-  // Primeira palavra em azul, última em rosa; "&", "e", "em"... ficam neutros.
-  // Se for uma palavra só, fica azul.
+  function doisDigitos(n) { return String(n).padStart(2, "0"); }
+
+  // Tudo menos a última palavra fica em azul; a última vai em ameixa itálico.
+  // Se for uma palavra só, ela inteira fica em azul.
   function montarTituloNicho(nome) {
     const h3 = document.createElement("h3");
-    h3.className = "nicho-titulo";
-    const palavras = nome.split(/\s+/);
-    const significativas = [];
-    palavras.forEach(function (p, i) { if (CONECTORES.indexOf(p.toLowerCase()) === -1) significativas.push(i); });
-    const primeira = significativas.length ? significativas[0] : 0;
-    const ultima = significativas.length > 1 ? significativas[significativas.length - 1] : -1;
-    palavras.forEach(function (p, i) {
-      const classe = i === primeira ? "nicho-azul" : (i === ultima ? "nicho-rosa" : "nicho-neutro");
-      h3.appendChild(criarTexto("span", classe, p));
-      if (i < palavras.length - 1) h3.appendChild(document.createTextNode(" "));
-    });
+    h3.className = "vitrine-titulo";
+    const palavras = nome.trim().split(/\s+/);
+    if (palavras.length === 1) {
+      h3.appendChild(criarTexto("span", "vitrine-azul", palavras[0]));
+      return h3;
+    }
+    h3.appendChild(criarTexto("span", "vitrine-azul", palavras.slice(0, -1).join(" ")));
+    h3.appendChild(document.createTextNode(" "));
+    h3.appendChild(criarTexto("em", "vitrine-ameixa", palavras[palavras.length - 1]));
     return h3;
   }
 
-  function montarCartaoNicho(video, indice, nomeNicho, emBreve) {
+  function montarCartaoNicho(video, indice, emBreve) {
     const temLink = !emBreve && video.link && video.link !== "#";
-    const cartao = document.createElement(temLink ? "a" : "div");
-    cartao.className = "nicho-cartao" + (emBreve ? " em-breve" : "");
-    cartao.style.background = FUNDOS_CARTAO[indice % FUNDOS_CARTAO.length];
+    const cartao = document.createElement("article");
+    cartao.className = "vitrine-cartao";
+
+    const capa = document.createElement(temLink ? "a" : "div");
+    capa.className = "vitrine-capa";
+    capa.style.background = FUNDOS_CARTAO[indice % FUNDOS_CARTAO.length];
     if (temLink) {
-      cartao.href = video.link;
-      cartao.target = "_blank";
-      cartao.rel = "noopener";
-      cartao.setAttribute("aria-label", video.titulo + ", assistir vídeo");
+      capa.href = video.link;
+      capa.target = "_blank";
+      capa.rel = "noopener";
+      capa.setAttribute("aria-label", video.titulo + ", assistir vídeo");
     }
 
     const chips = document.createElement("div");
-    chips.className = "nicho-chips";
-    if (emBreve) chips.appendChild(criarTexto("span", "nicho-chip", "Em breve"));
-    if (video.marca) chips.appendChild(criarTexto("span", "nicho-chip", video.marca));
-    if (video.destaque) chips.appendChild(criarTexto("span", "nicho-chip nicho-chip-destaque", video.destaque));
-    cartao.appendChild(chips);
+    chips.className = "vitrine-chips";
+    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", "Em breve"));
+    if (video.marca) chips.appendChild(criarTexto("span", "vitrine-chip", video.marca));
+    if (video.destaque) chips.appendChild(criarTexto("span", "vitrine-chip vitrine-chip-destaque", video.destaque));
+    capa.appendChild(chips);
 
-    const play = document.createElement("span");
-    play.className = "nicho-play";
-    play.setAttribute("aria-hidden", "true");
-    cartao.appendChild(play);
+    if (emBreve) {
+      capa.appendChild(criarTexto("span", "vitrine-marca-dagua", "p.b."));
+    } else {
+      const play = document.createElement("span");
+      play.className = "vitrine-play";
+      play.setAttribute("aria-hidden", "true");
+      capa.appendChild(play);
+    }
+    cartao.appendChild(capa);
 
-    const rodape = document.createElement("div");
-    rodape.className = "nicho-cartao-rodape";
-    rodape.appendChild(criarTexto("strong", "nicho-cartao-titulo", video.titulo));
-    rodape.appendChild(criarTexto("span", "nicho-cartao-rotulo", nomeNicho));
-    cartao.appendChild(rodape);
+    const legenda = document.createElement("div");
+    legenda.className = "vitrine-legenda";
+    legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
+    legenda.appendChild(criarTexto("span", "vitrine-legenda-formato", video.formato || "9:16"));
+    cartao.appendChild(legenda);
     return cartao;
   }
 
-  function montarNicho(nome, videos) {
-    const bloco = document.createElement("div");
-    bloco.className = "nicho reveal";
-    bloco.setAttribute("role", "region");
-    bloco.setAttribute("aria-label", "Nicho: " + nome);
+  function renderizarNichos(videos) {
+    const porChave = {};
+    videos.forEach(function (v) {
+      const k = chaveNicho(v.nicho) || "outros";
+      (porChave[k] = porChave[k] || []).push(v);
+    });
 
-    const topo = document.createElement("div");
-    topo.className = "nicho-topo";
-    const titulo = montarTituloNicho(nome);
-    if (videos.length) titulo.appendChild(criarTexto("span", "nicho-contagem", String(videos.length)));
-    topo.appendChild(titulo);
+    // Uma aba por nicho da lista, mais uma para cada nicho extra que tenha vídeos.
+    const abasDados = [];
+    const usados = {};
+    NICHOS.forEach(function (nome) {
+      const k = chaveNicho(nome);
+      usados[k] = true;
+      abasDados.push({ nome: nome, videos: porChave[k] || [] });
+    });
+    Object.keys(porChave).forEach(function (k) {
+      if (usados[k]) return;
+      abasDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k] });
+    });
 
-    const setas = document.createElement("div");
-    setas.className = "nicho-setas";
-    function botaoSeta(sentido) {
+    nichosListaEl.innerHTML = "";
+    const corpo = document.createElement("div");
+    corpo.className = "reveal";
+
+    const abas = document.createElement("div");
+    abas.className = "vitrine-abas";
+    abas.setAttribute("role", "tablist");
+    abas.setAttribute("aria-label", "Nichos");
+    const botoesAba = abasDados.map(function (dado, i) {
       const b = document.createElement("button");
       b.type = "button";
-      b.className = "nicho-seta";
-      b.setAttribute("aria-label", (sentido === "anterior" ? "Vídeos anteriores" : "Próximos vídeos") + " de " + nome);
-      b.innerHTML = ICONE_SETA[sentido];
+      b.className = "vitrine-aba";
+      b.setAttribute("role", "tab");
+      b.appendChild(criarTexto("span", "vitrine-aba-numero", doisDigitos(i + 1)));
+      b.appendChild(document.createTextNode(dado.nome));
+      b.addEventListener("click", function () { mostrar(i); });
+      abas.appendChild(b);
+      return b;
+    });
+    corpo.appendChild(abas);
+
+    const topo = document.createElement("div");
+    topo.className = "vitrine-topo";
+    const identificacao = document.createElement("div");
+    identificacao.className = "vitrine-identificacao";
+    const numero = criarTexto("span", "vitrine-numero", "");
+    let titulo = document.createElement("h3");
+    identificacao.appendChild(numero);
+    identificacao.appendChild(titulo);
+    topo.appendChild(identificacao);
+
+    const setas = document.createElement("div");
+    setas.className = "vitrine-setas";
+    function botaoSeta(texto, rotulo) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "vitrine-seta";
+      b.setAttribute("aria-label", rotulo);
+      b.textContent = texto;
       return b;
     }
-    const anterior = botaoSeta("anterior");
-    const proximo = botaoSeta("proximo");
+    const anterior = botaoSeta("←", "Vídeos anteriores");
+    const proximo = botaoSeta("→", "Próximos vídeos");
     setas.appendChild(anterior);
     setas.appendChild(proximo);
     topo.appendChild(setas);
-    bloco.appendChild(topo);
+    corpo.appendChild(topo);
 
     const faixa = document.createElement("div");
-    faixa.className = "nicho-faixa";
-    const emBreve = videos.length === 0;
-    const lista = emBreve ? [0, 1, 2, 3].map(function () { return { titulo: "Vídeo em breve" }; }) : videos;
-    lista.forEach(function (v, i) { faixa.appendChild(montarCartaoNicho(v, i, nome, emBreve)); });
-    bloco.appendChild(faixa);
+    faixa.className = "vitrine-faixa";
+    faixa.setAttribute("role", "tabpanel");
+    corpo.appendChild(faixa);
 
     function atualizarSetas() {
       const maximo = faixa.scrollWidth - faixa.clientWidth;
@@ -850,33 +902,26 @@
     proximo.addEventListener("click", function () { rolar(1); });
     faixa.addEventListener("scroll", atualizarSetas, { passive: true });
     window.addEventListener("resize", atualizarSetas);
-    setTimeout(atualizarSetas, 50);
-    return bloco;
-  }
 
-  function renderizarNichos(videos) {
-    nichosListaEl.innerHTML = "";
-    const porChave = {};
-    videos.forEach(function (v) {
-      const k = chaveNicho(v.nicho) || "outros";
-      (porChave[k] = porChave[k] || []).push(v);
-    });
-    const usados = {};
-    function adicionar(nome, itens) {
-      const bloco = montarNicho(nome, itens);
-      nichosListaEl.appendChild(bloco);
-      observer.observe(bloco);
+    function mostrar(i) {
+      const dado = abasDados[i];
+      botoesAba.forEach(function (b, k) { b.setAttribute("aria-selected", k === i ? "true" : "false"); });
+      numero.textContent = doisDigitos(i + 1);
+      const novoTitulo = montarTituloNicho(dado.nome);
+      identificacao.replaceChild(novoTitulo, titulo);
+      titulo = novoTitulo;
+      faixa.setAttribute("aria-label", "Vídeos de " + dado.nome);
+      faixa.innerHTML = "";
+      const emBreve = dado.videos.length === 0;
+      const lista = emBreve ? [0, 1, 2, 3].map(function () { return { titulo: "Vídeo em breve" }; }) : dado.videos;
+      lista.forEach(function (v, k) { faixa.appendChild(montarCartaoNicho(v, k, emBreve)); });
+      faixa.scrollLeft = 0;
+      setTimeout(atualizarSetas, 50);
     }
-    NICHOS.forEach(function (nome) {
-      const k = chaveNicho(nome);
-      usados[k] = true;
-      adicionar(nome, porChave[k] || []);
-    });
-    // Vídeos de um nicho que não está na lista acima ganham o próprio carrossel.
-    Object.keys(porChave).forEach(function (k) {
-      if (usados[k]) return;
-      adicionar(k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), porChave[k]);
-    });
+
+    nichosListaEl.appendChild(corpo);
+    observer.observe(corpo);
+    mostrar(0);
   }
 
 
