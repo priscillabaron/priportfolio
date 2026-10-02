@@ -33,7 +33,7 @@
     "nav.trabalhos": ["Trabalhos", "Work", "Trabajos"],
     "nav.servicos": ["Serviços", "Services", "Servicios"],
     "nav.numeros": ["Números", "Numbers", "Números"],
-    "nav.contato": ["Contato", "Contact", "Contacto"],
+    "nav.cta": ["Trabalhe comigo", "Work with me", "Trabaja conmigo"],
     "idioma.aria": ["Idioma", "Language", "Idioma"],
 
     /* ---- Capa ---- */

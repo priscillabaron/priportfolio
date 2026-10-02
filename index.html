@@ -99,11 +99,14 @@
   .logo { display: flex; align-items: center; gap: 10px; }
   .logo img { height: 46px; width: auto; display: block; }
   .logo-nome { font-size: .64rem; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; line-height: 1.55; color: #3a2a34; }
-  .nav-links { display: flex; align-items: center; gap: 28px; }
-  .nav-links a { font-weight: 600; font-size: .95rem; padding: 6px 2px; border-bottom: 2px solid transparent; }
-  .nav-links a:hover { border-color: var(--cor-azul-forte); }
-  .nav-cta { background: var(--cor-azul-forte); color: #fff !important; padding: 10px 20px; border-radius: 100px; }
-  .nav-cta:hover { border-color: transparent !important; background: var(--cor-mauve); }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a { font-weight: 600; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: #4A5868; padding: 6px 2px; border-bottom: 2px solid transparent; transition: color .15s ease, border-color .15s ease; }
+  .nav-links a:hover { color: var(--cor-azul-forte); border-color: var(--cor-azul-forte); }
+  .nav-links .so-mobile { display: none; }
+  .nav-direita { display: flex; align-items: center; gap: 16px; margin-left: 20px; flex-shrink: 0; }
+  .nav-cta { display: inline-block; background: var(--cor-azul-forte); color: #fff; padding: 13px 22px; border-radius: 3px; font-weight: 700; font-size: .86rem; line-height: 1.2; white-space: nowrap; transition: background .15s ease; }
+  .nav-cta:hover { background: var(--cor-mauve); }
+  .nav-links a.nav-cta { color: #fff; text-transform: none; letter-spacing: .01em; font-size: .9rem; border-bottom: 0; padding: 16px 24px; }
   .hamburger {
     display: none; flex-direction: column; justify-content: center; gap: 5px;
     width: 42px; height: 42px; background: transparent; border: 1px solid var(--borda); border-radius: 10px;
@@ -114,7 +117,7 @@
   .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /* ===== SELETOR DE IDIOMA (PT / EN / ES) ===== */
-  .seletor-idioma { display: inline-flex; align-items: center; padding: 3px; margin-left: 20px; background: var(--branco); border: 1px solid #CFC4BC; border-radius: 999px; flex-shrink: 0; }
+  .seletor-idioma { display: inline-flex; align-items: center; padding: 3px; background: var(--branco); border: 1px solid #CFC4BC; border-radius: 999px; flex-shrink: 0; }
   .seletor-idioma button { border: 0; background: transparent; color: var(--texto-suave); font-weight: 700; font-size: .76rem; letter-spacing: .06em; padding: 7px 12px; border-radius: 999px; transition: background .15s ease, color .15s ease; }
   .seletor-idioma button:hover { color: var(--cor-azul-forte); }
   .seletor-idioma button[aria-pressed="true"] { background: var(--cor-azul-forte); color: #fff; }
@@ -349,6 +352,27 @@
     .resultados-grid { grid-template-columns: 1fr; }
     .contato-grid { grid-template-columns: 1fr; }
   }
+  @media (max-width: 1100px) {
+    .nav-links { gap: 20px; }
+    .nav-links a { letter-spacing: .1em; }
+    .nav-direita { margin-left: 12px; gap: 12px; }
+    .nav-cta { padding: 12px 16px; }
+  }
+  @media (max-width: 960px) {
+    .hamburger { display: flex; order: 3; }
+    .nav-direita { order: 2; margin-left: auto; margin-right: 10px; }
+    .nav-cta-topo { display: none; }
+    .nav-links .so-mobile { display: block; }
+    .nav-links {
+      position: fixed; top: var(--header-h); left: 0; right: 0; background: var(--branco);
+      flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--borda);
+      max-height: 0; overflow: hidden; transition: max-height .25s ease;
+    }
+    .nav-links.aberto { max-height: 460px; }
+    .nav-links li { border-top: 1px solid var(--borda); }
+    .nav-links a { display: block; padding: 16px 24px; }
+    .nav-links a.nav-cta { border-radius: 0; text-align: center; }
+  }
   @media (max-width: 760px) {
     .vitrine-abas { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-bottom: 44px; }
     .vitrine-abas::-webkit-scrollbar { display: none; }
@@ -358,22 +382,11 @@
     .vitrine-seta { width: 42px; height: 42px; }
     .vitrine-cab { margin-bottom: 32px; }
     :root { --header-h: 92px; }
-    .hamburger { display: flex; order: 3; }
-    .seletor-idioma { order: 2; margin-left: auto; margin-right: 10px; }
     .seletor-idioma button { padding: 6px 8px; font-size: .7rem; letter-spacing: .03em; }
     .nav-inner { padding-left: 16px; padding-right: 16px; gap: 6px; }
     .logo { gap: 8px; }
     .logo img { height: 40px; }
     .logo-nome { font-size: .56rem; letter-spacing: .24em; }
-    .nav-links {
-      position: fixed; top: var(--header-h); left: 0; right: 0; background: var(--branco);
-      flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--borda);
-      max-height: 0; overflow: hidden; transition: max-height .25s ease;
-    }
-    .nav-links.aberto { max-height: 420px; }
-    .nav-links li { border-top: 1px solid var(--borda); }
-    .nav-links a { display: block; padding: 16px 24px; }
-    .nav-cta { border-radius: 0; text-align: center; }
     .hero-numbers { grid-template-columns: 1fr; }
     .destaques-grid, .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
     .hero { padding: 40px 0 28px; }
@@ -398,12 +411,15 @@
         <li><a href="#trabalhos" data-i18n="nav.trabalhos">Trabalhos</a></li>
         <li><a href="#servicos" data-i18n="nav.servicos">Serviços</a></li>
         <li><a href="#numeros" data-i18n="nav.numeros">Números</a></li>
-        <li><a href="#contato" class="nav-cta" data-i18n="nav.contato">Contato</a></li>
+        <li class="so-mobile"><a href="#contato" class="nav-cta" data-i18n="nav.cta">Trabalhe comigo</a></li>
       </ul>
-      <div class="seletor-idioma" role="group" aria-label="Idioma" data-i18n-attr="aria-label:idioma.aria">
-        <button type="button" data-idioma="pt" lang="pt" aria-pressed="true">PT</button>
-        <button type="button" data-idioma="en" lang="en" aria-pressed="false">EN</button>
-        <button type="button" data-idioma="es" lang="es" aria-pressed="false">ES</button>
+      <div class="nav-direita">
+        <div class="seletor-idioma" role="group" aria-label="Idioma" data-i18n-attr="aria-label:idioma.aria">
+          <button type="button" data-idioma="pt" lang="pt" aria-pressed="true">PT</button>
+          <button type="button" data-idioma="en" lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-idioma="es" lang="es" aria-pressed="false">ES</button>
+        </div>
+        <a href="#contato" class="nav-cta nav-cta-topo" data-i18n="nav.cta">Trabalhe comigo</a>
       </div>
     </div>
   </nav>
