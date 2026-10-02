@@ -108,13 +108,15 @@
   .vitrine h2 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(52px, 7vw, 96px); line-height: .92; letter-spacing: -.02em; color: var(--tinta); }
   .vitrine h2 em { font-style: italic; color: var(--ameixa); }
   .vitrine-intro { margin: 0; font-size: 16px; line-height: 1.7; color: var(--suave); max-width: 30em; text-wrap: pretty; }
-  .vitrine-abas { display: flex; flex-wrap: wrap; gap: 4px 32px; border-bottom: 1px solid var(--linha); margin-bottom: 48px; }
-  .vitrine-aba { display: flex; align-items: baseline; gap: 8px; padding: 14px 0; margin-bottom: -1px; background: none; border: 0; border-bottom: 1.5px solid transparent; color: #8C7E86; font-family: inherit; font-size: 15px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color .15s ease; }
-  .vitrine-aba:hover { color: var(--tinta); }
-  .vitrine-aba[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--ameixa); }
+  .vitrine-abas { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 64px; }
+  .vitrine-aba { display: inline-flex; align-items: center; padding: 9px 16px; border: 1px solid #CFC4BC; border-radius: 999px; background: rgba(255,252,250,.6); color: var(--tinta); font-size: 13px; font-weight: 500; white-space: nowrap; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+  .vitrine-aba:hover { background: var(--ameixa); border-color: var(--ameixa); color: #FFFCFA; }
   .vitrine-aba-numero { font-size: 11px; letter-spacing: .12em; color: var(--azul-rotulo); }
-  .vitrine-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
-  .vitrine-identificacao { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .vitrine-bloco { margin-bottom: 76px; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .vitrine-bloco:last-child { margin-bottom: 0; }
+  .vitrine-contagem { font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--azul-rotulo); }
+  .vitrine-descricao { margin: 8px 0 28px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; line-height: 1.3; color: var(--suave); }
+  .vitrine-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }  .vitrine-identificacao { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
   .vitrine-numero { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 28px; color: var(--azul-rotulo); }
   .vitrine-titulo { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -.01em; }
   .vitrine-azul { color: var(--azul-vitrine); }
@@ -127,7 +129,7 @@
   .vitrine-seta { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #CFC4BC; background: transparent; color: var(--tinta); display: grid; place-items: center; font-family: inherit; font-size: 18px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
   .vitrine-seta:hover:not(:disabled) { background: var(--ameixa); color: #FFFCFA; border-color: var(--ameixa); }
   .vitrine-seta:disabled { opacity: .35; cursor: default; }
-  .vitrine-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, calc((100% - 60px) / 4)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .vitrine-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, calc((100% - 80px) / 5)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
   .vitrine-faixa::-webkit-scrollbar { display: none; }
   .vitrine-cartao { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; }
   .vitrine-capa { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; }

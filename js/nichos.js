@@ -10,7 +10,20 @@
     "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
     "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
   ];
-  const FUNDOS_CARTAO = ["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
+  // Frase curta em itálico embaixo do título de cada nicho. Pode editar à vontade.
+  const descricoes = {
+    "casa e decoracao": "Ambientes, organização e achadinhos para a casa",
+    "gastronomia": "Receitas, produtos e sabores que dão água na boca",
+    "saude e fitness": "Treino, bem-estar e rotina saudável",
+    "beleza e autocuidado": "Skincare, cabelo e momentos de cuidado",
+    "moda e acessorios": "Looks, peças e acessórios na vida real",
+    "lojas e supermercados": "Compras do dia a dia e achados de loja",
+    "conteudos em familia": "Rotina, filhos e momentos em família",
+    "datas especiais": "Natal, Dia das Mães e outras datas que vendem",
+    "viagem e passeios": "Destinos, roteiros e experiências para viver",
+    "restaurantes e cafeterias": "Lugares para comer, beber e voltar sempre"
+  };
+  const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
 
   function chave(t) {
     return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -85,5 +98,9 @@
     return cartao;
   }
 
-  window.Nichos = { lista: lista, chave: chave, slug: slug, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
+  function descricao(nome) {
+    return descricoes[chave(nome)] || "";
+  }
+
+  window.Nichos = { lista: lista, chave: chave, slug: slug, descricao: descricao, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
 })();

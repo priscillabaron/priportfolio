@@ -204,13 +204,15 @@
   .vitrine h2 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(52px, 7vw, 96px); line-height: .92; letter-spacing: -.02em; color: var(--tinta); }
   .vitrine h2 em { font-style: italic; color: var(--ameixa); }
   .vitrine-intro { margin: 0; font-size: 16px; line-height: 1.7; color: var(--suave); max-width: 30em; text-wrap: pretty; }
-  .vitrine-abas { display: flex; flex-wrap: wrap; gap: 4px 32px; border-bottom: 1px solid var(--linha); margin-bottom: 48px; }
-  .vitrine-aba { display: flex; align-items: baseline; gap: 8px; padding: 14px 0; margin-bottom: -1px; background: none; border: 0; border-bottom: 1.5px solid transparent; color: #8C7E86; font-family: inherit; font-size: 15px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: color .15s ease; }
-  .vitrine-aba:hover { color: var(--tinta); }
-  .vitrine-aba[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--ameixa); }
+  .vitrine-abas { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 64px; }
+  .vitrine-aba { display: inline-flex; align-items: center; padding: 9px 16px; border: 1px solid #CFC4BC; border-radius: 999px; background: rgba(255,252,250,.6); color: var(--tinta); font-size: 13px; font-weight: 500; white-space: nowrap; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+  .vitrine-aba:hover { background: var(--ameixa); border-color: var(--ameixa); color: #FFFCFA; }
   .vitrine-aba-numero { font-size: 11px; letter-spacing: .12em; color: var(--azul-rotulo); }
-  .vitrine-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
-  .vitrine-identificacao { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .vitrine-bloco { margin-bottom: 76px; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .vitrine-bloco:last-child { margin-bottom: 0; }
+  .vitrine-contagem { font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--azul-rotulo); }
+  .vitrine-descricao { margin: 8px 0 28px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; line-height: 1.3; color: var(--suave); }
+  .vitrine-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }  .vitrine-identificacao { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
   .vitrine-numero { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 28px; color: var(--azul-rotulo); }
   .vitrine-titulo { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -.01em; }
   .vitrine-azul { color: var(--azul-vitrine); }
@@ -223,7 +225,7 @@
   .vitrine-seta { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #CFC4BC; background: transparent; color: var(--tinta); display: grid; place-items: center; font-family: inherit; font-size: 18px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
   .vitrine-seta:hover:not(:disabled) { background: var(--ameixa); color: #FFFCFA; border-color: var(--ameixa); }
   .vitrine-seta:disabled { opacity: .35; cursor: default; }
-  .vitrine-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, calc((100% - 60px) / 4)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .vitrine-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, calc((100% - 80px) / 5)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
   .vitrine-faixa::-webkit-scrollbar { display: none; }
   .vitrine-cartao { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; }
   .vitrine-capa { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; }
@@ -345,11 +347,13 @@
     .contato-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) {
-    .vitrine-abas { flex-wrap: nowrap; overflow-x: auto; gap: 24px; scrollbar-width: none; }
+    .vitrine-abas { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-bottom: 44px; }
     .vitrine-abas::-webkit-scrollbar { display: none; }
+    .vitrine-bloco { margin-bottom: 52px; }
+    .vitrine-descricao { font-size: 19px; margin-bottom: 20px; }
     .vitrine-faixa { grid-auto-columns: 68%; }
     .vitrine-seta { width: 42px; height: 42px; }
-    .vitrine-cab, .vitrine-abas, .vitrine-topo { margin-bottom: 32px; }
+    .vitrine-cab { margin-bottom: 32px; }
     :root { --header-h: 92px; }
     .hamburger { display: flex; }
     .nav-links {
@@ -469,7 +473,7 @@
           <span class="vitrine-eyebrow">Vitrine</span>
           <h2>Meus <em>nichos</em></h2>
         </div>
-        <p class="vitrine-intro">Conteúdos que já criei, separados por nicho. Use as setas ou arraste para ver mais.</p>
+        <p class="vitrine-intro">Conteúdos que já criei, separados por nicho. Escolha um nicho nos botões ou role para ver todos. Use as setas ou arraste para ver mais.</p>
       </header>
       <div id="nichos-lista"></div>
     </div>
@@ -759,48 +763,53 @@
       (porChave[k] = porChave[k] || []).push(v);
     });
 
-    // Uma aba por nicho da lista, mais uma para cada nicho extra que tenha vídeos.
-    const abasDados = [];
+    // Um bloco por nicho da lista, mais um para cada nicho extra que tenha vídeos.
+    const nichosDados = [];
     const usados = {};
     NICHOS.forEach(function (nome) {
       const k = chaveNicho(nome);
       usados[k] = true;
-      abasDados.push({ nome: nome, videos: porChave[k] || [] });
+      nichosDados.push({ nome: nome, videos: porChave[k] || [], pagina: true });
     });
     Object.keys(porChave).forEach(function (k) {
       if (usados[k]) return;
-      abasDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k] });
+      nichosDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k], pagina: false });
     });
 
     nichosListaEl.innerHTML = "";
-    const corpo = document.createElement("div");
-    corpo.className = "reveal";
 
-    const abas = document.createElement("div");
+    // Botões do topo: levam direto até a linha de cada nicho (todos ficam abertos embaixo).
+    const abas = document.createElement("nav");
     abas.className = "vitrine-abas";
-    abas.setAttribute("role", "tablist");
-    abas.setAttribute("aria-label", "Nichos");
-    const botoesAba = abasDados.map(function (dado, i) {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "vitrine-aba";
-      b.setAttribute("role", "tab");
-      b.appendChild(criarTexto("span", "vitrine-aba-numero", doisDigitos(i + 1)));
-      b.appendChild(document.createTextNode(dado.nome));
-      b.addEventListener("click", function () { mostrar(i); });
-      abas.appendChild(b);
-      return b;
+    abas.setAttribute("aria-label", "Ir para um nicho");
+    nichosDados.forEach(function (dado) {
+      const a = criarTexto("a", "vitrine-aba", dado.nome);
+      a.href = "#nicho-" + Nichos.slug(dado.nome);
+      abas.appendChild(a);
     });
-    corpo.appendChild(abas);
+    nichosListaEl.appendChild(abas);
+
+    nichosDados.forEach(function (dado, i) {
+      const bloco = montarBlocoNicho(dado, i);
+      nichosListaEl.appendChild(bloco);
+      observer.observe(bloco);
+    });
+  }
+
+  function montarBlocoNicho(dado, indice) {
+    const bloco = document.createElement("div");
+    bloco.className = "vitrine-bloco reveal";
+    bloco.id = "nicho-" + Nichos.slug(dado.nome);
+    bloco.setAttribute("role", "region");
+    bloco.setAttribute("aria-label", "Nicho: " + dado.nome);
 
     const topo = document.createElement("div");
     topo.className = "vitrine-topo";
     const identificacao = document.createElement("div");
     identificacao.className = "vitrine-identificacao";
-    const numero = criarTexto("span", "vitrine-numero", "");
-    let titulo = document.createElement("h3");
-    identificacao.appendChild(numero);
-    identificacao.appendChild(titulo);
+    identificacao.appendChild(criarTexto("span", "vitrine-numero", doisDigitos(indice + 1)));
+    identificacao.appendChild(montarTituloNicho(dado.nome));
+    if (dado.videos.length) identificacao.appendChild(criarTexto("span", "vitrine-contagem", doisDigitos(dado.videos.length)));
     topo.appendChild(identificacao);
 
     const setas = document.createElement("div");
@@ -809,7 +818,7 @@
       const b = document.createElement("button");
       b.type = "button";
       b.className = "vitrine-seta";
-      b.setAttribute("aria-label", rotulo);
+      b.setAttribute("aria-label", rotulo + " de " + dado.nome);
       b.textContent = texto;
       return b;
     }
@@ -817,18 +826,30 @@
     const proximo = botaoSeta("→", "Próximos vídeos");
     setas.appendChild(anterior);
     setas.appendChild(proximo);
-    const verPagina = criarTexto("a", "vitrine-ver", "Abrir página do nicho →");
+
     const acoes = document.createElement("div");
     acoes.className = "vitrine-acoes";
-    acoes.appendChild(verPagina);
+    // Só os nichos da lista têm página própria (nichos/<nome>/).
+    if (dado.pagina) {
+      const verPagina = criarTexto("a", "vitrine-ver", "Abrir página do nicho →");
+      verPagina.href = "nichos/" + Nichos.slug(dado.nome) + "/";
+      verPagina.setAttribute("aria-label", "Abrir a página do nicho " + dado.nome);
+      acoes.appendChild(verPagina);
+    }
     acoes.appendChild(setas);
     topo.appendChild(acoes);
-    corpo.appendChild(topo);
+    bloco.appendChild(topo);
+
+    const descricao = Nichos.descricao(dado.nome);
+    if (descricao) bloco.appendChild(criarTexto("p", "vitrine-descricao", descricao));
 
     const faixa = document.createElement("div");
     faixa.className = "vitrine-faixa";
-    faixa.setAttribute("role", "tabpanel");
-    corpo.appendChild(faixa);
+    faixa.setAttribute("aria-label", "Vídeos de " + dado.nome);
+    const emBreve = dado.videos.length === 0;
+    const lista = emBreve ? [0, 1, 2, 3, 4].map(function () { return { titulo: "Vídeo em breve" }; }) : dado.videos;
+    lista.forEach(function (v, k) { faixa.appendChild(montarCartaoNicho(v, k, emBreve)); });
+    bloco.appendChild(faixa);
 
     function atualizarSetas() {
       const maximo = faixa.scrollWidth - faixa.clientWidth;
@@ -842,35 +863,9 @@
     proximo.addEventListener("click", function () { rolar(1); });
     faixa.addEventListener("scroll", atualizarSetas, { passive: true });
     window.addEventListener("resize", atualizarSetas);
-
-    function mostrar(i) {
-      const dado = abasDados[i];
-      botoesAba.forEach(function (b, k) { b.setAttribute("aria-selected", k === i ? "true" : "false"); });
-      numero.textContent = doisDigitos(i + 1);
-      const novoTitulo = montarTituloNicho(dado.nome);
-      identificacao.replaceChild(novoTitulo, titulo);
-      titulo = novoTitulo;
-      faixa.setAttribute("aria-label", "Vídeos de " + dado.nome);
-      // Só os nichos da lista têm página própria (nichos/<nome>/).
-      const temPagina = NICHOS.indexOf(dado.nome) !== -1;
-      verPagina.hidden = !temPagina;
-      if (temPagina) {
-        verPagina.href = "nichos/" + Nichos.slug(dado.nome) + "/";
-        verPagina.setAttribute("aria-label", "Abrir a página do nicho " + dado.nome);
-      }
-      faixa.innerHTML = "";
-      const emBreve = dado.videos.length === 0;
-      const lista = emBreve ? [0, 1, 2, 3].map(function () { return { titulo: "Vídeo em breve" }; }) : dado.videos;
-      lista.forEach(function (v, k) { faixa.appendChild(montarCartaoNicho(v, k, emBreve)); });
-      faixa.scrollLeft = 0;
-      setTimeout(atualizarSetas, 50);
-    }
-
-    nichosListaEl.appendChild(corpo);
-    observer.observe(corpo);
-    mostrar(0);
+    setTimeout(atualizarSetas, 50);
+    return bloco;
   }
-
 
   // Busca os vídeos visíveis no Supabase e monta as seções de Destaques e
   // Trabalhos por nicho. Se algo falhar (sem internet, banco fora do ar),
