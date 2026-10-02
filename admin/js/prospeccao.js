@@ -7,6 +7,8 @@
   var U = window.AdminUtil;
 
   var EMAIL_DONA = "pribaronparcerias@gmail.com";
+  // Nome da função de envio publicada no Supabase (o Supabase gerou este nome sozinho).
+  var NOME_FUNCAO = "bright-endpoint";
   var TAMANHO_LOTE = 100;
   var CHAVE_RASCUNHO = "prospeccaoRascunhoV1";
   var ROTULOS_SITUACAO = {
@@ -522,17 +524,17 @@
         if (j && j.erro) return j.erro;
       }
     } catch (e) { /* segue */ }
-    if (erro && erro.context && erro.context.status === 404) return "A função enviar-emails ainda não foi publicada no Supabase.";
-    return "Não consegui falar com a função enviar-emails. Confira se ela foi publicada no Supabase e se você está logada.";
+    if (erro && erro.context && erro.context.status === 404) return "A função de envio ainda não foi publicada no Supabase.";
+    return "Não consegui falar com a função de envio. Confira se ela foi publicada no Supabase e se você está logada.";
   }
 
   async function chamarFuncao(corpo) {
     try {
-      var r = await window.bancoCliente.functions.invoke("enviar-emails", { body: corpo });
+      var r = await window.bancoCliente.functions.invoke(NOME_FUNCAO, { body: corpo });
       if (r.error) return { erroTexto: await descreverErroFuncao(r.error) };
       return { dados: r.data };
     } catch (e) {
-      return { erroTexto: "Não consegui falar com a função enviar-emails. Confira sua internet e se a função foi publicada." };
+      return { erroTexto: "Não consegui falar com a função de envio. Confira sua internet e se a função foi publicada." };
     }
   }
 
