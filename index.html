@@ -156,21 +156,21 @@
 
   /* ===== FAIXA DE MARCAS ===== */
   .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 48px; }
-  .marcas-legenda { text-align: center; color: var(--texto-suave); font-weight: 700; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 18px; }
-  .marcas-faixa-mascara { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); }
-  .marcas-track { display: flex; align-items: center; gap: 14px; width: max-content; animation: rolar 30s linear infinite; }
+  .marcas-legenda { display: flex; align-items: center; justify-content: center; gap: 20px; text-align: center; color: var(--texto-suave); font-weight: 700; font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; margin: 0 0 22px; padding: 0 16px; }
+  .marcas-legenda::before, .marcas-legenda::after { content: ''; flex: 0 1 72px; height: 1px; background: #CFC4BC; }
+  .marcas-faixa-mascara { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%); }
+  /* A faixa anda da direita para a esquerda. O JavaScript repete os logos até cobrir a tela e define
+     --periodo (largura de uma volta) e a duração, para o laço recomeçar sem nenhum buraco. */
+  .marcas-track { display: flex; align-items: center; width: max-content; animation: rolar 30s linear infinite; will-change: transform; }
   .marcas-track span {
-    display: flex; align-items: center; justify-content: center; white-space: nowrap;
+    display: flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; margin-right: 18px;
     font-weight: 700; color: var(--texto-suave); font-size: .85rem;
     background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
     padding: 10px 20px; box-shadow: var(--sombra); min-height: 44px;
   }
-  .marcas-track span.tem-logo {
-    width: 64px; height: 64px; padding: 9px; border-radius: 50%; flex-shrink: 0;
-  }
+  .marcas-track span.tem-logo { width: 92px; height: 92px; padding: 12px; border-radius: 50%; }
   .marcas-track span.tem-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
-  @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
+  @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--periodo, 700px))); } }
   /* ===== SOBRE ===== */
   #sobre { padding: 100px 0; }
   .sobre-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: center; }
@@ -407,6 +407,9 @@
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
+    .marcas-track span.tem-logo { width: 72px; height: 72px; padding: 9px; }
+    .marcas-legenda { letter-spacing: .16em; gap: 12px; }
+    .marcas-legenda::before, .marcas-legenda::after { flex-basis: 28px; }
     #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
   }
 </style>
@@ -648,15 +651,15 @@
   // da pasta "logos" (já existe nessa pasta) e informe o caminho em "logo": "logos/arquivo.png".
   // Sem logo, deixe "logo: null" e o nome da marca aparece como texto no card.
   const MARCAS = [
-    { nome: "Lippi", logo: "logos/lippi_BALANCE_2000.png" },
-    { nome: "Caffeine Army", logo: "logos/caffeine_army_BALANCE_2000.png" },
-    { nome: "Tia Sônia", logo: "logos/tia_sonia_BALANCE_500.png" },
-    { nome: "Norte Sul Chile", logo: "logos/norte_sul_CIRCULO_MARROM_2000.png" },
-    { nome: "RQ Stay", logo: "logos/rq_stay_BALANCE_2000.png" },
-    { nome: "Parksnet", logo: "logos/parksnet_CIRCULO_VERDE_LIMAO_2000.png" },
-    { nome: "CityPlan", logo: "logos/cityplan_go_BALANCE_500.png" },
-    { nome: "Shein", logo: "logos/shein_BALANCE_2000.png" },
-    { nome: "Sublyme", logo: "logos/sublyme_BALANCE_500.png" }
+    { nome: "Lippi", logo: "logos/web/lippi.png" },
+    { nome: "Caffeine Army", logo: "logos/web/caffeine_army.png" },
+    { nome: "Tia Sônia", logo: "logos/web/tia_sonia.png" },
+    { nome: "Norte Sul Chile", logo: "logos/web/norte_sul.png" },
+    { nome: "RQ Stay", logo: "logos/web/rq_stay.png" },
+    { nome: "Parksnet", logo: "logos/web/parksnet.png" },
+    { nome: "CityPlan", logo: "logos/web/cityplan_go.png" },
+    { nome: "Shein", logo: "logos/web/shein.png" },
+    { nome: "Sublyme", logo: "logos/web/sublyme.png" }
   ];
 
   // Os "Conteúdos de destaque" e os "Trabalhos por nicho" não ficam mais
@@ -747,25 +750,59 @@
     heroNumerosEl.appendChild(montarNumero(m.rotulo, m.valor, m.textoPlaceholder));
   });
 
-  // Faixa de marcas (duplicada para rolagem contínua)
+  // Faixa de marcas: anda da direita para a esquerda, sem parar e sem buracos.
+  // Os logos são repetidos até a faixa ser maior que a tela, e uma volta completa é exatamente
+  // a largura de um grupo de logos, então quando termina ela recomeça igualzinha.
   const marcasTrackEl = document.getElementById("marcas-track");
-  const marcasDobradas = MARCAS.concat(MARCAS);
-  marcasDobradas.forEach(function (marca, indice) {
+  const VELOCIDADE_MARCAS = 55; // pixels por segundo
+  let gruposDeMarcas = 0;
+
+  function criarItemMarca(marca, repetido) {
     const span = document.createElement("span");
     if (marca.logo) {
       span.classList.add("tem-logo");
       const img = document.createElement("img");
       img.src = marca.logo;
-      img.alt = marca.nome;
-      img.loading = "lazy";
+      img.alt = repetido ? "" : marca.nome;
+      img.width = 300;
+      img.height = 300;
+      img.decoding = "async";
       span.appendChild(img);
     } else {
       span.textContent = marca.nome;
     }
-    if (indice >= MARCAS.length) span.setAttribute("aria-hidden", "true");
-    marcasTrackEl.appendChild(span);
-  });
+    if (repetido) span.setAttribute("aria-hidden", "true");
+    return span;
+  }
 
+  function montarFaixaMarcas() {
+    marcasTrackEl.style.animation = "none";
+    marcasTrackEl.innerHTML = "";
+    MARCAS.forEach(function (m) { marcasTrackEl.appendChild(criarItemMarca(m, false)); });
+    const periodo = marcasTrackEl.getBoundingClientRect().width;
+    if (!periodo) return;
+    // grupos suficientes para cobrir a tela inteira mais uma volta
+    gruposDeMarcas = Math.ceil(window.innerWidth / periodo) + 1;
+    for (let g = 1; g < gruposDeMarcas; g++) {
+      MARCAS.forEach(function (m) { marcasTrackEl.appendChild(criarItemMarca(m, true)); });
+    }
+    marcasTrackEl.style.setProperty("--periodo", periodo + "px");
+    marcasTrackEl.style.animation = "";
+    marcasTrackEl.style.animationDuration = (periodo / VELOCIDADE_MARCAS) + "s";
+  }
+  montarFaixaMarcas();
+  window.addEventListener("load", function () {
+    // com as fontes e imagens carregadas as larguras podem mudar um pouco: recalcula uma vez
+    montarFaixaMarcas();
+  });
+  let esperaMarcas = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(esperaMarcas);
+    esperaMarcas = setTimeout(function () {
+      const periodo = parseFloat(marcasTrackEl.style.getPropertyValue("--periodo")) || 0;
+      if (periodo && Math.ceil(window.innerWidth / periodo) + 1 !== gruposDeMarcas) montarFaixaMarcas();
+    }, 250);
+  });
   // Elementos onde os vídeos entram (preenchidos por carregarVideosDoSite,
   // mais abaixo, depois que a página busca os dados no Supabase)
   const destaquesPalcoEl = document.getElementById("destaques-palco");
