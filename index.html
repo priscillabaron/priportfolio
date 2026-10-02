@@ -180,31 +180,41 @@
   .promessas .marca-check { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--cor-azul-forte); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; }
   .assinatura { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.8rem; color: var(--cor-azul-forte); margin-top: 18px; }
 
-  /* ===== DESTAQUES ===== */
-  #destaques { padding: 100px 0; background: var(--branco); }
-  .destaques-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .destaque-card {
-    display: block; border-radius: var(--raio); overflow: hidden; background: var(--gelo);
-    border: 1px solid var(--borda); box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease;
+  /* ===== DESTAQUES (carrossel) ===== */
+  #destaques { padding: 100px 0; background: var(--branco); overflow: hidden; }
+  .destaques-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 56px; align-items: center; }
+  .eyebrow-linha { display: flex; align-items: center; gap: 14px; font-size: .78rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--cor-mauve); margin-bottom: 18px; }
+  .eyebrow-linha::before { content: ''; width: 36px; height: 1.5px; background: currentColor; }
+  .destaques-texto h2 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.05; }
+  .destaques-texto p { font-size: 1.05rem; max-width: 30em; }
+  .destaques-palco { position: relative; --w: 280px; min-width: 0; }
+  .destaques-trilho {
+    position: relative; height: calc(var(--w) * 16 / 9 + 140px);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
   }
-  .destaque-card:hover { transform: translateY(-6px); box-shadow: var(--sombra-forte); }
-  .destaque-capa { position: relative; aspect-ratio: 9 / 16; background: linear-gradient(160deg, var(--gelo) 0%, var(--cor-clara) 32%, var(--cor-azul) 62%, var(--cor-azul-forte) 100%, var(--cor-mauve) 135%); display: flex; align-items: flex-end; padding: 16px; }
-  .destaque-capa .legenda-formato { color: #fff; font-size: .78rem; font-weight: 700; background: rgba(0,0,0,.28); padding: 6px 12px; border-radius: 100px; }
-  .play-botao {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 62px; height: 62px; border-radius: 50%; background: rgba(255,255,255,.92);
-    display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra-forte);
+  .destaques-slide {
+    position: absolute; top: 0; left: 50%; width: var(--w); margin-left: calc(var(--w) / -2); text-align: center;
+    transition: transform .55s cubic-bezier(.4, .1, .2, 1), opacity .55s ease, filter .55s ease;
   }
-  .play-botao::after { content: ''; border-style: solid; border-width: 11px 0 11px 18px; border-color: transparent transparent transparent var(--cor-azul-forte); margin-left: 4px; }
-  .destaque-info { padding: 20px; }
-  .destaque-numero { font-size: 1.7rem; font-weight: 800; color: var(--cor-azul-forte); }
-  .destaque-rotulo { font-size: .8rem; color: var(--texto-suave); font-weight: 600; margin-bottom: 10px; }
-  .destaque-titulo { font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; }
-  .destaque-contexto { font-size: .9rem; margin: 0; }
-
+  .destaques-slide[data-pos="0"] { transform: translateX(0) scale(1); z-index: 3; }
+  .destaques-slide[data-pos="1"] { transform: translateX(calc(var(--w) * .94)) scale(.8); opacity: .55; filter: blur(2px); z-index: 2; cursor: pointer; }
+  .destaques-slide[data-pos="-1"] { transform: translateX(calc(var(--w) * -.94)) scale(.8); opacity: .55; filter: blur(2px); z-index: 2; cursor: pointer; }
+  .destaques-slide[data-pos="fora"] { transform: translateX(0) scale(.6); opacity: 0; pointer-events: none; z-index: 1; }
+  .destaques-marca { margin: 0 0 12px; font-family: 'Instrument Serif', serif; font-size: 1.35rem; letter-spacing: .06em; text-transform: uppercase; color: var(--cor-azul-forte); min-height: 1.6rem; }
+  .destaques-capa { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden; box-shadow: var(--sombra-forte); }
+  .destaques-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 62px; height: 62px; border-radius: 50%; background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra); }
+  .destaques-play::after { content: ''; border-style: solid; border-width: 11px 0 11px 18px; border-color: transparent transparent transparent var(--cor-azul-forte); margin-left: 4px; }
+  .destaques-marca-dagua { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Instrument Serif', serif; font-style: italic; font-size: 46px; color: var(--cor-azul-forte); opacity: .3; }
+  .destaques-metrica { margin: 16px 0 2px; font-family: 'Instrument Serif', serif; font-size: 1.7rem; line-height: 1.1; color: var(--cor-azul-forte); }
+  .destaques-legenda { margin: 0; font-size: .95rem; color: var(--texto-suave); }
+  .destaques-seta { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 42px; height: 42px; border-radius: 50%; background: var(--branco); border: 1px solid var(--borda); box-shadow: var(--sombra); color: var(--texto); font-size: 1.4rem; line-height: 1; padding: 0 0 3px; display: flex; align-items: center; justify-content: center; transition: border-color .15s ease, transform .15s ease; }
+  .destaques-seta:hover { border-color: var(--cor-azul-forte); }
+  .destaques-seta-ant { left: 0; }
+  .destaques-seta-prox { right: 0; }
+  .destaques-palco.sem-setas .destaques-seta { display: none; }
   /* ===== TRABALHOS ===== */
   #trabalhos { padding: 100px 0; }
-  .aviso-em-breve { grid-column: 1 / -1; text-align: center; color: var(--texto-suave); background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 40px 24px; font-size: .95rem; }
 
   /* ===== VITRINE DE NICHOS ===== */
   .vitrine { --ameixa: #7A5068; --azul-vitrine: #7F96B6; --azul-rotulo: #5F7BA3; --tinta: #3B2B36; --suave: #6B5A64; --linha: #E3DAD3; font-family: 'Raleway', sans-serif; }
@@ -348,7 +358,11 @@
     .hero-inner { grid-template-columns: 1fr; }
     .hero-photo { max-width: 380px; margin: 0 auto; }
     .sobre-grid { grid-template-columns: 1fr; }
-    .destaques-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .destaques-layout { grid-template-columns: 1fr; gap: 36px; }
+    .destaques-texto { text-align: center; }
+    .destaques-texto p { margin-left: auto; margin-right: auto; }
+    .eyebrow-linha { justify-content: center; }
     .metricas-grid, .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
     .resultados-grid { grid-template-columns: 1fr; }
     .contato-grid { grid-template-columns: 1fr; }
@@ -389,7 +403,9 @@
     .logo img { height: 40px; }
     .logo-nome { font-size: .56rem; letter-spacing: .24em; }
     .hero-numbers { grid-template-columns: 1fr; }
-    .destaques-grid, .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
+    .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
+    .destaques-palco { --w: 215px; }
+    .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
     #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
   }
@@ -483,19 +499,20 @@
 
   <!-- ===== 3. CONTEÚDOS DE DESTAQUE ===== -->
   <section id="destaques">
-    <div class="container">
-      <div class="secao-titulo reveal">
-        <span class="eyebrow" data-i18n="destaques.eyebrow">Portfólio</span>
+    <div class="container destaques-layout">
+      <div class="destaques-texto reveal">
+        <span class="eyebrow-linha" data-i18n="destaques.eyebrow">Portfólio</span>
         <h2 data-i18n-html="destaques.titulo">Conteúdos de <em>destaque</em></h2>
         <p data-i18n="destaques.texto">Os vídeos que mais representam o meu trabalho e os resultados que já entreguei.</p>
       </div>
-      <!-- Os cards abaixo são gerados via JavaScript a partir do array DESTAQUES, no final deste arquivo. -->
-      <!-- Para trocar o LINK do vídeo, edite o campo "link" de cada item. -->
-      <!-- Para trocar a CAPA (imagem vertical 9:16), edite o campo "capa" de cada item. -->
-      <div class="destaques-grid" id="destaques-grid"></div>
+      <!-- Os vídeos entram aqui via JavaScript (js/carrossel-destaques.js), a partir dos vídeos com o campo "destaque" preenchido no painel. -->
+      <div class="destaques-palco reveal" id="destaques-palco" role="region" aria-roledescription="carousel">
+        <button type="button" class="destaques-seta destaques-seta-ant">‹</button>
+        <div class="destaques-trilho" id="destaques-grid"></div>
+        <button type="button" class="destaques-seta destaques-seta-prox">›</button>
+      </div>
     </div>
   </section>
-
   <!-- ===== 4. TRABALHOS POR NICHO ===== -->
   <section id="trabalhos" class="vitrine">
     <div class="container">
@@ -617,6 +634,7 @@
 <script src="js/banco.js"></script>
 <script src="js/idiomas.js"></script>
 <script src="js/nichos.js"></script>
+<script src="js/carrossel-destaques.js"></script>
 <script>
 (function () {
   "use strict";
@@ -750,41 +768,14 @@
 
   // Elementos onde os vídeos entram (preenchidos por carregarVideosDoSite,
   // mais abaixo, depois que a página busca os dados no Supabase)
-  const destaquesGridEl = document.getElementById("destaques-grid");
+  const destaquesPalcoEl = document.getElementById("destaques-palco");
   const nichosListaEl = document.getElementById("nichos-lista");
 
-  function montarCardDestaque(item) {
-    const card = criarEl("a", "destaque-card reveal");
-    card.href = item.link || "#";
-    card.target = "_blank";
-    card.rel = "noopener";
-    card.setAttribute("aria-label", Idiomas.t("destaques.assistir", { t: item.titulo }));
-
-    const capa = criarEl("div", "destaque-capa");
-    capa.appendChild(criarTextoSimples("span", "legenda-formato", item.formato ? Idiomas.t("destaques.capa", { f: item.formato }) : Idiomas.t("destaques.capaVertical")));
-    const play = criarEl("span", "play-botao");
-    play.setAttribute("aria-hidden", "true");
-    capa.appendChild(play);
-    card.appendChild(capa);
-
-    const info = criarEl("div", "destaque-info");
-    info.appendChild(criarTextoSimples("span", "destaque-numero", item.destaque));
-    info.appendChild(criarTextoSimples("p", "destaque-titulo", item.titulo));
-    if (item.marca) info.appendChild(criarTextoSimples("p", "destaque-contexto", item.marca));
-    card.appendChild(info);
-    return card;
-  }
-
-
-  function mensagemVazia(chave) {
-    return criarI18n("p", "aviso-em-breve", chave);
-  }
   // ---- Vitrine de nichos -------------------------------------------------------------
   // A lista de nichos e os cards ficam em js/nichos.js, junto com as páginas de cada nicho.
   const NICHOS = Nichos.lista;
   const chaveNicho = Nichos.chave;
   const criarTexto = Nichos.criarTexto;
-  const criarTextoSimples = Nichos.criarTexto;
   const montarTituloNicho = Nichos.montarTitulo;
   const montarCartaoNicho = Nichos.montarCartao;
 
@@ -934,18 +925,12 @@
   let videosCarregados = null;
   function renderizarVideos() {
     if (!videosCarregados) return;
-    // ---- Destaques: só os vídeos com o campo "destaque" preenchido, até 3
-    const destaques = videosCarregados.filter(function (v) { return v.destaque; }).slice(0, 3);
-    destaquesGridEl.innerHTML = "";
-    if (destaques.length === 0) {
-      destaquesGridEl.appendChild(mensagemVazia("destaques.vazio"));
-    } else {
-      destaques.forEach(function (item) {
-        const card = montarCardDestaque(item);
-        destaquesGridEl.appendChild(card);
-        observer.observe(card);
-      });
-    }
+    // ---- Destaques: só os vídeos com o campo "destaque" preenchido (até 10). Sem nenhum, mostra 3 "em breve".
+    const destaques = videosCarregados.filter(function (v) { return v.destaque; }).slice(0, 10);
+    const semDestaques = destaques.length === 0;
+    CarrosselDestaques.montar(destaquesPalcoEl, semDestaques
+      ? [0, 1, 2].map(function () { return { marca: Idiomas.t("nichos.emBreve"), titulo: Idiomas.t("nichos.videoEmBreve") }; })
+      : destaques, semDestaques);
 
     renderizarNichos(videosCarregados);
   }

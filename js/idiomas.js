@@ -83,15 +83,11 @@
       "The videos that best represent my work and the results I have delivered.",
       "Los videos que mejor representan mi trabajo y los resultados que he entregado."
     ],
-    "destaques.vazio": [
-      "Em breve, os vídeos de destaque aparecem aqui.",
-      "Coming soon: featured videos will appear here.",
-      "Próximamente: aquí aparecerán los videos destacados."
-    ],
     "destaques.assistir": ["{t}, assistir vídeo", "{t}, watch video", "{t}, ver video"],
-    "destaques.capa": ["Capa {f}", "Cover {f}", "Portada {f}"],
-    "destaques.capaVertical": ["Capa vertical 9:16", "Vertical cover 9:16", "Portada vertical 9:16"],
-
+    "destaques.slide": ["Vídeo {i} de {n}", "Video {i} of {n}", "Video {i} de {n}"],
+    "destaques.carrossel": ["Vídeos em destaque", "Featured videos", "Videos destacados"],
+    "destaques.anterior": ["Vídeo anterior", "Previous video", "Video anterior"],
+    "destaques.proximo": ["Próximo vídeo", "Next video", "Próximo video"],
     /* ---- Vitrine de nichos ---- */
     "nichos.eyebrow": ["Vitrine", "Showcase", "Vitrina"],
     "nichos.titulo": ["Meus <em>nichos</em>", "My <em>niches</em>", "Mis <em>nichos</em>"],
