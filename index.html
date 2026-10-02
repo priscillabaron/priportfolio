@@ -215,6 +215,10 @@
   .vitrine-titulo { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -.01em; }
   .vitrine-azul { color: var(--azul-vitrine); }
   .vitrine-ameixa { font-style: italic; color: var(--ameixa); }
+  .vitrine-acoes { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .vitrine-ver { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ameixa); border-bottom: 1px solid var(--ameixa); padding-bottom: 3px; transition: opacity .15s ease; }
+  .vitrine-ver:hover { opacity: .7; }
+  .vitrine-ver[hidden] { display: none; }
   .vitrine-setas { display: flex; gap: 10px; }
   .vitrine-seta { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #CFC4BC; background: transparent; color: var(--tinta); display: grid; place-items: center; font-family: inherit; font-size: 18px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
   .vitrine-seta:hover:not(:disabled) { background: var(--ameixa); color: #FFFCFA; border-color: var(--ameixa); }
@@ -576,6 +580,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/banco.js"></script>
+<script src="js/nichos.js"></script>
 <script>
 (function () {
   "use strict";
@@ -738,84 +743,14 @@
     return p;
   }
   // ---- Vitrine de nichos -------------------------------------------------------------
-  // Os nichos aparecem nesta ordem, um por aba. Cada vídeo entra na aba do nicho que tiver
-  // o mesmo nome no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
-  const NICHOS = [
-    "Casa & Decoração", "Gastronomia", "Saúde e Fitness", "Beleza & Autocuidado",
-    "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
-    "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
-  ];
-  const FUNDOS_CARTAO = ["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
-
-  function chaveNicho(t) {
-    return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
-      .replace(/&/g, " e ").replace(/\s+/g, " ").trim();
-  }
-
-  function criarTexto(tag, classe, texto) {
-    const el = document.createElement(tag);
-    if (classe) el.className = classe;
-    el.textContent = texto;
-    return el;
-  }
+  // A lista de nichos e os cards ficam em js/nichos.js, junto com as páginas de cada nicho.
+  const NICHOS = Nichos.lista;
+  const chaveNicho = Nichos.chave;
+  const criarTexto = Nichos.criarTexto;
+  const montarTituloNicho = Nichos.montarTitulo;
+  const montarCartaoNicho = Nichos.montarCartao;
 
   function doisDigitos(n) { return String(n).padStart(2, "0"); }
-
-  // Tudo menos a última palavra fica em azul; a última vai em ameixa itálico.
-  // Se for uma palavra só, ela inteira fica em azul.
-  function montarTituloNicho(nome) {
-    const h3 = document.createElement("h3");
-    h3.className = "vitrine-titulo";
-    const palavras = nome.trim().split(/\s+/);
-    if (palavras.length === 1) {
-      h3.appendChild(criarTexto("span", "vitrine-azul", palavras[0]));
-      return h3;
-    }
-    h3.appendChild(criarTexto("span", "vitrine-azul", palavras.slice(0, -1).join(" ")));
-    h3.appendChild(document.createTextNode(" "));
-    h3.appendChild(criarTexto("em", "vitrine-ameixa", palavras[palavras.length - 1]));
-    return h3;
-  }
-
-  function montarCartaoNicho(video, indice, emBreve) {
-    const temLink = !emBreve && video.link && video.link !== "#";
-    const cartao = document.createElement("article");
-    cartao.className = "vitrine-cartao";
-
-    const capa = document.createElement(temLink ? "a" : "div");
-    capa.className = "vitrine-capa";
-    capa.style.background = FUNDOS_CARTAO[indice % FUNDOS_CARTAO.length];
-    if (temLink) {
-      capa.href = video.link;
-      capa.target = "_blank";
-      capa.rel = "noopener";
-      capa.setAttribute("aria-label", video.titulo + ", assistir vídeo");
-    }
-
-    const chips = document.createElement("div");
-    chips.className = "vitrine-chips";
-    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", "Em breve"));
-    if (video.marca) chips.appendChild(criarTexto("span", "vitrine-chip", video.marca));
-    if (video.destaque) chips.appendChild(criarTexto("span", "vitrine-chip vitrine-chip-destaque", video.destaque));
-    capa.appendChild(chips);
-
-    if (emBreve) {
-      capa.appendChild(criarTexto("span", "vitrine-marca-dagua", "p.b."));
-    } else {
-      const play = document.createElement("span");
-      play.className = "vitrine-play";
-      play.setAttribute("aria-hidden", "true");
-      capa.appendChild(play);
-    }
-    cartao.appendChild(capa);
-
-    const legenda = document.createElement("div");
-    legenda.className = "vitrine-legenda";
-    legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
-    legenda.appendChild(criarTexto("span", "vitrine-legenda-formato", video.formato || "9:16"));
-    cartao.appendChild(legenda);
-    return cartao;
-  }
 
   function renderizarNichos(videos) {
     const porChave = {};
@@ -882,7 +817,12 @@
     const proximo = botaoSeta("→", "Próximos vídeos");
     setas.appendChild(anterior);
     setas.appendChild(proximo);
-    topo.appendChild(setas);
+    const verPagina = criarTexto("a", "vitrine-ver", "Abrir página do nicho →");
+    const acoes = document.createElement("div");
+    acoes.className = "vitrine-acoes";
+    acoes.appendChild(verPagina);
+    acoes.appendChild(setas);
+    topo.appendChild(acoes);
     corpo.appendChild(topo);
 
     const faixa = document.createElement("div");
@@ -911,6 +851,13 @@
       identificacao.replaceChild(novoTitulo, titulo);
       titulo = novoTitulo;
       faixa.setAttribute("aria-label", "Vídeos de " + dado.nome);
+      // Só os nichos da lista têm página própria (nichos/<nome>/).
+      const temPagina = NICHOS.indexOf(dado.nome) !== -1;
+      verPagina.hidden = !temPagina;
+      if (temPagina) {
+        verPagina.href = "nichos/" + Nichos.slug(dado.nome) + "/";
+        verPagina.setAttribute("aria-label", "Abrir a página do nicho " + dado.nome);
+      }
       faixa.innerHTML = "";
       const emBreve = dado.videos.length === 0;
       const lista = emBreve ? [0, 1, 2, 3].map(function () { return { titulo: "Vídeo em breve" }; }) : dado.videos;
