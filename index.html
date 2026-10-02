@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Priscilla Baron — Portfólio UGC Creator</title>
+<link rel="icon" type="image/png" sizes="32x32" href="imagens/marca/favicon-32.png">
+<link rel="apple-touch-icon" href="imagens/marca/apple-touch-icon.png">
 <meta name="description" content="Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,8 +96,8 @@
   .ribbon-72h strong { font-weight: 800; }
   .navbar { background: rgba(246,247,245,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borda); }
   .nav-inner { max-width: var(--container); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-weight: 800; font-size: 1.2rem; }
-  .logo em { color: var(--cor-azul-forte); }
+  .logo { display: flex; align-items: center; }
+  .logo img { height: 46px; width: auto; display: block; }
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a { font-weight: 600; font-size: .95rem; padding: 6px 2px; border-bottom: 2px solid transparent; }
   .nav-links a:hover { border-color: var(--cor-azul-forte); }
@@ -278,7 +280,7 @@
   /* ===== RODAPÉ ===== */
   .rodape { background: #212D3C; color: #d7e3ec; padding: 48px 0 28px; }
   .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
-  .rodape-nome { font-weight: 800; font-size: 1.15rem; color: #fff; }
+  .rodape-nome img { height: 52px; width: auto; display: block; }
   .rodape-redes { display: flex; gap: 18px; flex-wrap: wrap; }
   .rodape-redes a { font-weight: 600; font-size: .9rem; }
   .rodape-redes a:hover { color: var(--cor-pessego); }
@@ -352,7 +354,7 @@
   <div class="ribbon-72h">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
   <nav class="navbar" aria-label="Menu principal">
     <div class="nav-inner">
-      <a href="#topo" class="logo">Priscilla <em>Baron</em></a>
+      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/logo-nome.png" alt="Priscilla Baron" width="93" height="46"></a>
       <button class="hamburger" id="botao-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
@@ -527,7 +529,7 @@
 <!-- ===== 8. RODAPÉ ===== -->
 <footer class="rodape">
   <div class="container rodape-inner">
-    <span class="rodape-nome">Priscilla Baron</span>
+    <span class="rodape-nome"><img src="imagens/marca/logo-nome-branco.png" alt="Priscilla Baron" width="105" height="52" loading="lazy"></span>
     <div class="rodape-redes" id="rodape-redes"></div>
     <p class="rodape-copyright">© <span id="ano-atual"></span> Priscilla Baron — Sua Cidade. Todos os direitos reservados.</p>
   </div>
