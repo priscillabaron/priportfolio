@@ -986,13 +986,22 @@
 
     try {
       if (!window.bancoCliente) throw new Error("Supabase não carregou");
-      const resultado = await window.bancoCliente.from("marcas").insert({
+      // Os contatos do site caem na aba Portfólio do admin (tabela leads_site).
+      let resultado = await window.bancoCliente.from("leads_site").insert({
         nome: nome,
         email: email,
-        obs: mensagem,
-        situacao: "lead",
-        ultimo_contato: new Date().toISOString().slice(0, 10)
+        mensagem: mensagem
       });
+      // Se a tabela nova ainda não foi criada, guarda em marcas pra não perder o contato.
+      if (resultado.error && (resultado.error.code === "PGRST205" || resultado.error.code === "42P01")) {
+        resultado = await window.bancoCliente.from("marcas").insert({
+          nome: nome,
+          email: email,
+          obs: mensagem,
+          situacao: "lead",
+          ultimo_contato: new Date().toISOString().slice(0, 10)
+        });
+      }
       if (resultado.error) throw resultado.error;
       confirmacaoEnvio.style.background = "";
       confirmacaoEnvio.style.color = "";

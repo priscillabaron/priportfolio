@@ -370,3 +370,8 @@ tr.alvo-arrasto { box-shadow: inset 0 2px 0 var(--azul); }
   .pro-capa { padding: 22px 20px; }
   .pro-capa-numero { text-align: left; }
 }
+
+/* Contatos que chegaram pelo site (aba Portfólio) */
+table.tabela tbody tr.lead-novo td { background: var(--amarelo-claro); }
+table.tabela tbody tr.lead-novo td b { color: var(--azul-escuro); }
+td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-word; }

@@ -185,9 +185,9 @@ create policy "dona le marcas" on public.marcas
   for select using (auth.role() = 'authenticated');
 create policy "dona escreve marcas" on public.marcas
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
--- Exceção pedida: o formulário de contato do site pode inserir um lead novo.
-create policy "publico insere marcas" on public.marcas
-  for insert with check (situacao = 'lead');
+-- O formulário de contato do site não grava mais aqui: os contatos do site
+-- vão para a tabela leads_site (mais abaixo). Por isso a antiga permissão de
+-- "qualquer pessoa inserir em marcas" foi removida (drop policy logo acima).
 
 -- ---- calendario --------------------------------------------------------
 create policy "dona le calendario" on public.calendario
@@ -213,6 +213,37 @@ create policy "dona le visitas" on public.visitas
 -- Exceção pedida: qualquer visita do site pode ser registrada por qualquer um.
 create policy "publico insere visitas" on public.visitas
   for insert with check (true);
+
+
+-- ============================================================================
+-- TABELA: leads_site
+-- Os contatos que as marcas deixam no formulário do seu portfólio. Eles
+-- aparecem na aba Portfólio do admin (não na aba Marcas).
+-- ============================================================================
+create table if not exists public.leads_site (
+  id         uuid primary key default gen_random_uuid(),
+  nome       text not null,
+  email      text,
+  mensagem   text,
+  lido       boolean not null default false,
+  criado_em  timestamptz not null default now()
+);
+
+alter table public.leads_site enable row level security;
+
+drop policy if exists "dona total leads_site"        on public.leads_site;
+drop policy if exists "publico insere leads_site"    on public.leads_site;
+
+-- Só você, logada, lê e escreve.
+create policy "dona total leads_site" on public.leads_site
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+-- Qualquer visitante pode ENVIAR um contato (com limite de tamanho), mas nunca ler.
+create policy "publico insere leads_site" on public.leads_site
+  for insert with check (
+    char_length(nome) between 1 and 200
+    and char_length(coalesce(email, '')) <= 200
+    and char_length(coalesce(mensagem, '')) <= 5000
+  );
 
 
 -- ============================================================================

@@ -16,7 +16,134 @@
     document.getElementById("form-video").addEventListener("submit", salvarVideo);
     document.getElementById("btn-apagar-video").addEventListener("click", apagarVideoAtual);
 
-    await Promise.all([carregarVideos(), carregarEstatisticasVisita()]);
+    document.addEventListener("aba-ativada", function (e) {
+      if (e.detail === "portfolio") carregarLeads();
+    });
+
+    await Promise.all([carregarVideos(), carregarEstatisticasVisita(), carregarLeads()]);
+  }
+
+  // ---- CONTATOS QUE CHEGARAM PELO SITE ----------------------------------------------
+  var leadsAtuais = [];
+
+  async function carregarLeads() {
+    var resultado = await U.consulta("leads_site",
+      window.bancoCliente.from("leads_site").select("*").order("criado_em", { ascending: false }).limit(200)
+    );
+    leadsAtuais = resultado.data || [];
+    renderizarLeads(!!resultado.error);
+  }
+
+  function renderizarLeads(faltaTabela) {
+    var corpo = document.getElementById("corpo-tabela-leads");
+    var aviso = document.getElementById("aviso-leads-vazio");
+    var selo = document.getElementById("leads-novos");
+    corpo.innerHTML = "";
+
+    var novos = leadsAtuais.filter(function (l) { return !l.lido; }).length;
+    selo.style.display = novos > 0 ? "inline-flex" : "none";
+    selo.textContent = novos + (novos === 1 ? " novo" : " novos");
+
+    if (faltaTabela) {
+      aviso.style.display = "block";
+      aviso.textContent = "A tabela de contatos do site ainda não existe. Rode o SQL da tabela leads_site no Supabase.";
+      return;
+    }
+    if (leadsAtuais.length === 0) {
+      aviso.style.display = "block";
+      aviso.textContent = "Nenhum contato ainda. Quando uma marca preencher o formulário do seu portfólio, ela aparece aqui.";
+      return;
+    }
+    aviso.style.display = "none";
+
+    leadsAtuais.forEach(function (lead) {
+      var tr = document.createElement("tr");
+      if (!lead.lido) tr.className = "lead-novo";
+
+      var quando = lead.criado_em ? new Date(lead.criado_em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+      var tdQuando = document.createElement("td");
+      tdQuando.style.whiteSpace = "nowrap";
+      tdQuando.textContent = quando;
+      tr.appendChild(tdQuando);
+
+      var tdNome = document.createElement("td");
+      tdNome.innerHTML = "<b>" + U.escapar(lead.nome) + "</b>";
+      tr.appendChild(tdNome);
+
+      var tdEmail = document.createElement("td");
+      if (lead.email) {
+        var link = document.createElement("a");
+        link.href = "mailto:" + lead.email;
+        link.textContent = lead.email;
+        link.style.color = "var(--azul)";
+        tdEmail.appendChild(link);
+      } else {
+        tdEmail.textContent = "—";
+      }
+      tr.appendChild(tdEmail);
+
+      var tdMsg = document.createElement("td");
+      tdMsg.className = "lead-mensagem";
+      tdMsg.textContent = lead.mensagem || "—";
+      tr.appendChild(tdMsg);
+
+      var tdAcoes = document.createElement("td");
+      tdAcoes.style.whiteSpace = "nowrap";
+
+      var btnLido = document.createElement("button");
+      btnLido.className = "btn-icone";
+      btnLido.title = lead.lido ? "Marcar como não lido" : "Marcar como lido";
+      btnLido.innerHTML = U.icone(lead.lido ? "olhoFechado" : "olhoAberto");
+      btnLido.addEventListener("click", function () { alternarLido(lead); });
+      tdAcoes.appendChild(btnLido);
+
+      var btnMarcas = document.createElement("button");
+      btnMarcas.className = "btn btn-outline";
+      btnMarcas.style.cssText = "padding:5px 10px; font-size:.72rem; margin:0 4px;";
+      btnMarcas.textContent = "Mandar para Marcas";
+      btnMarcas.title = "Cria a marca na sua base e tira este contato daqui";
+      btnMarcas.addEventListener("click", function () { mandarParaMarcas(lead); });
+      tdAcoes.appendChild(btnMarcas);
+
+      var btnApagar = document.createElement("button");
+      btnApagar.className = "btn-icone";
+      btnApagar.title = "Apagar";
+      btnApagar.innerHTML = U.icone("apagar");
+      btnApagar.addEventListener("click", function () { apagarLead(lead); });
+      tdAcoes.appendChild(btnApagar);
+
+      tr.appendChild(tdAcoes);
+      corpo.appendChild(tr);
+    });
+  }
+
+  async function alternarLido(lead) {
+    lead.lido = !lead.lido;
+    renderizarLeads(false);
+    await U.consulta("leads_site", window.bancoCliente.from("leads_site").update({ lido: lead.lido }).eq("id", lead.id));
+  }
+
+  async function mandarParaMarcas(lead) {
+    var inserir = await U.consulta("marcas", window.bancoCliente.from("marcas").insert({
+      nome: lead.nome,
+      email: lead.email || null,
+      obs: lead.mensagem || null,
+      situacao: "lead",
+      ultimo_contato: U.hojeISO()
+    }));
+    if (inserir.error) return;
+    var apagar = await U.consulta("leads_site", window.bancoCliente.from("leads_site").delete().eq("id", lead.id));
+    if (apagar.error) return;
+    U.toast("Contato enviado para a aba Marcas.");
+    await carregarLeads();
+  }
+
+  async function apagarLead(lead) {
+    if (!confirm("Apagar este contato? Essa ação não pode ser desfeita.")) return;
+    var r = await U.consulta("leads_site", window.bancoCliente.from("leads_site").delete().eq("id", lead.id));
+    if (r.error) return;
+    U.toast("Contato apagado.");
+    await carregarLeads();
   }
 
   // ---- VÍDEOS ---------------------------------------------------------------
