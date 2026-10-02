@@ -218,9 +218,6 @@
   .vitrine-azul { color: var(--azul-vitrine); }
   .vitrine-ameixa { font-style: italic; color: var(--ameixa); }
   .vitrine-acoes { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-  .vitrine-ver { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ameixa); border-bottom: 1px solid var(--ameixa); padding-bottom: 3px; transition: opacity .15s ease; }
-  .vitrine-ver:hover { opacity: .7; }
-  .vitrine-ver[hidden] { display: none; }
   .vitrine-setas { display: flex; gap: 10px; }
   .vitrine-seta { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #CFC4BC; background: transparent; color: var(--tinta); display: grid; place-items: center; font-family: inherit; font-size: 18px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
   .vitrine-seta:hover:not(:disabled) { background: var(--ameixa); color: #FFFCFA; border-color: var(--ameixa); }
@@ -769,11 +766,11 @@
     NICHOS.forEach(function (nome) {
       const k = chaveNicho(nome);
       usados[k] = true;
-      nichosDados.push({ nome: nome, videos: porChave[k] || [], pagina: true });
+      nichosDados.push({ nome: nome, videos: porChave[k] || [] });
     });
     Object.keys(porChave).forEach(function (k) {
       if (usados[k]) return;
-      nichosDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k], pagina: false });
+      nichosDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k] });
     });
 
     nichosListaEl.innerHTML = "";
@@ -829,13 +826,6 @@
 
     const acoes = document.createElement("div");
     acoes.className = "vitrine-acoes";
-    // Só os nichos da lista têm página própria (nichos/<nome>/).
-    if (dado.pagina) {
-      const verPagina = criarTexto("a", "vitrine-ver", "Abrir página do nicho →");
-      verPagina.href = "nichos/" + Nichos.slug(dado.nome) + "/";
-      verPagina.setAttribute("aria-label", "Abrir a página do nicho " + dado.nome);
-      acoes.appendChild(verPagina);
-    }
     acoes.appendChild(setas);
     topo.appendChild(acoes);
     bloco.appendChild(topo);
@@ -857,12 +847,19 @@
       proximo.disabled = faixa.scrollLeft >= maximo - 8;
     }
     function rolar(direcao) {
-      faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.9, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
+      // Anda por cards inteiros, para o carrossel sempre parar certinho no começo de um card.
+      const primeiro = faixa.children[0];
+      if (!primeiro) return;
+      const espaco = parseFloat(getComputedStyle(faixa).columnGap) || 0;
+      const passo = primeiro.getBoundingClientRect().width + espaco;
+      const visiveis = Math.max(1, Math.floor((faixa.clientWidth + espaco + 1) / passo));
+      faixa.scrollBy({ left: direcao * visiveis * passo, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
     }
     anterior.addEventListener("click", function () { rolar(-1); });
     proximo.addEventListener("click", function () { rolar(1); });
     faixa.addEventListener("scroll", atualizarSetas, { passive: true });
     window.addEventListener("resize", atualizarSetas);
+    window.addEventListener("load", atualizarSetas);
     setTimeout(atualizarSetas, 50);
     return bloco;
   }
