@@ -10,19 +10,6 @@
     "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
     "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
   ];
-  // Frase curta em itálico embaixo do título de cada nicho. Pode editar à vontade.
-  const descricoes = {
-    "casa e decoracao": "Ambientes, organização e achadinhos para a casa",
-    "gastronomia": "Receitas, produtos e sabores que dão água na boca",
-    "saude e fitness": "Treino, bem-estar e rotina saudável",
-    "beleza e autocuidado": "Skincare, cabelo e momentos de cuidado",
-    "moda e acessorios": "Looks, peças e acessórios na vida real",
-    "lojas e supermercados": "Compras do dia a dia e achados de loja",
-    "conteudos em familia": "Rotina, filhos e momentos em família",
-    "datas especiais": "Natal, Dia das Mães e outras datas que vendem",
-    "viagem e passeios": "Destinos, roteiros e experiências para viver",
-    "restaurantes e cafeterias": "Lugares para comer, beber e voltar sempre"
-  };
   const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
 
   function chave(t) {
@@ -70,12 +57,12 @@
       capa.href = video.link;
       capa.target = "_blank";
       capa.rel = "noopener";
-      capa.setAttribute("aria-label", video.titulo + ", assistir vídeo");
+      capa.setAttribute("aria-label", Idiomas.t("destaques.assistir", { t: video.titulo }));
     }
 
     const chips = document.createElement("div");
     chips.className = "vitrine-chips";
-    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", "Em breve"));
+    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", Idiomas.t("nichos.emBreve")));
     if (video.marca) chips.appendChild(criarTexto("span", "vitrine-chip", video.marca));
     if (video.destaque) chips.appendChild(criarTexto("span", "vitrine-chip vitrine-chip-destaque", video.destaque));
     capa.appendChild(chips);
@@ -98,9 +85,16 @@
     return cartao;
   }
 
-  function descricao(nome) {
-    return descricoes[chave(nome)] || "";
+  // Nome e frase do nicho no idioma atual (as traduções ficam em js/idiomas.js).
+  // O nome em português continua sendo a "chave" que liga o vídeo ao nicho no painel.
+  function nome(nomePt) {
+    const k = "nicho." + slug(nomePt) + ".nome";
+    return Idiomas.existe(k) ? Idiomas.t(k) : nomePt;
+  }
+  function descricao(nomePt) {
+    const k = "nicho." + slug(nomePt) + ".desc";
+    return Idiomas.existe(k) ? Idiomas.t(k) : "";
   }
 
-  window.Nichos = { lista: lista, chave: chave, slug: slug, descricao: descricao, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
+  window.Nichos = { lista: lista, chave: chave, slug: slug, descricao: descricao, nome: nome, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
 })();

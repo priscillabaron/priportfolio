@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Priscilla Baron — Portfólio UGC Creator</title>
+<title>Priscilla Baron | Portfólio UGC Creator</title>
 <link rel="icon" type="image/png" sizes="32x32" href="imagens/marca/favicon-32.png">
 <link rel="apple-touch-icon" href="imagens/marca/apple-touch-icon.png">
 <meta name="description" content="Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
@@ -112,6 +112,12 @@
   .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ===== SELETOR DE IDIOMA (PT / EN / ES) ===== */
+  .seletor-idioma { display: inline-flex; align-items: center; padding: 3px; margin-left: 20px; background: var(--branco); border: 1px solid #CFC4BC; border-radius: 999px; flex-shrink: 0; }
+  .seletor-idioma button { border: 0; background: transparent; color: var(--texto-suave); font-weight: 700; font-size: .76rem; letter-spacing: .06em; padding: 7px 12px; border-radius: 999px; transition: background .15s ease, color .15s ease; }
+  .seletor-idioma button:hover { color: var(--cor-azul-forte); }
+  .seletor-idioma button[aria-pressed="true"] { background: var(--cor-azul-forte); color: #fff; }
 
   /* ===== HERO / CAPA ===== */
   .hero {
@@ -352,7 +358,13 @@
     .vitrine-seta { width: 42px; height: 42px; }
     .vitrine-cab { margin-bottom: 32px; }
     :root { --header-h: 92px; }
-    .hamburger { display: flex; }
+    .hamburger { display: flex; order: 3; }
+    .seletor-idioma { order: 2; margin-left: auto; margin-right: 10px; }
+    .seletor-idioma button { padding: 6px 8px; font-size: .7rem; letter-spacing: .03em; }
+    .nav-inner { padding-left: 16px; padding-right: 16px; gap: 6px; }
+    .logo { gap: 8px; }
+    .logo img { height: 40px; }
+    .logo-nome { font-size: .56rem; letter-spacing: .24em; }
     .nav-links {
       position: fixed; top: var(--header-h); left: 0; right: 0; background: var(--branco);
       flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--borda);
@@ -370,54 +382,59 @@
 </style>
 </head>
 <body>
-<a href="#conteudo-principal" class="skip-link">Pular para o conteúdo</a>
+<a href="#conteudo-principal" class="skip-link" data-i18n="pular">Pular para o conteúdo</a>
 
 <header class="site-header">
-  <div class="ribbon-72h">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
-  <nav class="navbar" aria-label="Menu principal">
+  <div class="ribbon-72h" data-i18n-html="faixa.entrega">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
+  <nav class="navbar" aria-label="Menu principal" data-i18n-attr="aria-label:nav.aria">
     <div class="nav-inner">
-      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/simbolo-pb-140.png" srcset="imagens/marca/simbolo-pb-140.png 140w, imagens/marca/simbolo-pb-210.png 210w, imagens/marca/simbolo-pb-280.png 280w" sizes="72px" alt="" width="72" height="46"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></a>
+      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo" data-i18n-attr="aria-label:logo.aria"><img src="imagens/marca/simbolo-pb-140.png" srcset="imagens/marca/simbolo-pb-140.png 140w, imagens/marca/simbolo-pb-210.png 210w, imagens/marca/simbolo-pb-280.png 280w" sizes="72px" alt="" width="72" height="46"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></a>
       <button class="hamburger" id="botao-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
       <ul id="menu-principal" class="nav-links">
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#destaques">Destaques</a></li>
-        <li><a href="#trabalhos">Trabalhos</a></li>
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#numeros">Números</a></li>
-        <li><a href="#contato" class="nav-cta">Contato</a></li>
+        <li><a href="#sobre" data-i18n="nav.sobre">Sobre</a></li>
+        <li><a href="#destaques" data-i18n="nav.destaques">Destaques</a></li>
+        <li><a href="#trabalhos" data-i18n="nav.trabalhos">Trabalhos</a></li>
+        <li><a href="#servicos" data-i18n="nav.servicos">Serviços</a></li>
+        <li><a href="#numeros" data-i18n="nav.numeros">Números</a></li>
+        <li><a href="#contato" class="nav-cta" data-i18n="nav.contato">Contato</a></li>
       </ul>
+      <div class="seletor-idioma" role="group" aria-label="Idioma" data-i18n-attr="aria-label:idioma.aria">
+        <button type="button" data-idioma="pt" lang="pt" aria-pressed="true">PT</button>
+        <button type="button" data-idioma="en" lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-idioma="es" lang="es" aria-pressed="false">ES</button>
+      </div>
     </div>
   </nav>
 </header>
 
 <main id="conteudo-principal">
   <!-- ===== 1. CAPA ===== -->
-  <section id="topo" class="hero" aria-label="Apresentação">
+  <section id="topo" class="hero" aria-label="Apresentação" data-i18n-attr="aria-label:hero.aria">
     <div class="hero-inner">
       <div class="hero-text reveal">
         <span class="eyebrow">UGC Creator</span>
         <h1><img src="imagens/marca/logo-nome-800.png" srcset="imagens/marca/logo-nome-400.png 400w, imagens/marca/logo-nome-800.png 800w, imagens/marca/logo-nome-1200.png 1200w" sizes="(min-width: 1176px) 400px, (min-width: 735px) 34vw, 250px" alt="Priscilla Baron" width="400" height="198"></h1>
-        <p class="hero-tagline">Crio vídeos autênticos que fazem a sua marca conversar de verdade com quem realmente compra — do roteiro à entrega.</p>
+        <p class="hero-tagline" data-i18n="hero.tagline">Crio vídeos autênticos que fazem a sua marca conversar de verdade com quem realmente compra, do roteiro à entrega.</p>
         <div class="hero-buttons">
-          <a href="#contato" class="btn btn-primary">Falar comigo</a>
-          <a href="#trabalhos" class="btn btn-outline">Ver os trabalhos</a>
+          <a href="#contato" class="btn btn-primary" data-i18n="hero.falar">Falar comigo</a>
+          <a href="#trabalhos" class="btn btn-outline" data-i18n="hero.ver">Ver os trabalhos</a>
         </div>
       </div>
       <div class="hero-photo reveal">
         <!-- Troque este bloco de degradê por <img src="sua-foto.jpg" alt="Priscilla Baron, UGC creator"> quando tiver a foto -->
-        <div class="foto-placeholder" role="img" aria-label="Foto da creator Priscilla Baron, formato retrato 4:5">
-          <span>Foto da creator — 4:5</span>
+        <div class="foto-placeholder" role="img" aria-label="Foto da creator Priscilla Baron, formato retrato 4:5" data-i18n-attr="aria-label:hero.foto.aria">
+          <span data-i18n="hero.foto.texto">Foto da creator, 4:5</span>
         </div>
-        <span class="tag-selo">sob consulta</span>
+        <span class="tag-selo" data-i18n="hero.selo">sob consulta</span>
       </div>
     </div>
-    <div class="hero-numbers" id="hero-numeros" aria-label="Resumo em números"></div>
+    <div class="hero-numbers" id="hero-numeros" aria-label="Resumo em números" data-i18n-attr="aria-label:hero.numeros.aria"></div>
   </section>
 
-  <div class="marcas-faixa" aria-label="Marcas que já atendi">
-    <p class="marcas-legenda">Marcas que confiam no meu trabalho</p>
+  <div class="marcas-faixa" aria-label="Marcas que já atendi" data-i18n-attr="aria-label:marcas.aria">
+    <p class="marcas-legenda" data-i18n="marcas.legenda">Marcas que confiam no meu trabalho</p>
     <div class="marcas-faixa-mascara">
       <div class="marcas-track" id="marcas-track"></div>
     </div>
@@ -428,19 +445,19 @@
     <div class="container sobre-grid">
       <div class="reveal">
         <!-- Troque este bloco de degradê por <img src="sua-foto-sobre.jpg" alt="Priscilla Baron sorrindo, foto de bastidores"> -->
-        <div class="foto-placeholder" style="aspect-ratio: 3/4;" role="img" aria-label="Foto de bastidores de Priscilla Baron, formato 3:4">
-          <span>Foto de bastidores — 3:4</span>
+        <div class="foto-placeholder" style="aspect-ratio: 3/4;" role="img" aria-label="Foto de bastidores de Priscilla Baron, formato 3:4" data-i18n-attr="aria-label:sobre.foto.aria">
+          <span data-i18n="sobre.foto.texto">Foto de bastidores, 3:4</span>
         </div>
       </div>
       <div class="sobre-texto reveal">
-        <span class="eyebrow">Sobre mim</span>
-        <h2>Quem grava é gente, não <em>roteiro pronto</em></h2>
-        <p>Oi, eu sou a Priscilla! Trabalho criando conteúdo autêntico para marcas que querem se conectar de verdade com quem assiste — sem parecer propaganda. Gosto de entender o produto, testar de verdade e contar isso de um jeito que faz sentido pra quem está do outro lado da tela.</p>
-        <p>Cada entrega passa por um processo simples e transparente, pensado pra sua marca ter previsibilidade do início ao fim.</p>
+        <span class="eyebrow" data-i18n="sobre.eyebrow">Sobre mim</span>
+        <h2 data-i18n-html="sobre.titulo">Quem grava é gente, não <em>roteiro pronto</em></h2>
+        <p data-i18n="sobre.p1">Oi, eu sou a Priscilla! Trabalho criando conteúdo autêntico para marcas que querem se conectar de verdade com quem assiste, sem parecer propaganda. Gosto de entender o produto, testar de verdade e contar isso de um jeito que faz sentido pra quem está do outro lado da tela.</p>
+        <p data-i18n="sobre.p2">Cada entrega passa por um processo simples e transparente, pensado pra sua marca ter previsibilidade do início ao fim.</p>
         <ul class="promessas">
-          <li><span class="marca-check">✓</span> Roteiro aprovado antes de gravar</li>
-          <li><span class="marca-check">✓</span> Uma rodada de ajuste inclusa</li>
-          <li><span class="marca-check">✓</span> Entrega em até 72 horas úteis</li>
+          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa1">Roteiro aprovado antes de gravar</span></li>
+          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa2">Uma rodada de ajuste inclusa</span></li>
+          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa3">Entrega em até 72 horas úteis</span></li>
         </ul>
         <p class="assinatura">Priscilla Baron</p>
       </div>
@@ -451,9 +468,9 @@
   <section id="destaques">
     <div class="container">
       <div class="secao-titulo reveal">
-        <span class="eyebrow">Portfólio</span>
-        <h2>Conteúdos de <em>destaque</em></h2>
-        <p>Os vídeos que mais representam o meu trabalho e os resultados que já entreguei.</p>
+        <span class="eyebrow" data-i18n="destaques.eyebrow">Portfólio</span>
+        <h2 data-i18n-html="destaques.titulo">Conteúdos de <em>destaque</em></h2>
+        <p data-i18n="destaques.texto">Os vídeos que mais representam o meu trabalho e os resultados que já entreguei.</p>
       </div>
       <!-- Os cards abaixo são gerados via JavaScript a partir do array DESTAQUES, no final deste arquivo. -->
       <!-- Para trocar o LINK do vídeo, edite o campo "link" de cada item. -->
@@ -467,10 +484,10 @@
     <div class="container">
       <header class="vitrine-cab reveal">
         <div>
-          <span class="vitrine-eyebrow">Vitrine</span>
-          <h2>Meus <em>nichos</em></h2>
+          <span class="vitrine-eyebrow" data-i18n="nichos.eyebrow">Vitrine</span>
+          <h2 data-i18n-html="nichos.titulo">Meus <em>nichos</em></h2>
         </div>
-        <p class="vitrine-intro">Conteúdos que já criei, separados por nicho. Escolha um nicho nos botões ou role para ver todos. Use as setas ou arraste para ver mais.</p>
+        <p class="vitrine-intro" data-i18n="nichos.intro">Conteúdos que já criei, separados por nicho. Escolha um nicho nos botões ou role para ver todos. Use as setas ou arraste para ver mais.</p>
       </header>
       <div id="nichos-lista"></div>
     </div>
@@ -480,9 +497,9 @@
   <section id="servicos">
     <div class="container">
       <div class="secao-titulo reveal">
-        <span class="eyebrow">Serviços</span>
-        <h2>Como eu te <em>ajudo</em></h2>
-        <p>Formatos prontos pra encaixar na sua estratégia de conteúdo.</p>
+        <span class="eyebrow" data-i18n="servicos.eyebrow">Serviços</span>
+        <h2 data-i18n-html="servicos.titulo">Como eu te <em>ajudo</em></h2>
+        <p data-i18n="servicos.texto">Formatos prontos pra encaixar na sua estratégia de conteúdo.</p>
       </div>
       <div class="servicos-grid" id="servicos-grid"></div>
     </div>
@@ -492,17 +509,17 @@
   <section id="numeros">
     <div class="container">
       <div class="secao-titulo reveal">
-        <span class="eyebrow">Prova</span>
-        <h2>Números e <em>depoimentos</em></h2>
-        <p>O que os números mostram e o que as marcas dizem sobre trabalhar comigo.</p>
+        <span class="eyebrow" data-i18n="numeros.eyebrow">Prova</span>
+        <h2 data-i18n-html="numeros.titulo">Números e <em>depoimentos</em></h2>
+        <p data-i18n="numeros.texto">O que os números mostram e o que as marcas dizem sobre trabalhar comigo.</p>
       </div>
 
       <div class="metricas-grid" id="metricas-grid"></div>
 
-      <h3 class="subtitulo-bloco reveal">Resultados de campanha</h3>
+      <h3 class="subtitulo-bloco reveal" data-i18n="numeros.resultados">Resultados de campanha</h3>
       <div class="resultados-grid" id="resultados-grid"></div>
 
-      <h3 class="subtitulo-bloco reveal">O que dizem sobre mim</h3>
+      <h3 class="subtitulo-bloco reveal" data-i18n="numeros.depoimentos">O que dizem sobre mim</h3>
       <div class="depoimentos-grid" id="depoimentos-grid"></div>
     </div>
   </section>
@@ -511,24 +528,24 @@
   <section id="contato">
     <div class="container contato-grid">
       <div class="reveal">
-        <span class="eyebrow">Contato</span>
-        <h2>Bora criar <em>juntos</em>?</h2>
-        <p>Me conta um pouco sobre a sua marca e o que você precisa. Respondo rapidinho.</p>
+        <span class="eyebrow" data-i18n="contato.eyebrow">Contato</span>
+        <h2 data-i18n-html="contato.titulo">Bora criar <em>juntos</em>?</h2>
+        <p data-i18n="contato.texto">Me conta um pouco sobre a sua marca e o que você precisa. Respondo rapidinho.</p>
         <form class="form-contato" id="form-contato" novalidate>
           <div class="campo">
-            <label for="campo-nome">Nome</label>
+            <label for="campo-nome" data-i18n="contato.nome">Nome</label>
             <input type="text" id="campo-nome" name="nome" autocomplete="name" required>
           </div>
           <div class="campo">
-            <label for="campo-email">E-mail</label>
+            <label for="campo-email" data-i18n="contato.email">E-mail</label>
             <input type="email" id="campo-email" name="email" autocomplete="email" required>
           </div>
           <div class="campo">
-            <label for="campo-mensagem">Mensagem</label>
+            <label for="campo-mensagem" data-i18n="contato.mensagem">Mensagem</label>
             <textarea id="campo-mensagem" name="mensagem" rows="4" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Enviar mensagem</button>
-          <p class="confirmacao-envio" id="confirmacao-envio" role="status">Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!</p>
+          <button type="submit" class="btn btn-primary" data-i18n="contato.enviar">Enviar mensagem</button>
+          <p class="confirmacao-envio" id="confirmacao-envio" role="status" data-i18n="contato.ok">Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!</p>
         </form>
       </div>
       <div class="contato-canais reveal">
@@ -538,7 +555,7 @@
         </a>
         <a class="canal-card" id="canal-email" href="#">
           <span class="canal-icone" aria-hidden="true">✉️</span>
-          <span>E-mail<span class="canal-sub">seuemail@email.com</span></span>
+          <span><span data-i18n="canal.email">E-mail</span><span class="canal-sub">seuemail@email.com</span></span>
         </a>
         <a class="canal-card" id="canal-instagram" href="#" target="_blank" rel="noopener">
           <span class="canal-icone" aria-hidden="true">📷</span>
@@ -554,33 +571,34 @@
   <div class="container rodape-inner">
     <span class="rodape-nome" aria-label="Priscilla Baron"><img src="imagens/marca/simbolo-pb-branco-140.png" srcset="imagens/marca/simbolo-pb-branco-140.png 140w, imagens/marca/simbolo-pb-branco-210.png 210w, imagens/marca/simbolo-pb-branco-280.png 280w" sizes="84px" alt="" width="84" height="53" loading="lazy"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></span>
     <div class="rodape-redes" id="rodape-redes"></div>
-    <p class="rodape-copyright">© <span id="ano-atual"></span> Priscilla Baron — Sua Cidade. Todos os direitos reservados.</p>
+    <p class="rodape-copyright" data-i18n="rodape.copyright">© Priscilla Baron. Todos os direitos reservados.</p>
   </div>
 </footer>
 
 <!-- ===== CARD DE CAPTURA ===== -->
 <div class="modal-overlay" id="modal-captura" hidden>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-captura-titulo">
-    <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">✕</button>
-    <h3 id="modal-captura-titulo">Quer meu mídia kit completo?</h3>
-    <p>Deixa seu nome e e-mail que eu te envio com os detalhes de audiência, formatos e valores.</p>
+    <button class="modal-fechar" id="modal-fechar" aria-label="Fechar" data-i18n-attr="aria-label:modal.fechar">✕</button>
+    <h3 id="modal-captura-titulo" data-i18n="modal.titulo">Quer meu mídia kit completo?</h3>
+    <p data-i18n="modal.texto">Deixa seu nome e e-mail que eu te envio com os detalhes de audiência, formatos e valores.</p>
     <form id="form-captura">
       <div class="campo">
-        <label for="captura-nome">Nome</label>
+        <label for="captura-nome" data-i18n="contato.nome">Nome</label>
         <input type="text" id="captura-nome" name="nome" autocomplete="name" required>
       </div>
       <div class="campo">
-        <label for="captura-email">E-mail</label>
+        <label for="captura-email" data-i18n="contato.email">E-mail</label>
         <input type="email" id="captura-email" name="email" autocomplete="email" required>
       </div>
-      <button type="submit" class="btn btn-coral" style="width:100%;">Quero receber</button>
-      <p class="modal-confirmacao" id="modal-confirmacao" role="status">Recebido! Em breve o mídia kit chega no seu e-mail.</p>
+      <button type="submit" class="btn btn-coral" style="width:100%;" data-i18n="modal.botao">Quero receber</button>
+      <p class="modal-confirmacao" id="modal-confirmacao" role="status" data-i18n="modal.confirmacao">Recebido! Em breve o mídia kit chega no seu e-mail.</p>
     </form>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/banco.js"></script>
+<script src="js/idiomas.js"></script>
 <script src="js/nichos.js"></script>
 <script>
 (function () {
@@ -611,46 +629,38 @@
   // em /admin. Veja a função carregarVideosDoSite(), mais abaixo.
 
   // Serviços oferecidos (seção 5)
+  // Os textos de cada serviço (título e descrição) ficam em js/idiomas.js, nas chaves servico.1 a servico.6.
   const SERVICOS = [
-    { numero: "01", titulo: "Vídeo UGC", descricao: "Vídeo autêntico, roteirizado e gravado como um conteúdo real de rede social." },
-    { numero: "02", titulo: "Corte para anúncio", descricao: "Edição pensada para performance em tráfego pago, com gancho nos primeiros segundos." },
-    { numero: "03", titulo: "Fotos do produto", descricao: "Imagens estáticas com boa luz e composição para loja, anúncio ou site." },
-    { numero: "04", titulo: "Unboxing", descricao: "Abertura e primeira impressão real do produto, do jeito que o público gosta de ver." },
-    { numero: "05", titulo: "Publicação no meu perfil", descricao: "O conteúdo é publicado no meu Instagram, gerando alcance orgânico para a marca." },
-    { numero: "06", titulo: "Pacote mensal", descricao: "Combinação de formatos entregues todo mês, com previsibilidade de calendário." }
+    { numero: "01", chave: "servico.1" },
+    { numero: "02", chave: "servico.2" },
+    { numero: "03", chave: "servico.3" },
+    { numero: "04", chave: "servico.4" },
+    { numero: "05", chave: "servico.5" },
+    { numero: "06", chave: "servico.6" }
   ];
 
   // Métricas com contador animado (seção 6). "marcas atendidas" é calculado
   // automaticamente a partir da lista MARCAS acima — as demais são placeholders (XXX):
   // troque pelo número real antes de publicar.
   const METRICAS = [
-    { rotulo: "vídeos entregues", valor: null, textoPlaceholder: "XXX" },
-    { rotulo: "marcas atendidas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "views somadas", valor: null, textoPlaceholder: "XXX" },
-    { rotulo: "TROQUE ESTE RÓTULO", valor: null, textoPlaceholder: "XXX" }
+    { rotulo: "metrica.videos", valor: null, textoPlaceholder: "XXX" },
+    { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
+    { rotulo: "metrica.views", valor: null, textoPlaceholder: "XXX" },
+    { rotulo: "metrica.extra", valor: null, textoPlaceholder: "XXX" }
   ];
 
   // Os mesmos três números resumidos, exibidos logo na capa
   const METRICAS_HERO = [
-    { rotulo: "vídeos entregues", valor: null, textoPlaceholder: "XXX" },
-    { rotulo: "marcas atendidas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "views somadas", valor: null, textoPlaceholder: "XXX" }
+    { rotulo: "metrica.videos", valor: null, textoPlaceholder: "XXX" },
+    { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
+    { rotulo: "metrica.views", valor: null, textoPlaceholder: "XXX" }
   ];
 
   // Resultados de campanha (seção 6)
-  const RESULTADOS = [
-    { marca: "Marca 01", titulo: "Resultado a definir", descricao: "Descreva aqui o resultado real dessa campanha." },
-    { marca: "Marca 02", titulo: "Resultado a definir", descricao: "Descreva aqui o resultado real dessa campanha." },
-    { marca: "Marca 03", titulo: "Resultado a definir", descricao: "Descreva aqui o resultado real dessa campanha." }
-  ];
+  const RESULTADOS = [{ n: "01" }, { n: "02" }, { n: "03" }];
 
   // Depoimentos (seção 6)
-  const DEPOIMENTOS = [
-    { texto: "Escreva aqui o depoimento real desse cliente sobre o trabalho.", nome: "Cliente 01", empresa: "Empresa 01" },
-    { texto: "Escreva aqui o depoimento real desse cliente sobre o trabalho.", nome: "Cliente 02", empresa: "Empresa 02" },
-    { texto: "Escreva aqui o depoimento real desse cliente sobre o trabalho.", nome: "Cliente 03", empresa: "Empresa 03" },
-    { texto: "Escreva aqui o depoimento real desse cliente sobre o trabalho.", nome: "Cliente 04", empresa: "Empresa 04" }
-  ];
+  const DEPOIMENTOS = [{ n: "01" }, { n: "02" }, { n: "03" }, { n: "04" }];
 
   // Canais de contato
   const CONTATO = {
@@ -672,6 +682,16 @@
     return el;
   }
 
+  // Cria um elemento cujo texto vem de js/idiomas.js e troca sozinho quando o idioma muda.
+  function criarI18n(tag, className, chave, params) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    el.dataset.i18n = chave;
+    if (params) Object.keys(params).forEach(function (k) { el.dataset[k] = params[k]; });
+    el.textContent = Idiomas.t(chave, params);
+    return el;
+  }
+
   function montarNumero(rotulo, valor, placeholder) {
     const wrap = criarEl("div", "numero-curto reveal");
     const span = criarEl("span", "numero");
@@ -682,7 +702,7 @@
       span.textContent = "0";
     }
     wrap.appendChild(span);
-    wrap.appendChild(criarEl("p", null, rotulo));
+    wrap.appendChild(criarI18n("p", null, rotulo));
     return wrap;
   }
 
@@ -721,33 +741,33 @@
     card.href = item.link || "#";
     card.target = "_blank";
     card.rel = "noopener";
-    card.setAttribute("aria-label", item.titulo + " — assistir vídeo");
+    card.setAttribute("aria-label", Idiomas.t("destaques.assistir", { t: item.titulo }));
 
     const capa = criarEl("div", "destaque-capa");
-    capa.appendChild(criarEl("span", "legenda-formato", item.formato ? ("Capa " + item.formato) : "Capa vertical 9:16"));
+    capa.appendChild(criarTextoSimples("span", "legenda-formato", item.formato ? Idiomas.t("destaques.capa", { f: item.formato }) : Idiomas.t("destaques.capaVertical")));
     const play = criarEl("span", "play-botao");
     play.setAttribute("aria-hidden", "true");
     capa.appendChild(play);
     card.appendChild(capa);
 
     const info = criarEl("div", "destaque-info");
-    info.appendChild(criarEl("span", "destaque-numero", item.destaque));
-    info.appendChild(criarEl("p", "destaque-titulo", item.titulo));
-    if (item.marca) info.appendChild(criarEl("p", "destaque-contexto", item.marca));
+    info.appendChild(criarTextoSimples("span", "destaque-numero", item.destaque));
+    info.appendChild(criarTextoSimples("p", "destaque-titulo", item.titulo));
+    if (item.marca) info.appendChild(criarTextoSimples("p", "destaque-contexto", item.marca));
     card.appendChild(info);
     return card;
   }
 
 
-  function mensagemVazia(texto) {
-    const p = criarEl("p", "aviso-em-breve", texto);
-    return p;
+  function mensagemVazia(chave) {
+    return criarI18n("p", "aviso-em-breve", chave);
   }
   // ---- Vitrine de nichos -------------------------------------------------------------
   // A lista de nichos e os cards ficam em js/nichos.js, junto com as páginas de cada nicho.
   const NICHOS = Nichos.lista;
   const chaveNicho = Nichos.chave;
   const criarTexto = Nichos.criarTexto;
+  const criarTextoSimples = Nichos.criarTexto;
   const montarTituloNicho = Nichos.montarTitulo;
   const montarCartaoNicho = Nichos.montarCartao;
 
@@ -770,7 +790,7 @@
     });
     Object.keys(porChave).forEach(function (k) {
       if (usados[k]) return;
-      nichosDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k] });
+      nichosDados.push({ nome: k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), videos: porChave[k], extra: true });
     });
 
     nichosListaEl.innerHTML = "";
@@ -778,9 +798,9 @@
     // Botões do topo: levam direto até a linha de cada nicho (todos ficam abertos embaixo).
     const abas = document.createElement("nav");
     abas.className = "vitrine-abas";
-    abas.setAttribute("aria-label", "Ir para um nicho");
+    abas.setAttribute("aria-label", Idiomas.t("nichos.nav"));
     nichosDados.forEach(function (dado) {
-      const a = criarTexto("a", "vitrine-aba", dado.nome);
+      const a = criarTexto("a", "vitrine-aba", nomeExibido(dado));
       a.href = "#nicho-" + Nichos.slug(dado.nome);
       abas.appendChild(a);
     });
@@ -793,19 +813,26 @@
     });
   }
 
+  // Nome do nicho no idioma atual. Nichos que não estão na lista (criados só no painel) ficam como foram escritos.
+  function nomeExibido(dado) {
+    if (dado.extra) return dado.nome === "Outros" ? Idiomas.t("nichos.outros") : dado.nome;
+    return Nichos.nome(dado.nome);
+  }
+
   function montarBlocoNicho(dado, indice) {
+    const nomeTela = nomeExibido(dado);
     const bloco = document.createElement("div");
     bloco.className = "vitrine-bloco reveal";
     bloco.id = "nicho-" + Nichos.slug(dado.nome);
     bloco.setAttribute("role", "region");
-    bloco.setAttribute("aria-label", "Nicho: " + dado.nome);
+    bloco.setAttribute("aria-label", Idiomas.t("nichos.regiao", { n: nomeTela }));
 
     const topo = document.createElement("div");
     topo.className = "vitrine-topo";
     const identificacao = document.createElement("div");
     identificacao.className = "vitrine-identificacao";
     identificacao.appendChild(criarTexto("span", "vitrine-numero", doisDigitos(indice + 1)));
-    identificacao.appendChild(montarTituloNicho(dado.nome));
+    identificacao.appendChild(montarTituloNicho(nomeTela));
     if (dado.videos.length) identificacao.appendChild(criarTexto("span", "vitrine-contagem", doisDigitos(dado.videos.length)));
     topo.appendChild(identificacao);
 
@@ -815,12 +842,12 @@
       const b = document.createElement("button");
       b.type = "button";
       b.className = "vitrine-seta";
-      b.setAttribute("aria-label", rotulo + " de " + dado.nome);
+      b.setAttribute("aria-label", Idiomas.t(rotulo, { n: nomeTela }));
       b.textContent = texto;
       return b;
     }
-    const anterior = botaoSeta("←", "Vídeos anteriores");
-    const proximo = botaoSeta("→", "Próximos vídeos");
+    const anterior = botaoSeta("←", "nichos.anterior");
+    const proximo = botaoSeta("→", "nichos.proximo");
     setas.appendChild(anterior);
     setas.appendChild(proximo);
 
@@ -830,14 +857,14 @@
     topo.appendChild(acoes);
     bloco.appendChild(topo);
 
-    const descricao = Nichos.descricao(dado.nome);
+    const descricao = dado.extra ? "" : Nichos.descricao(dado.nome);
     if (descricao) bloco.appendChild(criarTexto("p", "vitrine-descricao", descricao));
 
     const faixa = document.createElement("div");
     faixa.className = "vitrine-faixa";
-    faixa.setAttribute("aria-label", "Vídeos de " + dado.nome);
+    faixa.setAttribute("aria-label", Idiomas.t("nichos.faixa", { n: nomeTela }));
     const emBreve = dado.videos.length === 0;
-    const lista = emBreve ? [0, 1, 2, 3, 4].map(function () { return { titulo: "Vídeo em breve" }; }) : dado.videos;
+    const lista = emBreve ? [0, 1, 2, 3, 4].map(function () { return { titulo: Idiomas.t("nichos.videoEmBreve") }; }) : dado.videos;
     lista.forEach(function (v, k) { faixa.appendChild(montarCartaoNicho(v, k, emBreve)); });
     bloco.appendChild(faixa);
 
@@ -882,11 +909,19 @@
       console.error("Não consegui carregar os vídeos do portfólio:", erro);
     }
 
+    videosCarregados = videos;
+    renderizarVideos();
+  }
+
+  // Monta Destaques e Nichos com os vídeos já buscados. Roda de novo quando o idioma muda.
+  let videosCarregados = null;
+  function renderizarVideos() {
+    if (!videosCarregados) return;
     // ---- Destaques: só os vídeos com o campo "destaque" preenchido, até 3
-    const destaques = videos.filter(function (v) { return v.destaque; }).slice(0, 3);
+    const destaques = videosCarregados.filter(function (v) { return v.destaque; }).slice(0, 3);
     destaquesGridEl.innerHTML = "";
     if (destaques.length === 0) {
-      destaquesGridEl.appendChild(mensagemVazia("Em breve, os vídeos de destaque aparecem aqui."));
+      destaquesGridEl.appendChild(mensagemVazia("destaques.vazio"));
     } else {
       destaques.forEach(function (item) {
         const card = montarCardDestaque(item);
@@ -895,7 +930,7 @@
       });
     }
 
-    renderizarNichos(videos);
+    renderizarNichos(videosCarregados);
   }
 
   // Serviços
@@ -903,8 +938,8 @@
   SERVICOS.forEach(function (s) {
     const card = criarEl("div", "servico-card reveal");
     card.appendChild(criarEl("span", "servico-numero", s.numero));
-    card.appendChild(criarEl("h3", null, s.titulo));
-    card.appendChild(criarEl("p", null, s.descricao));
+    card.appendChild(criarI18n("h3", null, s.chave + ".titulo"));
+    card.appendChild(criarI18n("p", null, s.chave + ".desc"));
     servicosGridEl.appendChild(card);
   });
 
@@ -920,7 +955,7 @@
       span.textContent = "0";
     }
     card.appendChild(span);
-    card.appendChild(criarEl("p", null, m.rotulo));
+    card.appendChild(criarI18n("p", null, m.rotulo));
     metricasGridEl.appendChild(card);
   });
 
@@ -928,9 +963,9 @@
   const resultadosGridEl = document.getElementById("resultados-grid");
   RESULTADOS.forEach(function (r) {
     const card = criarEl("div", "resultado-card reveal");
-    card.appendChild(criarEl("span", "resultado-marca", r.marca));
-    card.appendChild(criarEl("p", "resultado-titulo", r.titulo));
-    card.appendChild(criarEl("p", "resultado-desc", r.descricao));
+    card.appendChild(criarI18n("span", "resultado-marca", "resultado.marca", { n: r.n }));
+    card.appendChild(criarI18n("p", "resultado-titulo", "resultado.titulo"));
+    card.appendChild(criarI18n("p", "resultado-desc", "resultado.desc"));
     resultadosGridEl.appendChild(card);
   });
 
@@ -939,9 +974,9 @@
   DEPOIMENTOS.forEach(function (d) {
     const card = criarEl("div", "depoimento-card reveal");
     card.appendChild(criarEl("span", "depoimento-aspas", "“"));
-    card.appendChild(criarEl("p", "depoimento-texto", d.texto));
-    card.appendChild(criarEl("p", "depoimento-autor", d.nome));
-    card.appendChild(criarEl("p", "depoimento-empresa", d.empresa));
+    card.appendChild(criarI18n("p", "depoimento-texto", "depoimento.texto"));
+    card.appendChild(criarI18n("p", "depoimento-autor", "depoimento.nome", { n: d.n }));
+    card.appendChild(criarI18n("p", "depoimento-empresa", "depoimento.empresa", { n: d.n }));
     depoimentosGridEl.appendChild(card);
   });
 
@@ -958,16 +993,16 @@
   const redes = [
     { texto: "Instagram " + CONTATO.instagramUsuario, href: "https://instagram.com/" + CONTATO.instagramUsuario.replace("@", "") },
     { texto: "WhatsApp", href: "https://wa.me/" + CONTATO.whatsappNumero },
-    { texto: "E-mail", href: "mailto:" + CONTATO.email }
+    { texto: "E-mail", href: "mailto:" + CONTATO.email, chave: "rodape.email" }
   ];
   redes.forEach(function (r) {
     const a = document.createElement("a");
     a.href = r.href;
-    a.textContent = r.texto;
+    a.textContent = r.chave ? Idiomas.t(r.chave) : r.texto;
+    if (r.chave) a.dataset.i18n = r.chave;
     if (r.href.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
     rodapeRedesEl.appendChild(a);
   });
-  document.getElementById("ano-atual").textContent = new Date().getFullYear();
 
   /* =====================================================================
      NAVEGAÇÃO / MENU SANDUÍCHE / ROLAGEM SUAVE
@@ -986,12 +1021,12 @@
   function fecharMenu() {
     menuPrincipal.classList.remove("aberto");
     botaoMenu.setAttribute("aria-expanded", "false");
-    botaoMenu.setAttribute("aria-label", "Abrir menu");
+    botaoMenu.setAttribute("aria-label", Idiomas.t("menu.abrir"));
   }
   function abrirMenu() {
     menuPrincipal.classList.add("aberto");
     botaoMenu.setAttribute("aria-expanded", "true");
-    botaoMenu.setAttribute("aria-label", "Fechar menu");
+    botaoMenu.setAttribute("aria-label", Idiomas.t("menu.fechar"));
   }
   botaoMenu.addEventListener("click", function () {
     const aberto = botaoMenu.getAttribute("aria-expanded") === "true";
@@ -1086,14 +1121,16 @@
       if (resultado.error) throw resultado.error;
       confirmacaoEnvio.style.background = "";
       confirmacaoEnvio.style.color = "";
-      confirmacaoEnvio.textContent = "Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!";
+      confirmacaoEnvio.dataset.i18n = "contato.ok";
+      confirmacaoEnvio.textContent = Idiomas.t("contato.ok");
       confirmacaoEnvio.classList.add("visivel");
       formContato.reset();
     } catch (erro) {
       console.error("Não consegui salvar sua mensagem:", erro);
       confirmacaoEnvio.style.background = "#fbe9e7";
       confirmacaoEnvio.style.color = "#c0392b";
-      confirmacaoEnvio.textContent = "Não consegui enviar agora. Tenta de novo em instantes ou me chama direto pelo WhatsApp.";
+      confirmacaoEnvio.dataset.i18n = "contato.erro";
+      confirmacaoEnvio.textContent = Idiomas.t("contato.erro");
       confirmacaoEnvio.classList.add("visivel");
     } finally {
       botaoEnviar.disabled = false;
@@ -1149,6 +1186,16 @@
   } catch (erro) {
     // sessionStorage indisponível (ex.: navegação privada) — o card simplesmente não é exibido
   }
+
+  // Idioma: preenche os textos e redesenha o que é montado por JavaScript quando a pessoa troca.
+  Idiomas.aoMudar(function () {
+    renderizarVideos();
+    const aberto = botaoMenu.getAttribute("aria-expanded") === "true";
+    botaoMenu.setAttribute("aria-label", Idiomas.t(aberto ? "menu.fechar" : "menu.abrir"));
+    ajustarAlturaHeader();
+  });
+  Idiomas.iniciar();
+  botaoMenu.setAttribute("aria-label", Idiomas.t("menu.abrir"));
 
   modalFechar.addEventListener("click", fecharModalCaptura);
   modalCaptura.addEventListener("click", function (e) {
