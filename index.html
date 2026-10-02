@@ -194,38 +194,34 @@
 
   /* ===== TRABALHOS ===== */
   #trabalhos { padding: 100px 0; }
-  .filtros { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px; }
-  .filtro-btn {
-    background: var(--branco); border: 1px solid var(--borda); padding: 10px 20px; border-radius: 100px;
-    font-weight: 700; font-size: .88rem; color: var(--texto-suave); transition: all .15s ease;
-  }
-  .filtro-btn:hover { border-color: var(--cor-azul-forte); color: var(--cor-azul-forte); }
-  .filtro-btn[aria-pressed="true"] { background: var(--cor-azul-forte); border-color: var(--cor-azul-forte); color: #fff; }
-  .trabalhos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
   .aviso-em-breve { grid-column: 1 / -1; text-align: center; color: var(--texto-suave); background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 40px 24px; font-size: .95rem; }
-  .trabalho-card {
-    background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio);
-    overflow: hidden; box-shadow: var(--sombra); display: flex; flex-direction: column;
-    transition: transform .2s ease, box-shadow .2s ease;
-  }
-  .trabalho-card.escondido { display: none; }
-  .trabalho-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
-  .trabalho-capa { position: relative; aspect-ratio: 4 / 5; background: linear-gradient(155deg, var(--cor-azul), var(--cor-azul-forte) 60%, var(--cor-mauve) 130%); display: flex; align-items: flex-end; padding: 14px; }
-  .trabalho-capa .legenda-formato { color: #fff; font-size: .74rem; font-weight: 700; background: rgba(0,0,0,.28); padding: 5px 10px; border-radius: 100px; }
-  .selo-novo {
-    position: absolute; top: 14px; left: 14px; background: var(--cor-pessego); color: var(--cor-coral-escuro);
-    font-weight: 800; font-size: .72rem; padding: 6px 12px; border-radius: 100px; box-shadow: var(--sombra);
-    transform: rotate(-4deg);
-  }
-  .trabalho-corpo { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .estrelas { color: var(--cor-coral); font-size: .95rem; letter-spacing: 2px; }
-  .trabalho-titulo { font-weight: 800; font-size: 1.05rem; }
-  .trabalho-cliente { font-size: .85rem; color: var(--texto-suave); font-weight: 600; }
-  .trabalho-descricao { font-size: .9rem; flex: 1; }
-  .trabalho-rodape { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
-  .etiqueta-consulta { background: var(--cor-clara); color: var(--cor-mauve); font-weight: 700; font-size: .78rem; padding: 7px 14px; border-radius: 100px; }
-  .contratar-btn { background: var(--cor-azul-forte); color: #fff; font-weight: 700; font-size: .85rem; padding: 10px 16px; border-radius: 100px; white-space: nowrap; }
-  .contratar-btn:hover { background: var(--cor-mauve); }
+
+  /* ===== NICHOS EM CARROSSEL ===== */
+  .nichos-lista { display: grid; gap: 56px; }
+  .nicho-topo { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .nicho-titulo { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0; letter-spacing: -.01em; }
+  .nicho-azul { color: #6E88B0; }
+  .nicho-rosa { color: #E25D6A; }
+  .nicho-neutro { color: var(--texto); }
+  .nicho-contagem { font-size: .8rem; font-weight: 800; color: var(--texto-suave); margin-left: 10px; vertical-align: middle; }
+  .nicho-setas { display: flex; gap: 10px; flex-shrink: 0; }
+  .nicho-seta { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); display: flex; align-items: center; justify-content: center; transition: border-color .15s ease, transform .15s ease; }
+  .nicho-seta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .nicho-seta:hover:not(:disabled) { border-color: var(--cor-azul-forte); transform: translateY(-2px); }
+  .nicho-seta:disabled { opacity: .35; cursor: default; }
+  .nicho-faixa { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 4px; padding: 4px 4px 18px; margin: 0 -4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .nicho-faixa::-webkit-scrollbar { display: none; }
+  .nicho-cartao { position: relative; flex: 0 0 auto; width: 270px; aspect-ratio: 9 / 16; border-radius: 24px; overflow: hidden; scroll-snap-align: start; display: block; color: #fff; box-shadow: var(--sombra); transition: transform .2s ease, box-shadow .2s ease; }
+  a.nicho-cartao:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
+  .nicho-chips { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; flex-wrap: wrap; gap: 6px; z-index: 2; }
+  .nicho-chip { background: rgba(255,255,255,.93); color: var(--texto); font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 6px 11px; border-radius: 100px; }
+  .nicho-chip-destaque { background: var(--cor-azul-forte); color: #fff; }
+  .nicho-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,.93); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra-forte); z-index: 2; }
+  .nicho-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #7B5068; margin-left: 4px; }
+  .nicho-cartao-rodape { position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 16px 16px; background: linear-gradient(to top, rgba(32,20,30,.74), rgba(32,20,30,0)); z-index: 1; }
+  .nicho-cartao-titulo { display: block; font-weight: 800; font-size: 1.05rem; line-height: 1.2; }
+  .nicho-cartao-rotulo { display: block; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; opacity: .82; margin-top: 5px; }
+  .nicho-cartao.em-breve .nicho-play { background: rgba(255,255,255,.6); }
 
   /* ===== SERVIÇOS ===== */
   #servicos { padding: 100px 0; background: var(--branco); }
@@ -327,12 +323,15 @@
     .hero-inner { grid-template-columns: 1fr; }
     .hero-photo { max-width: 380px; margin: 0 auto; }
     .sobre-grid { grid-template-columns: 1fr; }
-    .destaques-grid, .trabalhos-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .destaques-grid, .servicos-grid { grid-template-columns: repeat(2, 1fr); }
     .metricas-grid, .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
     .resultados-grid { grid-template-columns: 1fr; }
     .contato-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) {
+    .nicho-cartao { width: 220px; border-radius: 20px; }
+    .nicho-seta { width: 38px; height: 38px; }
+    .nichos-lista { gap: 44px; }
     :root { --header-h: 92px; }
     .hamburger { display: flex; }
     .nav-links {
@@ -345,7 +344,7 @@
     .nav-links a { display: block; padding: 16px 24px; }
     .nav-cta { border-radius: 0; text-align: center; }
     .hero-numbers { grid-template-columns: 1fr; }
-    .destaques-grid, .trabalhos-grid, .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
+    .destaques-grid, .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
     .hero { padding: 40px 0 28px; }
     #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
   }
@@ -449,11 +448,10 @@
     <div class="container">
       <div class="secao-titulo reveal">
         <span class="eyebrow">Vitrine</span>
-        <h2>Trabalhos por <em>nicho</em></h2>
-        <p>Filtre por categoria e veja os trabalhos mais parecidos com o que você precisa.</p>
+        <h2>Meus <em>nichos</em></h2>
+        <p>Conteúdos que já criei, separados por nicho. Use as setas ou arraste para ver mais.</p>
       </div>
-      <div class="filtros reveal" id="filtros" role="group" aria-label="Filtrar trabalhos por nicho"></div>
-      <div class="trabalhos-grid" id="trabalhos-grid"></div>
+      <div class="nichos-lista" id="nichos-lista"></div>
     </div>
   </section>
 
@@ -694,8 +692,7 @@
   // Elementos onde os vídeos entram (preenchidos por carregarVideosDoSite,
   // mais abaixo, depois que a página busca os dados no Supabase)
   const destaquesGridEl = document.getElementById("destaques-grid");
-  const trabalhosGridEl = document.getElementById("trabalhos-grid");
-  const filtrosEl = document.getElementById("filtros");
+  const nichosListaEl = document.getElementById("nichos-lista");
 
   function montarCardDestaque(item) {
     const card = criarEl("a", "destaque-card reveal");
@@ -719,45 +716,169 @@
     return card;
   }
 
-  function montarCardTrabalho(item) {
-    const card = criarEl("article", "trabalho-card reveal");
-    card.dataset.categoria = item.nicho || "Geral";
-
-    const capa = criarEl("div", "trabalho-capa");
-    capa.appendChild(criarEl("span", "legenda-formato", item.formato ? ("Foto do trabalho — " + item.formato) : "Foto do trabalho"));
-    card.appendChild(capa);
-
-    const corpo = criarEl("div", "trabalho-corpo");
-    const estrelas = criarEl("div", "estrelas", "★★★★★");
-    estrelas.setAttribute("role", "img");
-    estrelas.setAttribute("aria-label", "Avaliação 5 de 5 estrelas");
-    corpo.appendChild(estrelas);
-    corpo.appendChild(criarEl("h3", "trabalho-titulo", item.titulo));
-    corpo.appendChild(criarEl("p", "trabalho-cliente", [item.marca, item.nicho].filter(Boolean).join(" · ")));
-
-    const rodape = criarEl("div", "trabalho-rodape");
-    rodape.appendChild(criarEl("span", "etiqueta-consulta", "sob consulta"));
-    const contratarBtn = criarEl("a", "contratar-btn", "contratar →");
-    contratarBtn.href = "#contato";
-    rodape.appendChild(contratarBtn);
-    corpo.appendChild(rodape);
-
-    card.appendChild(corpo);
-    return card;
-  }
 
   function mensagemVazia(texto) {
     const p = criarEl("p", "aviso-em-breve", texto);
     return p;
   }
+  // ---- Nichos em carrossel -----------------------------------------------------------
+  // Os nichos aparecem nesta ordem. Cada vídeo entra no carrossel do nicho que tiver o
+  // mesmo nome no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
+  const NICHOS = [
+    "Casa & Decoração", "Gastronomia", "Saúde e Fitness", "Beleza & Autocuidado",
+    "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
+    "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
+  ];
+  const CONECTORES = ["&", "e", "em", "de", "do", "da", "para"];
+  const FUNDOS_CARTAO = [
+    "linear-gradient(165deg, #C9DEE4 0%, #93A4C3 48%, #7B5068 120%)",
+    "linear-gradient(165deg, #93A4C3 0%, #7B5068 55%, #E25D6A 130%)",
+    "linear-gradient(165deg, #F4A08E 0%, #E25D6A 50%, #7B5068 125%)"
+  ];
+  const ICONE_SETA = {
+    anterior: '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg>',
+    proximo: '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg>'
+  };
 
-  function filtrarTrabalhos(categoria) {
-    Array.from(trabalhosGridEl.children).forEach(function (card) {
-      if (!card.dataset) return;
-      const mostrar = categoria === "Todos" || card.dataset.categoria === categoria;
-      card.classList.toggle("escondido", !mostrar);
+  function chaveNicho(t) {
+    return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/&/g, " e ").replace(/\s+/g, " ").trim();
+  }
+
+  function criarTexto(tag, classe, texto) {
+    const el = document.createElement(tag);
+    el.className = classe;
+    el.textContent = texto;
+    return el;
+  }
+
+  // Primeira palavra em azul, última em rosa; "&", "e", "em"... ficam neutros.
+  // Se for uma palavra só, fica azul.
+  function montarTituloNicho(nome) {
+    const h3 = document.createElement("h3");
+    h3.className = "nicho-titulo";
+    const palavras = nome.split(/\s+/);
+    const significativas = [];
+    palavras.forEach(function (p, i) { if (CONECTORES.indexOf(p.toLowerCase()) === -1) significativas.push(i); });
+    const primeira = significativas.length ? significativas[0] : 0;
+    const ultima = significativas.length > 1 ? significativas[significativas.length - 1] : -1;
+    palavras.forEach(function (p, i) {
+      const classe = i === primeira ? "nicho-azul" : (i === ultima ? "nicho-rosa" : "nicho-neutro");
+      h3.appendChild(criarTexto("span", classe, p));
+      if (i < palavras.length - 1) h3.appendChild(document.createTextNode(" "));
+    });
+    return h3;
+  }
+
+  function montarCartaoNicho(video, indice, nomeNicho, emBreve) {
+    const temLink = !emBreve && video.link && video.link !== "#";
+    const cartao = document.createElement(temLink ? "a" : "div");
+    cartao.className = "nicho-cartao" + (emBreve ? " em-breve" : "");
+    cartao.style.background = FUNDOS_CARTAO[indice % FUNDOS_CARTAO.length];
+    if (temLink) {
+      cartao.href = video.link;
+      cartao.target = "_blank";
+      cartao.rel = "noopener";
+      cartao.setAttribute("aria-label", video.titulo + ", assistir vídeo");
+    }
+
+    const chips = document.createElement("div");
+    chips.className = "nicho-chips";
+    if (emBreve) chips.appendChild(criarTexto("span", "nicho-chip", "Em breve"));
+    if (video.marca) chips.appendChild(criarTexto("span", "nicho-chip", video.marca));
+    if (video.destaque) chips.appendChild(criarTexto("span", "nicho-chip nicho-chip-destaque", video.destaque));
+    cartao.appendChild(chips);
+
+    const play = document.createElement("span");
+    play.className = "nicho-play";
+    play.setAttribute("aria-hidden", "true");
+    cartao.appendChild(play);
+
+    const rodape = document.createElement("div");
+    rodape.className = "nicho-cartao-rodape";
+    rodape.appendChild(criarTexto("strong", "nicho-cartao-titulo", video.titulo));
+    rodape.appendChild(criarTexto("span", "nicho-cartao-rotulo", nomeNicho));
+    cartao.appendChild(rodape);
+    return cartao;
+  }
+
+  function montarNicho(nome, videos) {
+    const bloco = document.createElement("div");
+    bloco.className = "nicho reveal";
+    bloco.setAttribute("role", "region");
+    bloco.setAttribute("aria-label", "Nicho: " + nome);
+
+    const topo = document.createElement("div");
+    topo.className = "nicho-topo";
+    const titulo = montarTituloNicho(nome);
+    if (videos.length) titulo.appendChild(criarTexto("span", "nicho-contagem", String(videos.length)));
+    topo.appendChild(titulo);
+
+    const setas = document.createElement("div");
+    setas.className = "nicho-setas";
+    function botaoSeta(sentido) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "nicho-seta";
+      b.setAttribute("aria-label", (sentido === "anterior" ? "Vídeos anteriores" : "Próximos vídeos") + " de " + nome);
+      b.innerHTML = ICONE_SETA[sentido];
+      return b;
+    }
+    const anterior = botaoSeta("anterior");
+    const proximo = botaoSeta("proximo");
+    setas.appendChild(anterior);
+    setas.appendChild(proximo);
+    topo.appendChild(setas);
+    bloco.appendChild(topo);
+
+    const faixa = document.createElement("div");
+    faixa.className = "nicho-faixa";
+    const emBreve = videos.length === 0;
+    const lista = emBreve ? [0, 1, 2, 3].map(function () { return { titulo: "Vídeo em breve" }; }) : videos;
+    lista.forEach(function (v, i) { faixa.appendChild(montarCartaoNicho(v, i, nome, emBreve)); });
+    bloco.appendChild(faixa);
+
+    function atualizarSetas() {
+      const maximo = faixa.scrollWidth - faixa.clientWidth;
+      anterior.disabled = faixa.scrollLeft <= 8;
+      proximo.disabled = faixa.scrollLeft >= maximo - 8;
+    }
+    function rolar(direcao) {
+      faixa.scrollBy({ left: direcao * faixa.clientWidth * 0.9, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
+    }
+    anterior.addEventListener("click", function () { rolar(-1); });
+    proximo.addEventListener("click", function () { rolar(1); });
+    faixa.addEventListener("scroll", atualizarSetas, { passive: true });
+    window.addEventListener("resize", atualizarSetas);
+    setTimeout(atualizarSetas, 50);
+    return bloco;
+  }
+
+  function renderizarNichos(videos) {
+    nichosListaEl.innerHTML = "";
+    const porChave = {};
+    videos.forEach(function (v) {
+      const k = chaveNicho(v.nicho) || "outros";
+      (porChave[k] = porChave[k] || []).push(v);
+    });
+    const usados = {};
+    function adicionar(nome, itens) {
+      const bloco = montarNicho(nome, itens);
+      nichosListaEl.appendChild(bloco);
+      observer.observe(bloco);
+    }
+    NICHOS.forEach(function (nome) {
+      const k = chaveNicho(nome);
+      usados[k] = true;
+      adicionar(nome, porChave[k] || []);
+    });
+    // Vídeos de um nicho que não está na lista acima ganham o próprio carrossel.
+    Object.keys(porChave).forEach(function (k) {
+      if (usados[k]) return;
+      adicionar(k === "outros" ? "Outros" : String(porChave[k][0].nicho).trim(), porChave[k]);
     });
   }
+
 
   // Busca os vídeos visíveis no Supabase e monta as seções de Destaques e
   // Trabalhos por nicho. Se algo falhar (sem internet, banco fora do ar),
@@ -790,37 +911,7 @@
       });
     }
 
-    // ---- Trabalhos por nicho: todos os vídeos visíveis
-    trabalhosGridEl.innerHTML = "";
-    filtrosEl.innerHTML = "";
-    if (videos.length === 0) {
-      filtrosEl.style.display = "none";
-      trabalhosGridEl.appendChild(mensagemVazia("Em breve, novos trabalhos aparecem por aqui."));
-      return;
-    }
-    filtrosEl.style.display = "";
-
-    const categorias = ["Todos"].concat(
-      Array.from(new Set(videos.map(function (v) { return v.nicho || "Geral"; })))
-    );
-    categorias.forEach(function (categoria, indice) {
-      const btn = criarEl("button", "filtro-btn", categoria);
-      btn.type = "button";
-      btn.dataset.categoria = categoria;
-      btn.setAttribute("aria-pressed", indice === 0 ? "true" : "false");
-      btn.addEventListener("click", function () {
-        Array.from(filtrosEl.children).forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-        btn.setAttribute("aria-pressed", "true");
-        filtrarTrabalhos(categoria);
-      });
-      filtrosEl.appendChild(btn);
-    });
-
-    videos.forEach(function (item) {
-      const card = montarCardTrabalho(item);
-      trabalhosGridEl.appendChild(card);
-      observer.observe(card);
-    });
+    renderizarNichos(videos);
   }
 
   // Serviços
