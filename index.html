@@ -97,7 +97,7 @@
   .navbar { background: rgba(246,247,245,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borda); }
   .nav-inner { max-width: var(--container); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
   .logo { display: flex; align-items: center; }
-  .logo img { height: 46px; width: auto; display: block; }
+  .logo img { height: 56px; width: auto; display: block; }
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a { font-weight: 600; font-size: .95rem; padding: 6px 2px; border-bottom: 2px solid transparent; }
   .nav-links a:hover { border-color: var(--cor-azul-forte); }
@@ -120,7 +120,8 @@
   .hero-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
   .eyebrow { color: var(--cor-azul-forte); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; display: inline-block; margin-bottom: 14px; background: var(--cor-clara); padding: 6px 14px; border-radius: 100px; }
   .hero .eyebrow { background: var(--branco); }
-  .hero-text h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); margin-bottom: 18px; }
+  .hero-text h1 { margin: 10px 0 22px; line-height: 0; }
+  .hero-text h1 img { display: block; width: clamp(250px, 34vw, 400px); height: auto; margin-left: -4px; }
   .hero-tagline { font-size: 1.15rem; max-width: 520px; }
   .hero-buttons { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
   .hero-photo { position: relative; }
@@ -280,7 +281,7 @@
   /* ===== RODAPÉ ===== */
   .rodape { background: #212D3C; color: #d7e3ec; padding: 48px 0 28px; }
   .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
-  .rodape-nome img { height: 52px; width: auto; display: block; }
+  .rodape-nome img { height: 64px; width: auto; display: block; }
   .rodape-redes { display: flex; gap: 18px; flex-wrap: wrap; }
   .rodape-redes a { font-weight: 600; font-size: .9rem; }
   .rodape-redes a:hover { color: var(--cor-pessego); }
@@ -354,7 +355,7 @@
   <div class="ribbon-72h">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
   <nav class="navbar" aria-label="Menu principal">
     <div class="nav-inner">
-      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/logo-nome.png" alt="Priscilla Baron" width="93" height="46"></a>
+      <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo"><img src="imagens/marca/logo-pb.png" alt="Priscilla Baron" width="73" height="56"></a>
       <button class="hamburger" id="botao-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
         <span></span><span></span><span></span>
       </button>
@@ -376,7 +377,7 @@
     <div class="hero-inner">
       <div class="hero-text reveal">
         <span class="eyebrow">UGC Creator</span>
-        <h1>Priscilla <em>Baron</em></h1>
+        <h1><img src="imagens/marca/logo-nome.png" alt="Priscilla Baron" width="400" height="198"></h1>
         <p class="hero-tagline">Crio vídeos autênticos que fazem a sua marca conversar de verdade com quem realmente compra — do roteiro à entrega.</p>
         <div class="hero-buttons">
           <a href="#contato" class="btn btn-primary">Falar comigo</a>
@@ -529,7 +530,7 @@
 <!-- ===== 8. RODAPÉ ===== -->
 <footer class="rodape">
   <div class="container rodape-inner">
-    <span class="rodape-nome"><img src="imagens/marca/logo-nome-branco.png" alt="Priscilla Baron" width="105" height="52" loading="lazy"></span>
+    <span class="rodape-nome"><img src="imagens/marca/logo-pb-branco.png" alt="Priscilla Baron" width="82" height="64" loading="lazy"></span>
     <div class="rodape-redes" id="rodape-redes"></div>
     <p class="rodape-copyright">© <span id="ano-atual"></span> Priscilla Baron — Sua Cidade. Todos os direitos reservados.</p>
   </div>
