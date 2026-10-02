@@ -13,6 +13,7 @@
       item.classList.add("ativo");
       document.querySelectorAll(".aba").forEach(function (a) { a.classList.remove("ativa"); });
       document.getElementById("aba-" + aba).classList.add("ativa");
+      document.dispatchEvent(new CustomEvent("aba-ativada", { detail: aba }));
       fecharGaveta();
     });
   });
@@ -46,6 +47,7 @@
 
     await iniciarModulo("Portfólio", window.AdminPortfolio);
     await iniciarModulo("Marcas", window.AdminMarcas);
+    await iniciarModulo("Prospecção", window.AdminProspeccao);
     await iniciarModulo("Calendário", window.AdminCalendario);
     await iniciarModulo("Campanhas", window.AdminCampanhas);
     await iniciarModulo("Checklist", window.AdminChecklist);

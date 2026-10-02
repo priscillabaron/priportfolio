@@ -31,6 +31,8 @@
       filtroSituacao = e.target.value;
       renderizarTabela();
     });
+    document.getElementById("btn-selecionar-visiveis").addEventListener("click", selecionarVisiveis);
+    document.getElementById("btn-limpar-selecao").addEventListener("click", limparSelecao);
 
     await carregarMarcas();
   }
@@ -41,6 +43,58 @@
     );
     marcasAtuais = resultado.data || [];
     renderizarTabela();
+  }
+
+  // ---- seleção para a prospecção (fica salva na coluna "selecionada") ----------
+  function temEmail(m) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(m.email || "").trim());
+  }
+
+  function atualizarResumoSelecao() {
+    var total = marcasAtuais.filter(function (m) { return m.selecionada && temEmail(m); }).length;
+    var el = document.getElementById("resumo-selecao-marcas");
+    if (el) el.innerHTML = "<b>" + total + "</b> " + (total === 1 ? "marca selecionada" : "marcas selecionadas") + " para a prospecção";
+  }
+
+  async function atualizarEmLotes(ids, campos) {
+    for (var i = 0; i < ids.length; i += 100) {
+      var r = await U.consulta("marcas", window.bancoCliente.from("marcas").update(campos).in("id", ids.slice(i, i + 100)));
+      if (r.error) return false;
+    }
+    return true;
+  }
+
+  async function alternarSelecao(marca, caixa) {
+    var novo = caixa.checked;
+    marca.selecionada = novo;
+    atualizarResumoSelecao();
+    var r = await U.consulta("marcas", window.bancoCliente.from("marcas").update({ selecionada: novo }).eq("id", marca.id));
+    if (r.error) {
+      marca.selecionada = !novo;
+      caixa.checked = !novo;
+      atualizarResumoSelecao();
+      U.toast("Não consegui salvar a seleção. Rode o arquivo disparo.sql no Supabase.", true);
+    }
+  }
+
+  async function selecionarVisiveis() {
+    var ids = marcasFiltradas().filter(temEmail).filter(function (m) { return !m.selecionada; }).map(function (m) { return m.id; });
+    if (ids.length === 0) { U.toast("Nenhuma marca com e-mail para selecionar aqui."); return; }
+    var ok = await atualizarEmLotes(ids, { selecionada: true });
+    if (!ok) { U.toast("Não consegui salvar a seleção. Rode o arquivo disparo.sql no Supabase.", true); return; }
+    marcasAtuais.forEach(function (m) { if (ids.indexOf(m.id) !== -1) m.selecionada = true; });
+    renderizarTabela();
+    U.toast(ids.length + (ids.length === 1 ? " marca selecionada." : " marcas selecionadas."));
+  }
+
+  async function limparSelecao() {
+    var ids = marcasAtuais.filter(function (m) { return m.selecionada; }).map(function (m) { return m.id; });
+    if (ids.length === 0) { U.toast("Não há seleção para limpar."); return; }
+    var r = await U.consulta("marcas", window.bancoCliente.from("marcas").update({ selecionada: false }).eq("selecionada", true));
+    if (r.error) { U.toast("Não consegui limpar a seleção.", true); return; }
+    marcasAtuais.forEach(function (m) { m.selecionada = false; });
+    renderizarTabela();
+    U.toast("Seleção limpa.");
   }
 
   async function alternarFavorita(marca) {
@@ -65,6 +119,7 @@
     var aviso = document.getElementById("aviso-marcas-vazio");
     corpo.innerHTML = "";
     var lista = marcasFiltradas();
+    atualizarResumoSelecao();
 
     if (marcasAtuais.length === 0) {
       aviso.style.display = "block";
@@ -82,6 +137,22 @@
       var tr = document.createElement("tr");
       tr.className = "linha-clicavel" + (marca.favorita ? " linha-favorita" : "");
 
+      var tdSelecao = document.createElement("td");
+      var caixa = document.createElement("input");
+      caixa.type = "checkbox";
+      caixa.className = "check-linha";
+      caixa.checked = !!marca.selecionada && temEmail(marca);
+      if (!temEmail(marca)) {
+        caixa.disabled = true;
+        caixa.title = "Esta marca não tem e-mail";
+      } else {
+        caixa.title = "Selecionar para a prospecção";
+      }
+      caixa.addEventListener("click", function (e) { e.stopPropagation(); });
+      caixa.addEventListener("change", function () { alternarSelecao(marca, caixa); });
+      tdSelecao.appendChild(caixa);
+      tr.appendChild(tdSelecao);
+
       var tdEstrela = document.createElement("td");
       var btnEstrela = document.createElement("button");
       btnEstrela.className = "btn-icone";
@@ -95,6 +166,9 @@
       tdNome.innerHTML = "<b>" + U.escapar(marca.nome) + "</b>";
       if (String(marca.nome || "").toLowerCase().indexOf("exemplo") !== -1) {
         tdNome.innerHTML += ' <span class="pilula pilula-exemplo">exemplo</span>';
+      }
+      if (marca.prospeccao_enviada_em) {
+        tdNome.innerHTML += ' <span class="pilula pilula-lead" title="E-mail de apresentação enviado">e-mail enviado ' + U.formatarDataBr(marca.prospeccao_enviada_em).slice(0, 5) + "</span>";
       }
       tr.appendChild(tdNome);
 

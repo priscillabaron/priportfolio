@@ -38,6 +38,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Marcas
       </button>
+      <button class="nav-item" data-aba="prospeccao">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><polyline points="3.5 7 12 13 20.5 7"/></svg>
+        Prospecção
+      </button>
       <p class="nav-grupo-titulo">Minha rotina</p>
       <button class="nav-item" data-aba="calendario">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -145,11 +149,20 @@
         </select>
       </div>
 
+      <div class="barra-selecao" id="barra-selecao-marcas">
+        <p id="resumo-selecao-marcas"><b>0</b> marcas selecionadas para a prospecção</p>
+        <div class="barra-selecao-acoes">
+          <button class="btn btn-outline" id="btn-selecionar-visiveis">Selecionar todas as que estão aparecendo</button>
+          <button class="btn btn-outline" id="btn-limpar-selecao">Limpar seleção</button>
+        </div>
+      </div>
+
       <div class="painel">
         <div class="tabela-wrap">
           <table class="tabela">
             <thead>
               <tr>
+                <th></th>
                 <th></th>
                 <th>Marca</th>
                 <th>Contato</th>
@@ -168,6 +181,170 @@
         </div>
         <div id="aviso-marcas-vazio" class="aviso-vazio" style="display:none;"></div>
       </div>
+    </section>
+
+    <!-- ===================== ABA: PROSPECÇÃO ===================== -->
+    <section class="aba" id="aba-prospeccao">
+
+      <div class="pro-capa">
+        <div class="pro-capa-esq">
+          <div class="pro-capa-icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><polyline points="3.5 7 12 13 20.5 7"/></svg>
+          </div>
+          <div>
+            <h1>Prospecção</h1>
+            <p>Manda o seu e-mail de apresentação para várias marcas de uma vez, chamando cada uma pelo nome.</p>
+            <div class="pro-etiquetas">
+              <span class="pro-etiqueta">teste antes, sempre</span>
+              <span class="pro-etiqueta">a chave vive no Supabase</span>
+              <span class="pro-etiqueta">quem responde SAIR sai da lista</span>
+            </div>
+          </div>
+        </div>
+        <div class="pro-capa-numero">
+          <b id="pro-total-enviados">-</b>
+          <span>enviados até agora</span>
+        </div>
+      </div>
+
+      <div class="pro-aviso" id="pro-aviso-tabelas" style="display:none;"></div>
+
+      <div class="pro-cartoes" id="pro-cartoes"></div>
+
+      <div class="painel" id="pro-sem-email" style="display:none;">
+        <p class="painel-titulo">A sua base ainda está sem e-mail</p>
+        <p class="pro-nota">Nenhuma marca da aba Marcas tem e-mail preenchido. Cadastre ou importe a planilha primeiro, e depois volte aqui para enviar.</p>
+        <button class="btn btn-primario" id="pro-ir-marcas-vazio">Ir para Marcas</button>
+      </div>
+
+      <div id="pro-envio">
+        <div class="pro-grade">
+
+          <div class="pro-form-col">
+
+            <div class="painel">
+              <p class="painel-titulo">1. Para quem vai</p>
+              <p class="pro-nota"><b>Os e-mails vêm da sua aba Marcas.</b> Aqui você só escolhe qual parte da sua base vai receber.</p>
+              <select class="filtro-select" id="pro-lista" style="width:100%; border-radius:12px;"></select>
+              <div class="pro-contagem" id="pro-contagem"></div>
+              <div class="pro-aviso" id="pro-alerta-lista" style="display:none; margin-top:12px; margin-bottom:0;"></div>
+              <label class="campo-check" style="margin-top:14px;">
+                <input type="checkbox" id="pro-pular-enviados" checked> Pular quem já recebeu este mesmo assunto
+              </label>
+            </div>
+
+            <div class="painel">
+              <p class="painel-titulo">2. Como enviar</p>
+              <div class="pro-acoes" style="margin-top:0;">
+                <button class="chip-filtro ativo" data-modo-envio="resend">Enviar pelo Resend</button>
+                <button class="chip-filtro" data-modo-envio="rascunho">Modo rascunho (Gmail)</button>
+              </div>
+              <p class="pro-nota" id="pro-nota-modo-envio" style="margin-top:10px; margin-bottom:0;">O Resend manda tudo sozinho. Ele só entrega para outras pessoas depois que você verificar um domínio seu.</p>
+            </div>
+
+            <div class="painel">
+              <p class="painel-titulo">3. Escrever o e-mail</p>
+              <div class="pro-acoes" style="margin-top:0; margin-bottom:14px;">
+                <button class="chip-filtro ativo" data-modo-escrita="texto">Texto fácil</button>
+                <button class="chip-filtro" data-modo-escrita="html">HTML</button>
+              </div>
+
+              <div class="form-grade">
+                <div class="campo-f"><label for="pro-assunto">Assunto</label><input type="text" id="pro-assunto" placeholder="Ex: Uma ideia de conteúdo para a {{marca}}"></div>
+
+                <div id="pro-grupo-texto" class="form-grade">
+                  <div class="campo-f"><label for="pro-texto">Texto do e-mail</label><textarea id="pro-texto" class="pro-texto-grande" placeholder="Oi, {{nome}}! Eu sou a Priscilla, criadora de conteúdo UGC. Vi a {{marca}} e achei que a gente podia criar algo bem legal juntas.&#10;&#10;Se quiser ver meu trabalho: https://priscillabaron.github.io/priportfolio/"></textarea></div>
+                  <div class="form-linha">
+                    <div class="campo-f"><label for="pro-botao-texto">Texto do botão (opcional)</label><input type="text" id="pro-botao-texto" placeholder="Ver meu portfólio"></div>
+                    <div class="campo-f"><label for="pro-botao-link">Link do botão</label><input type="text" id="pro-botao-link" placeholder="https://priscillabaron.github.io/priportfolio/"></div>
+                  </div>
+                  <p class="pro-nota" style="margin:0;">Use {{nome}} e {{marca}} onde quiser. Links escritos no meio do texto viram clicáveis sozinhos.</p>
+                </div>
+
+                <div id="pro-grupo-html" class="form-grade" style="display:none;">
+                  <div class="campo-f"><label for="pro-html">HTML do e-mail</label><textarea id="pro-html" class="pro-codigo" spellcheck="false" placeholder="Cole aqui o HTML pronto. O {{nome}} e o {{marca}} continuam funcionando."></textarea></div>
+                  <div><button type="button" class="btn btn-outline" id="pro-html-modelo">Começar do modelo pronto</button></div>
+                  <p class="pro-nota" style="margin:0;">Neste modo o que você colar sai exatamente assim. O rodapé do SAIR precisa estar no seu HTML.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="painel">
+              <p class="painel-titulo">4. Enviar</p>
+
+              <div id="pro-acoes-resend">
+                <div class="pro-acoes">
+                  <button class="btn btn-outline" id="pro-btn-teste">Enviar teste pra mim</button>
+                  <button class="btn btn-primario" id="pro-btn-disparar">Disparar</button>
+                </div>
+                <div class="pro-progresso" id="pro-progresso">
+                  <p class="pro-progresso-texto" id="pro-progresso-texto"></p>
+                  <div class="barra-progresso"><div class="barra-progresso-preenchida" id="pro-progresso-barra" style="width:0%;"></div></div>
+                </div>
+                <div id="pro-resumo-envio"></div>
+              </div>
+
+              <div id="pro-acoes-rascunho" style="display:none;">
+                <div class="pro-acoes">
+                  <button class="btn btn-primario" id="pro-btn-fila">Montar a fila de rascunhos</button>
+                </div>
+                <div id="pro-fila"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pro-preview-col">
+            <div class="pro-palco">
+              <div class="pro-palco-topo">
+                <p>Prévia do e-mail</p>
+                <button class="btn btn-outline" id="pro-btn-tela-cheia">Ver em tela cheia</button>
+              </div>
+              <div class="pro-janela">
+                <div class="pro-janela-cab">
+                  <div class="pro-avatar">P</div>
+                  <div>
+                    <p class="pro-prev-assunto" id="pro-prev-assunto"></p>
+                    <p class="pro-prev-de">Priscilla Baron &lt;pribaronparcerias@gmail.com&gt; · para você</p>
+                  </div>
+                </div>
+                <iframe class="pro-iframe" id="pro-prev-iframe" sandbox="allow-same-origin" title="Prévia do e-mail"></iframe>
+              </div>
+              <p class="pro-prev-rodape" id="pro-prev-exemplo"></p>
+              <p class="pro-prev-rodape">Antes de disparar, mande o teste pra você mesma e abra no celular.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="painel">
+        <p class="painel-titulo">Descadastro</p>
+        <p class="pro-nota">Quando alguém responder SAIR, digite o e-mail aqui. Quem está nesta lista nunca mais recebe, em nenhum disparo.</p>
+        <div class="pro-optout-form">
+          <input type="email" id="pro-optout-email" placeholder="e-mail de quem pediu SAIR">
+          <button class="btn btn-outline" id="pro-optout-add">Adicionar ao descadastro</button>
+        </div>
+        <div id="pro-optout-lista"></div>
+      </div>
+
+      <div class="painel">
+        <p class="painel-titulo">Histórico de envios</p>
+        <div class="barra-filtros">
+          <div class="campo-busca">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="pro-busca-historico" placeholder="Buscar por e-mail">
+          </div>
+        </div>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead><tr><th>Para</th><th>Assunto</th><th>Quando</th><th>Resultado</th></tr></thead>
+            <tbody id="pro-corpo-historico"></tbody>
+          </table>
+        </div>
+        <div id="pro-historico-vazio" class="aviso-vazio" style="display:none;"></div>
+      </div>
+
     </section>
 
     <!-- ===================== ABA 3: CALENDÁRIO ===================== -->
@@ -495,6 +672,41 @@
   </div>
 </div>
 
+<div class="modal-fundo" id="modal-pro-confirma">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="pro-confirma-titulo"></p>
+      <button class="modal-fechar" data-fechar-modal="modal-pro-confirma"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <p id="pro-confirma-texto" style="font-size:.9rem; margin-bottom:12px;"></p>
+    <div id="pro-confirma-aviso"></div>
+    <div class="form-rodape">
+      <button type="button" class="btn btn-outline" id="pro-confirma-nao">Cancelar</button>
+      <button type="button" class="btn btn-primario" id="pro-confirma-sim">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-fundo" id="modal-pro-tela-cheia">
+  <div class="modal-caixa pro-tela-cheia">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo">Como vai chegar</p>
+      <button class="modal-fechar" data-fechar-modal="modal-pro-tela-cheia"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="pro-janela" style="box-shadow:none; border:1px solid var(--borda);">
+      <div class="pro-janela-cab">
+        <div class="pro-avatar">P</div>
+        <div>
+          <p class="pro-prev-assunto" id="pro-cheia-assunto"></p>
+          <p class="pro-prev-de">Priscilla Baron &lt;pribaronparcerias@gmail.com&gt; · para você</p>
+        </div>
+      </div>
+      <iframe class="pro-iframe" id="pro-cheia-iframe" sandbox="allow-same-origin" title="Prévia em tela cheia"></iframe>
+    </div>
+    <div class="form-rodape"><button type="button" class="btn btn-outline" data-fechar-modal="modal-pro-tela-cheia">Fechar</button></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -507,6 +719,7 @@
 <script src="js/calendario.js"></script>
 <script src="js/campanhas.js"></script>
 <script src="js/checklist.js"></script>
+<script src="js/prospeccao.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
