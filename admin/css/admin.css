@@ -524,6 +524,25 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-copiar:hover { background: #e8eef7; }
 .cont-dica { font-size: .78rem; color: #5d6573; font-weight: 500; }
 
+/* projetos */
+.cont-intro { font-size: .9rem; color: var(--c-suave); }
+.cont-projetos-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.cont-projeto-card { display: flex; align-items: center; gap: 14px; text-align: left; padding: 18px; border-radius: 14px; background: #fff; border: 1px solid var(--c-borda); color: var(--c-navy); }
+.cont-projeto-card:hover { border-color: #b9c7d8; box-shadow: 0 4px 14px rgba(29,43,64,.06); }
+.cont-projeto-nome { display: block; font-size: 1.05rem; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.cont-projeto-meta { display: block; font-size: .8rem; color: var(--c-suave); margin-top: 3px; }
+.cont-bandeira { width: 44px; height: 30px; object-fit: cover; border-radius: 5px; box-shadow: 0 0 0 1px rgba(29,43,64,.14); flex-shrink: 0; background: #eceff3; }
+.cont-bandeira-grande { width: 56px; height: 38px; }
+.cont-bandeira-vazia { display: flex; align-items: center; justify-content: center; color: var(--c-suave); font-size: .7rem; font-weight: 700; }
+.cont-bandeira-vazia svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+.cont-projeto-topo { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.cont-voltar { border: 0; background: transparent; color: var(--c-azul); font-size: .9rem; font-weight: 700; padding: 6px 2px; }
+.cont-projeto-titulo { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
+.cont-projeto-titulo small { display: block; font-size: .8rem; font-weight: 600; color: var(--c-suave); }
+.cont-pais-linha { display: flex; align-items: center; gap: 12px; }
+.cont-pais-linha select { flex: 1; min-width: 0; }
+.cont-pais-previa { display: inline-flex; width: 44px; justify-content: center; }
+
 @media (max-width: 820px) {
   .cont-semana { grid-template-columns: 1fr; }
   .cont-dia { min-height: 60px; }

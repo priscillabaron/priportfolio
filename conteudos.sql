@@ -8,6 +8,15 @@
 
 create extension if not exists "pgcrypto";
 
+-- ---- Projetos (ex.: Inverno Chile 2026) ------------------------------------------
+create table if not exists public.conteudos_projetos (
+  id         uuid primary key default gen_random_uuid(),
+  perfil     text not null check (perfil in ('entracomigo', 'favoritospri', 'ugc')),
+  nome       text not null,
+  pais       text,                          -- código do país com 2 letras (ex.: CL para Chile)
+  criado_em  timestamptz not null default now()
+);
+
 -- ---- Ideias de conteúdo --------------------------------------------------------
 create table if not exists public.conteudos_ideias (
   id             uuid primary key default gen_random_uuid(),
@@ -36,6 +45,8 @@ alter table public.conteudos_ideias add column if not exists marcar   text;
 alter table public.conteudos_ideias add column if not exists legenda  text;
 alter table public.conteudos_ideias add column if not exists links    text;
 alter table public.conteudos_ideias add column if not exists mensagem text;
+-- Ideia que pertence a um projeto (vazio = ideia solta). Apagar o projeto apaga as ideias dele.
+alter table public.conteudos_ideias add column if not exists projeto_id uuid references public.conteudos_projetos(id) on delete cascade;
 
 -- ---- Agenda (gravar, postar, publicidade) ---------------------------------------
 create table if not exists public.conteudos_agenda (
@@ -50,11 +61,16 @@ create table if not exists public.conteudos_agenda (
 -- ---- Segurança (RLS): só a dona, logada, lê e escreve ---------------------------
 alter table public.conteudos_ideias enable row level security;
 alter table public.conteudos_agenda enable row level security;
+alter table public.conteudos_projetos enable row level security;
 
 drop policy if exists "dona total conteudos_ideias" on public.conteudos_ideias;
 drop policy if exists "dona total conteudos_agenda" on public.conteudos_agenda;
+drop policy if exists "dona total conteudos_projetos" on public.conteudos_projetos;
 
 create policy "dona total conteudos_ideias" on public.conteudos_ideias
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 create policy "dona total conteudos_agenda" on public.conteudos_agenda
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+create policy "dona total conteudos_projetos" on public.conteudos_projetos
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');

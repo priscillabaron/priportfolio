@@ -39,6 +39,9 @@
     pinterest: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.5-1.8-4.3-4.4-4.3-3 0-4.8 2.3-4.8 4.6 0 .9.4 1.9.8 2.4.1.1.1.2.1.3l-.3 1.2c0 .2-.2.2-.4.1-1.3-.6-2.2-2.6-2.2-4.2 0-3.4 2.5-6.6 7.2-6.6 3.8 0 6.7 2.7 6.7 6.3 0 3.8-2.4 6.8-5.7 6.8-1.1 0-2.2-.6-2.5-1.3l-.7 2.6c-.2 1-.9 2.2-1.4 2.9A10 10 0 1 0 12 2Z"/></svg>'
   };
   var ICONE_CALENDARIO = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4M7.5 13.5h3M13.5 13.5h3M7.5 17h3"/></svg>';
+  // Países que você pode escolher nos projetos (o nome em português vem do próprio navegador).
+  var CODIGOS_PAIS = ["BR","AR","CL","UY","PY","BO","PE","CO","EC","VE","MX","US","CA","CU","DO","JM","BS","PA","CR","GT","BZ","HN","SV","NI","AW","CW","PR","PT","ES","FR","IT","DE","GB","IE","NL","BE","LU","CH","AT","GR","TR","HR","SI","RS","ME","AL","BG","RO","HU","CZ","SK","PL","LT","LV","EE","FI","SE","NO","DK","IS","MT","CY","UA","RU","GE","AM","IL","JO","LB","AE","QA","SA","OM","EG","MA","TN","KE","TZ","ZA","NA","MU","SC","MZ","MG","CV","SN","GH","NG","ET","IN","NP","LK","MV","TH","VN","KH","LA","MY","SG","ID","PH","CN","HK","TW","JP","KR","MN","AU","NZ","FJ","PF","KZ","UZ"];
+  var ICONE_GLOBO = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.500 18.300 12 21c-2.500-2.700-3.800-5.700-3.800-9S9.500 5.700 12 3Z"/></svg>';
   var ICONE_DATA = '<svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/></svg>';
   var ICONE_LINK = '<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
 
@@ -100,6 +103,9 @@
     ancora: hojeISO(),
     ideias: [],
     eventos: [],
+    projetos: [],
+    projetoId: null,
+    projetoEdit: null,
     frase: Math.floor(Math.random() * FRASES.length),
     rascunho: null,
     evento: null
@@ -144,7 +150,7 @@
      --------------------------------------------------------------------- */
   async function iniciar() {
     [
-      "cont-frase", "cont-outra-frase", "cont-perfis", "cont-abas", "cont-bloco-ideias", "cont-bloco-cal",
+      "cont-frase", "cont-outra-frase", "cont-perfis", "cont-abas", "cont-bloco-ideias", "cont-bloco-cal", "cont-bloco-projetos", "cont-projetos-grade", "cont-projetos-vazio", "cont-novo-projeto", "cont-projeto-topo", "cont-projeto-voltar", "cont-projeto-titulo", "cont-projeto-editar", "form-cont-projeto", "cp-titulo-modal", "cp-nome", "cp-pais", "cp-bandeira", "cp-apagar",
       "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade",
       "cont-cal-ant", "cont-cal-prox", "cont-cal-hoje", "cont-cal-rotulo", "cont-cal-modos", "cont-cal-adicionar",
       "cont-legenda-geral", "cont-cal-corpo", "cont-gaveta", "cont-gaveta-kicker", "cont-gaveta-titulo",
@@ -162,6 +168,15 @@
     el["cont-cal-prox"].addEventListener("click", function () { moverCalendario(1); });
     el["cont-cal-hoje"].addEventListener("click", function () { est.ancora = hojeISO(); renderCalendario(); });
     el["cont-cal-adicionar"].addEventListener("click", function () { abrirEvento(null, hojeISO()); });
+
+    // projetos
+    preencherPaises();
+    el["cont-novo-projeto"].addEventListener("click", function () { abrirFormProjeto(null); });
+    el["cont-projeto-voltar"].addEventListener("click", function () { est.projetoId = null; render(); });
+    el["cont-projeto-editar"].addEventListener("click", function () { abrirFormProjeto(projetoAtual()); });
+    el["form-cont-projeto"].addEventListener("submit", salvarProjeto);
+    el["cp-apagar"].addEventListener("click", apagarProjeto);
+    el["cp-pais"].addEventListener("change", atualizarPreviaBandeira);
 
     // gaveta da ideia
     document.querySelectorAll("[data-fechar-gaveta]").forEach(function (b) { b.addEventListener("click", fecharGaveta); });
@@ -220,6 +235,8 @@
     est.ideias = resI.data || [];
     var resE = await U.consulta("conteudos_agenda", window.bancoCliente.from("conteudos_agenda").select("*"));
     est.eventos = resE.data || [];
+    var resP = await U.consulta("conteudos_projetos", window.bancoCliente.from("conteudos_projetos").select("*"));
+    est.projetos = resP.data || [];
     render();
   }
 
@@ -232,10 +249,19 @@
     renderPerfis();
     var geral = est.perfil === "geral";
     var aba = geral ? "cal" : est.aba;
+    // projeto aberto que sumiu (apagado) ou que é de outro perfil: volta para a lista
+    var proj = projetoAtual();
+    if (proj && proj.perfil !== est.perfil) { est.projetoId = null; proj = null; }
+    if (est.projetoId && !proj) est.projetoId = null;
     renderAbas(geral, aba);
-    el["cont-bloco-ideias"].style.display = aba === "ideias" ? "" : "none";
+    var dentroDoProjeto = aba === "projetos" && !!proj;
+    el["cont-bloco-ideias"].style.display = (aba === "ideias" || dentroDoProjeto) ? "" : "none";
+    el["cont-bloco-projetos"].style.display = (aba === "projetos" && !proj) ? "" : "none";
     el["cont-bloco-cal"].style.display = aba === "cal" ? "" : "none";
-    if (aba === "ideias") renderIdeias(); else renderCalendario();
+    el["cont-projeto-topo"].style.display = dentroDoProjeto ? "" : "none";
+    if (aba === "cal") renderCalendario();
+    else if (aba === "projetos" && !proj) renderProjetos();
+    else { if (dentroDoProjeto) renderTopoProjeto(proj); renderIdeias(); }
   }
 
   function renderPerfis() {
@@ -243,6 +269,7 @@
     PERFIS.concat([GERAL]).forEach(function (p) {
       var b = botao("cont-perfil" + (est.perfil === p.id ? " ativo" : ""), "", function () {
         est.perfil = p.id;
+        est.projetoId = null;
         if (!achar(plataformasDo(p.id), est.plataforma)) est.plataforma = "instagram";
         est.filtro = "all";
         render();
@@ -273,8 +300,8 @@
   function renderAbas(geral, aba) {
     el["cont-abas"].innerHTML = "";
     el["cont-abas"].style.display = geral ? "none" : "";
-    [["ideias", "Ideias de Conteúdos"], ["cal", "Calendário"]].forEach(function (par) {
-      var b = botao("cont-aba" + (aba === par[0] ? " ativo" : ""), par[1], function () { est.aba = par[0]; render(); });
+    [["ideias", "Ideias de Conteúdos"], ["cal", "Calendário"], ["projetos", "Projetos"]].forEach(function (par) {
+      var b = botao("cont-aba" + (aba === par[0] ? " ativo" : ""), par[1], function () { est.aba = par[0]; est.projetoId = null; est.filtro = "all"; render(); });
       b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", aba === par[0] ? "true" : "false");
       el["cont-abas"].appendChild(b);
@@ -282,7 +309,14 @@
   }
 
   /* ---------- ideias ---------- */
-  function ideiasDoPerfil() { return est.ideias.filter(function (i) { return i.perfil === est.perfil; }); }
+  // Ideias soltas (aba Ideias) ou as ideias do projeto aberto (aba Projetos).
+  function ideiasDoPerfil() {
+    var proj = est.aba === "projetos" ? projetoAtual() : null;
+    return est.ideias.filter(function (i) {
+      if (i.perfil !== est.perfil) return false;
+      return proj ? i.projeto_id === proj.id : !i.projeto_id;
+    });
+  }
 
   function renderIdeias() {
     var minhas = ideiasDoPerfil();
@@ -480,13 +514,138 @@
   }
 
   /* ---------------------------------------------------------------------
+     PROJETOS
+     --------------------------------------------------------------------- */
+  var nomesPais = null;
+  function nomePais(codigo) {
+    if (!codigo) return "";
+    if (!nomesPais) {
+      try { nomesPais = new Intl.DisplayNames(["pt-BR"], { type: "region" }); } catch (erro) { nomesPais = { of: function (c) { return c; } }; }
+    }
+    try { return nomesPais.of(codigo) || codigo; } catch (erro) { return codigo; }
+  }
+
+  // Bandeira do país (imagem). Se a imagem não carregar, mostra o código do país no lugar.
+  function criarBandeira(codigo, grande) {
+    var classe = "cont-bandeira" + (grande ? " cont-bandeira-grande" : "");
+    if (!codigo) {
+      var globo = criar("span", classe + " cont-bandeira-vazia");
+      globo.innerHTML = ICONE_GLOBO;
+      return globo;
+    }
+    var c = String(codigo).toLowerCase();
+    var img = document.createElement("img");
+    img.className = classe;
+    img.src = "https://flagcdn.com/w80/" + c + ".png";
+    img.srcset = "https://flagcdn.com/w160/" + c + ".png 2x";
+    img.alt = "Bandeira: " + nomePais(codigo);
+    img.addEventListener("error", function () { img.replaceWith(criar("span", classe + " cont-bandeira-vazia", String(codigo).toUpperCase())); });
+    return img;
+  }
+
+  function preencherPaises() {
+    el["cp-pais"].innerHTML = "";
+    var vazio = document.createElement("option");
+    vazio.value = "";
+    vazio.textContent = "Sem país (ex.: uma publicidade)";
+    el["cp-pais"].appendChild(vazio);
+    CODIGOS_PAIS.map(function (c) { return { codigo: c, nome: nomePais(c) }; })
+      .sort(function (a, b) { return a.nome.localeCompare(b.nome, "pt-BR"); })
+      .forEach(function (p) {
+        var o = document.createElement("option");
+        o.value = p.codigo;
+        o.textContent = p.nome;
+        el["cp-pais"].appendChild(o);
+      });
+  }
+
+  function atualizarPreviaBandeira() {
+    el["cp-bandeira"].innerHTML = "";
+    el["cp-bandeira"].appendChild(criarBandeira(el["cp-pais"].value, false));
+  }
+
+  function projetoAtual() { return est.projetoId ? achar(est.projetos, est.projetoId) : null; }
+
+  function renderProjetos() {
+    var lista = est.projetos.filter(function (p) { return p.perfil === est.perfil; });
+    lista.sort(function (a, b) { return String(b.criado_em || "").localeCompare(String(a.criado_em || "")); });
+    el["cont-projetos-vazio"].style.display = lista.length === 0 ? "" : "none";
+    el["cont-projetos-grade"].innerHTML = "";
+    lista.forEach(function (p) {
+      var ideias = est.ideias.filter(function (i) { return i.projeto_id === p.id; });
+      var postadas = ideias.filter(function (i) { return i.status === "postado"; }).length;
+      var b = botao("cont-projeto-card", "", function () { est.projetoId = p.id; est.filtro = "all"; est.plataforma = "instagram"; render(); });
+      b.appendChild(criarBandeira(p.pais, true));
+      var textos = criar("div");
+      textos.appendChild(criar("span", "cont-projeto-nome", p.nome));
+      var meta = (ideias.length === 1 ? "1 ideia" : ideias.length + " ideias") + (postadas ? " · " + postadas + (postadas === 1 ? " postada" : " postadas") : "");
+      if (p.pais) meta = nomePais(p.pais) + " · " + meta;
+      textos.appendChild(criar("span", "cont-projeto-meta", meta));
+      b.appendChild(textos);
+      el["cont-projetos-grade"].appendChild(b);
+    });
+  }
+
+  function renderTopoProjeto(proj) {
+    el["cont-projeto-titulo"].innerHTML = "";
+    el["cont-projeto-titulo"].appendChild(criarBandeira(proj.pais, true));
+    var t = criar("div");
+    t.appendChild(document.createTextNode(proj.nome));
+    if (proj.pais) t.appendChild(criar("small", "", nomePais(proj.pais)));
+    el["cont-projeto-titulo"].appendChild(t);
+  }
+
+  function abrirFormProjeto(proj) {
+    est.projetoEdit = proj ? { id: proj.id } : { id: null };
+    el["cp-titulo-modal"].textContent = proj ? "Editar projeto" : "Novo projeto";
+    el["cp-nome"].value = proj ? proj.nome : "";
+    el["cp-pais"].value = proj && proj.pais ? proj.pais : "";
+    el["cp-apagar"].style.display = proj ? "" : "none";
+    atualizarPreviaBandeira();
+    U.abrirModal("modal-cont-projeto");
+    setTimeout(function () { el["cp-nome"].focus(); }, 50);
+  }
+
+  async function salvarProjeto(e) {
+    e.preventDefault();
+    var nome = el["cp-nome"].value.trim();
+    if (!nome) { U.toast("Dê um nome ao projeto.", true); return; }
+    var pais = el["cp-pais"].value || null;
+    var editando = est.projetoEdit && est.projetoEdit.id;
+    var consulta = editando
+      ? window.bancoCliente.from("conteudos_projetos").update({ nome: nome, pais: pais }).eq("id", editando)
+      : window.bancoCliente.from("conteudos_projetos").insert({ perfil: est.perfil, nome: nome, pais: pais }).select();
+    var resultado = await U.consulta("conteudos_projetos", consulta);
+    if (resultado.error) return;
+    U.fecharModal("modal-cont-projeto");
+    U.toast("Projeto salvo.");
+    // projeto novo: já abre para você colocar as ideias
+    if (!editando && resultado.data && resultado.data[0]) { est.aba = "projetos"; est.projetoId = resultado.data[0].id; est.filtro = "all"; est.plataforma = "instagram"; }
+    await carregar();
+  }
+
+  async function apagarProjeto() {
+    var proj = est.projetoEdit && est.projetoEdit.id ? achar(est.projetos, est.projetoEdit.id) : null;
+    if (!proj) return;
+    var n = est.ideias.filter(function (i) { return i.projeto_id === proj.id; }).length;
+    var aviso = 'Excluir o projeto "' + proj.nome + '"?' + (n ? " As " + n + (n === 1 ? " ideia" : " ideias") + " dentro dele também serão apagadas." : "");
+    if (!confirm(aviso)) return;
+    var resultado = await U.consulta("conteudos_projetos", window.bancoCliente.from("conteudos_projetos").delete().eq("id", proj.id));
+    if (resultado.error) return;
+    U.fecharModal("modal-cont-projeto");
+    est.projetoId = null;
+    U.toast("Projeto excluído.");
+    await carregar();
+  }
+  /* ---------------------------------------------------------------------
      GAVETA: NOVA IDEIA / EDITAR IDEIA
      --------------------------------------------------------------------- */
   function novaIdeia() {
     abrirGaveta({
       id: null, perfil: est.perfil, plataforma: est.plataforma, formato: "", titulo: "", descricao: "", status: "agravar",
       pendente: "", data_postagem: "", inspiracao: "", publi: est.perfil === "ugc", marca: "", prazo: "",
-      marcar: "", legenda: "", links: "", mensagem: ""
+      marcar: "", legenda: "", links: "", mensagem: "",
+      projeto_id: (est.aba === "projetos" && projetoAtual()) ? projetoAtual().id : null
     });
   }
 
@@ -497,7 +656,8 @@
       pendente: ideia.pendente || "", data_postagem: ideia.data_postagem ? String(ideia.data_postagem).slice(0, 10) : "",
       inspiracao: ideia.inspiracao || "", publi: !!ideia.publi, marca: ideia.marca || "",
       prazo: ideia.prazo ? String(ideia.prazo).slice(0, 10) : "",
-      marcar: ideia.marcar || "", legenda: ideia.legenda || "", links: ideia.links || "", mensagem: ideia.mensagem || ""
+      marcar: ideia.marcar || "", legenda: ideia.legenda || "", links: ideia.links || "", mensagem: ideia.mensagem || "",
+      projeto_id: ideia.projeto_id || null
     };
     var r = est.rascunho;
     el["cont-gaveta-titulo"].textContent = r.id ? "Editar ideia" : "Nova ideia";
@@ -540,7 +700,8 @@
   function desenharKicker() {
     var p = perfilDe(est.rascunho.perfil);
     var pl = achar(PLATAFORMAS, est.rascunho.plataforma) || PLATAFORMAS[0];
-    el["cont-gaveta-kicker"].textContent = (p.nome + " · " + pl.rotulo).toUpperCase();
+    var proj = est.rascunho.projeto_id ? achar(est.projetos, est.rascunho.projeto_id) : null;
+    el["cont-gaveta-kicker"].textContent = (p.nome + " · " + pl.rotulo + (proj ? " · " + proj.nome : "")).toUpperCase();
   }
 
   function desenharStatus() {
@@ -613,6 +774,8 @@
       links: r.links ? r.links : null,
       mensagem: r.mensagem ? r.mensagem : null
     };
+    // só envia projeto_id para ideias de projeto (assim ideias soltas funcionam mesmo antes de criar a coluna)
+    if (r.projeto_id) dados.projeto_id = r.projeto_id;
     var consulta = r.id
       ? window.bancoCliente.from("conteudos_ideias").update(dados).eq("id", r.id)
       : window.bancoCliente.from("conteudos_ideias").insert(dados);

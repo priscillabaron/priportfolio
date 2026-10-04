@@ -526,6 +526,11 @@
 
         <!-- Ideias de conteúdos -->
         <section class="cont-bloco" id="cont-bloco-ideias">
+          <div class="cont-projeto-topo" id="cont-projeto-topo" style="display:none;">
+            <button type="button" class="cont-voltar" id="cont-projeto-voltar">← Projetos</button>
+            <div class="cont-projeto-titulo" id="cont-projeto-titulo"></div>
+            <button type="button" class="cont-botao-claro" id="cont-projeto-editar">Editar projeto</button>
+          </div>
           <div class="cont-plataformas" id="cont-plataformas"></div>
           <div class="cont-barra">
             <div class="cont-filtros" id="cont-filtros"></div>
@@ -536,6 +541,19 @@
           </div>
           <div class="cont-vazio" id="cont-vazio" style="display:none;">Nenhuma ideia aqui ainda. Clique em <b>Nova ideia</b> para começar.</div>
           <div class="cont-grade" id="cont-grade"></div>
+        </section>
+
+        <!-- Projetos -->
+        <section class="cont-bloco" id="cont-bloco-projetos" style="display:none;">
+          <div class="cont-barra">
+            <p class="cont-intro">Um projeto reúne todas as ideias de uma viagem ou de uma publicidade.</p>
+            <button type="button" class="cont-botao-escuro" id="cont-novo-projeto">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Novo projeto
+            </button>
+          </div>
+          <div class="cont-vazio" id="cont-projetos-vazio" style="display:none;">Nenhum projeto ainda. Clique em <b>Novo projeto</b>, por exemplo "Inverno Chile 2026".</div>
+          <div class="cont-projetos-grade" id="cont-projetos-grade"></div>
         </section>
 
         <!-- Calendário -->
@@ -870,6 +888,31 @@
     </form>
   </div>
 </div>
+<!-- Janela: novo projeto / editar projeto -->
+<div class="modal-fundo" id="modal-cont-projeto">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="cp-titulo-modal">Novo projeto</p>
+      <button class="modal-fechar" data-fechar-modal="modal-cont-projeto" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-cont-projeto" novalidate>
+      <div class="campo-f"><label for="cp-nome">Nome do projeto</label><input type="text" id="cp-nome" placeholder="Ex.: Inverno Chile 2026"></div>
+      <div class="campo-f">
+        <label for="cp-pais">País do projeto</label>
+        <div class="cont-pais-linha">
+          <span class="cont-pais-previa" id="cp-bandeira"></span>
+          <select id="cp-pais"></select>
+        </div>
+      </div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="cp-apagar" style="display:none;">Excluir</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-cont-projeto">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
