@@ -154,7 +154,7 @@
       "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade",
       "cont-cal-ant", "cont-cal-prox", "cont-cal-hoje", "cont-cal-rotulo", "cont-cal-modos", "cont-cal-adicionar",
       "cont-legenda-geral", "cont-cal-corpo", "cont-gaveta", "cont-gaveta-kicker", "cont-gaveta-titulo",
-      "ci-titulo", "ci-desc", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
+      "ci-titulo", "ci-desc", "ci-serie-marca", "ci-serie-campo", "ci-serie", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
       "ci-inspiracao", "ci-inspiracao-link", "ci-publi", "ci-publi-campos", "ci-marca", "ci-prazo", "ci-apagar", "ci-salvar",
       "form-cont-evento", "ce-titulo-modal", "ce-tipo", "ce-titulo", "ce-data", "ce-perfil", "ce-apagar"
     ].forEach(function (id) { el[id] = document.getElementById(id); });
@@ -184,6 +184,12 @@
     ligarCampoRascunho("ci-titulo", "titulo");
     ligarCampoRascunho("ci-desc", "descricao");
     ligarCampoRascunho("ci-pendente", "pendente");
+    ligarCampoRascunho("ci-serie", "serie");
+    el["ci-serie-marca"].addEventListener("change", function () {
+      var ligada = el["ci-serie-marca"].checked;
+      el["ci-serie-campo"].style.display = ligada ? "" : "none";
+      if (ligada) { el["ci-serie"].focus(); } else { el["ci-serie"].value = ""; est.rascunho.serie = ""; }
+    });
     ligarCampoRascunho("ci-marcar", "marcar");
     ligarCampoRascunho("ci-legenda", "legenda");
     ligarCampoRascunho("ci-links", "links");
@@ -364,6 +370,7 @@
     chipStatus.style.background = st.bg;
     chipStatus.style.color = st.fg;
     chips.appendChild(chipStatus);
+    if (i.serie) chips.appendChild(criar("span", "cont-chip cont-chip-serie", "Série " + i.serie));
     if (i.publi) chips.appendChild(criar("span", "cont-chip cont-chip-publi", "Publi"));
     c.appendChild(chips);
 
@@ -645,6 +652,7 @@
       id: null, perfil: est.perfil, plataforma: est.plataforma, formato: "", titulo: "", descricao: "", status: "agravar",
       pendente: "", data_postagem: "", inspiracao: "", publi: est.perfil === "ugc", marca: "", prazo: "",
       marcar: "", legenda: "", links: "", mensagem: "",
+      serie: "",
       projeto_id: (est.aba === "projetos" && projetoAtual()) ? projetoAtual().id : null
     });
   }
@@ -657,6 +665,8 @@
       inspiracao: ideia.inspiracao || "", publi: !!ideia.publi, marca: ideia.marca || "",
       prazo: ideia.prazo ? String(ideia.prazo).slice(0, 10) : "",
       marcar: ideia.marcar || "", legenda: ideia.legenda || "", links: ideia.links || "", mensagem: ideia.mensagem || "",
+      serie: ideia.serie || "",
+      serieOriginal: ideia.serie || "",
       projeto_id: ideia.projeto_id || null
     };
     var r = est.rascunho;
@@ -664,6 +674,9 @@
     el["ci-titulo"].value = r.titulo;
     el["ci-desc"].value = r.descricao;
     el["ci-pendente"].value = r.pendente;
+    el["ci-serie"].value = r.serie;
+    el["ci-serie-marca"].checked = !!r.serie;
+    el["ci-serie-campo"].style.display = r.serie ? "" : "none";
     el["ci-marcar"].value = r.marcar;
     el["ci-legenda"].value = r.legenda;
     el["ci-links"].value = r.links;
@@ -776,6 +789,9 @@
     };
     // só envia projeto_id para ideias de projeto (assim ideias soltas funcionam mesmo antes de criar a coluna)
     if (r.projeto_id) dados.projeto_id = r.projeto_id;
+    // série: só envia se tiver número ou se precisar limpar (assim o resto salva mesmo antes de criar a coluna)
+    var serie = (r.serie || "").trim();
+    if (serie || r.serieOriginal) dados.serie = serie || null;
     var consulta = r.id
       ? window.bancoCliente.from("conteudos_ideias").update(dados).eq("id", r.id)
       : window.bancoCliente.from("conteudos_ideias").insert(dados);

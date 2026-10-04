@@ -45,6 +45,8 @@ alter table public.conteudos_ideias add column if not exists marcar   text;
 alter table public.conteudos_ideias add column if not exists legenda  text;
 alter table public.conteudos_ideias add column if not exists links    text;
 alter table public.conteudos_ideias add column if not exists mensagem text;
+-- Série: parte do vídeo dentro de uma série (ex.: 1/2). Vazio = não é série.
+alter table public.conteudos_ideias add column if not exists serie text;
 -- Ideia que pertence a um projeto (vazio = ideia solta). Apagar o projeto apaga as ideias dele.
 alter table public.conteudos_ideias add column if not exists projeto_id uuid references public.conteudos_projetos(id) on delete cascade;
 

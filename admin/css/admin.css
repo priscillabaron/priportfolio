@@ -448,6 +448,7 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-chip { font-size: .75rem; font-weight: 700; padding: 4px 9px; border-radius: 999px; }
 .cont-chip-formato { background: var(--c-navy); color: #fff; }
 .cont-chip-publi { background: #fbe4ea; color: #a3324f; }
+.cont-chip-serie { background: #fde0ec; color: #b3265a; }
 .cont-ideia-titulo { font-size: 1.03rem; font-weight: 700; line-height: 1.3; text-wrap: pretty; }
 .cont-ideia-desc { font-size: .88rem; color: #4a5260; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .cont-ideia-pendente { font-size: .8rem; color: #8a5a00; background: #fdf3de; border-radius: 8px; padding: 8px 10px; line-height: 1.4; }
