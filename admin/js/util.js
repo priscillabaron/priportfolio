@@ -138,8 +138,11 @@
     var aviso = document.getElementById("aviso-tabelas");
     if (!aviso) return;
     aviso.style.display = "block";
-    var lista = Object.keys(tabelasComProblema).join(", ");
-    aviso.textContent = "Não encontrei a tabela ou uma coluna esperada em: " + lista + ". Rode o arquivo banco.sql no Supabase. O resto do painel continua funcionando normalmente.";
+    var nomes = Object.keys(tabelasComProblema);
+    var soConteudos = nomes.every(function (n) { return n.indexOf("conteudos_") === 0; });
+    var algumConteudos = nomes.some(function (n) { return n.indexOf("conteudos_") === 0; });
+    var arquivo = soConteudos ? "conteudos.sql" : (algumConteudos ? "banco.sql e o conteudos.sql" : "banco.sql");
+    aviso.textContent = "Não encontrei a tabela ou uma coluna esperada em: " + nomes.join(", ") + ". Rode o arquivo " + arquivo + " no Supabase. O resto do painel continua funcionando normalmente.";
   };
   window.AdminUtil.consulta = async function (nomeTabela, promessa) {
     try {

@@ -51,6 +51,7 @@
     await iniciarModulo("Calendário", window.AdminCalendario);
     await iniciarModulo("Campanhas", window.AdminCampanhas);
     await iniciarModulo("Checklist", window.AdminChecklist);
+    await iniciarModulo("Conteúdos", window.AdminConteudos);
   }
 
   tudoPronto();

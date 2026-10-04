@@ -9,7 +9,7 @@
 <title>Painel — Priscilla Baron</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -56,6 +56,11 @@
       <button class="nav-item" data-aba="checklist">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         Checklist
+      </button>
+      <p class="nav-grupo-titulo">Meus conteúdos</p>
+      <button class="nav-item" data-aba="conteudos">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
+        Conteúdos
       </button>
     </nav>
     <div class="sidebar-rodape">
@@ -500,6 +505,66 @@
       </div>
     </section>
 
+
+    <!-- ===================== ABA 7: CONTEÚDOS ===================== -->
+    <section class="aba" id="aba-conteudos">
+      <div class="cont">
+        <div class="cont-banner">
+          <div class="cont-banner-texto">
+            <p class="cont-banner-rotulo">PARA HOJE</p>
+            <p class="cont-banner-frase" id="cont-frase"></p>
+          </div>
+          <button type="button" class="cont-banner-botao" id="cont-outra-frase">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+            Outra frase
+          </button>
+        </div>
+
+        <div class="cont-perfis" id="cont-perfis" role="group" aria-label="Perfis"></div>
+
+        <div class="cont-abas" id="cont-abas" role="tablist"></div>
+
+        <!-- Ideias de conteúdos -->
+        <section class="cont-bloco" id="cont-bloco-ideias">
+          <div class="cont-plataformas" id="cont-plataformas"></div>
+          <div class="cont-barra">
+            <div class="cont-filtros" id="cont-filtros"></div>
+            <button type="button" class="cont-botao-escuro" id="cont-nova-ideia">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nova ideia
+            </button>
+          </div>
+          <div class="cont-vazio" id="cont-vazio" style="display:none;">Nenhuma ideia aqui ainda. Clique em <b>Nova ideia</b> para começar.</div>
+          <div class="cont-grade" id="cont-grade"></div>
+        </section>
+
+        <!-- Calendário -->
+        <section class="cont-bloco cont-cal" id="cont-bloco-cal" style="display:none;">
+          <div class="cont-cal-topo">
+            <div class="cont-cal-nav">
+              <button type="button" class="cont-quadrado" id="cont-cal-ant" aria-label="Anterior">‹</button>
+              <button type="button" class="cont-quadrado" id="cont-cal-prox" aria-label="Próximo">›</button>
+              <button type="button" class="cont-quadrado cont-quadrado-texto" id="cont-cal-hoje">Hoje</button>
+              <p class="cont-cal-rotulo" id="cont-cal-rotulo"></p>
+            </div>
+            <div class="cont-cal-acoes">
+              <div class="cont-modos" id="cont-cal-modos"></div>
+              <button type="button" class="cont-botao-escuro" id="cont-cal-adicionar">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Adicionar
+              </button>
+            </div>
+          </div>
+          <div class="cont-legenda">
+            <span><i style="background:#e9a23b"></i>Gravar</span>
+            <span><i style="background:#3f6e9a"></i>Postar</span>
+            <span><i style="background:#d9577a"></i>Publicidade</span>
+            <span id="cont-legenda-geral" style="display:none;">· a foto mostra de qual perfil é</span>
+          </div>
+          <div id="cont-cal-corpo"></div>
+        </section>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -722,6 +787,74 @@
   </div>
 </div>
 
+<!-- Gaveta: nova ideia / editar ideia -->
+<div class="cont-gaveta-fundo" id="cont-gaveta">
+  <div class="cont-gaveta-fora" data-fechar-gaveta></div>
+  <aside class="cont-gaveta" role="dialog" aria-modal="true" aria-labelledby="cont-gaveta-titulo">
+    <div class="cont-gaveta-topo">
+      <div>
+        <p class="cont-gaveta-kicker" id="cont-gaveta-kicker"></p>
+        <p class="cont-gaveta-titulo" id="cont-gaveta-titulo">Nova ideia</p>
+      </div>
+      <button type="button" class="cont-quadrado" data-fechar-gaveta aria-label="Fechar">×</button>
+    </div>
+    <form id="form-conteudo-ideia" class="cont-gaveta-corpo" novalidate>
+      <label class="cont-campo"><span>Ideia do conteúdo</span><input type="text" id="ci-titulo" placeholder="Ex.: 5 cafés para conhecer em Gramado"></label>
+      <label class="cont-campo"><span>O que vai ter nesse conteúdo</span><textarea id="ci-desc" rows="4" placeholder="Roteiro, cenas, falas, gancho inicial..."></textarea></label>
+      <div class="cont-campo"><span>Status</span><div class="cont-pilulas" id="ci-status"></div></div>
+      <label class="cont-campo cont-pendente" id="ci-pendente-wrap" style="display:none;"><span>O que está pendente?</span><textarea id="ci-pendente" rows="3" placeholder="Ex.: faltam as cenas do quarto e a fala final"></textarea></label>
+      <div class="cont-duas">
+        <label class="cont-campo"><span>Data prevista de postagem</span><input type="date" id="ci-data"></label>
+        <label class="cont-campo"><span>Plataforma</span><select id="ci-plataforma"></select></label>
+      </div>
+      <div class="cont-campo"><span>Formato</span><div class="cont-pilulas" id="ci-formato"></div></div>
+      <label class="cont-campo"><span>Inspiração</span><input type="text" id="ci-inspiracao" placeholder="Cole o link do conteúdo que você viu"></label>
+      <a id="ci-inspiracao-link" class="cont-link" href="#" target="_blank" rel="noopener" style="display:none;">Abrir inspiração ↗</a>
+      <div class="cont-publi">
+        <label class="cont-check"><input type="checkbox" id="ci-publi"><span>É publicidade</span></label>
+        <div class="cont-duas" id="ci-publi-campos" style="display:none;">
+          <label class="cont-campo"><span>Marca</span><input type="text" id="ci-marca" placeholder="Nome da marca"></label>
+          <label class="cont-campo"><span>Prazo de entrega para a marca</span><input type="date" id="ci-prazo"></label>
+        </div>
+      </div>
+    </form>
+    <div class="cont-gaveta-rodape">
+      <button type="button" class="cont-texto-perigo" id="ci-apagar" style="display:none;">Excluir</button>
+      <span style="flex:1"></span>
+      <button type="button" class="cont-botao-claro" data-fechar-gaveta>Cancelar</button>
+      <button type="button" class="cont-botao-escuro" id="ci-salvar">Salvar</button>
+    </div>
+  </aside>
+</div>
+
+<!-- Janela: adicionar / editar item do calendário de conteúdos -->
+<div class="modal-fundo" id="modal-cont-evento">
+  <div class="modal-caixa">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="ce-titulo-modal">Adicionar ao calendário</p>
+      <button class="modal-fechar" data-fechar-modal="modal-cont-evento" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form class="form-grade" id="form-cont-evento" novalidate>
+      <div class="campo-f"><label>Tipo</label><div class="cont-pilulas" id="ce-tipo"></div></div>
+      <div class="campo-f"><label for="ce-titulo">Conteúdo</label><input type="text" id="ce-titulo" placeholder="Ex.: Reels hotel Gramado"></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="ce-data">Data</label><input type="date" id="ce-data" required></div>
+        <div class="campo-f"><label for="ce-perfil">Perfil</label>
+          <select id="ce-perfil">
+            <option value="entracomigo">@entracomigo</option>
+            <option value="favoritospri">@favoritospri</option>
+            <option value="ugc">UGC</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-perigo" id="ce-apagar" style="display:none;">Excluir</button>
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-cont-evento">Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -735,6 +868,7 @@
 <script src="js/campanhas.js"></script>
 <script src="js/checklist.js"></script>
 <script src="js/prospeccao.js"></script>
+<script src="js/conteudos.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
