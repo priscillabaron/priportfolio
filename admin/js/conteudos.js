@@ -121,6 +121,14 @@
   function addDias(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
   function segunda(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); return addDias(x, -((x.getDay() + 6) % 7)); }
   function br(s) { if (!s) return ""; var d = parse(s); return String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0"); }
+  // Devolve o link pronto para abrir (aceita sem "https://", ex.: instagram.com/reel/abc) ou null se não for um link.
+  function urlInspiracao(texto) {
+    var t = String(texto || "").trim();
+    if (!t || /\s/.test(t)) return null;
+    if (/^https?:\/\//i.test(t)) return t;
+    if (/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/\S*)?$/i.test(t)) return "https://" + t;
+    return null;
+  }
   function celular() { return window.innerWidth < 820; }
 
   // cria um elemento com texto seguro (nunca interpreta HTML do que você digitou)
@@ -362,7 +370,14 @@
 
   function montarCartaoIdeia(i) {
     var st = achar(STATUS, i.status) || STATUS[0];
-    var c = botao("cont-ideia", "", function () { abrirGaveta(i); });
+    // O card é um bloco clicável (e não um botão) porque tem um link de verdade dentro: a Inspiração.
+    var c = criar("div", "cont-ideia");
+    c.tabIndex = 0;
+    c.setAttribute("role", "button");
+    c.addEventListener("click", function () { abrirGaveta(i); });
+    c.addEventListener("keydown", function (e) {
+      if (e.target === c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); abrirGaveta(i); }
+    });
 
     var chips = criar("div", "cont-ideia-chips");
     if (i.formato) chips.appendChild(criar("span", "cont-chip cont-chip-formato", i.formato));
@@ -392,9 +407,19 @@
     }
     if (i.publi && i.prazo) rodape.appendChild(criar("span", "cont-prazo", "Entrega " + br(i.prazo)));
     if (i.inspiracao) {
-      var s2 = criar("span");
+      // Se for um link, clicar em "Inspiração" já abre o conteúdo em outra aba, sem abrir a ideia.
+      var url = urlInspiracao(i.inspiracao);
+      var s2 = criar(url ? "a" : "span", url ? "cont-link-inspiracao" : "");
       s2.innerHTML = ICONE_LINK;
       s2.appendChild(document.createTextNode("Inspiração"));
+      if (url) {
+        s2.href = url;
+        s2.target = "_blank";
+        s2.rel = "noopener";
+        s2.title = url;
+        s2.addEventListener("click", function (e) { e.stopPropagation(); });
+        s2.addEventListener("keydown", function (e) { e.stopPropagation(); });
+      }
       rodape.appendChild(s2);
     }
     c.appendChild(rodape);
@@ -747,10 +772,9 @@
   }
 
   function atualizarLinkInspiracao() {
-    var v = (est.rascunho.inspiracao || "").trim();
-    var valido = /^https?:\/\//i.test(v);
-    el["ci-inspiracao-link"].style.display = valido ? "" : "none";
-    if (valido) el["ci-inspiracao-link"].href = v;
+    var url = urlInspiracao(est.rascunho.inspiracao);
+    el["ci-inspiracao-link"].style.display = url ? "" : "none";
+    if (url) el["ci-inspiracao-link"].href = url;
   }
 
   // Copia o texto de um campo da gaveta (legenda, mensagem...) para colar na hora de postar.
