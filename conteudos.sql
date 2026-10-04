@@ -24,8 +24,18 @@ create table if not exists public.conteudos_ideias (
   publi          boolean not null default false,
   marca          text,                      -- se for publicidade
   prazo          date,                      -- prazo de entrega para a marca
+  marcar         text,                      -- perfis (@ ou links) das marcas para marcar na postagem
+  legenda        text,                      -- legenda pronta para copiar
+  links          text,                      -- links para a postagem, stories ou bio
+  mensagem       text,                      -- mensagem a ser enviada (marca ou direct)
   criado_em      timestamptz not null default now()
 );
+
+-- Se a tabela já existia (versão anterior), isto acrescenta os campos novos sem apagar nada.
+alter table public.conteudos_ideias add column if not exists marcar   text;
+alter table public.conteudos_ideias add column if not exists legenda  text;
+alter table public.conteudos_ideias add column if not exists links    text;
+alter table public.conteudos_ideias add column if not exists mensagem text;
 
 -- ---- Agenda (gravar, postar, publicidade) ---------------------------------------
 create table if not exists public.conteudos_agenda (

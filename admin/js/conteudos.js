@@ -148,7 +148,7 @@
       "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade",
       "cont-cal-ant", "cont-cal-prox", "cont-cal-hoje", "cont-cal-rotulo", "cont-cal-modos", "cont-cal-adicionar",
       "cont-legenda-geral", "cont-cal-corpo", "cont-gaveta", "cont-gaveta-kicker", "cont-gaveta-titulo",
-      "ci-titulo", "ci-desc", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
+      "ci-titulo", "ci-desc", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
       "ci-inspiracao", "ci-inspiracao-link", "ci-publi", "ci-publi-campos", "ci-marca", "ci-prazo", "ci-apagar", "ci-salvar",
       "form-cont-evento", "ce-titulo-modal", "ce-tipo", "ce-titulo", "ce-data", "ce-perfil", "ce-apagar"
     ].forEach(function (id) { el[id] = document.getElementById(id); });
@@ -169,6 +169,13 @@
     ligarCampoRascunho("ci-titulo", "titulo");
     ligarCampoRascunho("ci-desc", "descricao");
     ligarCampoRascunho("ci-pendente", "pendente");
+    ligarCampoRascunho("ci-marcar", "marcar");
+    ligarCampoRascunho("ci-legenda", "legenda");
+    ligarCampoRascunho("ci-links", "links");
+    ligarCampoRascunho("ci-mensagem", "mensagem");
+    document.querySelectorAll("[data-copiar]").forEach(function (b) {
+      b.addEventListener("click", function () { copiarCampo(b.getAttribute("data-copiar")); });
+    });
     ligarCampoRascunho("ci-data", "data_postagem");
     ligarCampoRascunho("ci-marca", "marca");
     ligarCampoRascunho("ci-prazo", "prazo");
@@ -478,7 +485,8 @@
   function novaIdeia() {
     abrirGaveta({
       id: null, perfil: est.perfil, plataforma: est.plataforma, formato: "", titulo: "", descricao: "", status: "agravar",
-      pendente: "", data_postagem: "", inspiracao: "", publi: est.perfil === "ugc", marca: "", prazo: ""
+      pendente: "", data_postagem: "", inspiracao: "", publi: est.perfil === "ugc", marca: "", prazo: "",
+      marcar: "", legenda: "", links: "", mensagem: ""
     });
   }
 
@@ -488,13 +496,18 @@
       titulo: ideia.titulo || "", descricao: ideia.descricao || "", status: ideia.status || "agravar",
       pendente: ideia.pendente || "", data_postagem: ideia.data_postagem ? String(ideia.data_postagem).slice(0, 10) : "",
       inspiracao: ideia.inspiracao || "", publi: !!ideia.publi, marca: ideia.marca || "",
-      prazo: ideia.prazo ? String(ideia.prazo).slice(0, 10) : ""
+      prazo: ideia.prazo ? String(ideia.prazo).slice(0, 10) : "",
+      marcar: ideia.marcar || "", legenda: ideia.legenda || "", links: ideia.links || "", mensagem: ideia.mensagem || ""
     };
     var r = est.rascunho;
     el["cont-gaveta-titulo"].textContent = r.id ? "Editar ideia" : "Nova ideia";
     el["ci-titulo"].value = r.titulo;
     el["ci-desc"].value = r.descricao;
     el["ci-pendente"].value = r.pendente;
+    el["ci-marcar"].value = r.marcar;
+    el["ci-legenda"].value = r.legenda;
+    el["ci-links"].value = r.links;
+    el["ci-mensagem"].value = r.mensagem;
     el["ci-data"].value = r.data_postagem;
     el["ci-inspiracao"].value = r.inspiracao;
     el["ci-publi"].checked = r.publi;
@@ -566,6 +579,20 @@
     if (valido) el["ci-inspiracao-link"].href = v;
   }
 
+  // Copia o texto de um campo da gaveta (legenda, mensagem...) para colar na hora de postar.
+  async function copiarCampo(idCampo) {
+    var texto = el[idCampo].value;
+    if (!texto.trim()) { U.toast("Esse campo está vazio.", true); return; }
+    try {
+      await navigator.clipboard.writeText(texto);
+    } catch (erro) {
+      el[idCampo].focus();
+      el[idCampo].select();
+      document.execCommand("copy");
+    }
+    U.toast("Copiado.");
+  }
+
   async function salvarIdeia() {
     var r = est.rascunho;
     var dados = {
@@ -580,7 +607,11 @@
       inspiracao: (r.inspiracao || "").trim() || null,
       publi: !!r.publi,
       marca: r.publi && r.marca ? r.marca.trim() : null,
-      prazo: r.publi && r.prazo ? r.prazo : null
+      prazo: r.publi && r.prazo ? r.prazo : null,
+      marcar: r.marcar ? r.marcar : null,
+      legenda: r.legenda ? r.legenda : null,
+      links: r.links ? r.links : null,
+      mensagem: r.mensagem ? r.mensagem : null
     };
     var consulta = r.id
       ? window.bancoCliente.from("conteudos_ideias").update(dados).eq("id", r.id)

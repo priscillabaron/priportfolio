@@ -379,7 +379,8 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 /* ============================================================
    ABA CONTEÚDOS: ideias por perfil e calendário
    ============================================================ */
-.cont { --c-navy: #1d2b40; --c-azul: #3f6e9a; --c-suave: #5d6573; --c-borda: #e6e9ee; --c-linha: #d5dae2; --c-claro: #e8eef7;
+:root { --c-navy: #1d2b40; --c-azul: #3f6e9a; --c-suave: #5d6573; --c-borda: #e6e9ee; --c-linha: #d5dae2; --c-claro: #e8eef7; }
+.cont {
   display: flex; flex-direction: column; gap: 26px; max-width: 1180px; color: var(--c-navy); }
 .cont button { font-family: inherit; }
 
@@ -518,6 +519,10 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-check { display: flex; align-items: center; gap: 10px; cursor: pointer; min-height: 28px; }
 .cont-check input { width: 20px; height: 20px; accent-color: #d9577a; }
 .cont-check span { font-size: .92rem; font-weight: 700; }
+.cont-campo > span.cont-rotulo { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cont-copiar { border: 1px solid #d5dae2; background: #fff; color: #3f6e9a; border-radius: 999px; padding: 3px 11px; font-size: .74rem; font-weight: 700; }
+.cont-copiar:hover { background: #e8eef7; }
+.cont-dica { font-size: .78rem; color: #5d6573; font-weight: 500; }
 
 @media (max-width: 820px) {
   .cont-semana { grid-template-columns: 1fr; }
