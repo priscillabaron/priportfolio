@@ -433,9 +433,20 @@
     renderCalendario();
   }
 
+  // Itens do calendário: os que você adicionou à mão + as ideias que têm data de postagem.
+  // As ideias entram sozinhas (como "Postar") e acompanham a data se você mudá-la na ideia.
+  function eventosDasIdeias() {
+    return est.ideias.filter(function (i) { return i.data_postagem; }).map(function (i) {
+      return { id: "ideia-" + i.id, virtual: true, ideia: i, perfil: i.perfil, tipo: "postar", titulo: i.titulo, data: String(i.data_postagem).slice(0, 10) };
+    });
+  }
   function eventosVisiveis() {
     var geral = est.perfil === "geral";
-    return est.eventos.filter(function (e) { return geral || e.perfil === est.perfil; });
+    return est.eventos.concat(eventosDasIdeias()).filter(function (e) { return geral || e.perfil === est.perfil; });
+  }
+  // Clicar num item: ideia abre a gaveta da ideia; item manual abre a janelinha do calendário.
+  function abrirItemDoCalendario(e) {
+    if (e.virtual) abrirGaveta(e.ideia); else abrirEvento(e, null);
   }
 
   function renderCalendario() {
@@ -471,13 +482,19 @@
 
   function botaoEvento(e, comSelo) {
     var t = achar(TIPOS, e.tipo) || TIPOS[0];
-    var b = botao("cont-evento", "", function (ev) { ev.stopPropagation(); abrirEvento(e, null); });
+    var feito = e.virtual && e.ideia.status === "postado";
+    var b = botao("cont-evento" + (feito ? " feito" : ""), "", function (ev) { ev.stopPropagation(); abrirItemDoCalendario(e); });
     b.style.background = t.bg;
     b.style.color = t.fg;
     b.style.boxShadow = "inset 3px 0 0 " + t.cor;
     if (comSelo) b.appendChild(seloDoPerfil(e.perfil));
     var txt = criar("span", "cont-evento-textos");
-    txt.appendChild(criar("small", "", t.rotulo.toUpperCase()));
+    var rotuloItem = t.rotulo.toUpperCase();
+    if (e.virtual) {
+      var pl = achar(PLATAFORMAS, e.ideia.plataforma);
+      rotuloItem = (feito ? "✓ POSTADO" : "POSTAR") + (pl ? " · " + pl.rotulo.toUpperCase() : "");
+    }
+    txt.appendChild(criar("small", "", rotuloItem));
     txt.appendChild(criar("b", "", e.titulo || "(sem título)"));
     b.appendChild(txt);
     return b;
@@ -534,7 +551,8 @@
           var chip = criar("span", "cont-mes-evento", e.titulo || "(sem título)");
           chip.style.background = t.bg;
           chip.style.color = t.fg;
-          chip.addEventListener("click", function (ev) { ev.stopPropagation(); abrirEvento(e, null); });
+          if (e.virtual && e.ideia.status === "postado") chip.classList.add("feito");
+          chip.addEventListener("click", function (ev) { ev.stopPropagation(); abrirItemDoCalendario(e); });
           caixa.appendChild(chip);
         });
         cel.appendChild(caixa);
