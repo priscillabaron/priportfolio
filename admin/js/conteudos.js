@@ -434,10 +434,10 @@
   }
 
   // Itens do calendário: os que você adicionou à mão + as ideias que têm data de postagem.
-  // As ideias entram sozinhas (como "Postar") e acompanham a data se você mudá-la na ideia.
+  // As ideias entram sozinhas (como "Postar", ou "Publicidade" se forem publi) e acompanham a data se você mudá-la na ideia.
   function eventosDasIdeias() {
     return est.ideias.filter(function (i) { return i.data_postagem; }).map(function (i) {
-      return { id: "ideia-" + i.id, virtual: true, ideia: i, perfil: i.perfil, tipo: "postar", titulo: i.titulo, data: String(i.data_postagem).slice(0, 10) };
+      return { id: "ideia-" + i.id, virtual: true, ideia: i, perfil: i.perfil, tipo: i.publi ? "publi" : "postar", titulo: i.titulo, data: String(i.data_postagem).slice(0, 10) };
     });
   }
   function eventosVisiveis() {
@@ -492,7 +492,7 @@
     var rotuloItem = t.rotulo.toUpperCase();
     if (e.virtual) {
       var pl = achar(PLATAFORMAS, e.ideia.plataforma);
-      rotuloItem = (feito ? "✓ POSTADO" : "POSTAR") + (pl ? " · " + pl.rotulo.toUpperCase() : "");
+      rotuloItem = (feito ? "✓ POSTADO" : (e.ideia.publi ? "PUBLICIDADE" : "POSTAR")) + (pl ? " · " + pl.rotulo.toUpperCase() : "");
     }
     txt.appendChild(criar("small", "", rotuloItem));
     txt.appendChild(criar("b", "", e.titulo || "(sem título)"));
