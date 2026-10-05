@@ -42,6 +42,7 @@
   // Países que você pode escolher nos projetos (o nome em português vem do próprio navegador).
   var CODIGOS_PAIS = ["BR","AR","CL","UY","PY","BO","PE","CO","EC","VE","MX","US","CA","CU","DO","JM","BS","PA","CR","GT","BZ","HN","SV","NI","AW","CW","PR","PT","ES","FR","IT","DE","GB","IE","NL","BE","LU","CH","AT","GR","TR","HR","SI","RS","ME","AL","BG","RO","HU","CZ","SK","PL","LT","LV","EE","FI","SE","NO","DK","IS","MT","CY","UA","RU","GE","AM","IL","JO","LB","AE","QA","SA","OM","EG","MA","TN","KE","TZ","ZA","NA","MU","SC","MZ","MG","CV","SN","GH","NG","ET","IN","NP","LK","MV","TH","VN","KH","LA","MY","SG","ID","PH","CN","HK","TW","JP","KR","MN","AU","NZ","FJ","PF","KZ","UZ"];
   var ICONE_GLOBO = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.500 18.300 12 21c-2.500-2.700-3.800-5.700-3.800-9S9.500 5.700 12 3Z"/></svg>';
+  var ICONE_CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
   var ICONE_DATA = '<svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/></svg>';
   var ICONE_LINK = '<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
 
@@ -351,21 +352,113 @@
 
     var naPlataforma = minhas.filter(function (i) { return i.plataforma === est.plataforma; });
     el["cont-filtros"].innerHTML = "";
-    [{ id: "all", rotulo: "Todos" }].concat(STATUS).forEach(function (s) {
+    var filtros = [{ id: "all", rotulo: "Todos" }].concat(STATUS);
+    filtros.forEach(function (s) {
       var n = s.id === "all" ? naPlataforma.length : naPlataforma.filter(function (i) { return i.status === s.id; }).length;
       el["cont-filtros"].appendChild(botao("cont-pilula" + (est.filtro === s.id ? " ativo" : ""), s.rotulo + " · " + n, function () { est.filtro = s.id; renderIdeias(); }));
     });
+    // filtro "Séries": mostra cada série numa linha, com os vídeos lado a lado e em ordem
+    var series = agruparSeries(ordenarIdeias(naPlataforma));
+    el["cont-filtros"].appendChild(botao("cont-pilula" + (est.filtro === "series" ? " ativo" : ""), "Séries · " + series.length, function () { est.filtro = "series"; renderIdeias(); }));
 
-    var lista = naPlataforma.filter(function (i) { return est.filtro === "all" || i.status === est.filtro; });
-    lista.sort(function (a, b) {
+    el["cont-grade"].innerHTML = "";
+    if (est.filtro === "series") {
+      el["cont-grade"].className = "cont-series";
+      el["cont-vazio"].innerHTML = "Nenhuma série ainda. Abra uma ideia e marque <b>Faz parte de uma série</b>.";
+      el["cont-vazio"].style.display = series.length === 0 ? "" : "none";
+      series.forEach(function (g) { el["cont-grade"].appendChild(montarBlocoSerie(g)); });
+      return;
+    }
+
+    el["cont-grade"].className = "cont-grade";
+    el["cont-vazio"].innerHTML = "Nenhuma ideia aqui ainda. Clique em <b>Nova ideia</b> para começar.";
+    var lista = ordenarIdeias(naPlataforma.filter(function (i) { return est.filtro === "all" || i.status === est.filtro; }));
+    lista = juntarSeries(lista);
+    el["cont-vazio"].style.display = lista.length === 0 ? "" : "none";
+    lista.forEach(function (ideia) { el["cont-grade"].appendChild(montarCartaoIdeia(ideia)); });
+  }
+
+  /* ---------- séries ---------- */
+  // Lê o que você escreveu em Série. Exemplos: "1/2 Campinas", "2/6 Campinas", "1/2Gonçalves".
+  // n = número da parte, nome = nome da série (o que vem depois do número).
+  function lerSerie(texto) {
+    var s = String(texto || "").trim();
+    if (!s) return null;
+    var m = s.match(/^(\d+)\s*\/\s*(\d+)\s*(.*)$/);
+    var nome = m ? m[3].trim() : s;
+    var chave = nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ");
+    return { n: m ? parseInt(m[1], 10) : 0, total: m ? parseInt(m[2], 10) : 0, nome: nome, chave: chave };
+  }
+
+  // Ordem padrão: o que ainda não foi postado primeiro, depois por data de postagem.
+  function ordenarIdeias(lista) {
+    return lista.slice().sort(function (a, b) {
       var pa = a.status === "postado" ? 1 : 0, pb = b.status === "postado" ? 1 : 0;
       if (pa !== pb) return pa - pb;
       return String(a.data_postagem || "9").localeCompare(String(b.data_postagem || "9"));
     });
+  }
 
-    el["cont-vazio"].style.display = lista.length === 0 ? "" : "none";
-    el["cont-grade"].innerHTML = "";
-    lista.forEach(function (ideia) { el["cont-grade"].appendChild(montarCartaoIdeia(ideia)); });
+  // Cada série vira um grupo com os vídeos na ordem (1/2, 2/2...). Os grupos seguem a ordem da lista.
+  function agruparSeries(listaOrdenada) {
+    var grupos = [], porChave = {};
+    listaOrdenada.forEach(function (i) {
+      var s = lerSerie(i.serie);
+      if (!s) return;
+      var g = porChave[s.chave];
+      if (!g) { g = porChave[s.chave] = { chave: s.chave, nome: s.nome, itens: [] }; grupos.push(g); }
+      g.itens.push({ ideia: i, n: s.n });
+    });
+    grupos.forEach(function (g) {
+      g.itens.sort(function (a, b) {
+        if (a.n !== b.n) return a.n - b.n;
+        return String(a.ideia.data_postagem || "9").localeCompare(String(b.ideia.data_postagem || "9"));
+      });
+      g.itens = g.itens.map(function (x) { return x.ideia; });
+    });
+    return grupos;
+  }
+
+  // Na lista normal, os vídeos de uma mesma série ficam um do lado do outro, na ordem.
+  function juntarSeries(listaOrdenada) {
+    var grupos = agruparSeries(listaOrdenada), porChave = {};
+    grupos.forEach(function (g) { porChave[g.chave] = g; });
+    var vistos = {}, saida = [];
+    listaOrdenada.forEach(function (i) {
+      var s = lerSerie(i.serie);
+      if (!s) { saida.push(i); return; }
+      if (vistos[s.chave]) return;
+      vistos[s.chave] = true;
+      porChave[s.chave].itens.forEach(function (x) { saida.push(x); });
+    });
+    return saida;
+  }
+
+  function montarBlocoSerie(g) {
+    var bloco = criar("section", "cont-serie");
+    var postados = g.itens.filter(function (i) { return i.status === "postado"; }).length;
+    var cab = criar("div", "cont-serie-cab");
+    cab.appendChild(criar("h3", "cont-serie-nome", g.nome ? "Série " + g.nome : "Série"));
+    cab.appendChild(criar("span", "cont-serie-meta", (g.itens.length === 1 ? "1 vídeo" : g.itens.length + " vídeos") + " · " + postados + (postados === 1 ? " postado" : " postados")));
+    bloco.appendChild(cab);
+    var linha = criar("div", "cont-serie-linha");
+    g.itens.forEach(function (i) { linha.appendChild(montarCartaoIdeia(i)); });
+    bloco.appendChild(linha);
+    return bloco;
+  }
+
+  /* ---------- marcar como postado direto no card ---------- */
+  var statusAntesDePostar = {};
+  async function alternarPostado(i) {
+    var vaiPostar = i.status !== "postado";
+    var antigo = i.status;
+    var novo = vaiPostar ? "postado" : (statusAntesDePostar[i.id] || "gravado");
+    if (vaiPostar) statusAntesDePostar[i.id] = antigo;
+    i.status = novo;
+    renderIdeias();
+    var resultado = await U.consulta("conteudos_ideias", window.bancoCliente.from("conteudos_ideias").update({ status: novo }).eq("id", i.id));
+    if (resultado.error) { i.status = antigo; renderIdeias(); return; }
+    U.toast(vaiPostar ? "Marcado como postado." : "Voltou para " + (achar(STATUS, novo) || STATUS[0]).rotulo.toLowerCase() + ".");
   }
 
   function montarCartaoIdeia(i) {
@@ -378,6 +471,16 @@
     c.addEventListener("keydown", function (e) {
       if (e.target === c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); abrirGaveta(i); }
     });
+
+    // bolinha do canto: clicou, ficou verde com check = postado (sem abrir o card)
+    var postado = i.status === "postado";
+    var bolinha = botao("cont-postado" + (postado ? " ativo" : ""), "", function (e) { e.stopPropagation(); alternarPostado(i); });
+    bolinha.innerHTML = ICONE_CHECK;
+    bolinha.setAttribute("aria-pressed", postado ? "true" : "false");
+    bolinha.setAttribute("aria-label", postado ? "Desmarcar como postado: " + i.titulo : "Marcar como postado: " + i.titulo);
+    bolinha.title = postado ? "Postado. Clique para desmarcar" : "Marcar como postado";
+    bolinha.addEventListener("keydown", function (e) { e.stopPropagation(); });
+    c.appendChild(bolinha);
 
     var chips = criar("div", "cont-ideia-chips");
     if (i.formato) chips.appendChild(criar("span", "cont-chip cont-chip-formato", i.formato));
