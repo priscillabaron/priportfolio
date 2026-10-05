@@ -820,6 +820,20 @@
     <form id="form-conteudo-ideia" class="cont-gaveta-corpo" novalidate>
       <label class="cont-campo"><span>Ideia do conteúdo</span><input type="text" id="ci-titulo" placeholder="Ex.: 5 cafés para conhecer em Gramado"></label>
       <label class="cont-campo"><span>O que vai ter nesse conteúdo</span><textarea id="ci-desc" rows="4" placeholder="Roteiro, cenas, falas, gancho inicial..."></textarea></label>
+      <div class="cont-roteiro" id="ci-roteiro-bloco">
+        <div class="cont-roteiro-cab">
+          <button type="button" class="cont-roteiro-alternar" id="ci-roteiro-alternar" aria-expanded="false" aria-controls="ci-roteiro-corpo">
+            <span class="cont-roteiro-titulo">Roteiro</span>
+            <span class="cont-roteiro-resumo" id="ci-roteiro-resumo">Nenhum roteiro ainda</span>
+            <svg class="cont-roteiro-seta" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <button type="button" class="cont-copiar" data-copiar="ci-roteiro">Copiar</button>
+          <button type="button" class="cont-copiar" id="ci-roteiro-ampliar">Ampliar</button>
+        </div>
+        <div class="cont-roteiro-corpo" id="ci-roteiro-corpo" style="display:none;">
+          <textarea id="ci-roteiro" rows="10" placeholder="Cole aqui o roteiro inteiro. Não tem limite de tamanho."></textarea>
+        </div>
+      </div>
       <div class="cont-campo"><span>Status</span><div class="cont-pilulas" id="ci-status"></div></div>
       <label class="cont-campo cont-pendente" id="ci-pendente-wrap" style="display:none;"><span>O que está pendente?</span><textarea id="ci-pendente" rows="3" placeholder="Ex.: faltam as cenas do quarto e a fala final"></textarea></label>
       <div class="cont-duas">
@@ -863,6 +877,22 @@
       <button type="button" class="cont-botao-escuro" id="ci-salvar">Salvar</button>
     </div>
   </aside>
+</div>
+
+<!-- Janela grande para ler e escrever o roteiro -->
+<div class="modal-fundo" id="modal-cont-roteiro" style="z-index:340;">
+  <div class="modal-caixa modal-larga cont-roteiro-modal">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo">Roteiro<span id="cr-titulo-ideia"></span></p>
+      <button class="modal-fechar" data-fechar-modal="modal-cont-roteiro" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <textarea id="cr-texto" class="cont-roteiro-grande" placeholder="Cole aqui o roteiro inteiro. Não tem limite de tamanho."></textarea>
+    <div class="form-rodape cont-roteiro-rodape">
+      <span class="cont-dica" id="cr-contagem"></span>
+      <button type="button" class="btn btn-outline" id="cr-copiar">Copiar</button>
+      <button type="button" class="btn btn-primario" data-fechar-modal="modal-cont-roteiro">Concluir</button>
+    </div>
+  </div>
 </div>
 
 <!-- Janela: adicionar / editar item do calendário de conteúdos -->

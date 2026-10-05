@@ -163,7 +163,7 @@
       "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade",
       "cont-cal-ant", "cont-cal-prox", "cont-cal-hoje", "cont-cal-rotulo", "cont-cal-modos", "cont-cal-adicionar",
       "cont-legenda-geral", "cont-cal-corpo", "cont-gaveta", "cont-gaveta-kicker", "cont-gaveta-titulo",
-      "ci-titulo", "ci-desc", "ci-serie-marca", "ci-serie-campo", "ci-serie", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
+      "ci-titulo", "ci-desc", "ci-roteiro", "ci-roteiro-resumo", "ci-roteiro-alternar", "ci-roteiro-corpo", "ci-roteiro-ampliar", "ci-roteiro-bloco", "cr-texto", "cr-contagem", "cr-titulo-ideia", "cr-copiar", "ci-serie-marca", "ci-serie-campo", "ci-serie", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
       "ci-inspiracao", "ci-inspiracao-link", "ci-publi", "ci-publi-campos", "ci-marca", "ci-prazo", "ci-apagar", "ci-salvar",
       "form-cont-evento", "ce-titulo-modal", "ce-tipo", "ce-titulo", "ce-data", "ce-perfil", "ce-apagar"
     ].forEach(function (id) { el[id] = document.getElementById(id); });
@@ -189,11 +189,21 @@
 
     // gaveta da ideia
     document.querySelectorAll("[data-fechar-gaveta]").forEach(function (b) { b.addEventListener("click", fecharGaveta); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") fecharGaveta(); });
+    // Esc fecha a gaveta, mas não se ele acabou de fechar a janela grande do roteiro
+    var escComJanela = false;
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") escComJanela = !!document.querySelector(".modal-fundo.visivel"); }, true);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !escComJanela) fecharGaveta(); });
     ligarCampoRascunho("ci-titulo", "titulo");
     ligarCampoRascunho("ci-desc", "descricao");
     ligarCampoRascunho("ci-pendente", "pendente");
     ligarCampoRascunho("ci-serie", "serie");
+    // roteiro: linha recolhida (não polui), caixa com rolagem e janela grande
+    ligarCampoRascunho("ci-roteiro", "roteiro");
+    el["ci-roteiro"].addEventListener("input", function () { sincronizarRoteiro("ci-roteiro"); });
+    el["cr-texto"].addEventListener("input", function () { est.rascunho.roteiro = el["cr-texto"].value; sincronizarRoteiro("cr-texto"); });
+    el["ci-roteiro-alternar"].addEventListener("click", function () { alternarRoteiro(); });
+    el["ci-roteiro-ampliar"].addEventListener("click", abrirRoteiroGrande);
+    el["cr-copiar"].addEventListener("click", function () { copiarCampo("cr-texto"); });
     el["ci-serie-marca"].addEventListener("change", function () {
       var ligada = el["ci-serie-marca"].checked;
       el["ci-serie-campo"].style.display = ligada ? "" : "none";
@@ -798,7 +808,7 @@
       id: null, perfil: est.perfil, plataforma: est.plataforma, formato: "", titulo: "", descricao: "", status: "agravar",
       pendente: "", data_postagem: "", inspiracao: "", publi: est.perfil === "ugc", marca: "", prazo: "",
       marcar: "", legenda: "", links: "", mensagem: "",
-      serie: "",
+      serie: "", roteiro: "",
       projeto_id: (est.aba === "projetos" && projetoAtual()) ? projetoAtual().id : null
     });
   }
@@ -813,6 +823,8 @@
       marcar: ideia.marcar || "", legenda: ideia.legenda || "", links: ideia.links || "", mensagem: ideia.mensagem || "",
       serie: ideia.serie || "",
       serieOriginal: ideia.serie || "",
+      roteiro: ideia.roteiro || "",
+      roteiroOriginal: ideia.roteiro || "",
       projeto_id: ideia.projeto_id || null
     };
     var r = est.rascunho;
@@ -820,6 +832,10 @@
     el["ci-titulo"].value = r.titulo;
     el["ci-desc"].value = r.descricao;
     el["ci-pendente"].value = r.pendente;
+    el["ci-roteiro"].value = r.roteiro;
+    el["cr-texto"].value = r.roteiro;
+    alternarRoteiro(false);
+    atualizarResumoRoteiro();
     el["ci-serie"].value = r.serie;
     el["ci-serie-marca"].checked = !!r.serie;
     el["ci-serie-campo"].style.display = r.serie ? "" : "none";
@@ -898,6 +914,40 @@
     if (url) el["ci-inspiracao-link"].href = url;
   }
 
+  /* ---------- roteiro ---------- */
+  function contarPalavras(texto) {
+    var t = String(texto || "").trim();
+    return t ? t.split(/\s+/).length : 0;
+  }
+  function atualizarResumoRoteiro() {
+    var texto = est.rascunho ? est.rascunho.roteiro : "";
+    var n = contarPalavras(texto);
+    el["ci-roteiro-resumo"].textContent = n ? n.toLocaleString("pt-BR") + (n === 1 ? " palavra" : " palavras") : "Nenhum roteiro ainda";
+    el["cr-contagem"].textContent = n ? n.toLocaleString("pt-BR") + " palavras · " + String(texto).length.toLocaleString("pt-BR") + " caracteres" : "";
+  }
+  // Mantém a caixa pequena e a janela grande iguais enquanto você digita ou cola.
+  function sincronizarRoteiro(origem) {
+    var valor = el[origem].value;
+    est.rascunho.roteiro = valor;
+    if (origem !== "ci-roteiro") el["ci-roteiro"].value = valor;
+    if (origem !== "cr-texto") el["cr-texto"].value = valor;
+    atualizarResumoRoteiro();
+  }
+  function alternarRoteiro(abrir) {
+    var abrirAgora = typeof abrir === "boolean" ? abrir : el["ci-roteiro-corpo"].style.display === "none";
+    el["ci-roteiro-corpo"].style.display = abrirAgora ? "" : "none";
+    el["ci-roteiro-bloco"].classList.toggle("aberto", abrirAgora);
+    el["ci-roteiro-alternar"].setAttribute("aria-expanded", abrirAgora ? "true" : "false");
+    if (abrirAgora && typeof abrir !== "boolean") el["ci-roteiro"].focus();
+  }
+  function abrirRoteiroGrande() {
+    el["cr-texto"].value = est.rascunho.roteiro || "";
+    el["cr-titulo-ideia"].textContent = est.rascunho.titulo ? ": " + est.rascunho.titulo : "";
+    atualizarResumoRoteiro();
+    U.abrirModal("modal-cont-roteiro");
+    setTimeout(function () { el["cr-texto"].focus(); }, 50);
+  }
+
   // Copia o texto de um campo da gaveta (legenda, mensagem...) para colar na hora de postar.
   async function copiarCampo(idCampo) {
     var texto = el[idCampo].value;
@@ -937,6 +987,8 @@
     // série: só envia se tiver número ou se precisar limpar (assim o resto salva mesmo antes de criar a coluna)
     var serie = (r.serie || "").trim();
     if (serie || r.serieOriginal) dados.serie = serie || null;
+    // roteiro: só envia se tiver texto ou se precisar limpar (assim o resto salva mesmo antes de criar a coluna)
+    if (r.roteiro || r.roteiroOriginal) dados.roteiro = r.roteiro ? r.roteiro : null;
     var consulta = r.id
       ? window.bancoCliente.from("conteudos_ideias").update(dados).eq("id", r.id)
       : window.bancoCliente.from("conteudos_ideias").insert(dados);
