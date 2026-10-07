@@ -164,12 +164,12 @@
      --periodo (largura de uma volta) e a duração, para o laço recomeçar sem nenhum buraco. */
   .marcas-track { display: flex; align-items: center; width: max-content; animation: rolar 30s linear infinite; will-change: transform; }
   .marcas-track span {
-    display: flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; margin-right: 18px;
+    display: flex; align-items: center; justify-content: center; white-space: nowrap; flex-shrink: 0; margin-right: 16px;
     font-weight: 700; color: var(--texto-suave); font-size: .85rem;
     background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
     padding: 10px 20px; box-shadow: var(--sombra); min-height: 44px;
   }
-  .marcas-track span.tem-logo { width: 92px; height: 92px; padding: 0; border-radius: 50%; overflow: hidden; background: #fff; }
+  .marcas-track span.tem-logo { width: 74px; height: 74px; padding: 0; border-radius: 50%; overflow: hidden; background: #fff; }
   .marcas-track span.tem-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--periodo, 700px))); } }
   /* ===== SOBRE ===== */
@@ -408,7 +408,7 @@
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
-    .marcas-track span.tem-logo { width: 72px; height: 72px; }
+    .marcas-track span.tem-logo { width: 60px; height: 60px; }
     .marcas-legenda { letter-spacing: .16em; gap: 12px; }
     .marcas-legenda::before, .marcas-legenda::after { flex-basis: 28px; }
     #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
