@@ -143,6 +143,7 @@
   }
   .foto-placeholder span { background: rgba(0,0,0,.22); padding: 8px 16px; border-radius: 100px; font-size: .85rem; }
   /* A capa principal usa a textura de seda de verdade, em vez do degradê */
+  .hero-retrato img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
   .hero-photo .foto-placeholder { background-image: url('imagens/textura-seda-azul.jpg'); background-size: cover; background-position: center; }
   .tag-selo {
     position: absolute; top: 18px; right: -10px; background: var(--branco); color: var(--texto);
@@ -356,7 +357,7 @@
   /* ===== RESPONSIVO ===== */
   @media (max-width: 980px) {
     .hero-inner { grid-template-columns: 1fr; }
-    .hero-photo { max-width: 380px; margin: 0 auto; }
+    .hero-photo { width: 100%; max-width: 380px; margin: 0 auto; }
     .sobre-grid { grid-template-columns: 1fr; }
     .servicos-grid { grid-template-columns: repeat(2, 1fr); }
     .destaques-layout { grid-template-columns: 1fr; gap: 36px; }
@@ -459,9 +460,9 @@
         </div>
       </div>
       <div class="hero-photo reveal">
-        <!-- Troque este bloco de degradê por <img src="sua-foto.jpg" alt="Priscilla Baron, UGC creator"> quando tiver a foto -->
-        <div class="foto-placeholder" role="img" aria-label="Foto da creator Priscilla Baron, formato retrato 4:5" data-i18n-attr="aria-label:hero.foto.aria">
-          <span data-i18n="hero.foto.texto">Foto da creator, 4:5</span>
+        <!-- A foto de capa já vem sobre a textura de seda (imagens/capa-priscilla-*.jpg). Para trocar, substitua esses arquivos. -->
+        <div class="foto-placeholder hero-retrato">
+          <img src="imagens/capa-priscilla-900.jpg" srcset="imagens/capa-priscilla-600.jpg 600w, imagens/capa-priscilla-900.jpg 900w, imagens/capa-priscilla-1200.jpg 1200w" sizes="(min-width: 981px) 460px, 380px" width="900" height="1125" alt="Retrato de Priscilla Baron sorrindo" data-i18n-attr="alt:hero.foto.alt" fetchpriority="high">
         </div>
         <span class="tag-selo" data-i18n="hero.selo">sob consulta</span>
       </div>
