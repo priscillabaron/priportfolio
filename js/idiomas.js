@@ -52,8 +52,7 @@
     "marcas.legenda": ["Marcas que confiam no meu trabalho", "Brands that trust my work", "Marcas que confían en mi trabajo"],
 
     /* ---- Sobre ---- */
-    "sobre.foto.aria": ["Foto de bastidores de Priscilla Baron, formato 3:4", "Behind-the-scenes photo of Priscilla Baron, 3:4 format", "Foto del detrás de cámaras de Priscilla Baron, formato 3:4"],
-    "sobre.foto.texto": ["Foto de bastidores, 3:4", "Behind the scenes, 3:4", "Detrás de cámaras, 3:4"],
+    "sobre.foto.alt": ["Priscilla Baron na neve, de jaqueta lilás", "Priscilla Baron in the snow, wearing a lilac jacket", "Priscilla Baron en la nieve, con una chaqueta lila"],
     "sobre.eyebrow": ["Sobre mim", "About me", "Sobre mí"],
     "sobre.titulo": [
       "Quem grava é gente, não <em>roteiro pronto</em>",
