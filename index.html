@@ -169,8 +169,8 @@
     background: var(--branco); border: 1px solid var(--borda); border-radius: 100px;
     padding: 10px 20px; box-shadow: var(--sombra); min-height: 44px;
   }
-  .marcas-track span.tem-logo { width: 92px; height: 92px; padding: 12px; border-radius: 50%; }
-  .marcas-track span.tem-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .marcas-track span.tem-logo { width: 92px; height: 92px; padding: 0; border-radius: 50%; overflow: hidden; background: #fff; }
+  .marcas-track span.tem-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--periodo, 700px))); } }
   /* ===== SOBRE ===== */
   #sobre { padding: 100px 0; }
@@ -408,7 +408,7 @@
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
-    .marcas-track span.tem-logo { width: 72px; height: 72px; padding: 9px; }
+    .marcas-track span.tem-logo { width: 72px; height: 72px; }
     .marcas-legenda { letter-spacing: .16em; gap: 12px; }
     .marcas-legenda::before, .marcas-legenda::after { flex-basis: 28px; }
     #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
@@ -652,15 +652,16 @@
   // da pasta "logos" (já existe nessa pasta) e informe o caminho em "logo": "logos/arquivo.png".
   // Sem logo, deixe "logo: null" e o nome da marca aparece como texto no card.
   const MARCAS = [
-    { nome: "Lippi", logo: "logos/web/lippi.png" },
-    { nome: "Caffeine Army", logo: "logos/web/caffeine_army.png" },
-    { nome: "Tia Sônia", logo: "logos/web/tia_sonia.png" },
-    { nome: "Norte Sul Chile", logo: "logos/web/norte_sul.png" },
-    { nome: "RQ Stay", logo: "logos/web/rq_stay.png" },
+    { nome: "Uppi", logo: "logos/web/uppi.png" },
+    { nome: "Caffeine Army", logo: "logos/web/caffeine-army.png" },
+    { nome: "Tia Sônia", logo: "logos/web/tia-sonia.png" },
+    { nome: "Norte Sul Chile", logo: "logos/web/norte-sul-chile.png" },
+    { nome: "RQ Stay", logo: "logos/web/rq-stay.png" },
     { nome: "Parksnet", logo: "logos/web/parksnet.png" },
-    { nome: "CityPlan", logo: "logos/web/cityplan_go.png" },
+    { nome: "CityPlan", logo: "logos/web/cityplan-go.png" },
     { nome: "Shein", logo: "logos/web/shein.png" },
-    { nome: "Sublyme", logo: "logos/web/sublyme.png" }
+    { nome: "Sublyme", logo: "logos/web/sublyme.png" },
+    { nome: "Vizzela", logo: "logos/web/vizzela.png" }
   ];
 
   // Os "Conteúdos de destaque" e os "Trabalhos por nicho" não ficam mais
