@@ -230,16 +230,20 @@
   async function explicarLimite(chave, j) {
     var detalhe = String((j && (j.details || j.message)) || "");
     var creditosAcabaram = null;
+    var numeros = "";
     try {
       var r = await fetch(API + "/me", { headers: { "x-api-key": chave } });
       var m = await r.json().catch(function () { return null; });
-      if (r.ok && m && typeof m.maxCredits !== "undefined") creditosAcabaram = Number(m.usedCredits) >= Number(m.maxCredits);
+      if (r.ok && m && typeof m.maxCredits !== "undefined") {
+        creditosAcabaram = Number(m.usedCredits) >= Number(m.maxCredits);
+        numeros = " (a Supadata mostra " + m.usedCredits + " de " + m.maxCredits + " créditos usados)";
+      }
     } catch (e) { /* segue com o texto da API */ }
     if (creditosAcabaram === null) creditosAcabaram = /plan|usage|credit/i.test(detalhe) && !/rate/i.test(detalhe);
     if (creditosAcabaram) {
-      return "Os créditos do mês na Supadata acabaram. Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles.";
+      return "Os créditos do mês na Supadata acabaram" + numeros + ". Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles.";
     }
-    return "Muitos pedidos seguidos na Supadata. Espere 1 minuto e clique em Tentar de novo.";
+    return "Muitos pedidos seguidos na Supadata" + numeros + ". Espere 1 minuto e clique em Tentar de novo.";
   }
   async function traduzirErro(status, j, chave) {
     var m = erroDaApi(status, j);
