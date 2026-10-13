@@ -214,12 +214,7 @@
     if (status === 401 || status === 403 || codigo === "unauthorized" || codigo === "forbidden") {
       return "A Supadata não aceitou a chave. Confira se ela está inteira, ou crie uma nova em supadata.ai.";
     }
-    if (codigo === "limit-exceeded" || status === 429) {
-      if (detalhe.indexOf("plan") >= 0 || detalhe.indexOf("usage") >= 0 || detalhe.indexOf("credit") >= 0) {
-        return "Os créditos do mês na Supadata acabaram. Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles.";
-      }
-      return "Muitos pedidos seguidos. Espere 1 minuto e tente de novo.";
-    }
+    if (codigo === "limit-exceeded" || status === 429) return "LIMITE";
     if (codigo === "transcript-unavailable") return "VAZIO";
     if (codigo === "not-found" || codigo === "video-not-found" || status === 404) {
       return "Não achei esse vídeo. Ele pode ser privado ou ter sido apagado. Confira o link.";
@@ -228,6 +223,27 @@
       return "Esse link não parece ser de um vídeo que eu consiga ler. Confira se é de um reel, vídeo do TikTok ou do YouTube.";
     }
     return "A transcrição não funcionou desta vez. Tente de novo daqui a pouco.";
+  }
+
+  // A Supadata usa a mesma mensagem para "créditos acabaram" e "pedidos demais seguidos".
+  // Para não errar, confere o saldo de verdade (o /me ainda responde quando a cota acaba).
+  async function explicarLimite(chave, j) {
+    var detalhe = String((j && (j.details || j.message)) || "");
+    var creditosAcabaram = null;
+    try {
+      var r = await fetch(API + "/me", { headers: { "x-api-key": chave } });
+      var m = await r.json().catch(function () { return null; });
+      if (r.ok && m && typeof m.maxCredits !== "undefined") creditosAcabaram = Number(m.usedCredits) >= Number(m.maxCredits);
+    } catch (e) { /* segue com o texto da API */ }
+    if (creditosAcabaram === null) creditosAcabaram = /plan|usage|credit/i.test(detalhe) && !/rate/i.test(detalhe);
+    if (creditosAcabaram) {
+      return "Os créditos do mês na Supadata acabaram. Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles.";
+    }
+    return "Muitos pedidos seguidos na Supadata. Espere 1 minuto e clique em Tentar de novo.";
+  }
+  async function traduzirErro(status, j, chave) {
+    var m = erroDaApi(status, j);
+    return m === "LIMITE" ? await explicarLimite(chave, j) : m;
   }
 
   // Devolve { texto, segmentos } | { vazio:true } | { erro:"..." }
@@ -252,12 +268,12 @@
           var r2 = await fetch(API + "/transcript/" + encodeURIComponent(j.jobId), { headers: { "x-api-key": chave } });
           var j2 = await r2.json().catch(function () { return null; });
           if (!r2.ok && r2.status !== 202) {
-            var m2 = erroDaApi(r2.status, j2);
+            var m2 = await traduzirErro(r2.status, j2, chave);
             return m2 === "VAZIO" ? { vazio: true } : { erro: m2 };
           }
           if (j2 && j2.status === "completed") return resultadoFinal(j2);
           if (j2 && j2.status === "failed") {
-            var m3 = erroDaApi(500, j2.error && typeof j2.error === "object" ? j2.error : { error: j2.error });
+            var m3 = await traduzirErro(500, j2.error && typeof j2.error === "object" ? j2.error : { error: j2.error }, chave);
             return m3 === "VAZIO" ? { vazio: true } : { erro: m3 };
           }
         }
@@ -265,7 +281,7 @@
 
       if (resp.status === 206) return { vazio: true };
       if (!resp.ok) {
-        var m = erroDaApi(resp.status, j);
+        var m = await traduzirErro(resp.status, j, chave);
         return m === "VAZIO" ? { vazio: true } : { erro: m };
       }
       return resultadoFinal(j);
@@ -502,10 +518,12 @@
     var fraseAndamento = function (s) {
       mostrarAviso("info", "🎧 Ouvindo o vídeo... " + frasePassouTempo(s) + ". Costuma levar de 3 a 4 minutos, pode deixar a aba aberta.");
     };
-    // título, perfil, data, tags e legenda vêm de outro pedido, feito ao mesmo tempo
-    var pedidoMeta = buscarMetadados(linha.url, est.chave);
+    // título, perfil, data, tags, legenda e capa vêm de outro pedido (1 crédito)
+    // (um pedido de cada vez, para a Supadata não achar que são pedidos demais seguidos)
+    mostrarAviso("info", "🔎 Buscando os dados do vídeo...");
+    var meta = await buscarMetadados(linha.url, est.chave);
+    var extras = camposVaziosDaMeta(linha, meta);
     var r = await pedirTranscricao(linha.url, est.chave, fraseAndamento);
-    var extras = camposVaziosDaMeta(linha, await pedidoMeta);
     delete est.rodando[linha.id];
 
     if (r.texto) {
