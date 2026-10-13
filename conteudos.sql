@@ -78,3 +78,25 @@ create policy "dona total conteudos_agenda" on public.conteudos_agenda
 
 create policy "dona total conteudos_projetos" on public.conteudos_projetos
   for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+-- ---- Banco de Ideias: conteúdos de outros perfis que deram certo (com transcrição) ----
+create table if not exists public.conteudos_banco (
+  id               uuid primary key default gen_random_uuid(),
+  nicho            text not null check (nicho in ('viagens', 'afiliados', 'ugc')),
+  rede             text not null check (rede in ('instagram', 'tiktok', 'facebook', 'youtube', 'pinterest')),
+  formato          text not null default 'Vídeo' check (formato in ('Vídeo', 'Carrossel')),
+  link             text,
+  capa             text,                      -- endereço da imagem de capa
+  titulo           text,
+  gancho           text,                      -- frase ou cena dos primeiros segundos
+  roteiro          text,                      -- transcrição do vídeo ou texto do carrossel (sem limite)
+  duracao          text,                      -- ex.: 0:38, ou número de cards
+  por_que          text,                      -- por que deu certo
+  ideias_para_mim  text,                      -- o que dá para trazer para o meu perfil
+  criado_em        timestamptz not null default now()
+);
+
+alter table public.conteudos_banco enable row level security;
+drop policy if exists "dona total conteudos_banco" on public.conteudos_banco;
+create policy "dona total conteudos_banco" on public.conteudos_banco
+  for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');

@@ -62,6 +62,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
         Conteúdos
       </button>
+      <button class="nav-item" data-aba="banco">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h11a1 1 0 0 1 1 1V21l-6.5-4.2L5.5 21V4.5a1 1 0 0 1 1-1Z"/></svg>
+        Banco de Ideias
+      </button>
     </nav>
     <div class="sidebar-rodape">
       <p class="sidebar-email" id="sidebar-email">carregando...</p>
@@ -584,6 +588,51 @@
         </section>
       </div>
     </section>
+
+    <!-- ===================== ABA 8: BANCO DE IDEIAS ===================== -->
+    <section class="aba" id="aba-banco">
+      <div class="cont">
+        <div class="cont-banner">
+          <div class="cont-banner-texto">
+            <p class="cont-banner-rotulo">PARA HOJE</p>
+            <p class="cont-banner-frase" id="banco-frase"></p>
+          </div>
+          <button type="button" class="cont-banner-botao" id="banco-outra-frase">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+            Outra frase
+          </button>
+        </div>
+
+        <header class="banco-cabeca">
+          <h1 class="banco-titulo">Banco de Ideias</h1>
+          <p class="banco-sub">Conteúdos de outros perfis que deram certo, organizados por nicho e rede social, com a transcrição e o que você pode aproveitar no seu.</p>
+          <div class="banco-ajuda">
+            <span class="banco-ajuda-titulo">Transcrever com o TokScript:</span>
+            <a href="https://tokscript.com" target="_blank" rel="noopener">Site</a>
+            <a href="https://tokscript.com/instagram-transcript-generator" target="_blank" rel="noopener">Transcrição de Instagram</a>
+            <a href="https://tokscript.com/mcp" target="_blank" rel="noopener">Conectar no Claude (MCP)</a>
+            <a href="https://tokscript.com/chrome-extension" target="_blank" rel="noopener">Extensão do Chrome</a>
+          </div>
+        </header>
+
+        <div class="cont-abas" id="banco-nichos" role="tablist" aria-label="Nicho"></div>
+        <div class="cont-plataformas" id="banco-redes"></div>
+
+        <div class="banco-link-barra">
+          <label class="banco-link-campo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+            <input type="text" id="banco-link" placeholder="Cole aqui o link do conteúdo que você encontrou" autocomplete="off">
+          </label>
+          <button type="button" class="cont-botao-escuro" id="banco-salvar-link" style="height:48px;white-space:nowrap;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Salvar no banco
+          </button>
+        </div>
+
+        <div class="cont-vazio" id="banco-vazio" style="display:none;">Nenhum conteúdo salvo aqui ainda. Cole um link acima para começar.</div>
+        <div class="banco-tabela" id="banco-tabela"></div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -879,6 +928,57 @@
   </aside>
 </div>
 
+<!-- Gaveta: novo conteúdo / conteúdo salvo do Banco de Ideias -->
+<div class="cont-gaveta-fundo" id="banco-gaveta">
+  <div class="cont-gaveta-fora" data-fechar-banco></div>
+  <aside class="cont-gaveta" role="dialog" aria-modal="true" aria-labelledby="bi-titulo-gaveta">
+    <div class="cont-gaveta-topo">
+      <div>
+        <p class="cont-gaveta-kicker" id="bi-kicker"></p>
+        <p class="cont-gaveta-titulo" id="bi-titulo-gaveta">Novo conteúdo</p>
+      </div>
+      <button type="button" class="cont-quadrado" data-fechar-banco aria-label="Fechar">×</button>
+    </div>
+    <form id="form-banco" class="cont-gaveta-corpo" novalidate>
+      <div class="banco-capa-grande" id="bi-capa" style="display:none;" role="img" aria-label="Capa do conteúdo"></div>
+      <label class="cont-campo"><span>Link do conteúdo</span><input type="text" id="bi-link" placeholder="https://..."></label>
+      <a id="bi-link-abrir" class="cont-link" href="#" target="_blank" rel="noopener" style="display:none;">Abrir conteúdo original ↗</a>
+      <div class="banco-tok">
+        <div class="banco-tok-texto"><b>Transcrever este vídeo</b><span>Abre o TokScript e já copia o link. Depois cole a transcrição em <i>Roteiro</i>.</span></div>
+        <button type="button" class="cont-botao-claro" id="bi-tokscript" style="white-space:nowrap;">Copiar link e abrir TokScript</button>
+      </div>
+      <div class="banco-aviso" id="bi-aviso" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+        <span id="bi-aviso-texto">Título e capa são buscados do link quando o site permite. A transcrição você faz no TokScript e cola em Roteiro. Revise e complete com o que você observou.</span>
+      </div>
+      <div class="cont-duas">
+        <label class="cont-campo"><span>Nicho</span><select id="bi-nicho"></select></label>
+        <label class="cont-campo"><span>Rede social</span><select id="bi-rede"></select></label>
+      </div>
+      <div class="cont-campo"><span>Formato</span><div class="cont-pilulas" id="bi-formato"></div></div>
+      <label class="cont-campo"><span>Título do vídeo</span><input type="text" id="bi-titulo" placeholder="Ex.: Hotel com piscina no quarto por menos de R$ 400"></label>
+      <label class="cont-campo"><span>Qual foi o gancho</span><textarea id="bi-gancho" rows="2" placeholder="A frase ou cena dos primeiros segundos"></textarea></label>
+      <div class="cont-campo">
+        <span class="cont-rotulo"><span id="bi-roteiro-rotulo">Roteiro (transcrição)</span> <button type="button" class="cont-copiar" data-copiar-banco="bi-roteiro">Copiar</button></span>
+        <textarea id="bi-roteiro" class="banco-roteiro" rows="7" placeholder="Cole aqui a transcrição do TokScript. Não tem limite de tamanho."></textarea>
+        <span class="cont-dica" id="bi-roteiro-contagem"></span>
+      </div>
+      <label class="cont-campo" style="max-width:240px;"><span id="bi-duracao-rotulo">Tempo do vídeo</span><input type="text" id="bi-duracao" placeholder="Ex.: 0:38"></label>
+      <label class="cont-campo"><span>Por que deu certo</span><textarea id="bi-porque" rows="3" placeholder="Gancho forte, assunto em alta, edição rápida, preço na tela..."></textarea></label>
+      <label class="cont-campo banco-ideias-caixa"><span>Ideias que posso trazer para o meu perfil</span><textarea id="bi-ideias" rows="3" placeholder="Como adaptar para o @entracomigo, @favoritospri ou UGC"></textarea></label>
+    </form>
+    <div class="cont-gaveta-rodape">
+      <button type="button" class="cont-texto-perigo" id="bi-apagar" style="display:none;">Excluir</button>
+      <span style="flex:1"></span>
+      <button type="button" class="cont-botao-claro" data-fechar-banco>Cancelar</button>
+      <button type="button" class="cont-botao-escuro" id="bi-salvar">Salvar</button>
+      <button type="button" class="banco-copiar-tudo" id="bi-copiar-tudo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>
+        <span id="bi-copiar-rotulo">Copiar tudo</span>
+      </button>
+    </div>
+  </aside>
+</div>
 <!-- Janela grande para ler e escrever o roteiro -->
 <div class="modal-fundo" id="modal-cont-roteiro" style="z-index:340;">
   <div class="modal-caixa modal-larga cont-roteiro-modal">
@@ -962,6 +1062,7 @@
 <script src="js/checklist.js"></script>
 <script src="js/prospeccao.js"></script>
 <script src="js/conteudos.js"></script>
+<script src="js/banco-ideias.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

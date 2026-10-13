@@ -52,6 +52,7 @@
     await iniciarModulo("Campanhas", window.AdminCampanhas);
     await iniciarModulo("Checklist", window.AdminChecklist);
     await iniciarModulo("Conteúdos", window.AdminConteudos);
+    await iniciarModulo("Banco de Ideias", window.AdminBanco);
   }
 
   tudoPronto();
