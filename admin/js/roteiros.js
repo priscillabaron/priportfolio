@@ -540,6 +540,10 @@
     delete est.rodando[linha.id];
 
     if (r.texto) {
+      // confere o que o vídeo é (restaurante em SP, viagem, passeio, loja) e põe a tag certa
+      var vistaPrevia = Object.assign({}, linha, extras, { transcricao: r.texto });
+      var catsAchadas = classificar(vistaPrevia);
+      if (catsAchadas.length) extras.tags = uniaoDeTags(extras.tags || linha.tags, catsAchadas);
       var up = await gravarLinha(linha.id, Object.assign({
         transcricao: r.texto, segmentos: r.segmentos, status: "pronto", erro: null, updated_at: agoraISO()
       }, extras));
@@ -593,10 +597,67 @@
   /* ---------------------------------------------------------------------
      BIBLIOTECA
      --------------------------------------------------------------------- */
-  function todasAsTags() {
-    var vistas = {};
-    est.itens.forEach(function (i) { (i.tags || []).forEach(function (t) { vistas[t] = true; }); });
-    return Object.keys(vistas).sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+  // Categorias: o painel confere o texto do vídeo (título, legenda, hashtags e fala) e coloca a tag certa.
+  // Cada lista tem palavras sem acento; "s?" aceita o plural.
+  var SP = ["sao paulo", "sp", "paulistano", "paulista", "pinheiros", "vila madalena", "moema", "itaim", "bixiga", "consolacao", "mooca", "tatuape", "ibirapuera", "brooklin", "vila olimpia", "higienopolis"];
+  var CATEGORIAS = [
+    { rotulo: "Restaurantes SP", exigeSP: true, palavras: ["restaurantes?", "bar", "bares", "cafe", "cafes", "cafeterias?", "padarias?", "pizzarias?", "hamburguerias?", "rodizios?", "comidas?", "gastronomi(a|co|cos)", "drinks?", "coquetelaria", "brunch", "sorveterias?", "botecos?", "cardapios?", "chefs?", "churrascarias?", "sushi", "lanches?", "docerias?", "confeitarias?", "jantar", "almoco", "pratos?", "petiscos?", "cervejas?", "choperias?", "bebidas?", "menu"] },
+    { rotulo: "Viagens", palavras: ["viagem", "viagens", "viajar", "viajei", "viajando", "hotel", "hoteis", "resorts?", "pousadas?", "hospedagem", "hospedar", "passagens?", "voos?", "aeroporto", "destinos?", "ferias", "turismo", "turista", "intercambio", "malas?", "all inclusive", "hostel", "airbnb", "cruzeiros?", "milhas", "internacional", "pacotes?"] },
+    { rotulo: "Passeios", palavras: ["passeios?", "atracao", "atracoes", "parques?", "museus?", "mirantes?", "trilhas?", "tours?", "ingressos?", "o que fazer", "pontos? turisticos?", "roles?", "programas?", "fim de semana", "cachoeiras?", "praias?", "exposicao", "exposicoes", "shows?", "eventos?", "lugares", "conhecer", "visitar", "teatro", "cinema", "bate e volta", "zoologico", "fora do obvio", "imperdiveis?"] },
+    { rotulo: "Lojas", palavras: ["lojas?", "comprar", "compras?", "shopping", "outlet", "promocao", "promocoes", "descontos?", "achadinhos?", "brechos?", "boutiques?", "cupom", "cupons", "precos?", "marcas?", "liquidacao", "vitrine", "moda", "roupas?", "sapatos?", "bolsas?", "perfumes?", "perfumaria", "maquiagem", "decoracao"] }
+  ];
+  function normalizar(t) { return semAcento(t).replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " "); }
+  function contarDistintas(lista, texto) {
+    var n = 0;
+    lista.forEach(function (p) {
+      if (new RegExp("(^| )" + p + "( |$)").test(texto)) n++;
+    });
+    return n;
+  }
+  // Devolve os nomes das categorias que combinam com o roteiro
+  function classificar(item) {
+    var forte = normalizar([item.titulo, item.legenda, (item.tags || []).join(" ")].join(" "));
+    var fraco = normalizar(item.transcricao);
+    var juntos = forte + " " + fraco;
+    var achadas = [];
+    CATEGORIAS.forEach(function (c) {
+      var pontos = contarDistintas(c.palavras, forte) * 2 + contarDistintas(c.palavras, fraco);
+      if (pontos < 2) return;
+      if (c.exigeSP && contarDistintas(SP, juntos) < 1) return;
+      achadas.push(c.rotulo);
+    });
+    return achadas;
+  }
+  function nomesDeCategorias() { return CATEGORIAS.map(function (c) { return c.rotulo; }); }
+  function uniaoDeTags(a, b) {
+    var saida = (a || []).slice();
+    (b || []).forEach(function (t) {
+      if (saida.map(function (x) { return x.toLowerCase(); }).indexOf(String(t).toLowerCase()) < 0) saida.push(t);
+    });
+    return saida;
+  }
+  function temCategoria(item) {
+    var nomes = nomesDeCategorias().map(function (n) { return n.toLowerCase(); });
+    return (item.tags || []).some(function (t) { return nomes.indexOf(String(t).toLowerCase()) >= 0; });
+  }
+
+  // Roteiros que já existiam antes das categorias: organiza uma vez só (por navegador)
+  async function organizarAntigos() {
+    var feitos = {};
+    try { feitos = JSON.parse(localStorage.getItem("rot-organizados") || "{}"); } catch (e) { feitos = {}; }
+    var mudou = false;
+    for (var k = 0; k < est.itens.length; k++) {
+      var i = est.itens[k];
+      if (feitos[i.id] || i.status !== "pronto" || temCategoria(i)) continue;
+      feitos[i.id] = 1;
+      var cats = classificar(i);
+      if (cats.length) {
+        var r = await gravarLinha(i.id, { tags: uniaoDeTags(i.tags, cats), updated_at: agoraISO() });
+        if (!r.error) mudou = true;
+      }
+    }
+    try { localStorage.setItem("rot-organizados", JSON.stringify(feitos)); } catch (e) { /* tudo bem */ }
+    if (mudou) await carregarLista();
   }
 
   function renderFiltros() {
@@ -604,10 +665,10 @@
     caixa.innerHTML = "";
     var lista = [
       { id: "todos", rotulo: "Todos" },
-      { id: "minha", rotulo: "Meus" },
-      { id: "outra", rotulo: "De outras" }
+      { id: "minha", rotulo: "Meus vídeos" },
+      { id: "outra", rotulo: "Outros perfis" }
     ];
-    todasAsTags().forEach(function (t) { lista.push({ id: "tag:" + t, rotulo: "#" + t }); });
+    CATEGORIAS.forEach(function (c) { lista.push({ id: "tag:" + c.rotulo, rotulo: c.rotulo }); });
     lista.forEach(function (f) {
       var b = criar("button", "cont-pilula" + (est.filtro === f.id ? " ativo" : ""), f.rotulo);
       b.type = "button";
@@ -619,7 +680,10 @@
   function passaNoFiltro(i) {
     if (est.filtro === "minha" && i.de_quem !== "minha") return false;
     if (est.filtro === "outra" && i.de_quem === "minha") return false;
-    if (est.filtro.indexOf("tag:") === 0 && (i.tags || []).indexOf(est.filtro.slice(4)) < 0) return false;
+    if (est.filtro.indexOf("tag:") === 0) {
+      var quer = est.filtro.slice(4).toLowerCase();
+      if ((i.tags || []).map(function (t) { return String(t).toLowerCase(); }).indexOf(quer) < 0) return false;
+    }
     if (est.busca) {
       var palheiro = semAcento([i.transcricao, i.perfil, i.titulo, i.obs, i.legenda, (i.tags || []).join(" ")].join(" "));
       if (palheiro.indexOf(est.busca) < 0) return false;
@@ -825,6 +889,17 @@
     if (novo.postado_em) el["rm-data"].value = novo.postado_em;
     if (novo.tags) el["rm-tags"].value = novo.tags.join(", ");
     if (novo.legenda) el["rm-legenda"].value = novo.legenda;
+    // categorias (Restaurantes SP, Viagens, Passeios, Lojas) pelo que já está nos campos
+    var tagsAgora = [];
+    el["rm-tags"].value.split(",").forEach(function (t) { var x = t.trim().replace(/^#/, ""); if (x) tagsAgora.push(x); });
+    var catsModal = classificar({
+      titulo: el["rm-titulo"].value, legenda: el["rm-legenda"].value, tags: tagsAgora, transcricao: el["rm-transcricao"].value
+    });
+    if (catsModal.length) {
+      var antes = el["rm-tags"].value;
+      el["rm-tags"].value = uniaoDeTags(tagsAgora, catsModal).join(", ");
+      if (el["rm-tags"].value !== antes) novo.tags = true;
+    }
     if (novo.capa) est.capaModal = novo.capa;
     U.toast(Object.keys(novo).length ? "Campos vazios preenchidos." : "Não achei nada novo para preencher.");
     setTimeout(carregarSaldo, 1500);
@@ -930,6 +1005,7 @@
     await carregarChave();
     desenharChave();
     await carregarLista();
+    organizarAntigos();
     carregarSaldo();
   }
 })();
