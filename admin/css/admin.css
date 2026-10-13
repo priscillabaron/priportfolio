@@ -716,3 +716,4 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
   .rot-capa.tocando { flex-basis: 100%; width: 100%; max-width: 270px; }
   .rot-card:has(.rot-capa.tocando) { flex-wrap: wrap; }
 }
+.rot-preencher { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }

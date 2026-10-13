@@ -282,6 +282,48 @@
     return { texto: texto, segmentos: Array.isArray(j.content) ? j.content : null };
   }
 
+  // Busca título, perfil, data, hashtags e legenda do post (1 crédito). Nunca derruba a transcrição:
+  // se não der certo, devolve null.
+  async function buscarMetadados(link, chave) {
+    try {
+      var resp = await fetch(API + "/metadata?url=" + encodeURIComponent(link), { headers: { "x-api-key": chave } });
+      if (!resp.ok) return null;
+      var j = await resp.json();
+      if (!j) return null;
+      var legenda = typeof j.description === "string" ? j.description.trim() : "";
+      var tags = Array.isArray(j.tags) ? j.tags.map(function (t) { return String(t).replace(/^#/, "").trim(); }).filter(Boolean) : [];
+      if (!tags.length && legenda) {
+        (legenda.match(/#[\p{L}\p{N}_]+/gu) || []).forEach(function (h) {
+          var x = h.slice(1);
+          if (tags.indexOf(x) < 0) tags.push(x);
+        });
+      }
+      var titulo = typeof j.title === "string" ? j.title.trim() : "";
+      if (!titulo && legenda) {
+        // sem título (comum no Instagram): usa a primeira frase da legenda, sem hashtags
+        var primeira = legenda.replace(/#[\p{L}\p{N}_]+/gu, "").split(/\n/).map(function (l) { return l.trim(); }).filter(Boolean)[0] || "";
+        titulo = primeira.length > 90 ? primeira.slice(0, 87).trim() + "..." : primeira;
+      }
+      var perfil = j.author && (j.author.username || j.author.displayName) ? String(j.author.username || j.author.displayName).replace(/^@/, "") : "";
+      var data = typeof j.createdAt === "string" && /^\d{4}-\d{2}-\d{2}/.test(j.createdAt) ? j.createdAt.slice(0, 10) : "";
+      return { titulo: titulo, perfil: perfil, postado_em: data, tags: tags.slice(0, 12), legenda: legenda };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Só preenche o que ainda está vazio (não passa por cima do que você já escreveu)
+  function camposVaziosDaMeta(atual, meta) {
+    var novo = {};
+    if (!meta) return novo;
+    if (!atual.titulo && meta.titulo) novo.titulo = meta.titulo;
+    if (!atual.perfil && meta.perfil) novo.perfil = meta.perfil;
+    if (!atual.postado_em && meta.postado_em) novo.postado_em = meta.postado_em;
+    if ((!atual.tags || !atual.tags.length) && meta.tags && meta.tags.length) novo.tags = meta.tags;
+    if (!atual.legenda && meta.legenda) novo.legenda = meta.legenda;
+    return novo;
+  }
+
   // Usada também pelo Banco de Ideias (botão "Transcrever aqui")
   async function transcreverLink(link, aoAndamento) {
     var limpo = limparLink(link);
@@ -393,13 +435,16 @@
     var fraseAndamento = function (s) {
       mostrarAviso("info", "🎧 Ouvindo o vídeo... " + frasePassouTempo(s) + ". Costuma levar de 3 a 4 minutos, pode deixar a aba aberta.");
     };
+    // título, perfil, data, tags e legenda vêm de outro pedido, feito ao mesmo tempo
+    var pedidoMeta = buscarMetadados(linha.url, est.chave);
     var r = await pedirTranscricao(linha.url, est.chave, fraseAndamento);
+    var extras = camposVaziosDaMeta(linha, await pedidoMeta);
     delete est.rodando[linha.id];
 
     if (r.texto) {
-      var up = await U.consulta("roteiros", cliente().from("roteiros").update({
+      var up = await U.consulta("roteiros", cliente().from("roteiros").update(Object.assign({
         transcricao: r.texto, segmentos: r.segmentos, status: "pronto", erro: null, updated_at: agoraISO()
-      }).eq("id", linha.id).select().single());
+      }, extras)).eq("id", linha.id).select().single());
       await carregarLista();
       carregarSaldo();
       esconderAviso();
@@ -411,7 +456,7 @@
     var msgErro = r.vazio
       ? "Não achei fala nesse vídeo. Costuma ser reel só com música ou só com texto na tela."
       : r.erro;
-    await U.consulta("roteiros", cliente().from("roteiros").update({ status: "falhou", erro: msgErro, updated_at: agoraISO() }).eq("id", linha.id));
+    await U.consulta("roteiros", cliente().from("roteiros").update(Object.assign({ status: "falhou", erro: msgErro, updated_at: agoraISO() }, extras)).eq("id", linha.id));
     await carregarLista();
     carregarSaldo();
     if (r.vazio) {
@@ -644,6 +689,33 @@
     el["rm-contagem"].textContent = n ? n.toLocaleString("pt-BR") + " palavras" : "";
   }
 
+  // Botão da janela: preenche o que está vazio usando só o link (gasta 1 crédito)
+  async function preencherPeloLink() {
+    var link = limparLink(el["rm-link"].value);
+    if (!/^https?:\/\//i.test(link) || !descobrirFonte(link)) { U.toast("Cole um link do Instagram, TikTok ou YouTube.", true); return; }
+    if (!est.chaveCarregada || !est.chave) await carregarChave();
+    if (!est.chave) { U.toast("Falta a chave da Supadata. Cole na aba Roteiros.", true); return; }
+    var b = el["rm-buscar-dados"];
+    b.disabled = true;
+    b.textContent = "Buscando...";
+    var meta = await buscarMetadados(link, est.chave);
+    b.disabled = false;
+    b.textContent = "✨ Preencher pelo link";
+    if (!meta) { U.toast("Não consegui buscar os dados desse link agora.", true); return; }
+    var atual = {
+      titulo: el["rm-titulo"].value.trim(), perfil: el["rm-perfil"].value.trim(), postado_em: el["rm-data"].value,
+      tags: el["rm-tags"].value.trim() ? ["x"] : [], legenda: el["rm-legenda"].value.trim()
+    };
+    var novo = camposVaziosDaMeta(atual, meta);
+    if (novo.titulo) el["rm-titulo"].value = novo.titulo;
+    if (novo.perfil) el["rm-perfil"].value = "@" + novo.perfil;
+    if (novo.postado_em) el["rm-data"].value = novo.postado_em;
+    if (novo.tags) el["rm-tags"].value = novo.tags.join(", ");
+    if (novo.legenda) el["rm-legenda"].value = novo.legenda;
+    U.toast(Object.keys(novo).length ? "Campos vazios preenchidos." : "Não achei nada novo para preencher.");
+    carregarSaldo();
+  }
+
   async function salvarModal() {
     var link = limparLink(el["rm-link"].value);
     if (link && !/^https?:\/\//i.test(link)) { U.toast("O link precisa começar com http.", true); el["rm-link"].focus(); return; }
@@ -713,8 +785,9 @@
       "rot-chave-card", "rot-chave-rotulo", "rot-chave", "rot-salvar-chave", "rot-remover-chave", "rot-chave-estado",
       "rot-saldo", "rot-saldo-atualizar", "rot-como-chave", "rot-busca", "rot-filtros", "rot-lista", "rot-vazio", "rot-sem-tabela",
       "rm-titulo-modal", "rm-titulo", "rm-dequem", "rm-perfil", "rm-link", "rm-data", "rm-tags", "rm-legenda",
-      "rm-transcricao", "rm-contagem", "rm-obs", "rm-aviso", "rm-salvar"
+      "rm-transcricao", "rm-contagem", "rm-obs", "rm-aviso", "rm-salvar", "rm-buscar-dados"
     ].forEach(function (id) { el[id] = $(id); });
+    el["rm-buscar-dados"].addEventListener("click", preencherPeloLink);
 
     el["rot-transcrever"].addEventListener("click", aoClicarTranscrever);
     el["rot-link"].addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); aoClicarTranscrever(); } });
