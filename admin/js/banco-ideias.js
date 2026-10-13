@@ -1,7 +1,7 @@
 // ============================================================================
 // ABA: BANCO DE IDEIAS
 // Guarda conteúdos de outros perfis que deram certo (YouTube, Instagram, TikTok,
-// Facebook, Pinterest), com a transcrição (feita no TokScript), o gancho, por que
+// Facebook, Pinterest), com a transcrição (feita aqui mesmo), o gancho, por que
 // deu certo e o que dá para trazer para o seu perfil. Tabela: conteudos_banco.
 // ============================================================================
 (function () {
@@ -26,11 +26,6 @@
     { id: "pinterest", rotulo: "Pinterest" }
   ];
   var FORMATOS = ["Vídeo", "Carrossel"];
-  // Endereços do TokScript (ferramenta usada para transcrever os vídeos)
-  var TOKSCRIPT = {
-    site: "https://tokscript.com",
-    instagram: "https://tokscript.com/instagram-transcript-generator"
-  };
   var ICONE_PLAY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m10 9 5 3-5 3V9Z" fill="currentColor"/></svg>';
   var ICONE_SETA = '<svg class="banco-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>';
 
@@ -112,7 +107,7 @@
     [
       "banco-frase", "banco-outra-frase", "banco-nichos", "banco-redes", "banco-link", "banco-salvar-link",
       "banco-vazio", "banco-tabela", "banco-gaveta", "bi-kicker", "bi-titulo-gaveta", "bi-capa", "bi-link",
-      "bi-link-abrir", "bi-tokscript", "bi-aviso", "bi-aviso-texto", "bi-nicho", "bi-rede", "bi-formato", "bi-titulo",
+      "bi-link-abrir", "bi-tokscript", "bi-tok-status", "bi-aviso", "bi-aviso-texto", "bi-nicho", "bi-rede", "bi-formato", "bi-titulo",
       "bi-gancho", "bi-roteiro-rotulo", "bi-roteiro", "bi-roteiro-contagem", "bi-duracao-rotulo", "bi-duracao",
       "bi-porque", "bi-ideias", "bi-apagar", "bi-salvar", "bi-copiar-tudo", "bi-copiar-rotulo"
     ].forEach(function (id) { el[id] = document.getElementById(id); });
@@ -156,7 +151,7 @@
     });
     el["bi-nicho"].addEventListener("change", function () { est.rascunho.nicho = el["bi-nicho"].value; desenharKicker(); });
     el["bi-rede"].addEventListener("change", function () { est.rascunho.rede = el["bi-rede"].value; desenharKicker(); });
-    el["bi-tokscript"].addEventListener("click", abrirTokscript);
+    el["bi-tokscript"].addEventListener("click", transcrever);
     el["bi-salvar"].addEventListener("click", salvar);
     el["bi-apagar"].addEventListener("click", apagar);
     el["bi-copiar-tudo"].addEventListener("click", copiarTudo);
@@ -289,7 +284,7 @@
   }
 
   // Tenta buscar título e capa direto do link (o que cada site permite). Se não conseguir, tudo bem:
-  // você preenche à mão. A transcrição vem do TokScript.
+  // você preenche à mão. A transcrição é feita pelo botão "Transcrever aqui".
   async function buscarDadosDoLink() {
     var r = est.rascunho;
     if (!r || !linkValido(r.link)) return;
@@ -340,6 +335,7 @@
     el["bi-ideias"].value = r.ideias_para_mim;
     el["bi-apagar"].style.display = r.id ? "" : "none";
     el["bi-copiar-rotulo"].textContent = "Copiar tudo";
+    el["bi-tok-status"].textContent = "A transcrição aparece aqui mesmo, no campo Roteiro. Funciona com Instagram, TikTok e YouTube.";
     desenharFormatos();
     desenharKicker();
     mostrarCapa();
@@ -382,7 +378,7 @@
     });
     var car = est.rascunho.formato === "Carrossel";
     el["bi-roteiro-rotulo"].textContent = car ? "Texto do carrossel" : "Roteiro (transcrição)";
-    el["bi-roteiro"].placeholder = car ? "O que está escrito em cada card" : "Cole aqui a transcrição do TokScript. Não tem limite de tamanho.";
+    el["bi-roteiro"].placeholder = car ? "O que está escrito em cada card" : "A transcrição aparece aqui. Você também pode escrever ou colar. Não tem limite de tamanho.";
     el["bi-duracao-rotulo"].textContent = car ? "Quantidade de cards" : "Tempo do vídeo";
     el["bi-duracao"].placeholder = car ? "Ex.: 7" : "Ex.: 0:38";
   }
@@ -393,13 +389,61 @@
     el["bi-roteiro-contagem"].textContent = n ? n.toLocaleString("pt-BR") + " palavras · " + t.length.toLocaleString("pt-BR") + " caracteres" : "";
   }
 
-  // Copia o link e abre o TokScript para você fazer a transcrição.
-  async function abrirTokscript() {
-    var link = normalizarLink(est.rascunho.link);
+  // Transcreve o vídeo aqui mesmo: pede para a função "transcrever" (no Supabase) e coloca o texto no Roteiro.
+  async function transcrever() {
+    if (est.transcrevendo) return;
+    var r = est.rascunho;
+    var link = normalizarLink(r.link);
     if (!linkValido(link)) { U.toast("Cole o link do vídeo primeiro.", true); el["bi-link"].focus(); return; }
-    try { await navigator.clipboard.writeText(link); U.toast("Link copiado. Cole no TokScript."); }
-    catch (erro) { U.toast("Abri o TokScript. Cole o link do vídeo lá."); }
-    window.open(est.rascunho.rede === "instagram" ? TOKSCRIPT.instagram : TOKSCRIPT.site, "_blank", "noopener");
+    if (["instagram", "tiktok", "youtube"].indexOf(r.rede) < 0) {
+      U.toast("A transcrição automática funciona para Instagram, TikTok e YouTube.", true);
+      return;
+    }
+    if (r.formato === "Carrossel") { U.toast("Carrossel não tem fala para transcrever. Escreva o texto dos cards.", true); return; }
+    if (r.roteiro && r.roteiro.trim() && !window.confirm("O Roteiro já tem texto. Substituir pela transcrição?")) return;
+
+    est.transcrevendo = true;
+    var rotuloBotao = el["bi-tokscript"].textContent;
+    el["bi-tokscript"].disabled = true;
+    el["bi-tokscript"].textContent = "Transcrevendo...";
+    el["bi-tok-status"].textContent = "Buscando a fala do vídeo. Pode levar até 1 minuto.";
+    var erroTexto = "";
+    var texto = "";
+    try {
+      var resp = await window.bancoCliente.functions.invoke("transcrever", { body: { link: link, rede: r.rede } });
+      if (resp.error) erroTexto = await descreverErroFuncao(resp.error);
+      else if (resp.data && resp.data.texto) texto = String(resp.data.texto);
+      else erroTexto = (resp.data && resp.data.erro) || "A transcrição veio vazia.";
+    } catch (e) {
+      erroTexto = "Não consegui falar com a função de transcrição. Confira sua internet e se ela foi publicada no Supabase.";
+    }
+    est.transcrevendo = false;
+    el["bi-tokscript"].disabled = false;
+    el["bi-tokscript"].textContent = rotuloBotao;
+
+    // se fechou ou trocou de conteúdo enquanto esperava, não mexe
+    if (est.rascunho !== r) return;
+    if (erroTexto) {
+      el["bi-tok-status"].textContent = erroTexto;
+      U.toast(erroTexto, true);
+      return;
+    }
+    r.roteiro = texto;
+    el["bi-roteiro"].value = texto;
+    atualizarContagem();
+    el["bi-tok-status"].textContent = "Pronto! A transcrição está no campo Roteiro. Revise e ajuste se precisar.";
+    U.toast("Transcrição colocada no Roteiro.");
+  }
+
+  async function descreverErroFuncao(erro) {
+    try {
+      if (erro && erro.context && typeof erro.context.json === "function") {
+        var j = await erro.context.json();
+        if (j && j.erro) return j.erro;
+      }
+    } catch (e) { /* segue */ }
+    if (erro && erro.context && erro.context.status === 404) return "A função de transcrição ainda não foi publicada no Supabase.";
+    return "Não consegui falar com a função de transcrição. Confira se ela foi publicada no Supabase e se você está logada.";
   }
 
   async function copiarTexto(texto) {

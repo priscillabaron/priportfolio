@@ -606,13 +606,6 @@
         <header class="banco-cabeca">
           <h1 class="banco-titulo">Banco de Ideias</h1>
           <p class="banco-sub">Conteúdos de outros perfis que deram certo, organizados por nicho e rede social, com a transcrição e o que você pode aproveitar no seu.</p>
-          <div class="banco-ajuda">
-            <span class="banco-ajuda-titulo">Transcrever com o TokScript:</span>
-            <a href="https://tokscript.com" target="_blank" rel="noopener">Site</a>
-            <a href="https://tokscript.com/instagram-transcript-generator" target="_blank" rel="noopener">Transcrição de Instagram</a>
-            <a href="https://tokscript.com/mcp" target="_blank" rel="noopener">Conectar no Claude (MCP)</a>
-            <a href="https://tokscript.com/chrome-extension" target="_blank" rel="noopener">Extensão do Chrome</a>
-          </div>
         </header>
 
         <div class="cont-abas" id="banco-nichos" role="tablist" aria-label="Nicho"></div>
@@ -944,12 +937,12 @@
       <label class="cont-campo"><span>Link do conteúdo</span><input type="text" id="bi-link" placeholder="https://..."></label>
       <a id="bi-link-abrir" class="cont-link" href="#" target="_blank" rel="noopener" style="display:none;">Abrir conteúdo original ↗</a>
       <div class="banco-tok">
-        <div class="banco-tok-texto"><b>Transcrever este vídeo</b><span>Abre o TokScript e já copia o link. Depois cole a transcrição em <i>Roteiro</i>.</span></div>
-        <button type="button" class="cont-botao-claro" id="bi-tokscript" style="white-space:nowrap;">Copiar link e abrir TokScript</button>
+        <div class="banco-tok-texto"><b>Transcrever este vídeo</b><span id="bi-tok-status">A transcrição aparece aqui mesmo, no campo <i>Roteiro</i>. Funciona com Instagram, TikTok e YouTube.</span></div>
+        <button type="button" class="cont-botao-claro" id="bi-tokscript" style="white-space:nowrap;">Transcrever aqui</button>
       </div>
       <div class="banco-aviso" id="bi-aviso" style="display:none;">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
-        <span id="bi-aviso-texto">Título e capa são buscados do link quando o site permite. A transcrição você faz no TokScript e cola em Roteiro. Revise e complete com o que você observou.</span>
+        <span id="bi-aviso-texto">Título e capa são buscados do link quando o site permite. Clique em "Transcrever aqui" para trazer a fala do vídeo para o Roteiro. Revise e complete com o que você observou.</span>
       </div>
       <div class="cont-duas">
         <label class="cont-campo"><span>Nicho</span><select id="bi-nicho"></select></label>
@@ -960,7 +953,7 @@
       <label class="cont-campo"><span>Qual foi o gancho</span><textarea id="bi-gancho" rows="2" placeholder="A frase ou cena dos primeiros segundos"></textarea></label>
       <div class="cont-campo">
         <span class="cont-rotulo"><span id="bi-roteiro-rotulo">Roteiro (transcrição)</span> <button type="button" class="cont-copiar" data-copiar-banco="bi-roteiro">Copiar</button></span>
-        <textarea id="bi-roteiro" class="banco-roteiro" rows="7" placeholder="Cole aqui a transcrição do TokScript. Não tem limite de tamanho."></textarea>
+        <textarea id="bi-roteiro" class="banco-roteiro" rows="7" placeholder="A transcrição aparece aqui. Você também pode escrever ou colar. Não tem limite de tamanho."></textarea>
         <span class="cont-dica" id="bi-roteiro-contagem"></span>
       </div>
       <label class="cont-campo" style="max-width:240px;"><span id="bi-duracao-rotulo">Tempo do vídeo</span><input type="text" id="bi-duracao" placeholder="Ex.: 0:38"></label>
