@@ -231,6 +231,8 @@
     var detalhe = String((j && (j.details || j.message)) || "");
     var creditosAcabaram = null;
     var numeros = "";
+    var tecnico = detalhe ? " [detalhe da Supadata: " + detalhe + "]" : "";
+    await dormir(1300); // respeita o limite de 1 pedido por segundo antes de consultar o saldo
     try {
       var r = await fetch(API + "/me", { headers: { "x-api-key": chave } });
       var m = await r.json().catch(function () { return null; });
@@ -241,9 +243,9 @@
     } catch (e) { /* segue com o texto da API */ }
     if (creditosAcabaram === null) creditosAcabaram = /plan|usage|credit/i.test(detalhe) && !/rate/i.test(detalhe);
     if (creditosAcabaram) {
-      return "Os créditos do mês na Supadata acabaram" + numeros + ". Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles.";
+      return "Os créditos do mês na Supadata acabaram" + numeros + ". Eles voltam no começo do próximo mês, ou você pode assinar um plano maior no site deles." + tecnico;
     }
-    return "Muitos pedidos seguidos na Supadata" + numeros + ". Espere 1 minuto e clique em Tentar de novo.";
+    return "Muitos pedidos seguidos na Supadata" + numeros + ". Espere 1 minuto e clique em Tentar de novo." + tecnico;
   }
   async function traduzirErro(status, j, chave) {
     var m = erroDaApi(status, j);
@@ -259,8 +261,14 @@
     if (aoAndamento) aoAndamento(0);
     try {
       var endereco = API + "/transcript?url=" + encodeURIComponent(link) + "&mode=auto&text=true&lang=pt";
-      var resp = await fetch(endereco, { headers: { "x-api-key": chave } });
-      var j = await resp.json().catch(function () { return null; });
+      var resp, j;
+      // o plano grátis aceita 1 pedido por segundo: se recusar por velocidade, espera e tenta de novo sozinho
+      for (var tentativa = 0; tentativa < 4; tentativa++) {
+        if (tentativa > 0) await dormir(1500 * tentativa);
+        resp = await fetch(endereco, { headers: { "x-api-key": chave } });
+        j = await resp.json().catch(function () { return null; });
+        if (resp.status !== 429 && !(j && j.error === "limit-exceeded")) break;
+      }
 
       if (resp.status === 202 && j && j.jobId) {
         // vídeo longo: consulta o andamento a cada 5 segundos
@@ -527,6 +535,7 @@
     mostrarAviso("info", "🔎 Buscando os dados do vídeo...");
     var meta = await buscarMetadados(linha.url, est.chave);
     var extras = camposVaziosDaMeta(linha, meta);
+    await dormir(1300); // plano grátis: 1 pedido por segundo
     var r = await pedirTranscricao(linha.url, est.chave, fraseAndamento);
     delete est.rodando[linha.id];
 
@@ -818,7 +827,7 @@
     if (novo.legenda) el["rm-legenda"].value = novo.legenda;
     if (novo.capa) est.capaModal = novo.capa;
     U.toast(Object.keys(novo).length ? "Campos vazios preenchidos." : "Não achei nada novo para preencher.");
-    carregarSaldo();
+    setTimeout(carregarSaldo, 1500);
   }
 
   async function salvarModal() {
