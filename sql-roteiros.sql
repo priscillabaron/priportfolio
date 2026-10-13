@@ -31,6 +31,9 @@ create table if not exists public.configuracoes (
   updated_at  timestamptz not null default now()
 );
 
+-- Capa do vídeo (imagem pequena guardada junto do roteiro)
+alter table public.roteiros add column if not exists capa text;
+
 create index if not exists roteiros_created_at_idx on public.roteiros (created_at desc);
 
 -- Só quem está logada lê e escreve. Nada para visitantes (anon).

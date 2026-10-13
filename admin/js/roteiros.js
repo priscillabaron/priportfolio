@@ -282,6 +282,68 @@
     return { texto: texto, segmentos: Array.isArray(j.content) ? j.content : null };
   }
 
+  // Copia a capa para uma imagem pequena guardada junto do roteiro (os links das redes expiram).
+  // Se o site da capa não deixar copiar, guarda o link mesmo.
+  function reduzirImagem(blob) {
+    return new Promise(function (ok, falha) {
+      var u = URL.createObjectURL(blob);
+      var img = new Image();
+      img.onload = function () {
+        var s = Math.min(1, 360 / img.width);
+        var c = document.createElement("canvas");
+        c.width = Math.max(1, Math.round(img.width * s));
+        c.height = Math.max(1, Math.round(img.height * s));
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(u);
+        ok(c.toDataURL("image/jpeg", 0.72));
+      };
+      img.onerror = function () { URL.revokeObjectURL(u); falha(new Error("imagem")); };
+      img.src = u;
+    });
+  }
+  async function guardarCapa(url) {
+    try {
+      var resp = await fetch(url, { referrerPolicy: "no-referrer" });
+      if (!resp.ok) throw new Error("capa");
+      return await reduzirImagem(await resp.blob());
+    } catch (e) {
+      return url;
+    }
+  }
+  function idYoutube(url) {
+    try {
+      var u = new URL(url);
+      if (u.hostname.indexOf("youtu.be") >= 0) return u.pathname.split("/").filter(Boolean)[0] || "";
+      if (u.searchParams.get("v")) return u.searchParams.get("v");
+      var m = u.pathname.match(/\/(?:shorts|embed|live)\/([A-Za-z0-9_-]+)/);
+      return m ? m[1] : "";
+    } catch (e) { return ""; }
+  }
+  // Capa para mostrar no card: a guardada, ou (YouTube) a oficial
+  function capaDoItem(item) {
+    if (item.capa) return item.capa;
+    if (item.fonte === "youtube") {
+      var id = idYoutube(item.url || "");
+      if (id) return "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
+    }
+    return "";
+  }
+
+  // Grava no banco. Se a coluna "capa" ainda não existe (SQL novo não rodado), tenta de novo sem ela.
+  async function gravarLinha(id, dados) {
+    var r = await cliente().from("roteiros").update(dados).eq("id", id).select().single();
+    if (r.error && "capa" in dados && (r.error.code === "42703" || r.error.code === "PGRST204")) {
+      var semCapa = Object.assign({}, dados);
+      delete semCapa.capa;
+      r = await cliente().from("roteiros").update(semCapa).eq("id", id).select().single();
+    }
+    if (r.error) {
+      console.error("Erro ao gravar roteiro:", r.error);
+      U.toast("Não consegui salvar. Confira se o SQL foi rodado.", true);
+    }
+    return r;
+  }
+
   // Busca título, perfil, data, hashtags e legenda do post (1 crédito). Nunca derruba a transcrição:
   // se não der certo, devolve null.
   async function buscarMetadados(link, chave) {
@@ -306,7 +368,11 @@
       }
       var perfil = j.author && (j.author.username || j.author.displayName) ? String(j.author.username || j.author.displayName).replace(/^@/, "") : "";
       var data = typeof j.createdAt === "string" && /^\d{4}-\d{2}-\d{2}/.test(j.createdAt) ? j.createdAt.slice(0, 10) : "";
-      return { titulo: titulo, perfil: perfil, postado_em: data, tags: tags.slice(0, 12), legenda: legenda };
+      var m = j.media || {};
+      var primeiro = m.items && m.items[0] ? m.items[0] : {};
+      var urlCapa = m.thumbnailUrl || m.url || primeiro.thumbnailUrl || primeiro.url || "";
+      var capa = urlCapa ? await guardarCapa(urlCapa) : "";
+      return { titulo: titulo, perfil: perfil, postado_em: data, tags: tags.slice(0, 12), legenda: legenda, capa: capa };
     } catch (e) {
       return null;
     }
@@ -321,6 +387,7 @@
     if (!atual.postado_em && meta.postado_em) novo.postado_em = meta.postado_em;
     if ((!atual.tags || !atual.tags.length) && meta.tags && meta.tags.length) novo.tags = meta.tags;
     if (!atual.legenda && meta.legenda) novo.legenda = meta.legenda;
+    if (!atual.capa && meta.capa) novo.capa = meta.capa;
     return novo;
   }
 
@@ -442,9 +509,9 @@
     delete est.rodando[linha.id];
 
     if (r.texto) {
-      var up = await U.consulta("roteiros", cliente().from("roteiros").update(Object.assign({
+      var up = await gravarLinha(linha.id, Object.assign({
         transcricao: r.texto, segmentos: r.segmentos, status: "pronto", erro: null, updated_at: agoraISO()
-      }, extras)).eq("id", linha.id).select().single());
+      }, extras));
       await carregarLista();
       carregarSaldo();
       esconderAviso();
@@ -456,7 +523,7 @@
     var msgErro = r.vazio
       ? "Não achei fala nesse vídeo. Costuma ser reel só com música ou só com texto na tela."
       : r.erro;
-    await U.consulta("roteiros", cliente().from("roteiros").update(Object.assign({ status: "falhou", erro: msgErro, updated_at: agoraISO() }, extras)).eq("id", linha.id));
+    await gravarLinha(linha.id, Object.assign({ status: "falhou", erro: msgErro, updated_at: agoraISO() }, extras));
     await carregarLista();
     carregarSaldo();
     if (r.vazio) {
@@ -558,7 +625,21 @@
       capa.appendChild(criar("span", "rot-capa-nome", f.rotulo));
       return capa;
     }
-    capa.appendChild(criar("span", "rot-capa-emoji", f.emoji));
+    var emoji = criar("span", "rot-capa-emoji", f.emoji);
+    capa.appendChild(emoji);
+    var urlCapa = capaDoItem(item);
+    if (urlCapa) {
+      // a capa de verdade; se não carregar (link vencido), fica o fundo colorido
+      var foto = document.createElement("img");
+      foto.className = "rot-capa-foto";
+      foto.alt = "";
+      foto.referrerPolicy = "no-referrer";
+      foto.loading = "lazy";
+      foto.addEventListener("load", function () { emoji.style.display = "none"; capa.classList.add("com-foto"); });
+      foto.addEventListener("error", function () { foto.remove(); });
+      foto.src = urlCapa;
+      capa.appendChild(foto);
+    }
     var b = criar("button", "rot-ver-video", "▶ ver vídeo");
     b.type = "button";
     b.addEventListener("click", function () {
@@ -677,6 +758,7 @@
     el["rm-legenda"].value = i.legenda || "";
     el["rm-transcricao"].value = i.transcricao || "";
     el["rm-obs"].value = i.obs || "";
+    est.capaModal = i.capa || "";
     el["rm-aviso"].style.display = aviso ? "" : "none";
     el["rm-aviso"].textContent = aviso || "";
     atualizarContagem();
@@ -704,7 +786,7 @@
     if (!meta) { U.toast("Não consegui buscar os dados desse link agora.", true); return; }
     var atual = {
       titulo: el["rm-titulo"].value.trim(), perfil: el["rm-perfil"].value.trim(), postado_em: el["rm-data"].value,
-      tags: el["rm-tags"].value.trim() ? ["x"] : [], legenda: el["rm-legenda"].value.trim()
+      tags: el["rm-tags"].value.trim() ? ["x"] : [], legenda: el["rm-legenda"].value.trim(), capa: est.capaModal
     };
     var novo = camposVaziosDaMeta(atual, meta);
     if (novo.titulo) el["rm-titulo"].value = novo.titulo;
@@ -712,6 +794,7 @@
     if (novo.postado_em) el["rm-data"].value = novo.postado_em;
     if (novo.tags) el["rm-tags"].value = novo.tags.join(", ");
     if (novo.legenda) el["rm-legenda"].value = novo.legenda;
+    if (novo.capa) est.capaModal = novo.capa;
     U.toast(Object.keys(novo).length ? "Campos vazios preenchidos." : "Não achei nada novo para preencher.");
     carregarSaldo();
   }
@@ -741,10 +824,19 @@
       erro: null,
       updated_at: agoraISO()
     };
+    dados.capa = est.capaModal || null;
     var r;
-    if (est.editando) r = await U.consulta("roteiros", cliente().from("roteiros").update(dados).eq("id", est.editando.id));
-    else r = await U.consulta("roteiros", cliente().from("roteiros").insert(dados));
-    if (r.error) { U.toast("Não consegui salvar.", true); return; }
+    if (est.editando) {
+      r = await gravarLinha(est.editando.id, dados);
+    } else {
+      r = await cliente().from("roteiros").insert(dados).select().single();
+      if (r.error && (r.error.code === "42703" || r.error.code === "PGRST204")) {
+        delete dados.capa;
+        r = await cliente().from("roteiros").insert(dados).select().single();
+      }
+      if (r.error) { console.error(r.error); U.toast("Não consegui salvar. Confira se o SQL foi rodado.", true); }
+    }
+    if (r.error) return;
     U.fecharModal("modal-roteiro");
     U.toast("Roteiro salvo.");
     await carregarLista();
