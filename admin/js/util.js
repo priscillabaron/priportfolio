@@ -141,7 +141,9 @@
     var nomes = Object.keys(tabelasComProblema);
     var soConteudos = nomes.every(function (n) { return n.indexOf("conteudos_") === 0; });
     var algumConteudos = nomes.some(function (n) { return n.indexOf("conteudos_") === 0; });
-    var arquivo = soConteudos ? "conteudos.sql" : (algumConteudos ? "banco.sql e o conteudos.sql" : "banco.sql");
+    var ehRoteiros = function (n) { return n === "roteiros" || n === "configuracoes"; };
+    var soRoteiros = nomes.every(ehRoteiros);
+    var arquivo = soRoteiros ? "sql-roteiros.sql" : (soConteudos ? "conteudos.sql" : (algumConteudos ? "banco.sql e o conteudos.sql" : "banco.sql"));
     aviso.textContent = "Não encontrei a tabela ou uma coluna esperada em: " + nomes.join(", ") + ". Rode o arquivo " + arquivo + " no Supabase. O resto do painel continua funcionando normalmente.";
   };
   window.AdminUtil.consulta = async function (nomeTabela, promessa) {

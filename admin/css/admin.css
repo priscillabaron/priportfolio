@@ -640,3 +640,79 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
   .banco-titulo { font-size: 2rem; }
   .cont-gaveta { width: 100%; }
 }
+/* ============================================================================
+   ABA ROTEIROS
+   ============================================================================ */
+.rot-barra { background: #fff; border: 1px solid var(--c-borda); border-radius: 14px; padding: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.rot-link-campo { flex: 1 1 280px; }
+.rot-select { height: 48px; border: 1px solid var(--c-linha); border-radius: 10px; padding: 0 12px; font-family: inherit; font-size: .9rem; font-weight: 600; color: var(--c-navy); background: #fff; }
+.rot-bt { height: 48px; white-space: nowrap; }
+.rot-bt:disabled { opacity: .55; cursor: wait; }
+.rot-aviso { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-radius: 12px; padding: 13px 16px; font-size: .9rem; line-height: 1.45; font-weight: 600; }
+.rot-aviso.info { background: var(--c-claro); color: #22476d; }
+.rot-aviso.erro { background: var(--vermelho-claro); color: var(--vermelho); }
+.rot-aviso-texto { flex: 1; min-width: 200px; }
+.rot-aviso-botao { height: 38px; padding: 0 16px; border-radius: 10px; border: 0; background: var(--c-navy); color: #fff; font-size: .85rem; font-weight: 600; }
+.rot-chave-card { background: #fff; border: 1px solid var(--c-borda); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.rot-chave-card.sem-chave { border-color: #e6ac1f; background: #fffaf0; }
+.rot-chave-topo { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.rot-chave-titulo { font-weight: 700; color: var(--c-navy); font-size: .95rem; }
+.rot-chave-estado { font-size: .8rem; font-weight: 700; padding: 4px 11px; border-radius: 999px; }
+.rot-chave-estado.ok { background: var(--verde-claro); color: var(--verde); }
+.rot-chave-estado.falta { background: #fff0cf; color: #8a5a00; }
+.rot-chave-linha { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.rot-chave-campo { flex: 1 1 260px; }
+.rot-chave-campo input { height: 48px; }
+.rot-saldo-linha { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-size: .85rem; color: var(--c-suave); }
+.rot-saldo { font-weight: 600; color: var(--c-navy); }
+.rot-link-botao { border: 0; background: transparent; color: var(--c-azul); font-size: .82rem; font-weight: 600; text-decoration: underline; padding: 0; }
+.rot-como { margin: 0; padding-left: 20px; font-size: .88rem; color: var(--c-suave); line-height: 1.7; }
+.rot-como a { color: var(--c-azul); font-weight: 600; }
+.rot-biblioteca-topo { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.rot-busca { flex: 1 1 280px; display: flex; align-items: center; gap: 10px; height: 48px; border: 1px solid var(--c-linha); border-radius: 10px; padding: 0 14px; background: #fff; color: var(--c-suave); }
+.rot-busca svg { width: 18px; height: 18px; stroke: currentColor; flex-shrink: 0; }
+.rot-busca input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; font-family: inherit; font-size: .95rem; color: var(--c-navy); background: transparent; }
+.rot-filtros { display: flex; gap: 8px; flex-wrap: wrap; }
+.rot-lista { display: flex; flex-direction: column; gap: 14px; }
+.rot-card { background: #fff; border: 1px solid var(--c-borda); border-radius: 14px; padding: 14px; display: flex; gap: 18px; align-items: flex-start; }
+.rot-capa { flex: 0 0 150px; width: 150px; min-height: 200px; border-radius: 12px; background: linear-gradient(160deg, var(--rot-cor, #1d2b40), #1d2b40); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; overflow: hidden; }
+.rot-capa-emoji { font-size: 2.2rem; line-height: 1; }
+.rot-capa-nome { font-size: .8rem; font-weight: 700; opacity: .85; }
+.rot-ver-video { height: 36px; padding: 0 14px; border-radius: 999px; border: 0; background: #fff; color: var(--c-navy); font-size: .82rem; font-weight: 700; }
+.rot-ver-video:hover { background: #eaf0f7; }
+.rot-capa.tocando { flex-basis: 270px; width: 270px; aspect-ratio: 9 / 16; min-height: 0; background: #000; display: block; }
+.rot-capa.tocando iframe { width: 100%; height: 100%; border: 0; display: block; }
+.rot-corpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.rot-etiquetas { display: flex; gap: 6px; flex-wrap: wrap; }
+.rot-etq { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.rot-etq.meu { background: #dff3e8; color: #17724d; }
+.rot-etq.outra { background: #fde8d6; color: #a14f0e; }
+.rot-etq.fonte { background: var(--c-claro); color: #22476d; }
+.rot-etq.tag { background: #f1f2f5; color: var(--c-suave); }
+.rot-titulo { font-size: 1.05rem; font-weight: 700; color: var(--c-navy); line-height: 1.3; overflow-wrap: anywhere; }
+.rot-meta { font-size: .82rem; color: var(--c-suave); }
+.rot-previa { font-size: .9rem; color: #3a4350; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; overflow-wrap: anywhere; }
+.rot-previa.vazio { color: var(--c-suave); font-style: italic; }
+.rot-processando { display: flex; gap: 10px; align-items: center; background: var(--c-claro); color: #22476d; border-radius: 10px; padding: 10px 12px; font-size: .88rem; font-weight: 600; }
+.rot-relogio { display: inline-block; animation: rot-gira 2s linear infinite; font-size: 1.2rem; }
+@keyframes rot-gira { to { transform: rotate(360deg); } }
+.rot-falhou { background: var(--vermelho-claro); color: var(--vermelho); border-radius: 10px; padding: 10px 12px; font-size: .88rem; font-weight: 600; line-height: 1.4; }
+.rot-acoes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.rot-btn { height: 36px; padding: 0 13px; border-radius: 9px; border: 1px solid var(--c-linha); background: #fff; color: var(--c-navy); font-family: inherit; font-size: .82rem; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none; cursor: pointer; }
+.rot-btn:hover { border-color: var(--c-azul); color: var(--c-azul); }
+.rot-btn.escuro { background: var(--c-navy); border-color: var(--c-navy); color: #fff; }
+.rot-btn.escuro:hover { background: #2c4160; color: #fff; }
+.rot-btn.perigo { color: var(--vermelho); border-color: var(--vermelho-claro); }
+.rot-btn.perigo:hover { background: var(--vermelho-claro); color: var(--vermelho); }
+.rot-modal-aviso { background: var(--verde-claro); color: #17724d; border-radius: 10px; padding: 10px 14px; font-size: .88rem; font-weight: 700; margin-bottom: 14px; }
+.rot-transcricao-grande { min-height: 220px; resize: vertical; }
+.rot-contagem { font-weight: 500; color: var(--c-suave); margin-left: 6px; }
+@media (max-width: 700px) {
+  .rot-barra > * { flex: 1 1 100%; }
+  .rot-chave-linha > * { flex: 1 1 100%; }
+  .rot-card { gap: 12px; padding: 12px; }
+  .rot-capa { flex-basis: 96px; width: 96px; min-height: 140px; }
+  .rot-ver-video { height: 32px; padding: 0 10px; font-size: .74rem; }
+  .rot-capa.tocando { flex-basis: 100%; width: 100%; max-width: 270px; }
+  .rot-card:has(.rot-capa.tocando) { flex-wrap: wrap; }
+}

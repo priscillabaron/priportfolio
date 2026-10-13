@@ -66,6 +66,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h11a1 1 0 0 1 1 1V21l-6.5-4.2L5.5 21V4.5a1 1 0 0 1 1-1Z"/></svg>
         Banco de Ideias
       </button>
+      <button class="nav-item" data-aba="roteiros">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><polyline points="14 3 14 8 19 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        Roteiros
+      </button>
     </nav>
     <div class="sidebar-rodape">
       <p class="sidebar-email" id="sidebar-email">carregando...</p>
@@ -626,6 +630,68 @@
         <div class="banco-tabela" id="banco-tabela"></div>
       </div>
     </section>
+
+    <!-- ===================== ABA 9: ROTEIROS ===================== -->
+    <section class="aba" id="aba-roteiros">
+      <div class="cont">
+        <header class="banco-cabeca">
+          <h1 class="banco-titulo">📜 Roteiros</h1>
+          <p class="banco-sub">Cole o link de um reel e eu transcrevo. Serve pros seus e pros das outras, com etiqueta pra você separar.</p>
+        </header>
+
+        <div class="rot-barra">
+          <label class="banco-link-campo rot-link-campo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+            <input type="text" id="rot-link" placeholder="Cole aqui: instagram.com/reel/... · tiktok.com/... · youtube.com/..." autocomplete="off">
+          </label>
+          <select id="rot-dequem" class="rot-select" aria-label="De quem é o vídeo">
+            <option value="outra">De outra pessoa</option>
+            <option value="minha">Meu</option>
+          </select>
+          <button type="button" class="cont-botao-escuro rot-bt" id="rot-transcrever">🎧 Transcrever</button>
+          <button type="button" class="cont-botao-claro rot-bt" id="rot-escrever">+ Escrever na mão</button>
+        </div>
+
+        <div class="rot-aviso" id="rot-aviso" style="display:none;"></div>
+
+        <div class="rot-chave-card" id="rot-chave-card">
+          <div class="rot-chave-topo">
+            <p class="rot-chave-titulo">🔑 Chave da Supadata</p>
+            <span class="rot-chave-estado" id="rot-chave-estado"></span>
+          </div>
+          <div class="rot-chave-linha">
+            <label class="campo-f rot-chave-campo">
+              <span id="rot-chave-rotulo" class="rot-chave-rotulo">Chave da Supadata</span>
+              <input type="password" id="rot-chave" placeholder="Cole aqui a sua API key" autocomplete="off" spellcheck="false">
+            </label>
+            <button type="button" class="cont-botao-escuro rot-bt" id="rot-salvar-chave">Salvar chave</button>
+            <button type="button" class="cont-botao-claro rot-bt" id="rot-remover-chave" style="display:none;">Remover</button>
+          </div>
+          <div class="rot-saldo-linha">
+            <span class="rot-saldo" id="rot-saldo"></span>
+            <button type="button" class="rot-link-botao" id="rot-saldo-atualizar" style="display:none;">atualizar saldo</button>
+          </div>
+          <ol class="rot-como" id="rot-como-chave">
+            <li>Crie uma conta grátis em <a href="https://supadata.ai" target="_blank" rel="noopener">supadata.ai</a> (100 créditos por mês, sem cartão).</li>
+            <li>Dentro da conta, copie a sua <b>API key</b>.</li>
+            <li>Cole a chave no campo acima e clique em <b>Salvar chave</b>.</li>
+          </ol>
+        </div>
+
+        <div class="rot-biblioteca-topo">
+          <label class="rot-busca">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="rot-busca" placeholder="Buscar na transcrição, no perfil, no título e nas notas" autocomplete="off">
+          </label>
+          <button type="button" class="cont-botao-claro rot-bt" id="rot-estudar">🧠 Estudar com o Claude</button>
+        </div>
+        <div class="rot-filtros" id="rot-filtros"></div>
+
+        <div class="aviso-erro" id="rot-sem-tabela" style="display:none;">Não encontrei a tabela de roteiros. Rode o arquivo sql-roteiros.sql no Supabase.</div>
+        <div class="cont-vazio" id="rot-vazio" style="display:none;"></div>
+        <div class="rot-lista" id="rot-lista"></div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -988,6 +1054,41 @@
   </div>
 </div>
 
+<!-- Janela: editar roteiro (aba Roteiros) -->
+<div class="modal-fundo" id="modal-roteiro" style="z-index:340;">
+  <div class="modal-caixa modal-larga">
+    <div class="modal-cabecalho">
+      <p class="modal-titulo" id="rm-titulo-modal">Editar roteiro</p>
+      <button class="modal-fechar" data-fechar-modal="modal-roteiro" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="rot-modal-aviso" id="rm-aviso" style="display:none;"></div>
+    <form class="form-grade" onsubmit="return false" novalidate>
+      <div class="campo-f"><label for="rm-titulo">Título</label><input type="text" id="rm-titulo" placeholder="Ex.: Hotel com piscina no quarto"></div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="rm-dequem">De quem é</label>
+          <select id="rm-dequem"><option value="outra">De outra</option><option value="minha">Meu</option></select>
+        </div>
+        <div class="campo-f"><label for="rm-perfil">Perfil</label><input type="text" id="rm-perfil" placeholder="@perfil"></div>
+      </div>
+      <div class="form-linha">
+        <div class="campo-f"><label for="rm-link">Link</label><input type="text" id="rm-link" placeholder="https://..."></div>
+        <div class="campo-f"><label for="rm-data">Data de postagem</label><input type="date" id="rm-data"></div>
+      </div>
+      <div class="campo-f"><label for="rm-tags">Tags (separadas por vírgula)</label><input type="text" id="rm-tags" placeholder="Ex.: hotel, gancho forte, viagem"></div>
+      <div class="campo-f"><label for="rm-legenda">Legenda do post</label><textarea id="rm-legenda" rows="3" placeholder="A legenda que estava no post"></textarea></div>
+      <div class="campo-f">
+        <label for="rm-transcricao">Transcrição <span class="rot-contagem" id="rm-contagem"></span></label>
+        <textarea id="rm-transcricao" class="rot-transcricao-grande" rows="10" placeholder="O que a pessoa fala no vídeo"></textarea>
+      </div>
+      <div class="campo-f"><label for="rm-obs">Notas minhas</label><textarea id="rm-obs" rows="3" placeholder="O que chamou atenção, como posso adaptar..."></textarea></div>
+      <div class="form-rodape">
+        <button type="button" class="btn btn-outline" data-fechar-modal="modal-roteiro">Cancelar</button>
+        <button type="button" class="btn btn-primario" id="rm-salvar">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Janela: adicionar / editar item do calendário de conteúdos -->
 <div class="modal-fundo" id="modal-cont-evento">
   <div class="modal-caixa">
@@ -1056,6 +1157,7 @@
 <script src="js/prospeccao.js"></script>
 <script src="js/conteudos.js"></script>
 <script src="js/banco-ideias.js"></script>
+<script src="js/roteiros.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

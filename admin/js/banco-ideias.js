@@ -406,16 +406,18 @@
     var rotuloBotao = el["bi-tokscript"].textContent;
     el["bi-tokscript"].disabled = true;
     el["bi-tokscript"].textContent = "Transcrevendo...";
-    el["bi-tok-status"].textContent = "Buscando a fala do vídeo. Pode levar até 1 minuto.";
+    el["bi-tok-status"].textContent = "Ouvindo o vídeo... Costuma levar de 3 a 4 minutos, pode deixar essa janela aberta.";
     var erroTexto = "";
     var texto = "";
     try {
-      var resp = await window.bancoCliente.functions.invoke("transcrever", { body: { link: link, rede: r.rede } });
-      if (resp.error) erroTexto = await descreverErroFuncao(resp.error);
-      else if (resp.data && resp.data.texto) texto = String(resp.data.texto);
-      else erroTexto = (resp.data && resp.data.erro) || "A transcrição veio vazia.";
+      if (!window.AdminRoteiros) throw new Error("sem modulo");
+      var resp = await window.AdminRoteiros.transcreverLink(link, function (s) {
+        el["bi-tok-status"].textContent = "Ouvindo o vídeo... " + s + "s. Costuma levar de 3 a 4 minutos, pode deixar essa janela aberta.";
+      });
+      if (resp.texto) texto = resp.texto;
+      else erroTexto = resp.erro || "A transcrição veio vazia.";
     } catch (e) {
-      erroTexto = "Não consegui falar com a função de transcrição. Confira sua internet e se ela foi publicada no Supabase.";
+      erroTexto = "Não consegui transcrever agora. Tente de novo em instantes.";
     }
     est.transcrevendo = false;
     el["bi-tokscript"].disabled = false;
@@ -433,17 +435,6 @@
     atualizarContagem();
     el["bi-tok-status"].textContent = "Pronto! A transcrição está no campo Roteiro. Revise e ajuste se precisar.";
     U.toast("Transcrição colocada no Roteiro.");
-  }
-
-  async function descreverErroFuncao(erro) {
-    try {
-      if (erro && erro.context && typeof erro.context.json === "function") {
-        var j = await erro.context.json();
-        if (j && j.erro) return j.erro;
-      }
-    } catch (e) { /* segue */ }
-    if (erro && erro.context && erro.context.status === 404) return "A função de transcrição ainda não foi publicada no Supabase.";
-    return "Não consegui falar com a função de transcrição. Confira se ela foi publicada no Supabase e se você está logada.";
   }
 
   async function copiarTexto(texto) {
