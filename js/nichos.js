@@ -83,7 +83,6 @@
     const legenda = document.createElement("div");
     legenda.className = "vitrine-legenda";
     legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
-    legenda.appendChild(criarTexto("span", "vitrine-legenda-formato", video.formato || "9:16"));
     cartao.appendChild(legenda);
     return cartao;
   }
