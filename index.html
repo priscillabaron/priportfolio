@@ -337,6 +337,8 @@
   /* ===== CONTATO ===== */
   #contato { padding: 100px 0; background: var(--branco); }
   .contato-grid { display: grid; grid-template-columns: 1fr .8fr; gap: 48px; align-items: start; }
+  .btn-perfil { display: inline-flex; align-items: center; gap: 10px; margin: 6px 0 28px; }
+  #contato .reveal > p strong { color: var(--cor-azul-forte); }
   .form-contato { display: grid; gap: 16px; }
   .campo { display: grid; gap: 6px; }
   .campo label { font-weight: 700; font-size: .9rem; }
@@ -611,13 +613,18 @@
     </div>
   </section>
 
-  <!-- ===== 7. BORA CRIAR JUNTOS ===== -->
+  <!-- ===== 7. VAMOS CONSTRUIR ISSO JUNTOS ===== -->
   <section id="contato">
     <div class="container contato-grid">
       <div class="reveal">
         <span class="eyebrow" data-i18n="contato.eyebrow">Contato</span>
-        <h2 data-i18n-html="contato.titulo">Bora criar <em>juntos</em>?</h2>
-        <p data-i18n="contato.texto">Me conta um pouco sobre a sua marca e o que você precisa. Respondo rapidinho.</p>
+        <h2 data-i18n-html="contato.titulo">Vamos construir isso <em>juntos</em>?</h2>
+        <p data-i18n="contato.texto">Quero entender a sua marca, sua ideia e transformar isso em um conteúdo real, com intenção e estratégia. Um conteúdo especial que faça sentido para você e para o seu público.</p>
+        <p data-i18n-html="contato.texto2">Conta um pouco sobre sua marca e qual tipo de conteúdo você precisa. <strong>Respondo em até 48h.</strong></p>
+        <a class="btn btn-outline btn-perfil" href="https://www.instagram.com/entracomigo/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+          <span data-i18n="contato.perfil">Conhecer o @entracomigo</span>
+        </a>
         <form class="form-contato" id="form-contato" novalidate>
           <div class="campo">
             <label for="campo-nome" data-i18n="contato.nome">Nome</label>

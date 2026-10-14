@@ -226,13 +226,18 @@
 
     /* ---- Contato ---- */
     "contato.eyebrow": ["Contato", "Contact", "Contacto"],
-    "contato.titulo": ["Bora criar <em>juntos</em>?", "Let's create <em>together</em>?", "¿Creamos <em>juntos</em>?"],
+    "contato.titulo": ["Vamos construir isso <em>juntos</em>?", "Shall we build this <em>together</em>?", "¿Construimos esto <em>juntos</em>?"],
     "contato.texto": [
-      "Me conta um pouco sobre a sua marca e o que você precisa. Respondo rapidinho.",
-      "Tell me a bit about your brand and what you need. I reply quickly.",
-      "Cuéntame un poco sobre tu marca y lo que necesitas. Respondo rápido."
+      "Quero entender a sua marca, sua ideia e transformar isso em um conteúdo real, com intenção e estratégia. Um conteúdo especial que faça sentido para você e para o seu público.",
+      "I want to understand your brand and your idea and turn them into real content, with intention and strategy. Special content that makes sense for you and for your audience.",
+      "Quiero entender tu marca, tu idea y convertirlas en un contenido real, con intención y estrategia. Un contenido especial que tenga sentido para ti y para tu público."
     ],
-    "contato.nome": ["Nome", "Name", "Nombre"],
+    "contato.texto2": [
+      "Conta um pouco sobre sua marca e qual tipo de conteúdo você precisa. <strong>Respondo em até 48h.</strong>",
+      "Tell me a bit about your brand and what kind of content you need. <strong>I reply within 48 hours.</strong>",
+      "Cuéntame un poco sobre tu marca y qué tipo de contenido necesitas. <strong>Respondo en hasta 48 horas.</strong>"
+    ],
+    "contato.perfil": ["Conhecer o @entracomigo", "Visit @entracomigo", "Conocer @entracomigo"],    "contato.nome": ["Nome", "Name", "Nombre"],
     "contato.email": ["E-mail", "Email", "Correo electrónico"],
     "contato.mensagem": ["Mensagem", "Message", "Mensaje"],
     "contato.enviar": ["Enviar mensagem", "Send message", "Enviar mensaje"],
