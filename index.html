@@ -10,7 +10,7 @@
 <meta name="description" content="Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Raleway:wght@400;500;600&family=Playfair+Display:ital,wght@1,800&display=swap" rel="stylesheet">
 <style>
   /* ===== RESET E BASE ===== */
   *, *::before, *::after { box-sizing: border-box; }
@@ -286,10 +286,24 @@
 
   /* ===== NÚMEROS E DEPOIMENTOS ===== */
   #numeros { padding: 100px 0; }
-  .metricas-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 64px; }
-  .metrica-card { background: var(--cor-azul-forte); color: #fff; border-radius: var(--raio); padding: 28px 20px; text-align: center; }
-  .metrica-card .numero { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; display: block; }
-  .metrica-card p { color: rgba(255,255,255,.85); margin: 6px 0 0; font-size: .85rem; font-weight: 600; }
+  /* ===== NÚMEROS: faixa editorial, sem caixas, números no serifado ===== */
+  .metricas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 72px; align-items: stretch; }
+  .metrica-card { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
+  .metrica-card:first-child { border-left: 0; padding-left: 0; }
+  .metrica-card .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3.6rem, 8vw, 6.6rem); line-height: 1; display: block; letter-spacing: -.01em; }
+  .metrica-card:nth-child(1) .numero { color: #7A5068; }
+  .metrica-card:nth-child(2) .numero { color: #86A0C4; }
+  .metrica-card:nth-child(3) .numero { color: var(--cor-azul-forte); }
+  .metrica-card .numero::after { content: ''; display: block; width: 50px; height: 4px; border-radius: 2px; background: #E4566A; margin: 16px 0 18px; }
+  .metrica-card p { color: var(--texto-suave); margin: 0; font-size: clamp(.95rem, 1.5vw, 1.1rem); font-weight: 500; line-height: 1.4; }
+  .bandeira { display: inline-block; width: 1.3em; height: .92em; border-radius: 2px; background-size: cover; background-position: center; vertical-align: -.14em; margin: 0 .1em; box-shadow: 0 0 0 1px rgba(0,0,0,.14); }
+  .bandeira-br { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14'%3E%3Crect width='20' height='14' fill='%23009C3B'/%3E%3Cpath d='M10 1.3 18.4 7 10 12.7 1.6 7z' fill='%23FFDF00'/%3E%3Ccircle cx='10' cy='7' r='3.4' fill='%23002776'/%3E%3Cpath d='M6.8 7.7Q10 6.1 13.2 7.7' stroke='%23fff' stroke-width='.8' fill='none'/%3E%3C/svg%3E"); }
+  .bandeira-cl { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Crect width='30' height='20' fill='%23fff'/%3E%3Crect y='10' width='30' height='10' fill='%23D52B1E'/%3E%3Crect width='10' height='10' fill='%230039A6'/%3E%3Cpolygon points='5,1.9 5.71,4.03 7.95,4.04 6.14,5.37 6.82,7.51 5,6.2 3.18,7.51 3.86,5.37 2.05,4.04 4.29,4.03' fill='%23fff'/%3E%3C/svg%3E"); }
+  @media (max-width: 760px) {
+    .metricas-grid { grid-template-columns: 1fr; margin-bottom: 56px; }
+    .metrica-card, .metrica-card:first-child { border-left: 0; padding: 22px 0; border-top: 1px solid #cfd6df; }
+    .metrica-card:first-child { border-top: 0; padding-top: 0; }
+  }
   .subtitulo-bloco { font-weight: 800; font-size: 1.3rem; text-align: center; margin: 0 0 28px; }
   .resultados-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 64px; }
   .resultado-card { background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; box-shadow: var(--sombra); }
@@ -382,7 +396,7 @@
     .destaques-texto { text-align: center; }
     .destaques-texto p { margin-left: auto; margin-right: auto; }
     .eyebrow-linha { justify-content: center; }
-    .metricas-grid, .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
+    .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
     .resultados-grid { grid-template-columns: 1fr; }
     .contato-grid { grid-template-columns: 1fr; }
   }
@@ -422,7 +436,7 @@
     .logo img { height: 40px; }
     .logo-nome { font-size: .56rem; letter-spacing: .24em; }
     .hero-numbers { grid-template-columns: 1fr; }
-    .servicos-grid, .metricas-grid, .depoimentos-grid { grid-template-columns: 1fr; }
+    .servicos-grid, .depoimentos-grid { grid-template-columns: 1fr; }
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
@@ -702,17 +716,16 @@
   // automaticamente a partir da lista MARCAS acima — as demais são placeholders (XXX):
   // troque pelo número real antes de publicar.
   const METRICAS = [
-    { rotulo: "metrica.videos", valor: null, textoPlaceholder: "XXX" },
+    { rotulo: "metrica.videos", valor: 26, textoPlaceholder: null },
     { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null }, // Brasil e Chile (a frase do rótulo cita os dois)
-    { rotulo: "metrica.extra", valor: null, textoPlaceholder: "XXX" }
+    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true } // Brasil e Chile (o rótulo cita os dois, com as bandeiras)
   ];
 
   // Os mesmos três números resumidos, exibidos logo na capa
   const METRICAS_HERO = [
-    { rotulo: "metrica.videos", valor: null, textoPlaceholder: "XXX" },
+    { rotulo: "metrica.videos", valor: 26, textoPlaceholder: null },
     { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null }
+    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true }
   ];
 
   // Resultados de campanha (seção 6)
@@ -751,7 +764,16 @@
     return el;
   }
 
-  function montarNumero(rotulo, valor, placeholder) {
+  // Igual ao criarI18n, mas o texto pode ter HTML (usado no rótulo com as bandeiras).
+  function criarI18nHtml(tag, className, chave) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    el.dataset.i18nHtml = chave;
+    el.innerHTML = Idiomas.t(chave);
+    return el;
+  }
+
+  function montarNumero(rotulo, valor, placeholder, html) {
     const wrap = criarEl("div", "numero-curto reveal");
     const span = criarEl("span", "numero");
     if (placeholder) {
@@ -761,14 +783,14 @@
       span.textContent = "0";
     }
     wrap.appendChild(span);
-    wrap.appendChild(criarI18n("p", null, rotulo));
+    wrap.appendChild(html ? criarI18nHtml("p", null, rotulo) : criarI18n("p", null, rotulo));
     return wrap;
   }
 
   // Capa: 3 números resumidos
   const heroNumerosEl = document.getElementById("hero-numeros");
   METRICAS_HERO.forEach(function (m) {
-    heroNumerosEl.appendChild(montarNumero(m.rotulo, m.valor, m.textoPlaceholder));
+    heroNumerosEl.appendChild(montarNumero(m.rotulo, m.valor, m.textoPlaceholder, m.html));
   });
 
   // Faixa de marcas: anda da direita para a esquerda, sem parar e sem buracos.
@@ -1015,7 +1037,7 @@
       span.textContent = "0";
     }
     card.appendChild(span);
-    card.appendChild(criarI18n("p", null, m.rotulo));
+    card.appendChild(m.html ? criarI18nHtml("p", null, m.rotulo) : criarI18n("p", null, m.rotulo));
     metricasGridEl.appendChild(card);
   });
 

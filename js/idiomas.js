@@ -199,7 +199,7 @@
     "metrica.videos": ["vídeos entregues", "videos delivered", "videos entregados"],
     "metrica.marcas": ["marcas atendidas", "brands served", "marcas atendidas"],
     "metrica.views": ["views somadas", "combined views", "vistas acumuladas"],
-    "metrica.paises": ["países já trabalhados: Brasil e Chile", "countries worked in: Brazil and Chile", "países ya trabajados: Brasil y Chile"],
+    "metrica.paises": ["países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> e Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "countries: Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brazil\"></span> and Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> y Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
     "metrica.extra": ["TROQUE ESTE RÓTULO", "CHANGE THIS LABEL", "CAMBIA ESTA ETIQUETA"],
     "numeros.resultados": ["Resultados de campanha", "Campaign results", "Resultados de campañas"],
     "numeros.depoimentos": ["O que dizem sobre mim", "What people say about me", "Lo que dicen de mí"],
