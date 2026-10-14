@@ -53,6 +53,10 @@
     let comSom = false;
     let tocando = false;
     let visivel = true;
+    let estadoAtual = -1;   // último estado que o YouTube informou (1 = rodando, 3 = carregando, 2 = pausado)
+    let tempoAtual = 0;     // quanto do vídeo já passou, em segundos
+    let legendasDesligadas = false;
+    let timerRevelar = null;
 
     capa.classList.add("pv");
     capa.setAttribute("role", "button");
@@ -155,15 +159,22 @@
       pronto = false;
       fila = [];
       tocando = false;
+      estadoAtual = -1;
+      tempoAtual = 0;
+      legendasDesligadas = false;
+      clearTimeout(timerRevelar);
+      timerRevelar = null;
+      clearTimeout(timerMostrar);
       capa.classList.remove("tocando", "com-som");
       atualizarSelo();
     }
 
-    // Se o YouTube não avisar que começou, mostra o vídeo mesmo assim depois de um tempinho.
+    // Só se o YouTube nunca avisar nada (mensagens bloqueadas), mostra o vídeo mesmo assim depois de um tempo.
+    // Normalmente a capa fica visível até o vídeo estar mesmo rodando, para nunca aparecer um quadro preto.
     let timerMostrar = null;
     function garantirVisivel() {
       clearTimeout(timerMostrar);
-      timerMostrar = setTimeout(function () { if (tocando) capa.classList.add("tocando"); }, 2000);
+      timerMostrar = setTimeout(function () { if (tocando && estadoAtual === -1) capa.classList.add("tocando"); }, 8000);
     }
 
     function atualizarSelo() {
@@ -181,13 +192,11 @@
       garantirVisivel();
       atualizarSelo();
     }
+    // Parar = descarregar o player (o vídeo volta a ser só a capa). Pausar e retomar faria o YouTube
+    // mostrar por um instante os botões e o título dele.
     function pausar() {
-      enviar("pauseVideo");
-      tocando = false;
-      capa.classList.remove("tocando", "com-som");
-      atualizarSelo();
-    }
-    function ligarSom() {
+      descarregar();
+    }    function ligarSom() {
       // só um vídeo com som por vez
       todos.forEach(function (p) { if (p !== api && p.estaComSom()) p.parar(); });
       garantirIframe();
@@ -235,14 +244,34 @@
       descarregar: descarregar,
       aoReceber: function (d) {
         if (d.event === "onReady" || d.event === "initialDelivery" || d.event === "infoDelivery" || d.event === "onStateChange") liberarFila();
-        const estado = d.info && typeof d.info.playerState === "number" ? d.info.playerState : (d.event === "onStateChange" && typeof d.info === "number" ? d.info : null);
-        if (estado === 1) {
+        if (d.info && typeof d.info === "object") {
+          if (typeof d.info.playerState === "number") estadoAtual = d.info.playerState;
+          if (typeof d.info.currentTime === "number") tempoAtual = d.info.currentTime;
+        } else if (d.event === "onStateChange" && typeof d.info === "number") {
+          estadoAtual = d.info;
+        }
+        if (estadoAtual === 1 && !legendasDesligadas) {
+          legendasDesligadas = true; // uma vez por vez que o vídeo começa
           semLegendas();
           setTimeout(semLegendas, 700);
           setTimeout(semLegendas, 2000);
+        } else if (estadoAtual !== 1 && estadoAtual !== -1) {
+          legendasDesligadas = false;
         }
-        if (estado === 1 && tocando) capa.classList.add("tocando");
-        if ((estado === 2 || estado === 0 || estado === 5) && !tocando) capa.classList.remove("tocando");
+        // O vídeo só aparece por cima da capa quando já está rodando de verdade (sem quadro preto no começo).
+        if (tocando && estadoAtual === 1 && tempoAtual > 0.25) {
+          // só mostra depois de rodar estável por um instante
+          if (!timerRevelar && !capa.classList.contains("tocando")) {
+            timerRevelar = setTimeout(function () {
+              timerRevelar = null;
+              if (tocando && estadoAtual === 1) capa.classList.add("tocando");
+            }, 700);
+          }
+        } else if (estadoAtual !== 1 && estadoAtual !== -1) {
+          clearTimeout(timerRevelar);
+          timerRevelar = null;
+          capa.classList.remove("tocando");
+        }
       }
     };
     todos.push(api);
