@@ -777,6 +777,11 @@
     var topo = criar("div", "rot-etiquetas");
     topo.appendChild(criar("span", "rot-etq " + (item.de_quem === "minha" ? "meu" : "outra"), item.de_quem === "minha" ? "Meu" : "De outra"));
     topo.appendChild(criar("span", "rot-etq fonte", f.emoji + " " + f.rotulo));
+    if (typeof item.visualizacoes === "number") {
+      var pv = criar("span", "rot-etq views", "👁 " + formatarViews(item.visualizacoes) + " visualizações");
+      pv.title = item.visualizacoes.toLocaleString("pt-BR") + " visualizações";
+      topo.appendChild(pv);
+    }
     (item.tags || []).forEach(function (t) { topo.appendChild(criar("span", "rot-etq tag", "#" + t)); });
     corpo.appendChild(topo);
 
@@ -785,7 +790,6 @@
     if (item.perfil) meta.push("@" + item.perfil);
     var d = dataBr(item.postado_em || item.created_at);
     if (d) meta.push(d);
-    if (typeof item.visualizacoes === "number") meta.push("👁 " + formatarViews(item.visualizacoes) + " visualizações");
     if (meta.length) corpo.appendChild(criar("p", "rot-meta", meta.join("  ·  ")));
 
     var emAndamento = item.status === "processando";
@@ -823,6 +827,12 @@
       acoes.appendChild(bc);
       acoes.appendChild(botaoCard("rot-btn", "✏️ Editar", function () { abrirModal(item); }));
     }
+    if (item.status === "pronto" && item.url && FONTES[item.fonte] && item.fonte !== "manual") {
+      var faltaAlgo = typeof item.visualizacoes !== "number" || !item.capa;
+      var bd = botaoCard("rot-btn" + (faltaAlgo ? " destaque" : ""), "🔄 Atualizar dados", function () { atualizarDados(item, bd); });
+      bd.title = "Busca a capa e as visualizações de agora (usa 1 crédito)";
+      acoes.appendChild(bd);
+    }
     if (item.url) {
       var ab = criar("a", "rot-btn", "↗ Abrir original");
       ab.href = item.url;
@@ -837,6 +847,36 @@
 
     card.appendChild(corpo);
     return card;
+  }
+
+  // Botão do card: busca de novo a capa e as visualizações (1 crédito) sem abrir a janela
+  async function atualizarDados(item, botao) {
+    if (est.ocupado) { U.toast("Espere a transcrição em andamento terminar.", true); return; }
+    if (!est.chaveCarregada || !est.chave) await carregarChave();
+    if (!est.chave) { U.toast("Falta a chave da Supadata. Cole no campo acima.", true); return; }
+    est.ocupado = true;
+    var rotulo = botao.textContent;
+    botao.disabled = true;
+    botao.textContent = "Buscando...";
+    try {
+      var meta = await buscarMetadados(item.url, est.chave);
+      if (!meta) { U.toast("Não consegui buscar os dados desse vídeo agora. Tente de novo em instantes.", true); return; }
+      var novo = camposVaziosDaMeta(item, meta);
+      // a capa guardada por link (sem cópia) pode ter vencido: troca por uma nova
+      if (meta.capa && (!item.capa || item.capa.indexOf("data:") !== 0)) novo.capa = meta.capa;
+      var cats = classificar(Object.assign({}, item, novo));
+      if (cats.length) novo.tags = uniaoDeTags(novo.tags || item.tags, cats);
+      if (!Object.keys(novo).length) { U.toast("Não achei nada novo para este vídeo."); return; }
+      novo.updated_at = agoraISO();
+      var r = await gravarLinha(item.id, novo);
+      if (r.error) return;
+      U.toast("Dados atualizados.");
+      await carregarLista();
+      setTimeout(carregarSaldo, 1500);
+    } finally {
+      est.ocupado = false;
+      if (botao.isConnected) { botao.disabled = false; botao.textContent = rotulo; }
+    }
   }
 
   async function apagar(item) {
