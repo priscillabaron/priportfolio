@@ -257,12 +257,12 @@
   .vitrine-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--ameixa); margin-left: 4px; }
   /* ===== PLAYER DOS VÍDEOS (roda aqui mesmo; js/player-video.js) ===== */
   .pv { cursor: pointer; background-color: #1d1d1d; isolation: isolate; }
-  .pv-foto { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; object-fit: cover; z-index: 0; transition: opacity .3s ease; }
-  /* O player é mais alto que o cartão e fica cortado em cima e embaixo: assim o título, a foto do canal,
-     a marca do YouTube e as legendas (que ficam nessas bordas) não aparecem. O vídeo continua inteiro no meio. */
-  .pv-iframe { position: absolute; left: 0; top: -84px; width: 100%; height: calc(100% + 168px); border: 0; display: block; z-index: 1; pointer-events: none; background: #000; opacity: 0; transition: opacity .3s ease; }
+  .pv-foto { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; object-fit: cover; z-index: 0; }
+  /* O player é "largo" (16:9) e fica centralizado e cortado dos lados. O vídeo vertical aparece no meio, no tamanho
+     certo (sem zoom), e tudo que o YouTube desenha nas bordas (título, foto do canal, logo, "Shorts", menu) fica
+     fora da área visível. A capa fica por baixo e o vídeo aparece por cima só enquanto está rodando. */
+  .pv-iframe { position: absolute; top: 0; left: 50%; width: 316.05%; height: 100%; transform: translateX(-50%); border: 0; display: block; z-index: 1; pointer-events: none; background: #000; opacity: 0; transition: opacity .25s ease; }
   .pv.tocando .pv-iframe { opacity: 1; }
-  .pv.tocando .pv-foto { opacity: 0; }
   .pv-toque { position: absolute; inset: 0; z-index: 3; }
   .pv .vitrine-play, .pv .destaques-play { z-index: 2; transition: opacity .2s ease, transform .2s ease; }
   .pv:hover .vitrine-play, .pv:hover .destaques-play { transform: translate(-50%, -50%) scale(1.08); }

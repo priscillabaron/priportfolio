@@ -93,16 +93,21 @@
       try { iframe.contentWindow.postMessage(msg, "*"); } catch (e) { /* iframe saiu */ }
     }
 
+    // sem legendas do YouTube (o módulo de legenda só carrega depois que o vídeo começa, então o comando se repete)
+    function semLegendas() {
+      if (!iframe) return;
+      ["captions", "cc"].forEach(function (modulo) {
+        try { iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "unloadModule", args: [modulo] }), "*"); } catch (e) { /* tudo bem */ }
+      });
+    }
+
     function liberarFila() {
       if (pronto) return;
       pronto = true;
       clearInterval(timerOla);
       const pendentes = fila;
       fila = [];
-      // sem legendas do YouTube (a conta de quem assiste pode ter legenda automática ligada)
-      ["captions", "cc"].forEach(function (modulo) {
-        try { iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "unloadModule", args: [modulo] }), "*"); } catch (e) { /* tudo bem */ }
-      });
+      semLegendas();
       pendentes.forEach(function (m) { try { iframe.contentWindow.postMessage(m, "*"); } catch (e) { /* tudo bem */ } });
     }
 
@@ -231,6 +236,11 @@
       aoReceber: function (d) {
         if (d.event === "onReady" || d.event === "initialDelivery" || d.event === "infoDelivery" || d.event === "onStateChange") liberarFila();
         const estado = d.info && typeof d.info.playerState === "number" ? d.info.playerState : (d.event === "onStateChange" && typeof d.info === "number" ? d.info : null);
+        if (estado === 1) {
+          semLegendas();
+          setTimeout(semLegendas, 700);
+          setTimeout(semLegendas, 2000);
+        }
         if (estado === 1 && tocando) capa.classList.add("tocando");
         if ((estado === 2 || estado === 0 || estado === 5) && !tocando) capa.classList.remove("tocando");
       }
