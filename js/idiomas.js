@@ -55,21 +55,25 @@
     "sobre.foto.alt": ["Priscilla Baron na neve, de jaqueta lilás", "Priscilla Baron in the snow, wearing a lilac jacket", "Priscilla Baron en la nieve, con una chaqueta lila"],
     "sobre.eyebrow": ["Sobre mim", "About me", "Sobre mí"],
     "sobre.titulo": [
-      "Quem grava é gente, não <em>roteiro pronto</em>",
-      "The person on camera is real, not a <em>canned script</em>",
-      "Quien graba es una persona, no un <em>guion enlatado</em>"
+      "Quem sou <em>eu</em>",
+      "Who <em>I am</em>",
+      "Quién <em>soy</em>"
     ],
     "sobre.p1": [
-      "Oi, eu sou a Priscilla! Trabalho criando conteúdo autêntico para marcas que querem se conectar de verdade com quem assiste, sem parecer propaganda. Gosto de entender o produto, testar de verdade e contar isso de um jeito que faz sentido pra quem está do outro lado da tela.",
-      "Hi, I'm Priscilla! I create authentic content for brands that want to truly connect with their audience, without feeling like an ad. I like to understand the product, really try it, and tell the story in a way that makes sense to the person on the other side of the screen.",
-      "¡Hola, soy Priscilla! Creo contenido auténtico para marcas que quieren conectar de verdad con quien las mira, sin que parezca publicidad. Me gusta entender el producto, probarlo de verdad y contarlo de una forma que tenga sentido para quien está al otro lado de la pantalla."
+      "Criadora UGC e influenciadora que transforma bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.",
+      "UGC creator and influencer who turns wellness, sports, lifestyle and travel into stories that sell naturally.",
+      "Creadora UGC e influencer que transforma bienestar, deporte, lifestyle y viajes en historias que venden de forma natural."
     ],
     "sobre.p2": [
-      "Cada entrega passa por um processo simples e transparente, pensado pra sua marca ter previsibilidade do início ao fim.",
-      "Every delivery follows a simple, transparent process, designed so your brand can count on predictability from start to finish.",
-      "Cada entrega sigue un proceso simple y transparente, pensado para que tu marca tenga previsibilidad de principio a fin."
+      "Com uma comunicação leve, autêntica e estratégica, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam.",
+      "With light, authentic and strategic communication, I connect brands and people through real narratives that inspire and perform.",
+      "Con una comunicación ligera, auténtica y estratégica, conecto marcas y personas a través de narrativas reales que inspiran y rinden."
     ],
-    "sobre.promessa1": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
+    "sobre.citacao": [
+      "“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)",
+      "“Every video I produce is designed to generate results, connection and brand memory, because good content doesn't just delight, it convinces and transforms” (Pri Baron)",
+      "“Cada video que produzo está pensado para generar resultados, conexión y recuerdo de marca, porque el buen contenido no solo encanta, convence y transforma” (Pri Baron)"
+    ],    "sobre.promessa1": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
     "sobre.promessa2": ["Uma rodada de ajuste inclusa", "One round of revisions included", "Una ronda de ajustes incluida"],
     "sobre.promessa3": ["Entrega em até 72 horas úteis", "Delivery within 72 business hours", "Entrega en hasta 72 horas hábiles"],
 
