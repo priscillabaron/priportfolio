@@ -71,30 +71,27 @@
 
     if (emBreve) {
       capa.appendChild(criarTexto("span", "vitrine-marca-dagua", "p.b."));
-    } else {
+    } else if (!rodaAqui) {
+      // vídeo que abre em outra aba mantém o botão de play; o que roda aqui não precisa (toca ao passar o mouse)
       const play = document.createElement("span");
       play.className = "vitrine-play";
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);
     }
-    // Nome do vídeo por cima do próprio vídeo, embaixo, como se ele fosse só do portfólio.
-    const tituloNoCartao = !emBreve && video.titulo;
-    if (tituloNoCartao) {
+    // Só o nicho, pequeno, por cima do vídeo (embaixo). O nome da marca e do produto fica embaixo do card.
+    if (!emBreve && video.nicho) {
       const info = document.createElement("div");
       info.className = "vitrine-info";
-      info.appendChild(criarTexto("span", "vitrine-info-titulo", video.titulo));
-      if (video.nicho) info.appendChild(criarTexto("span", "vitrine-info-nicho", nome(String(video.nicho).trim())));
+      info.appendChild(criarTexto("span", "vitrine-info-nicho", nome(String(video.nicho).trim())));
       capa.appendChild(info);
     }
     if (rodaAqui) PlayerVideo.anexar(capa, video.link, { titulo: video.titulo });
     cartao.appendChild(capa);
 
-    if (!tituloNoCartao) {
-      const legenda = document.createElement("div");
-      legenda.className = "vitrine-legenda";
-      legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
-      cartao.appendChild(legenda);
-    }
+    const legenda = document.createElement("div");
+    legenda.className = "vitrine-legenda";
+    legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
+    cartao.appendChild(legenda);
     return cartao;
   }
 

@@ -38,7 +38,7 @@
     }
     if (emBreve) {
       capa.appendChild(el("span", "destaques-marca-dagua", "p.b."));
-    } else {
+    } else if (!rodaAqui) {
       const play = el("span", "destaques-play");
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);

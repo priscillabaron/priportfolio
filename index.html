@@ -268,11 +268,9 @@
   .vitrine-chip-destaque { background: var(--ameixa); color: #FFFCFA; }
   .vitrine-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255,252,250,.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra); }
   .vitrine-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--ameixa); margin-left: 4px; }
-  /* Nome do vídeo por cima do próprio vídeo, embaixo (como o vídeo fosse só do portfólio) */
-  .vitrine-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none; display: flex; flex-direction: column; gap: 6px; padding: 56px 18px 18px; color: #fff; background: linear-gradient(to top, rgba(18,12,16,.78) 0%, rgba(18,12,16,.45) 55%, rgba(18,12,16,0) 100%); }
-  .vitrine-info-titulo { font-family: 'Playfair Display', 'Cormorant Garamond', serif; font-weight: 800; font-size: clamp(1.1rem, 1.7vw, 1.45rem); line-height: 1.12; text-shadow: 0 1px 8px rgba(0,0,0,.35); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .vitrine-info-nicho { font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-  .pv.com-som .vitrine-info, .pv.tocando .vitrine-info { opacity: 1; }  /* ===== PLAYER DOS VÍDEOS (roda aqui mesmo; js/player-video.js) ===== */
+  /* Só o nicho, pequeno, por cima do vídeo, embaixo */
+  .vitrine-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none; padding: 30px 14px 12px; color: #fff; background: linear-gradient(to top, rgba(18,12,16,.5) 0%, rgba(18,12,16,0) 100%); }
+  .vitrine-info-nicho { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.9); text-shadow: 0 1px 4px rgba(0,0,0,.4); }  /* ===== PLAYER DOS VÍDEOS (roda aqui mesmo; js/player-video.js) ===== */
   .pv { cursor: pointer; background-color: #1d1d1d; isolation: isolate; }
   .pv-foto { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; object-fit: cover; z-index: 0; }
   /* O player é "largo" (16:9) e fica centralizado e cortado dos lados. O vídeo vertical aparece no meio, no tamanho
@@ -284,7 +282,7 @@
   .pv .vitrine-play, .pv .destaques-play { z-index: 2; transition: opacity .2s ease, transform .2s ease; }
   .pv:hover .vitrine-play, .pv:hover .destaques-play { transform: translate(-50%, -50%) scale(1.08); }
   .pv.tocando .vitrine-play, .pv.tocando .destaques-play { opacity: 0; }
-  .pv-selo { position: absolute; left: 50%; top: calc(50% + 48px); transform: translateX(-50%); z-index: 4; pointer-events: none; max-width: calc(100% - 20px); padding: 7px 12px; border-radius: 999px; background: rgba(20,16,18,.72); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv-selo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; pointer-events: none; max-width: calc(100% - 20px); padding: 7px 12px; border-radius: 999px; background: rgba(20,16,18,.72); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pv-selo:empty { display: none; }
   .pv.com-som { box-shadow: 0 0 0 3px var(--ameixa, #7A5068); }
   .pv:focus-visible { outline: 3px solid var(--ameixa, #7A5068); outline-offset: 3px; }
