@@ -151,10 +151,16 @@
     padding: 8px 16px; border-radius: 100px; font-weight: 700; font-size: .78rem; box-shadow: var(--sombra);
     border: 1px solid var(--borda);
   }
-  .hero-numbers { max-width: var(--container); margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .numero-curto { background: var(--branco); border-radius: var(--raio); padding: 24px; text-align: center; box-shadow: var(--sombra); border: 1px solid var(--borda); }
-  .numero-curto .numero { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--cor-azul-forte); display: block; }
-  .numero-curto p { margin: 4px 0 0; font-size: .88rem; color: var(--texto-suave); }
+  /* Faixa de números da capa: editorial, sem caixas, números em serifado itálico, barrinha rosa e linhas separando */
+  .hero-numbers { max-width: var(--container); margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .numero-curto { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
+  .numero-curto:first-child { border-left: 0; padding-left: 0; }
+  .numero-curto .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3.4rem, 7vw, 6rem); line-height: 1; display: block; letter-spacing: -.01em; }
+  .numero-curto:nth-child(1) .numero { color: #7A5068; }
+  .numero-curto:nth-child(2) .numero { color: #86A0C4; }
+  .numero-curto:nth-child(3) .numero { color: var(--cor-azul-forte); }
+  .numero-curto .numero::after { content: ''; display: block; width: 50px; height: 4px; border-radius: 2px; background: #E4566A; margin: 16px 0 18px; }
+  .numero-curto p { margin: 0; font-size: clamp(.95rem, 1.5vw, 1.1rem); font-weight: 500; line-height: 1.4; color: var(--texto-suave); }
 
   /* ===== FAIXA DE MARCAS ===== */
   .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 48px; }
@@ -437,6 +443,8 @@
     .logo img { height: 40px; }
     .logo-nome { font-size: .56rem; letter-spacing: .24em; }
     .hero-numbers { grid-template-columns: 1fr; }
+    .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 22px 0; }
+    .numero-curto:first-child { border-top: 0; padding-top: 0; }
     .servicos-grid, .depoimentos-grid { grid-template-columns: 1fr; }
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
