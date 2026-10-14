@@ -282,9 +282,8 @@
   .pv .vitrine-play, .pv .destaques-play { z-index: 2; transition: opacity .2s ease, transform .2s ease; }
   .pv:hover .vitrine-play, .pv:hover .destaques-play { transform: translate(-50%, -50%) scale(1.08); }
   .pv.tocando .vitrine-play, .pv.tocando .destaques-play { opacity: 0; }
-  .pv-selo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; pointer-events: none; max-width: calc(100% - 20px); padding: 7px 12px; border-radius: 999px; background: rgba(20,16,18,.72); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv-selo { position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); z-index: 4; pointer-events: none; max-width: calc(100% - 16px); padding: 6px 11px; border-radius: 999px; background: rgba(20,16,18,.66); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pv-selo:empty { display: none; }
-  .pv.com-som { box-shadow: 0 0 0 3px var(--ameixa, #7A5068); }
   .pv:focus-visible { outline: 3px solid var(--ameixa, #7A5068); outline-offset: 3px; }
   .vitrine-marca-dagua { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 44px; color: var(--ameixa); opacity: .3; pointer-events: none; }
   .vitrine-legenda { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--linha); padding-top: 12px; }

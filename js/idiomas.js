@@ -146,7 +146,7 @@
     "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
 
     /* ---- Player dos vídeos ---- */
-    "video.ouvir": ["Ativar o som", "Turn sound on", "Activar sonido"],
+    "video.ouvir": ["Clique para ouvir", "Click to listen", "Haz clic para escuchar"],
     "video.comSom": ["Com som · pausar", "Sound on · pause", "Con sonido · pausar"],
 
     /* ---- Serviços ---- */

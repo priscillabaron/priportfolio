@@ -56,6 +56,8 @@
     let estadoAtual = -1;   // último estado que o YouTube informou (1 = rodando, 3 = carregando, 2 = pausado)
     let tempoAtual = 0;     // quanto do vídeo já passou, em segundos
     let legendasDesligadas = false;
+    let duracaoAtual = 0;
+    let reiniciando = false;
     let timerRevelar = null;
 
     capa.classList.add("pv");
@@ -130,7 +132,7 @@
       iframe = document.createElement("iframe");
       const origem = location.origin && location.origin !== "null" ? "&origin=" + encodeURIComponent(location.origin) : "";
       iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
-        "?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=" + id +
+        "?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1" +
         "&rel=0&modestbranding=1&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0&showinfo=0" + origem;
       iframe.title = opc.titulo || "Vídeo";
       iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
@@ -161,6 +163,8 @@
       tocando = false;
       estadoAtual = -1;
       tempoAtual = 0;
+      duracaoAtual = 0;
+      reiniciando = false;
       legendasDesligadas = false;
       clearTimeout(timerRevelar);
       timerRevelar = null;
@@ -178,11 +182,10 @@
     }
 
     function atualizarSelo() {
-      if (comSom) selo.textContent = "🔊 " + t("video.comSom", "Com som · pausar");
-      else if (tocando) selo.textContent = "🔇 " + t("video.ouvir", "Ativar o som");
+      // só aparece quando está tocando sem som; com som, nada por cima do vídeo
+      if (tocando && !comSom) selo.textContent = "🔇 " + t("video.ouvir", "Clique para ouvir");
       else selo.textContent = "";
     }
-
     function tocarMudo() {
       if (comSom || !permitido()) return;
       garantirIframe();
@@ -247,6 +250,7 @@
         if (d.info && typeof d.info === "object") {
           if (typeof d.info.playerState === "number") estadoAtual = d.info.playerState;
           if (typeof d.info.currentTime === "number") tempoAtual = d.info.currentTime;
+          if (typeof d.info.duration === "number" && d.info.duration > 0) duracaoAtual = d.info.duration;
         } else if (d.event === "onStateChange" && typeof d.info === "number") {
           estadoAtual = d.info;
         }
@@ -257,6 +261,16 @@
           setTimeout(semLegendas, 2000);
         } else if (estadoAtual !== 1 && estadoAtual !== -1) {
           legendasDesligadas = false;
+        }
+        // Repete o vídeo sozinho (sem usar a lista do YouTube, que traz botões de anterior e próximo)
+        if (tocando && iframe) {
+          const acabando = duracaoAtual > 1 && tempoAtual >= duracaoAtual - 0.35;
+          if ((estadoAtual === 0 || acabando) && !reiniciando) {
+            reiniciando = true;
+            enviar("seekTo", [0, true]);
+            enviar("playVideo");
+            setTimeout(function () { reiniciando = false; }, 1500);
+          }
         }
         // O vídeo só aparece por cima da capa quando já está rodando de verdade (sem quadro preto no começo).
         if (tocando && estadoAtual === 1 && tempoAtual > 0.25) {
