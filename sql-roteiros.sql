@@ -34,6 +34,9 @@ create table if not exists public.configuracoes (
 -- Capa do vídeo (imagem pequena guardada junto do roteiro)
 alter table public.roteiros add column if not exists capa text;
 
+-- Quantidade de visualizações do vídeo
+alter table public.roteiros add column if not exists visualizacoes bigint;
+
 create index if not exists roteiros_created_at_idx on public.roteiros (created_at desc);
 
 -- Só quem está logada lê e escreve. Nada para visitantes (anon).

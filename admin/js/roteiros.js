@@ -59,6 +59,11 @@
     if (isNaN(d.getTime())) return "";
     return d.toLocaleDateString("pt-BR");
   }
+  // 1234 vira "1,2 mil"; 3400000 vira "3,4 mi"
+  function formatarViews(n) {
+    try { return new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFractionDigits: 1 }).format(n); }
+    catch (e) { return String(n); }
+  }
   async function copiarTexto(texto) {
     try { await navigator.clipboard.writeText(texto); }
     catch (erro) {
@@ -360,10 +365,11 @@
   // Grava no banco. Se a coluna "capa" ainda não existe (SQL novo não rodado), tenta de novo sem ela.
   async function gravarLinha(id, dados) {
     var r = await cliente().from("roteiros").update(dados).eq("id", id).select().single();
-    if (r.error && "capa" in dados && (r.error.code === "42703" || r.error.code === "PGRST204")) {
-      var semCapa = Object.assign({}, dados);
-      delete semCapa.capa;
-      r = await cliente().from("roteiros").update(semCapa).eq("id", id).select().single();
+    if (r.error && (r.error.code === "42703" || r.error.code === "PGRST204")) {
+      var semNovas = Object.assign({}, dados);
+      delete semNovas.capa;
+      delete semNovas.visualizacoes;
+      r = await cliente().from("roteiros").update(semNovas).eq("id", id).select().single();
     }
     if (r.error) {
       console.error("Erro ao gravar roteiro:", r.error);
@@ -400,7 +406,8 @@
       var primeiro = m.items && m.items[0] ? m.items[0] : {};
       var urlCapa = m.thumbnailUrl || m.url || primeiro.thumbnailUrl || primeiro.url || "";
       var capa = urlCapa ? await guardarCapa(urlCapa) : "";
-      return { titulo: titulo, perfil: perfil, postado_em: data, tags: tags.slice(0, 12), legenda: legenda, capa: capa };
+      var views = j.stats && typeof j.stats.views === "number" ? j.stats.views : null;
+      return { titulo: titulo, perfil: perfil, postado_em: data, tags: tags.slice(0, 12), legenda: legenda, capa: capa, visualizacoes: views };
     } catch (e) {
       return null;
     }
@@ -416,6 +423,8 @@
     if ((!atual.tags || !atual.tags.length) && meta.tags && meta.tags.length) novo.tags = meta.tags;
     if (!atual.legenda && meta.legenda) novo.legenda = meta.legenda;
     if (!atual.capa && meta.capa) novo.capa = meta.capa;
+    // visualizações mudam com o tempo: sempre guarda o número mais novo
+    if (typeof meta.visualizacoes === "number") novo.visualizacoes = meta.visualizacoes;
     return novo;
   }
 
@@ -776,6 +785,7 @@
     if (item.perfil) meta.push("@" + item.perfil);
     var d = dataBr(item.postado_em || item.created_at);
     if (d) meta.push(d);
+    if (typeof item.visualizacoes === "number") meta.push("👁 " + formatarViews(item.visualizacoes) + " visualizações");
     if (meta.length) corpo.appendChild(criar("p", "rot-meta", meta.join("  ·  ")));
 
     var emAndamento = item.status === "processando";
@@ -854,6 +864,7 @@
     el["rm-transcricao"].value = i.transcricao || "";
     el["rm-obs"].value = i.obs || "";
     est.capaModal = i.capa || "";
+    el["rm-views"].value = typeof i.visualizacoes === "number" ? i.visualizacoes : "";
     el["rm-aviso"].style.display = aviso ? "" : "none";
     el["rm-aviso"].textContent = aviso || "";
     atualizarContagem();
@@ -901,6 +912,7 @@
       if (el["rm-tags"].value !== antes) novo.tags = true;
     }
     if (novo.capa) est.capaModal = novo.capa;
+    if (typeof novo.visualizacoes === "number") el["rm-views"].value = novo.visualizacoes;
     U.toast(Object.keys(novo).length ? "Campos vazios preenchidos." : "Não achei nada novo para preencher.");
     setTimeout(carregarSaldo, 1500);
   }
@@ -931,6 +943,8 @@
       updated_at: agoraISO()
     };
     dados.capa = est.capaModal || null;
+    var vtxt = el["rm-views"].value.trim();
+    dados.visualizacoes = vtxt !== "" && !isNaN(Number(vtxt)) ? Math.max(0, Math.round(Number(vtxt))) : null;
     var r;
     if (est.editando) {
       r = await gravarLinha(est.editando.id, dados);
@@ -938,6 +952,7 @@
       r = await cliente().from("roteiros").insert(dados).select().single();
       if (r.error && (r.error.code === "42703" || r.error.code === "PGRST204")) {
         delete dados.capa;
+        delete dados.visualizacoes;
         r = await cliente().from("roteiros").insert(dados).select().single();
       }
       if (r.error) { console.error(r.error); U.toast("Não consegui salvar. Confira se o SQL foi rodado.", true); }
@@ -983,7 +998,7 @@
       "rot-chave-card", "rot-chave-rotulo", "rot-chave", "rot-salvar-chave", "rot-remover-chave", "rot-chave-estado",
       "rot-saldo", "rot-saldo-atualizar", "rot-como-chave", "rot-busca", "rot-filtros", "rot-lista", "rot-vazio", "rot-sem-tabela",
       "rm-titulo-modal", "rm-titulo", "rm-dequem", "rm-perfil", "rm-link", "rm-data", "rm-tags", "rm-legenda",
-      "rm-transcricao", "rm-contagem", "rm-obs", "rm-aviso", "rm-salvar", "rm-buscar-dados"
+      "rm-transcricao", "rm-contagem", "rm-obs", "rm-aviso", "rm-salvar", "rm-buscar-dados", "rm-views"
     ].forEach(function (id) { el[id] = $(id); });
     el["rm-buscar-dados"].addEventListener("click", preencherPeloLink);
 
