@@ -26,9 +26,11 @@
     if (item.marca) slide.appendChild(el("p", "destaques-marca", item.marca));
 
     const temLink = !emBreve && item.link && item.link !== "#";
-    const capa = el(temLink ? "a" : "div", "destaques-capa");
+    // Vídeo do YouTube roda aqui mesmo (sem abrir o YouTube); outros links abrem em outra aba.
+    const rodaAqui = temLink && window.PlayerVideo && PlayerVideo.idDoVideo(item.link);
+    const capa = el(temLink && !rodaAqui ? "a" : "div", "destaques-capa");
     capa.style.background = FUNDOS[indice % FUNDOS.length];
-    if (temLink) {
+    if (temLink && !rodaAqui) {
       capa.href = item.link;
       capa.target = "_blank";
       capa.rel = "noopener";
@@ -41,11 +43,15 @@
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);
     }
+    // só o vídeo do meio toca; os vizinhos só viram o do meio quando clicados
+    const player = rodaAqui
+      ? PlayerVideo.anexar(capa, item.link, { titulo: item.titulo, focavel: false, ativo: function () { return slide.dataset.pos === "0"; } })
+      : null;
     slide.appendChild(capa);
 
     if (item.destaque) slide.appendChild(el("p", "destaques-metrica", item.destaque));
     if (item.titulo) slide.appendChild(el("p", "destaques-legenda", item.titulo));
-    return { el: slide, capa: capa };
+    return { el: slide, capa: capa, player: player };
   }
 
   // palco: elemento que contém o trilho e as setas. itens: vídeos com {marca, destaque, titulo, link}.
@@ -80,6 +86,7 @@
         s.el.dataset.pos = d === 0 ? "0" : (d === 1 ? "1" : (d === -1 ? "-1" : "fora"));
         s.el.setAttribute("aria-hidden", d === 0 ? "false" : "true");
         s.capa.tabIndex = d === 0 ? 0 : -1;
+        if (d !== 0 && s.player) s.player.parar(); // o que saiu do meio para de tocar
       });
     }
     function ir(novo) {
@@ -117,7 +124,8 @@
       timer = null;
       if (prefereReduzir || emBreve || total < 2) return;
       timer = setInterval(function () {
-        if (!pausado && visivel && !document.hidden) ir(atual + 1);
+        // não passa sozinho enquanto alguém está ouvindo um vídeo
+        if (!pausado && visivel && !document.hidden && !(window.PlayerVideo && PlayerVideo.algumComSom())) ir(atual + 1);
       }, INTERVALO_MS);
     }
     palco.onmouseenter = function () { pausado = true; };

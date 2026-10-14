@@ -6,9 +6,9 @@
   // Os nichos aparecem nesta ordem. Cada vídeo entra no nicho que tiver o mesmo nome
   // no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
   const lista = [
-    "Casa & Decoração", "Gastronomia", "Saúde e Fitness", "Beleza & Autocuidado",
-    "Moda & Acessórios", "Lojas & Supermercados", "Conteúdos em Família",
-    "Datas Especiais", "Viagem & Passeios", "Restaurantes & Cafeterias"
+    "Casa & Decoração", "Beleza", "Tech & Apps", "Alimentação e Suplementação",
+    "Moda & Acessórios", "Viagem", "Passeios em Família", "Clips & TikTok Shop",
+    "Gastronomia", "Lojas e Mercados", "Datas Especiais"
   ];
   const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
 
@@ -47,13 +47,15 @@
 
   function montarCartao(video, indice, emBreve) {
     const temLink = !emBreve && video.link && video.link !== "#";
+    // Vídeo do YouTube roda aqui mesmo (sem abrir o YouTube); outros links abrem em outra aba.
+    const rodaAqui = temLink && window.PlayerVideo && PlayerVideo.idDoVideo(video.link);
     const cartao = document.createElement("article");
     cartao.className = "vitrine-cartao";
 
-    const capa = document.createElement(temLink ? "a" : "div");
+    const capa = document.createElement(temLink && !rodaAqui ? "a" : "div");
     capa.className = "vitrine-capa";
     capa.style.background = FUNDOS_CARTAO[indice % FUNDOS_CARTAO.length];
-    if (temLink) {
+    if (temLink && !rodaAqui) {
       capa.href = video.link;
       capa.target = "_blank";
       capa.rel = "noopener";
@@ -75,6 +77,7 @@
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);
     }
+    if (rodaAqui) PlayerVideo.anexar(capa, video.link, { titulo: video.titulo });
     cartao.appendChild(capa);
 
     const legenda = document.createElement("div");

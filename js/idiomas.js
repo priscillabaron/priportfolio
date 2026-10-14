@@ -113,9 +113,16 @@
     "nicho.datas-especiais.nome": ["Datas Especiais", "Special Occasions", "Fechas Especiales"],
     "nicho.viagem-e-passeios.nome": ["Viagem & Passeios", "Travel & Getaways", "Viajes y Paseos"],
     "nicho.restaurantes-e-cafeterias.nome": ["Restaurantes & Cafeterias", "Restaurants & Cafés", "Restaurantes y Cafeterías"],
+    "nicho.beleza.nome": ["Beleza", "Beauty", "Belleza"],
+    "nicho.tech-e-apps.nome": ["Tech & Apps", "Tech & Apps", "Tech y Apps"],
+    "nicho.alimentacao-e-suplementacao.nome": ["Alimentação e Suplementação", "Food & Supplements", "Alimentación y Suplementación"],
+    "nicho.viagem.nome": ["Viagem", "Travel", "Viajes"],
+    "nicho.passeios-em-familia.nome": ["Passeios em Família", "Family Outings", "Paseos en Familia"],
+    "nicho.clips-e-tiktok-shop.nome": ["Clips & TikTok Shop", "Clips & TikTok Shop", "Clips y TikTok Shop"],
+    "nicho.lojas-e-mercados.nome": ["Lojas e Mercados", "Stores & Markets", "Tiendas y Mercados"],
 
     "nicho.casa-e-decoracao.desc": ["Ambientes, organização e achadinhos para a casa", "Rooms, organization and finds for the home", "Ambientes, organización y hallazgos para la casa"],
-    "nicho.gastronomia.desc": ["Receitas, produtos e sabores que dão água na boca", "Recipes, products and flavors that make your mouth water", "Recetas, productos y sabores que se te hacen agua la boca"],
+    "nicho.gastronomia.desc": ["Restaurantes e cafeterias para comer, beber e voltar sempre", "Restaurants and cafés to eat, drink and come back to", "Restaurantes y cafeterías para comer, beber y volver siempre"],
     "nicho.saude-e-fitness.desc": ["Treino, bem-estar e rotina saudável", "Workouts, wellbeing and a healthy routine", "Entrenamiento, bienestar y rutina saludable"],
     "nicho.beleza-e-autocuidado.desc": ["Skincare, cabelo e momentos de cuidado", "Skincare, hair and self-care moments", "Skincare, cabello y momentos de cuidado personal"],
     "nicho.moda-e-acessorios.desc": ["Looks, peças e acessórios na vida real", "Looks, pieces and accessories in real life", "Looks, prendas y accesorios en la vida real"],
@@ -124,6 +131,17 @@
     "nicho.datas-especiais.desc": ["Natal, Dia das Mães e outras datas que vendem", "Christmas, Mother's Day and other dates that sell", "Navidad, Día de las Madres y otras fechas que venden"],
     "nicho.viagem-e-passeios.desc": ["Destinos, roteiros e experiências para viver", "Destinations, itineraries and experiences to live", "Destinos, itinerarios y experiencias para vivir"],
     "nicho.restaurantes-e-cafeterias.desc": ["Lugares para comer, beber e voltar sempre", "Places to eat, drink and come back to", "Lugares para comer, beber y volver siempre"],
+    "nicho.beleza.desc": ["Skincare, maquiagem e cuidados com o cabelo", "Skincare, makeup and hair care", "Skincare, maquillaje y cuidado del cabello"],
+    "nicho.tech-e-apps.desc": ["Equipamentos, sites e aplicativos", "Gadgets, websites and apps", "Equipos, sitios web y aplicaciones"],
+    "nicho.alimentacao-e-suplementacao.desc": ["Snacks, suplementos e comida do dia a dia", "Snacks, supplements and everyday food", "Snacks, suplementos y comida del día a día"],
+    "nicho.viagem.desc": ["Companhias aéreas, hospedagens e destinos pelo mundo", "Airlines, stays and destinations around the world", "Aerolíneas, alojamientos y destinos por el mundo"],
+    "nicho.passeios-em-familia.desc": ["Parques, atrações e programas para ir com a família", "Parks, attractions and outings for the whole family", "Parques, atracciones y planes para ir en familia"],
+    "nicho.clips-e-tiktok-shop.desc": ["Achadinhos e produtos em vídeos curtos", "Finds and products in short videos", "Hallazgos y productos en videos cortos"],
+    "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
+
+    /* ---- Player dos vídeos ---- */
+    "video.ouvir": ["Clique para ouvir", "Click to listen", "Haz clic para escuchar"],
+    "video.comSom": ["Com som · clique para pausar", "Sound on · click to pause", "Con sonido · clic para pausar"],
 
     /* ---- Serviços ---- */
     "servicos.eyebrow": ["Serviços", "Services", "Servicios"],
