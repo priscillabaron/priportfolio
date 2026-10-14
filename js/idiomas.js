@@ -140,8 +140,8 @@
     "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
 
     /* ---- Player dos vídeos ---- */
-    "video.ouvir": ["Clique para ouvir", "Click to listen", "Haz clic para escuchar"],
-    "video.comSom": ["Com som · clique para pausar", "Sound on · click to pause", "Con sonido · clic para pausar"],
+    "video.ouvir": ["Ativar o som", "Turn sound on", "Activar sonido"],
+    "video.comSom": ["Com som · pausar", "Sound on · pause", "Con sonido · pausar"],
 
     /* ---- Serviços ---- */
     "servicos.eyebrow": ["Serviços", "Services", "Servicios"],

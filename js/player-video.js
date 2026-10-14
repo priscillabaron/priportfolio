@@ -99,6 +99,10 @@
       clearInterval(timerOla);
       const pendentes = fila;
       fila = [];
+      // sem legendas do YouTube (a conta de quem assiste pode ter legenda automática ligada)
+      ["captions", "cc"].forEach(function (modulo) {
+        try { iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "unloadModule", args: [modulo] }), "*"); } catch (e) { /* tudo bem */ }
+      });
       pendentes.forEach(function (m) { try { iframe.contentWindow.postMessage(m, "*"); } catch (e) { /* tudo bem */ } });
     }
 
@@ -118,7 +122,7 @@
       const origem = location.origin && location.origin !== "null" ? "&origin=" + encodeURIComponent(location.origin) : "";
       iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
         "?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=" + id +
-        "&rel=0&modestbranding=1&fs=0&disablekb=1&iv_load_policy=3" + origem;
+        "&rel=0&modestbranding=1&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0&showinfo=0" + origem;
       iframe.title = opc.titulo || "Vídeo";
       iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
       iframe.setAttribute("tabindex", "-1");
@@ -158,8 +162,8 @@
     }
 
     function atualizarSelo() {
-      if (comSom) selo.textContent = "🔊 " + t("video.comSom", "Com som · clique para pausar");
-      else if (tocando) selo.textContent = "🔇 " + t("video.ouvir", "Clique para ouvir");
+      if (comSom) selo.textContent = "🔊 " + t("video.comSom", "Com som · pausar");
+      else if (tocando) selo.textContent = "🔇 " + t("video.ouvir", "Ativar o som");
       else selo.textContent = "";
     }
 
