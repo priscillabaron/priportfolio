@@ -77,13 +77,24 @@
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);
     }
+    // Nome do vídeo por cima do próprio vídeo, embaixo, como se ele fosse só do portfólio.
+    const tituloNoCartao = !emBreve && video.titulo;
+    if (tituloNoCartao) {
+      const info = document.createElement("div");
+      info.className = "vitrine-info";
+      info.appendChild(criarTexto("span", "vitrine-info-titulo", video.titulo));
+      if (video.nicho) info.appendChild(criarTexto("span", "vitrine-info-nicho", nome(String(video.nicho).trim())));
+      capa.appendChild(info);
+    }
     if (rodaAqui) PlayerVideo.anexar(capa, video.link, { titulo: video.titulo });
     cartao.appendChild(capa);
 
-    const legenda = document.createElement("div");
-    legenda.className = "vitrine-legenda";
-    legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
-    cartao.appendChild(legenda);
+    if (!tituloNoCartao) {
+      const legenda = document.createElement("div");
+      legenda.className = "vitrine-legenda";
+      legenda.appendChild(criarTexto("span", "vitrine-legenda-titulo", video.titulo));
+      cartao.appendChild(legenda);
+    }
     return cartao;
   }
 
