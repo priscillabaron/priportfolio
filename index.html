@@ -10,7 +10,7 @@
 <meta name="description" content="Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Raleway:wght@400;500;600&family=Playfair+Display:ital,wght@1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Raleway:wght@400;500;600&family=Playfair+Display:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
 <style>
   /* ===== RESET E BASE ===== */
   *, *::before, *::after { box-sizing: border-box; }
@@ -183,6 +183,12 @@
   #sobre { padding: 100px 0; }
   .sobre-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: center; }
   .sobre-texto p { font-size: 1.08rem; }
+  .sobre-titulo { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: clamp(2.3rem, 4.6vw, 3.6rem); line-height: 1.08; letter-spacing: -.01em; color: var(--cor-azul-forte); margin: 0 0 24px; }
+  .sobre-titulo em { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; color: #7A5068; }
+  .sobre-texto p strong { color: var(--cor-azul-forte); font-weight: 700; }
+  .sobre-pilulas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .sobre-pilula { display: inline-flex; align-items: center; gap: 4px; padding: 14px 24px; border-radius: 999px; background: #ececec; border: 1px solid #dcdcdc; color: var(--texto); font-weight: 600; font-size: .95rem; }
+  .sobre-pilula-azul { background: #dfe8ef; border-color: #b9cad8; color: var(--cor-azul-forte); }
   .sobre-citacao { margin: 22px 0 0; padding: 0 0 0 18px; border-left: 3px solid var(--cor-azul-forte); font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.25rem; line-height: 1.45; color: var(--texto-suave); }
   .promessas { display: grid; gap: 14px; margin: 24px 0; }
   .promessas li { display: flex; align-items: flex-start; gap: 12px; background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio-pequeno); padding: 14px 18px; box-shadow: var(--sombra); }
@@ -528,16 +534,15 @@
         </div>
       </div>
       <div class="sobre-texto reveal">
-        <span class="eyebrow" data-i18n="sobre.eyebrow">Sobre mim</span>
-        <h2 data-i18n-html="sobre.titulo">Quem sou <em>eu</em></h2>
-        <p data-i18n="sobre.p1">Criadora UGC e influenciadora que transforma bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.</p>
-        <p data-i18n="sobre.p2">Com uma comunicação leve, autêntica e estratégica, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam.</p>
-        <blockquote class="sobre-citacao" data-i18n="sobre.citacao">“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)</blockquote>        <ul class="promessas">
-          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa1">Roteiro aprovado antes de gravar</span></li>
-          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa2">Uma rodada de ajuste inclusa</span></li>
-          <li><span class="marca-check">✓</span> <span data-i18n="sobre.promessa3">Entrega em até 72 horas úteis</span></li>
-        </ul>
-      </div>
+        <span class="eyebrow-linha" data-i18n="sobre.eyebrow">Sobre mim</span>
+        <h2 class="sobre-titulo" data-i18n-html="sobre.titulo">Oie, sou a <em>Pri Baron</em></h2>
+        <p data-i18n-html="sobre.p1">Tenho <strong>25 anos</strong>, sou <strong>criadora UGC e influenciadora</strong>, já trabalhei com <strong>10 marcas</strong> no <strong>Brasil e Chile</strong>, transformando conteúdos de bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.</p>
+        <p data-i18n-html="sobre.p2">Tenho uma comunicação <strong>leve, autêntica e estratégica</strong>, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam. Também produzo <strong>conteúdos em família</strong>, com passeios e momentos reais do dia a dia.</p>
+        <blockquote class="sobre-citacao" data-i18n="sobre.citacao">“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)</blockquote>
+        <div class="sobre-pilulas">
+          <span class="sobre-pilula sobre-pilula-azul" data-i18n="sobre.pilula1">10 marcas parceiras</span>
+          <span class="sobre-pilula" data-i18n-html="sobre.pilula2">Brasil <span class="bandeira bandeira-br" role="img" aria-label="Brasil"></span> · Chile <span class="bandeira bandeira-cl" role="img" aria-label="Chile"></span></span>
+        </div>      </div>
     </div>
   </section>
 
