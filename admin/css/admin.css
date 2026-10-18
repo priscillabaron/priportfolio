@@ -441,8 +441,9 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-vazio b { color: var(--c-navy); }
 
 /* cartoes das ideias */
-.cont-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
-.cont-ideia { text-align: left; background: #fff; border: 1px solid var(--c-borda); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; color: var(--c-navy); }
+/* lista na vertical: um conteúdo embaixo do outro, cada um ocupando a largura toda */
+.cont-grade { display: flex; flex-direction: column; gap: 14px; }
+.cont-ideia { text-align: left; background: #fff; border: 1px solid var(--c-borda); border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; color: var(--c-navy); }
 .cont-ideia { cursor: pointer; position: relative; }
 .cont-ideia-chips { padding-right: 34px; }
 .cont-postado { position: absolute; top: 14px; right: 14px; width: 26px; height: 26px; padding: 0; border-radius: 50%; border: 2px solid #c9d0da; background: #fff; display: flex; align-items: center; justify-content: center; transition: background .15s ease, border-color .15s ease; }
@@ -455,7 +456,7 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-serie-cab { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
 .cont-serie-nome { font-size: 1.1rem; font-weight: 800; }
 .cont-serie-meta { font-size: .8rem; color: var(--c-suave); font-weight: 600; }
-.cont-serie-linha { display: grid; grid-auto-flow: column; grid-auto-columns: 290px; gap: 14px; overflow-x: auto; padding: 2px 2px 10px; }
+.cont-serie-linha { display: flex; flex-direction: column; gap: 14px; padding: 2px 0 10px; }
 .cont-ideia:hover { border-color: #b9c7d8; box-shadow: 0 4px 14px rgba(29,43,64,.06); }
 .cont-link-inspiracao { color: #3f6e9a; text-decoration: none; font-weight: 600; border-radius: 6px; padding: 2px 4px; margin: -2px -4px; }
 .cont-link-inspiracao:hover { background: #e8eef7; text-decoration: underline; }
@@ -465,9 +466,9 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .cont-chip-publi { background: #fbe4ea; color: #a3324f; }
 .cont-chip-serie { background: #fde0ec; color: #b3265a; }
 .cont-ideia-titulo { font-size: 1.03rem; font-weight: 700; line-height: 1.3; text-wrap: pretty; }
-.cont-ideia-desc { font-size: .88rem; color: #4a5260; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.cont-ideia-desc { font-size: .92rem; color: #4a5260; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .cont-ideia-pendente { font-size: .8rem; color: #8a5a00; background: #fdf3de; border-radius: 8px; padding: 8px 10px; line-height: 1.4; }
-.cont-ideia-rodape { display: flex; gap: 14px; flex-wrap: wrap; font-size: .8rem; color: var(--c-suave); margin-top: auto; padding-top: 4px; }
+.cont-ideia-rodape { display: flex; gap: 18px; flex-wrap: wrap; font-size: .82rem; color: var(--c-suave); margin-top: auto; padding-top: 4px; }
 .cont-ideia-rodape span { display: inline-flex; align-items: center; gap: 5px; }
 .cont-ideia-rodape svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 .cont-ideia-rodape .cont-prazo { color: #a3324f; font-weight: 600; }
