@@ -105,6 +105,7 @@
     aba: "ideias",
     plataforma: "instagram",
     filtro: "all",
+    busca: "",
     calModo: "week",
     ancora: hojeISO(),
     ideias: [],
@@ -165,7 +166,7 @@
   async function iniciar() {
     [
       "cont-frase", "cont-outra-frase", "cont-perfis", "cont-abas", "cont-bloco-ideias", "cont-bloco-cal", "cont-bloco-projetos", "cont-projetos-grade", "cont-projetos-vazio", "cont-novo-projeto", "cont-projeto-topo", "cont-projeto-voltar", "cont-projeto-titulo", "cont-projeto-editar", "form-cont-projeto", "cp-titulo-modal", "cp-nome", "cp-pais", "cp-bandeira", "cp-apagar",
-      "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade",
+      "cont-plataformas", "cont-filtros", "cont-nova-ideia", "cont-vazio", "cont-grade", "cont-busca", "cont-busca-limpar", "cont-busca-info",
       "cont-cal-ant", "cont-cal-prox", "cont-cal-hoje", "cont-cal-rotulo", "cont-cal-modos", "cont-cal-adicionar",
       "cont-legenda-geral", "cont-cal-corpo", "cont-gaveta", "cont-gaveta-kicker", "cont-gaveta-titulo",
       "ci-titulo", "ci-desc", "ci-roteiro", "ci-roteiro-resumo", "ci-roteiro-alternar", "ci-roteiro-corpo", "ci-roteiro-ampliar", "ci-roteiro-bloco", "cr-texto", "cr-contagem", "cr-titulo-ideia", "cr-copiar", "ci-serie-marca", "ci-serie-campo", "ci-serie", "ci-marcar", "ci-legenda", "ci-links", "ci-mensagem", "ci-status", "ci-pendente-wrap", "ci-pendente", "ci-data", "ci-plataforma", "ci-formato",
@@ -178,6 +179,20 @@
       renderFrase();
     });
     el["cont-nova-ideia"].addEventListener("click", novaIdeia);
+    // busca: procura no título, na descrição, no roteiro, na legenda e nos outros campos
+    var buscar = U.debounce(function () { est.busca = el["cont-busca"].value; renderIdeias(); }, 150);
+    el["cont-busca"].addEventListener("input", function () {
+      el["cont-busca-limpar"].style.display = el["cont-busca"].value ? "" : "none";
+      buscar();
+    });
+    el["cont-busca"].addEventListener("keydown", function (e) { if (e.key === "Escape") el["cont-busca-limpar"].click(); });
+    el["cont-busca-limpar"].addEventListener("click", function () {
+      el["cont-busca"].value = "";
+      el["cont-busca-limpar"].style.display = "none";
+      est.busca = "";
+      renderIdeias();
+      el["cont-busca"].focus();
+    });
     el["cont-cal-ant"].addEventListener("click", function () { moverCalendario(-1); });
     el["cont-cal-prox"].addEventListener("click", function () { moverCalendario(1); });
     el["cont-cal-hoje"].addEventListener("click", function () { est.ancora = hojeISO(); renderCalendario(); });
@@ -376,6 +391,10 @@
     var series = agruparSeries(ordenarIdeias(naPlataforma));
     el["cont-filtros"].appendChild(botao("cont-pilula" + (est.filtro === "series" ? " ativo" : ""), "Séries · " + series.length, function () { est.filtro = "series"; renderIdeias(); }));
 
+    // com algo escrito na busca, mostra os resultados no lugar da lista normal
+    if (est.busca.trim()) { renderBusca(); return; }
+    el["cont-busca-info"].style.display = "none";
+
     el["cont-grade"].innerHTML = "";
     if (est.filtro === "series") {
       el["cont-grade"].className = "cont-series";
@@ -391,6 +410,36 @@
     lista = juntarSeries(lista);
     el["cont-vazio"].style.display = lista.length === 0 ? "" : "none";
     lista.forEach(function (ideia) { el["cont-grade"].appendChild(montarCartaoIdeia(ideia)); });
+  }
+
+  /* ---------- busca ---------- */
+  function semAcento(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim(); }
+
+  // Procura em todas as ideias do perfil (todas as plataformas e todos os status), ou só no projeto aberto.
+  // Cada palavra digitada precisa aparecer em algum campo da ideia (a ordem não importa).
+  function renderBusca() {
+    var termos = semAcento(est.busca).split(" ").filter(Boolean);
+    var proj = est.aba === "projetos" ? projetoAtual() : null;
+    var base = est.ideias.filter(function (i) { return i.perfil === est.perfil && (!proj || i.projeto_id === proj.id); });
+    var achadas = base.filter(function (i) {
+      var st = achar(STATUS, i.status) || STATUS[0];
+      var pl = achar(PLATAFORMAS, i.plataforma);
+      var pj = i.projeto_id ? achar(est.projetos, i.projeto_id) : null;
+      var palheiro = semAcento([
+        i.titulo, i.descricao, i.pendente, i.inspiracao, i.serie, i.formato, i.marca, i.roteiro, i.marcar,
+        i.legenda, i.links, i.mensagem, st.rotulo, pl ? pl.rotulo : "", pj ? pj.nome : "",
+        i.data_postagem ? br(i.data_postagem) + " " + String(i.data_postagem).slice(0, 10) : "", i.publi ? "publi publicidade" : ""
+      ].join(" "));
+      return termos.every(function (t) { return palheiro.indexOf(t) >= 0; });
+    });
+    var info = el["cont-busca-info"];
+    info.style.display = "";
+    info.textContent = (achadas.length === 1 ? "1 resultado" : achadas.length + " resultados") + " para “" + est.busca.trim() + "”, em todas as plataformas e status" + (proj ? " deste projeto" : "") + ".";
+    el["cont-grade"].className = "cont-grade";
+    el["cont-grade"].innerHTML = "";
+    el["cont-vazio"].innerHTML = "Não achei nada com essa busca. Tente outra palavra.";
+    el["cont-vazio"].style.display = achadas.length === 0 ? "" : "none";
+    ordenarIdeias(achadas).forEach(function (i) { el["cont-grade"].appendChild(montarCartaoIdeia(i, true)); });
   }
 
   /* ---------- séries ---------- */
@@ -476,7 +525,7 @@
     U.toast(vaiPostar ? "Marcado como postado." : "Voltou para " + (achar(STATUS, novo) || STATUS[0]).rotulo.toLowerCase() + ".");
   }
 
-  function montarCartaoIdeia(i) {
+  function montarCartaoIdeia(i, nosResultados) {
     var st = achar(STATUS, i.status) || STATUS[0];
     // O card é um bloco clicável (e não um botão) porque tem um link de verdade dentro: a Inspiração.
     var c = criar("div", "cont-ideia");
@@ -498,6 +547,13 @@
     c.appendChild(bolinha);
 
     var chips = criar("div", "cont-ideia-chips");
+    if (nosResultados) {
+      // na busca, mostra de onde vem o conteúdo (plataforma e projeto)
+      var pl = achar(PLATAFORMAS, i.plataforma);
+      if (pl) chips.appendChild(criar("span", "cont-chip cont-chip-plat", pl.rotulo));
+      var pj = i.projeto_id ? achar(est.projetos, i.projeto_id) : null;
+      if (pj && !(est.aba === "projetos")) chips.appendChild(criar("span", "cont-chip cont-chip-plat", "Projeto " + pj.nome));
+    }
     if (i.formato) chips.appendChild(criar("span", "cont-chip cont-chip-formato", i.formato));
     var chipStatus = criar("span", "cont-chip", (i.status === "postado" ? "✓ " : "") + st.rotulo);
     chipStatus.style.background = st.bg;

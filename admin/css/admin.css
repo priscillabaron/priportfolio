@@ -726,3 +726,13 @@ td.lead-mensagem { white-space: pre-wrap; max-width: 360px; word-break: break-wo
 .rot-capa.com-foto { justify-content: flex-end; padding-bottom: 14px; }
 .rot-etq.views { background: #fff1c9; color: #7a5200; }
 .rot-btn.destaque { border-color: var(--c-azul); color: var(--c-azul); background: var(--c-claro); }
+
+/* Busca da aba Conteúdos */
+.cont-busca { display: flex; align-items: center; gap: 10px; height: 50px; border: 1px solid var(--c-linha); border-radius: 12px; padding: 0 14px; background: #fff; color: var(--c-suave); }
+.cont-busca:focus-within { border-color: var(--c-azul); box-shadow: 0 0 0 3px #e8eef7; }
+.cont-busca svg { width: 18px; height: 18px; stroke: currentColor; flex-shrink: 0; }
+.cont-busca input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; font-family: inherit; font-size: .95rem; color: var(--c-navy); }
+.cont-busca-limpar { width: 28px; height: 28px; border: 0; border-radius: 50%; background: #eef0f3; color: var(--c-suave); font-size: 1.1rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
+.cont-busca-limpar:hover { background: #dfe3e8; color: var(--c-navy); }
+.cont-busca-info { margin: 0; font-size: .85rem; font-weight: 600; color: var(--c-suave); }
+.cont-chip-plat { background: #e8eef7; color: #22476d; }
