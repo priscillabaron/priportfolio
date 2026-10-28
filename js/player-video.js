@@ -59,6 +59,8 @@
     let duracaoAtual = 0;
     let reiniciando = false;
     let timerRevelar = null;
+    let timerFalha = null;
+    let recebeu = false;    // o YouTube já respondeu alguma coisa?
 
     capa.classList.add("pv");
     capa.setAttribute("role", "button");
@@ -84,6 +86,12 @@
     const toque = document.createElement("div");
     toque.className = "pv-toque";
     capa.appendChild(toque);
+
+    // botão de play: só aparece se o vídeo não começar sozinho (o navegador pode não deixar). O clique sempre inicia.
+    const iconePlay = document.createElement("span");
+    iconePlay.className = "pv-play";
+    iconePlay.setAttribute("aria-hidden", "true");
+    capa.appendChild(iconePlay);
 
     const selo = document.createElement("span");
     selo.className = "pv-selo";
@@ -132,7 +140,7 @@
       iframe = document.createElement("iframe");
       const origem = location.origin && location.origin !== "null" ? "&origin=" + encodeURIComponent(location.origin) : "";
       iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
-        "?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1" +
+        "?enablejsapi=1&autoplay=1&mute=" + (comSom ? 0 : 1) + "&controls=0&playsinline=1" +
         "&rel=0&modestbranding=1&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0&showinfo=0" + origem;
       iframe.title = opc.titulo || "Vídeo";
       iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
@@ -159,6 +167,7 @@
       iframe.remove();
       iframe = null;
       pronto = false;
+      recebeu = false;
       fila = [];
       tocando = false;
       estadoAtual = -1;
@@ -169,7 +178,8 @@
       clearTimeout(timerRevelar);
       timerRevelar = null;
       clearTimeout(timerMostrar);
-      capa.classList.remove("tocando", "com-som");
+      clearTimeout(timerFalha);
+      capa.classList.remove("tocando", "com-som", "sem-autoplay", "so-youtube");
       atualizarSelo();
     }
 
@@ -178,12 +188,27 @@
     let timerMostrar = null;
     function garantirVisivel() {
       clearTimeout(timerMostrar);
-      timerMostrar = setTimeout(function () { if (tocando && estadoAtual === -1) capa.classList.add("tocando"); }, 8000);
+      timerMostrar = setTimeout(function () { if (tocando && !recebeu) capa.classList.add("tocando"); }, 8000);
+    }
+
+    // Se em alguns segundos o vídeo não começou sozinho (o navegador não deixou), mostra o play: clicar sempre inicia.
+    function vigiarInicio() {
+      clearTimeout(timerFalha);
+      timerFalha = setTimeout(function () {
+        if (tocando && !capa.classList.contains("tocando")) {
+          // 1ª vez: o navegador não deixou tocar sozinho (o clique resolve). Se já foi um clique e ainda não toca,
+          // o player do YouTube não está funcionando aqui: o próximo clique abre o vídeo no YouTube.
+          capa.classList.add(comSom ? "so-youtube" : "sem-autoplay");
+          atualizarSelo();
+        }
+      }, 3500);
     }
 
     function atualizarSelo() {
       // só aparece quando está tocando sem som; com som, nada por cima do vídeo
-      if (tocando && !comSom) selo.textContent = "🔇 " + t("video.ouvir", "Clique para ouvir");
+      if (capa.classList.contains("so-youtube")) selo.textContent = "↗ " + t("video.abrir", "Abrir o vídeo");
+      else if (capa.classList.contains("sem-autoplay") && tocando) selo.textContent = "▶ " + t("video.assistir", "Clique para assistir");
+      else if (tocando && !comSom) selo.textContent = "🔇 " + t("video.ouvir", "Clique para ouvir");
       else selo.textContent = "";
     }
     function tocarMudo() {
@@ -193,6 +218,7 @@
       enviar("playVideo");
       tocando = true;
       garantirVisivel();
+      vigiarInicio();
       atualizarSelo();
     }
     // Parar = descarregar o player (o vídeo volta a ser só a capa). Pausar e retomar faria o YouTube
@@ -202,13 +228,14 @@
     }    function ligarSom() {
       // só um vídeo com som por vez
       todos.forEach(function (p) { if (p !== api && p.estaComSom()) p.parar(); });
+      comSom = true;
       garantirIframe();
       enviar("unMute");
       enviar("setVolume", [100]);
       enviar("playVideo");
-      comSom = true;
       tocando = true;
       garantirVisivel();
+      vigiarInicio();
       capa.classList.add("com-som");
       atualizarSelo();
     }
@@ -223,7 +250,11 @@
       if (!permitido()) return; // deixa o clique seguir (ex.: trazer o slide vizinho para o meio)
       e.preventDefault();
       e.stopPropagation();
-      if (comSom) parar(); else ligarSom();
+      if (capa.classList.contains("so-youtube")) { window.open(link, "_blank", "noopener"); return; }
+      if (comSom) { parar(); return; }
+      // se o player carregou mas não começou sozinho, cria de novo agora, dentro do clique (o clique libera a reprodução)
+      if (iframe && !capa.classList.contains("tocando")) descarregar();
+      ligarSom();
     }
     toque.addEventListener("click", alternar);
     capa.addEventListener("keydown", function (e) {
@@ -246,6 +277,7 @@
       temIframe: function () { return !!iframe; },
       descarregar: descarregar,
       aoReceber: function (d) {
+        recebeu = true;
         if (d.event === "onReady" || d.event === "initialDelivery" || d.event === "infoDelivery" || d.event === "onStateChange") liberarFila();
         if (d.info && typeof d.info === "object") {
           if (typeof d.info.playerState === "number") estadoAtual = d.info.playerState;
@@ -278,7 +310,7 @@
           if (!timerRevelar && !capa.classList.contains("tocando")) {
             timerRevelar = setTimeout(function () {
               timerRevelar = null;
-              if (tocando && estadoAtual === 1) capa.classList.add("tocando");
+              if (tocando && estadoAtual === 1) { capa.classList.add("tocando"); capa.classList.remove("sem-autoplay"); atualizarSelo(); }
             }, 700);
           }
         } else if (estadoAtual !== 1 && estadoAtual !== -1) {

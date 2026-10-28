@@ -147,6 +147,8 @@
 
     /* ---- Player dos vídeos ---- */
     "video.ouvir": ["Clique para ouvir", "Click to listen", "Haz clic para escuchar"],
+    "video.assistir": ["Clique para assistir", "Click to watch", "Haz clic para ver"],
+    "video.abrir": ["Abrir o vídeo", "Open the video", "Abrir el video"],
     "video.comSom": ["Com som · pausar", "Sound on · pause", "Con sonido · pausar"],
 
     /* ---- Serviços ---- */

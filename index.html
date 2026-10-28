@@ -279,6 +279,10 @@
   .pv-iframe { position: absolute; top: 0; left: 50%; width: 760%; height: 100%; transform: translateX(-50%); border: 0; display: block; z-index: 1; pointer-events: none; background: #000; opacity: 0; transition: opacity .25s ease; }
   .pv.tocando .pv-iframe { opacity: 1; }
   .pv-toque { position: absolute; inset: 0; z-index: 3; }
+  /* play: só aparece quando o navegador não deixa o vídeo começar sozinho; clicar sempre inicia */
+  .pv-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -62%); z-index: 2; width: 58px; height: 58px; border-radius: 50%; background: rgba(255,252,250,.92); box-shadow: var(--sombra); pointer-events: none; }
+  .pv-play::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-35%, -50%); border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--ameixa, #7A5068); }
+  .pv.sem-autoplay:not(.tocando) .pv-play, .pv.so-youtube:not(.tocando) .pv-play { display: block; }
   .pv .vitrine-play, .pv .destaques-play { z-index: 2; transition: opacity .2s ease, transform .2s ease; }
   .pv:hover .vitrine-play, .pv:hover .destaques-play { transform: translate(-50%, -50%) scale(1.08); }
   .pv.tocando .vitrine-play, .pv.tocando .destaques-play { opacity: 0; }
