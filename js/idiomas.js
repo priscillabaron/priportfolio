@@ -189,7 +189,7 @@
     "nicho.alimentacao-e-suplementacao.desc": ["Snacks, suplementos e comida do dia a dia", "Snacks, supplements and everyday food", "Snacks, suplementos y comida del día a día"],
     "nicho.viagens-e-passeios.desc": ["Conteúdos em família, hospedagem, companhias aéreas e passeios", "Family content, stays, airlines and outings", "Contenidos en familia, alojamiento, aerolíneas y paseos"],
     "nicho.clips-e-tiktok-shop.desc": ["Achadinhos e produtos em vídeos curtos", "Finds and products in short videos", "Hallazgos y productos en videos cortos"],
-    "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
+    "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar, incluindo datas especiais", "Stores, malls and markets to visit, including special occasions", "Tiendas, centros comerciales y mercados para visitar, incluidas las fechas especiales"],
 
     /* ---- Formatos dos vídeos (campo "tipo" de cada vídeo no painel) ---- */
     "formato.unboxing": ["Unboxing", "Unboxing", "Unboxing"],
