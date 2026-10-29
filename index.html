@@ -426,16 +426,17 @@
   #depoimentos { padding: 100px 0; background: var(--branco); }
   #depoimentos[hidden] { display: none; }
   .depoimentos-palco { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; }
-  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 64px 0 4px; }
   .depoimentos-faixa::-webkit-scrollbar { display: none; }
   .depoimentos-seta { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); font-size: 1.1rem; display: grid; place-items: center; }
   .depoimentos-seta:hover { border-color: var(--cor-azul-forte); }
-  .dep-card { scroll-snap-align: start; background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; display: flex; flex-direction: column; gap: 14px; }
-  .dep-topo { display: flex; align-items: center; gap: 12px; }
-  .dep-logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #fff; border: 1px solid var(--borda); flex-shrink: 0; }
-  .dep-logo img { width: 100%; height: 100%; object-fit: cover; }
-  .dep-arroba { font-weight: 700; color: var(--cor-azul-forte); }
-  .dep-titulo { margin: 0; font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--texto); }
+  .dep-card { position: relative; scroll-snap-align: start; background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 66px 26px 26px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .dep-logo { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 0 0 8px rgba(255,255,255,.75), var(--sombra); display: flex; align-items: center; justify-content: center; }
+  .dep-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+  .dep-logo-letra { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: 2.6rem; color: var(--cor-azul-forte); }
+  .dep-arroba { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: 1.1rem; color: var(--cor-azul-forte); overflow-wrap: anywhere; }
+  .dep-estrelas { color: var(--cor-azul-forte); letter-spacing: .18em; font-size: .9rem; }
+  .dep-titulo { margin: 0; font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
   .dep-texto { margin: 0; font-size: .98rem; color: var(--texto-suave); }
   .dep-linha { border: 0; border-top: 1px solid var(--borda); margin: 4px 0 0; }
   .dep-resultado { margin: 0; font-family: 'Instrument Serif', serif; font-size: 1.7rem; line-height: 1.1; color: var(--cor-azul-forte); }
@@ -1334,31 +1335,44 @@
     const faixa = document.getElementById("depoimentos-faixa");
     dados.forEach(function (d) {
       const card = criarEl("article", "dep-card");
-      const topo = criarEl("div", "dep-topo");
+      // Círculo no topo do cartão: o logo da marca; sem logo, a inicial da marca; sem marca, aspas
+      const logo = criarEl("span", "dep-logo");
+      logo.setAttribute("aria-hidden", d.logo ? "false" : "true");
       if (d.logo) {
-        const logo = criarEl("span", "dep-logo");
         const img = document.createElement("img");
         img.src = d.logo;
         img.alt = "Logo " + (d.marca || "");
         img.loading = "lazy";
         img.decoding = "async";
         logo.appendChild(img);
-        topo.appendChild(logo);
+      } else {
+        logo.classList.add("dep-logo-letra");
+        logo.textContent = d.marca ? d.marca.trim().charAt(0).toUpperCase() : "“";
       }
+      card.appendChild(logo);
       if (d.instagram) {
         const a = criarEl("a", "dep-arroba");
         a.textContent = d.instagram;
         a.href = "https://instagram.com/" + d.instagram.replace("@", "");
         a.target = "_blank";
         a.rel = "noopener";
-        topo.appendChild(a);
+        card.appendChild(a);
       } else if (d.marca) {
         const nomeMarca = criarEl("span", "dep-arroba");
         nomeMarca.textContent = d.marca;
-        topo.appendChild(nomeMarca);
+        card.appendChild(nomeMarca);
       }
-      card.appendChild(topo);
-      if (d.titulo) { const h = criarEl("h3", "dep-titulo"); h.textContent = d.titulo; card.appendChild(h); }
+      // Estrelas só se a marca deu uma nota (campo "nota", de 1 a 5)
+      if (d.nota >= 1 && d.nota <= 5) {
+        const est = criarEl("span", "dep-estrelas");
+        est.textContent = "★".repeat(Math.round(d.nota));
+        est.setAttribute("role", "img");
+        est.setAttribute("aria-label", d.nota + " / 5");
+        card.appendChild(est);
+      }
+      // Linha pequena em caixa alta: o nicho do trabalho (traduzido sozinho) ou um "titulo" escrito à mão
+      if (d.nicho) { const h = criarEl("h3", "dep-titulo"); h.dataset.nicho = d.nicho; h.textContent = Nichos.nome(d.nicho); card.appendChild(h); }
+      else if (d.titulo) { const h = criarEl("h3", "dep-titulo"); h.textContent = d.titulo; card.appendChild(h); }
       const texto = criarEl("p", "dep-texto");
       texto.textContent = d.texto || "";
       card.appendChild(texto);
@@ -1374,6 +1388,9 @@
       const passo = primeiro ? primeiro.getBoundingClientRect().width + 20 : 300;
       faixa.scrollBy({ left: direcao * passo, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
     }
+    Idiomas.aoMudar(function () {
+      faixa.querySelectorAll(".dep-titulo[data-nicho]").forEach(function (h) { h.textContent = Nichos.nome(h.dataset.nicho); });
+    });
     document.getElementById("depoimentos-ant").addEventListener("click", function () { rolarDep(-1); });
     document.getElementById("depoimentos-prox").addEventListener("click", function () { rolarDep(1); });
     secao.hidden = false;
