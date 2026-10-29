@@ -60,16 +60,16 @@
       "Hola, soy <em>Pri Baron</em>"
     ],
     "sobre.p1": [
-      "Tenho <strong>25 anos</strong>, sou <strong>criadora UGC e influenciadora</strong>, já trabalhei com <strong>10 marcas</strong> no <strong>Brasil e Chile</strong>, transformando conteúdos de bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.",
-      "I'm <strong>25 years old</strong>, a <strong>UGC creator and influencer</strong>, and I've worked with <strong>10 brands</strong> in <strong>Brazil and Chile</strong>, turning wellness, sports, lifestyle and travel content into stories that sell naturally.",
-      "Tengo <strong>25 años</strong>, soy <strong>creadora UGC e influencer</strong>, he trabajado con <strong>10 marcas</strong> en <strong>Brasil y Chile</strong>, transformando contenido de bienestar, deporte, lifestyle y viajes en historias que venden de forma natural."
+      "Tenho <strong>25 anos</strong>, sou <strong>criadora UGC e influenciadora</strong>, já trabalhei com <strong>11 marcas</strong> no <strong>Brasil e Chile</strong>, transformando conteúdos de bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.",
+      "I'm <strong>25 years old</strong>, a <strong>UGC creator and influencer</strong>, and I've worked with <strong>11 brands</strong> in <strong>Brazil and Chile</strong>, turning wellness, sports, lifestyle and travel content into stories that sell naturally.",
+      "Tengo <strong>25 años</strong>, soy <strong>creadora UGC e influencer</strong>, he trabajado con <strong>11 marcas</strong> en <strong>Brasil y Chile</strong>, transformando contenido de bienestar, deporte, lifestyle y viajes en historias que venden de forma natural."
     ],
     "sobre.p2": [
       "Tenho uma comunicação <strong>leve, autêntica e estratégica</strong>, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam. Também produzo <strong>conteúdos em família</strong>, com passeios e momentos reais do dia a dia.",
       "I have a <strong>light, authentic and strategic</strong> way of communicating, I connect brands and people through real narratives that inspire and perform. I also create <strong>family content</strong>, with outings and real everyday moments.",
       "Tengo una comunicación <strong>ligera, auténtica y estratégica</strong>, conecto marcas y personas a través de narrativas reales que inspiran y rinden. También produzco <strong>contenido en familia</strong>, con paseos y momentos reales del día a día."
     ],
-    "sobre.pilula1": ["10 marcas parceiras", "10 partner brands", "10 marcas aliadas"],
+    "sobre.pilula1": ["11 marcas parceiras", "11 partner brands", "11 marcas aliadas"],
     "sobre.pilula2": ["Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
     "sobre.citacao": [
       "“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)",
