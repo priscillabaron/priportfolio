@@ -7,7 +7,7 @@
   // no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
   const lista = [
     "Casa & Decoração", "Beleza", "Tech & Apps", "Alimentação e Suplementação",
-    "Moda & Acessórios", "Viagem", "Passeios em Família", "Clips & TikTok Shop",
+    "Moda & Acessórios", "Viagens e Passeios", "Clips & TikTok Shop",
     "Gastronomia", "Lojas e Mercados", "Datas Especiais"
   ];
   const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];

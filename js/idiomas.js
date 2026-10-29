@@ -169,8 +169,7 @@
     "nicho.beleza.nome": ["Beleza", "Beauty", "Belleza"],
     "nicho.tech-e-apps.nome": ["Tech & Apps", "Tech & Apps", "Tech y Apps"],
     "nicho.alimentacao-e-suplementacao.nome": ["Alimentação Saudável e Suplementação", "Healthy Food & Supplements", "Alimentación Saludable y Suplementación"],
-    "nicho.viagem.nome": ["Viagem", "Travel", "Viajes"],
-    "nicho.passeios-em-familia.nome": ["Passeios em Família", "Family Outings", "Paseos en Familia"],
+    "nicho.viagens-e-passeios.nome": ["Viagens e Passeios", "Travel & Outings", "Viajes y Paseos"],
     "nicho.clips-e-tiktok-shop.nome": ["Clips & TikTok Shop", "Clips & TikTok Shop", "Clips y TikTok Shop"],
     "nicho.lojas-e-mercados.nome": ["Lojas e Mercados", "Stores & Markets", "Tiendas y Mercados"],
 
@@ -187,8 +186,7 @@
     "nicho.beleza.desc": ["Skincare, maquiagem e cuidados com o cabelo", "Skincare, makeup and hair care", "Skincare, maquillaje y cuidado del cabello"],
     "nicho.tech-e-apps.desc": ["Equipamentos, sites e aplicativos", "Gadgets, websites and apps", "Equipos, sitios web y aplicaciones"],
     "nicho.alimentacao-e-suplementacao.desc": ["Snacks, suplementos e comida do dia a dia", "Snacks, supplements and everyday food", "Snacks, suplementos y comida del día a día"],
-    "nicho.viagem.desc": ["Companhias aéreas, hospedagens e destinos pelo mundo", "Airlines, stays and destinations around the world", "Aerolíneas, alojamientos y destinos por el mundo"],
-    "nicho.passeios-em-familia.desc": ["Parques, atrações e programas para ir com a família", "Parks, attractions and outings for the whole family", "Parques, atracciones y planes para ir en familia"],
+    "nicho.viagens-e-passeios.desc": ["Conteúdos em família, hospedagem, companhias aéreas e passeios", "Family content, stays, airlines and outings", "Contenidos en familia, alojamiento, aerolíneas y paseos"],
     "nicho.clips-e-tiktok-shop.desc": ["Achadinhos e produtos em vídeos curtos", "Finds and products in short videos", "Hallazgos y productos en videos cortos"],
     "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
 
