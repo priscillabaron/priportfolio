@@ -1127,10 +1127,12 @@
 
   // Clips & TikTok Shop: seção própria "Outros formatos", fora da lista de nichos
   const CHAVE_CLIPS = chaveNicho("Clips & TikTok Shop");
+  const MOSTRAR_OUTROS_FORMATOS = false; // false = a seção "Outros formatos" fica escondida por enquanto (true para voltar)
   function renderizarOutrosFormatos(clips) {
     const secao = document.getElementById("outros-formatos");
     const area = document.getElementById("outros-videos");
     area.textContent = "";
+    if (!MOSTRAR_OUTROS_FORMATOS) { secao.hidden = true; return; }
     clips.forEach(function (v, k) { area.appendChild(montarCartaoNicho(v, k, false)); });
     secao.hidden = clips.length === 0;
   }
