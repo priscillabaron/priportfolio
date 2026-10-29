@@ -88,11 +88,6 @@
       "Scripted UGC videos for organic and ads. You approve the script before I film, and the delivery date is agreed in the briefing.",
       "Videos UGC con guion para orgánico y anuncios. Tú apruebas el guion antes de grabar, y el plazo de entrega se acuerda ya en el briefing."
     ],
-    "hero.prova": [
-      "<strong>{videos} vídeos</strong> | <strong>{marcas} marcas</strong> | <strong>Brasil e Chile</strong>",
-      "<strong>{videos} videos</strong> | <strong>{marcas} brands</strong> | <strong>Brazil and Chile</strong>",
-      "<strong>{videos} videos</strong> | <strong>{marcas} marcas</strong> | <strong>Brasil y Chile</strong>"
-    ],
     "hero.cta": ["Quero um vídeo UGC", "I want a UGC video", "Quiero un video UGC"],
     "hero.ver": ["Ver trabalhos →", "See my work →", "Ver trabajos →"],
     "hero.foto.alt": ["Retrato de Priscilla Baron sorrindo", "Portrait of Priscilla Baron smiling", "Retrato de Priscilla Baron sonriendo"],
