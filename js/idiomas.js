@@ -174,7 +174,7 @@
     "nicho.clips-e-tiktok-shop.nome": ["Clips & TikTok Shop", "Clips & TikTok Shop", "Clips y TikTok Shop"],
     "nicho.lojas-e-mercados.nome": ["Lojas e Mercados", "Stores & Markets", "Tiendas y Mercados"],
 
-    "nicho.casa-e-decoracao.desc": ["Ambientes, organização e achadinhos para a casa", "Rooms, organization and finds for the home", "Ambientes, organización y hallazgos para la casa"],
+    "nicho.casa-e-decoracao.desc": ["Limpeza, organização, utensílios e decoração para casa", "Cleaning, organization, utensils and home decor", "Limpieza, organización, utensilios y decoración para el hogar"],
     "nicho.gastronomia.desc": ["Restaurantes e cafeterias para comer, beber e voltar sempre", "Restaurants and cafés to eat, drink and come back to", "Restaurantes y cafeterías para comer, beber y volver siempre"],
     "nicho.saude-e-fitness.desc": ["Treino, bem-estar e rotina saudável", "Workouts, wellbeing and a healthy routine", "Entrenamiento, bienestar y rutina saludable"],
     "nicho.beleza-e-autocuidado.desc": ["Skincare, cabelo e momentos de cuidado", "Skincare, hair and self-care moments", "Skincare, cabello y momentos de cuidado personal"],
