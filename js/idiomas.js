@@ -292,7 +292,7 @@
     "processo.4.d": ["No prazo combinado no briefing, com 1 rodada de revisão.", "On the date agreed in the briefing, with 1 round of revisions.", "En el plazo acordado en el briefing, con 1 ronda de revisión."],
     "processo.4.d.prazo": ["Em {prazo}, com 1 rodada de revisão.", "Within {prazo}, with 1 round of revisions.", "En {prazo}, con 1 ronda de revisión."],
     "processo.5.t": ["Uso", "Usage", "Uso"],
-    "processo.5.d": ["Combinamos onde e por quanto tempo o vídeo vai rodar: orgânico, anúncio ou site.", "We agree on where and for how long the video will run: organic, ads or website.", "Acordamos dónde y por cuánto tiempo se usará el video: orgánico, anuncio o sitio web."],
+    "processo.5.d": ["Combinamos onde e por quanto tempo o vídeo vai rodar: anúncio ou site, caso aplicável.", "We agree on where and for how long the video will run: ads or website, if applicable.", "Acordamos dónde y por cuánto tiempo se usará el video: anuncio o sitio web, si aplica."],
     "processo.cta": ["Começar pelo briefing →", "Start with the briefing →", "Empezar por el briefing →"],
 
     /* ---- Depoimentos (seção escondida até haver depoimento real) ---- */
