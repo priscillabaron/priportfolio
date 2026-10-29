@@ -10,7 +10,8 @@
   const porJanela = new Map(); // janela do iframe -> player (para ouvir o que o YouTube responde)
   const MAX_IFRAMES = 14;    // quantos vídeos ficam carregados ao mesmo tempo
   const MAX_AQUECIDOS = 10;  // quantos vídeos da tela ficam preparados (pausados) para tocar na hora
-  const temMouse = window.matchMedia("(hover: hover) and (pointer: fine)");
+  // "any-hover": notebook com tela de toque também conta (o mouse é reconhecido pelo tipo do evento, mais abaixo)
+  const temMouse = window.matchMedia("(any-hover: hover)");
   const economiaDeDados = !!(navigator.connection && navigator.connection.saveData);
 
   // Prepara os vídeos que aparecem na tela, um de cada vez, para o play ser instantâneo ao passar o mouse.
@@ -96,12 +97,18 @@
     foto.loading = "lazy";
     foto.decoding = "async";
     foto.referrerPolicy = "no-referrer";
-    foto.addEventListener("error", function () {
-      if (foto.dataset.tentou) return;
-      foto.dataset.tentou = "1";
-      foto.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+    // capa na maior qualidade que existir: maxres, depois sd, depois hq
+    const tamanhos = ["maxresdefault", "sddefault", "hqdefault"];
+    let passo = 0;
+    function proximaCapa() {
+      if (passo >= tamanhos.length) return;
+      foto.src = "https://i.ytimg.com/vi/" + id + "/" + tamanhos[passo++] + ".jpg";
+    }
+    foto.addEventListener("error", proximaCapa);
+    foto.addEventListener("load", function () {
+      if (foto.naturalWidth > 0 && foto.naturalWidth < 300) proximaCapa(); // imagem reserva minúscula do YouTube
     });
-    foto.src = "https://i.ytimg.com/vi/" + id + "/sddefault.jpg";
+    proximaCapa();
     capa.insertBefore(foto, capa.firstChild);
 
     // camada transparente por cima: recebe o mouse e o toque (o vídeo não rouba a rolagem do carrossel)
@@ -297,8 +304,10 @@
       garantirIframe(true);
     }
 
-    toque.addEventListener("mouseenter", function () { if (temMouse.matches) tocarMudo(); });
-    toque.addEventListener("mouseleave", function () { if (temMouse.matches && !comSom) pausar(); });
+    // Só mouse (ou caneta) dispara o play ao passar; o dedo usa o clique. Pelo tipo do evento, não pelo aparelho.
+    function eMouse(e) { return e.pointerType === "mouse" || e.pointerType === "pen"; }
+    toque.addEventListener("pointerenter", function (e) { if (eMouse(e)) tocarMudo(); });
+    toque.addEventListener("pointerleave", function (e) { if (eMouse(e) && !comSom) pausar(); });
     function alternar(e) {
       if (!permitido()) return; // deixa o clique seguir (ex.: trazer o slide vizinho para o meio)
       e.preventDefault();
