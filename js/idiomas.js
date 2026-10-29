@@ -264,6 +264,19 @@
       "A mix of formats delivered every month, with a predictable calendar.",
       "Una combinación de formatos entregados cada mes, con calendario previsible."
     ],
+    "servico.7.titulo": ["Clips para marketplaces e TikTok Shop", "Clips for marketplaces and TikTok Shop", "Clips para marketplaces y TikTok Shop"],
+    "servico.7.desc": [
+      "Vídeos curtos e diretos para mostrar o produto em marketplaces e no TikTok Shop.",
+      "Short, direct videos to show your product on marketplaces and TikTok Shop.",
+      "Videos cortos y directos para mostrar tu producto en marketplaces y TikTok Shop."
+    ],
+    "servico.8.titulo": ["YouTube", "YouTube", "YouTube"],
+    "servico.8.desc": [
+      "Vídeos pensados para o YouTube, para orgânico ou anúncio.",
+      "Videos made for YouTube, for organic or ads.",
+      "Videos pensados para YouTube, para orgánico o anuncios."
+    ],
+    "servico.obs": ["Conferir disponibilidade e preços", "Check availability and pricing", "Consultar disponibilidad y precios"],
 
     /* ---- Processo ---- */
     "processo.eyebrow": ["Processo", "Process", "Proceso"],

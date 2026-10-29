@@ -413,11 +413,12 @@
   .servicos-texto h2 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.05; }
   .servicos-texto p { font-size: 1.05rem; max-width: 30em; }
   .servicos-texto p strong { color: var(--cor-azul-forte); }
-  .servicos-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-  .servico-card { background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; }
-  .servico-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-  .servico-card p { font-size: .92rem; margin: 0; }
-  .servico-pill { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .14em; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .servicos-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .servico-card { background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 18px 20px; }
+  .servico-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .servico-card p { font-size: .86rem; margin: 0; }
+  .servico-card p.servico-obs { font-size: .74rem; margin-top: 8px; color: var(--texto-suave); opacity: .85; }
+  .servico-pill { display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .14em; padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
   .servico-pill-vender { background: #dfe8ef; color: var(--cor-azul-forte); }
   .servico-pill-anunciar { background: #7A5068; color: #fff; }
   .servico-pill-marca { background: #F5E4DC; color: #7A5068; }
@@ -987,8 +988,10 @@
     { chave: "servico.1", objetivo: "vender" },
     { chave: "servico.2", objetivo: "vender" },
     { chave: "servico.3", objetivo: "vender" },
+    { chave: "servico.7", objetivo: "vender", obs: true },
     { chave: "servico.4", objetivo: "anunciar" },
-    { chave: "servico.5", objetivo: "marca" },
+    { chave: "servico.8", objetivo: "anunciar", obs: true },
+    { chave: "servico.5", objetivo: "marca", obs: true },
     { chave: "servico.6", objetivo: "marca" }
   ];
 
@@ -1303,6 +1306,7 @@
     card.appendChild(criarI18n("span", "servico-pill servico-pill-" + s.objetivo, "servico.obj." + s.objetivo));
     card.appendChild(criarI18n("h3", null, s.chave + ".titulo"));
     card.appendChild(criarI18n("p", null, s.chave + ".desc"));
+    if (s.obs) card.appendChild(criarI18n("p", "servico-obs", "servico.obs"));
     servicosGridEl.appendChild(card);
   });
 
