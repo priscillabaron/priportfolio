@@ -869,6 +869,10 @@
           <input type="email" id="campo-email" name="email" autocomplete="email" required placeholder="voce@marca.com" data-i18n-attr="placeholder:contato.email.ph">
         </div>
         <div class="campo">
+          <label for="campo-whatsapp" data-i18n="contato.whatsapp">WhatsApp</label>
+          <input type="tel" id="campo-whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="(11) 99999-9999" data-i18n-attr="placeholder:contato.whatsapp.ph">
+        </div>
+        <div class="campo">
           <label for="campo-marca" data-i18n="contato.marca">Marca / Empresa</label>
           <input type="text" id="campo-marca" name="marca" autocomplete="organization" required placeholder="Nome da marca" data-i18n-attr="placeholder:contato.marca.ph">
         </div>
@@ -1582,6 +1586,7 @@
 
     const nome = document.getElementById("campo-nome").value.trim();
     const email = document.getElementById("campo-email").value.trim();
+    const whatsapp = document.getElementById("campo-whatsapp").value.trim();
     const marca = document.getElementById("campo-marca").value.trim();
     const precisa = document.getElementById("campo-precisa").value;
     const prazo = document.getElementById("campo-prazo").value.trim();
@@ -1589,6 +1594,7 @@
 
     // A tabela leads_site tem nome, e-mail e mensagem; os campos novos vão no começo da mensagem (aparecem no painel).
     const linhas = ["Marca: " + marca];
+    if (whatsapp) linhas.push("WhatsApp: " + whatsapp);
     if (precisa) linhas.push("Precisa de: " + precisa);
     if (prazo) linhas.push("Para quando: " + prazo);
     if (texto) linhas.push("", texto);

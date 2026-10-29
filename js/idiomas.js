@@ -306,6 +306,8 @@
     "contato.email": ["E-mail", "Email", "Correo electrónico"],
     "contato.email.ph": ["voce@marca.com", "you@brand.com", "tu@marca.com"],
     "contato.marca": ["Marca / Empresa", "Brand / Company", "Marca / Empresa"],
+    "contato.whatsapp": ["WhatsApp", "WhatsApp", "WhatsApp"],
+    "contato.whatsapp.ph": ["(11) 99999-9999", "+55 11 99999-9999", "+55 11 99999-9999"],
     "contato.marca.ph": ["Nome da marca", "Brand name", "Nombre de la marca"],
     "contato.precisa": ["O que você precisa?", "What do you need?", "¿Qué necesitas?"],
     "contato.prazo": ["Para quando?", "By when?", "¿Para cuándo?"],
