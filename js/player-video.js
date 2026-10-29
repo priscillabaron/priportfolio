@@ -8,8 +8,26 @@
 
   const todos = [];          // todos os players da página
   const porJanela = new Map(); // janela do iframe -> player (para ouvir o que o YouTube responde)
-  const MAX_IFRAMES = 4;     // quantos vídeos ficam carregados ao mesmo tempo
+  const MAX_IFRAMES = 12;    // quantos vídeos ficam carregados ao mesmo tempo
+  const MAX_AQUECIDOS = 8;   // quantos vídeos da tela ficam preparados (pausados) para tocar na hora
   const temMouse = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const economiaDeDados = !!(navigator.connection && navigator.connection.saveData);
+
+  // Prepara os vídeos que aparecem na tela, um de cada vez, para o play ser instantâneo ao passar o mouse.
+  const filaAquecer = [];
+  let aquecendo = false;
+  function agendarAquecer(p) {
+    if (filaAquecer.indexOf(p) === -1) filaAquecer.push(p);
+    proximoAquecer();
+  }
+  function proximoAquecer() {
+    if (aquecendo) return;
+    const p = filaAquecer.shift();
+    if (!p) return;
+    aquecendo = true;
+    p.aquecer();
+    setTimeout(function () { aquecendo = false; proximoAquecer(); }, 350);
+  }
 
   function t(chave, padrao) {
     try { if (window.Idiomas && Idiomas.existe(chave)) return Idiomas.t(chave); } catch (e) { /* usa o padrão */ }
@@ -61,6 +79,9 @@
     let timerRevelar = null;
     let timerFalha = null;
     let recebeu = false;    // o YouTube já respondeu alguma coisa?
+    let criadoEm = 0;       // quando o player atual foi criado
+    let preparando = false; // player carregado só para ficar pronto (pausa sozinho no começo)
+    let preparado = false;  // já pausou no começo com o vídeo baixado: dá play na hora
 
     capa.classList.add("pv");
     capa.setAttribute("role", "button");
@@ -135,8 +156,12 @@
       }
     }
 
-    function garantirIframe() {
+    // aquecendo = true: carrega o player escondido e, assim que ele começa a rodar (sem som), pausa no início:
+    // o vídeo já fica baixado e é só dar play quando a pessoa passar o mouse
+    function garantirIframe(aquecendo) {
       if (iframe) return;
+      criadoEm = Date.now();
+      preparando = !!aquecendo;
       iframe = document.createElement("iframe");
       const origem = location.origin && location.origin !== "null" ? "&origin=" + encodeURIComponent(location.origin) : "";
       iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
@@ -168,6 +193,8 @@
       iframe = null;
       pronto = false;
       recebeu = false;
+      preparando = false;
+      preparado = false;
       fila = [];
       tocando = false;
       estadoAtual = -1;
@@ -213,18 +240,27 @@
     }
     function tocarMudo() {
       if (comSom || !permitido()) return;
-      garantirIframe();
+      garantirIframe(false);
       enviar("mute");
+      if (tempoAtual > 1) { enviar("seekTo", [0, true]); tempoAtual = 0; } // já tinha rodado: começa do início
       enviar("playVideo");
       tocando = true;
       garantirVisivel();
       vigiarInicio();
       atualizarSelo();
     }
-    // Parar = descarregar o player (o vídeo volta a ser só a capa). Pausar e retomar faria o YouTube
-    // mostrar por um instante os botões e o título dele.
+    // Pausar = o vídeo volta a ser só a capa, mas o player continua carregado (escondido) para tocar na hora de novo.
+    // O iframe é bem mais largo que o card, então o que o YouTube desenha em volta fica fora da vista.
     function pausar() {
-      descarregar();
+      if (!iframe) return;
+      tocando = false;
+      enviar("pauseVideo");
+      clearTimeout(timerRevelar);
+      timerRevelar = null;
+      clearTimeout(timerMostrar);
+      clearTimeout(timerFalha);
+      capa.classList.remove("tocando", "com-som", "sem-autoplay", "so-youtube");
+      atualizarSelo();
     }
     function ligarSom() {
       // só um vídeo com som por vez
@@ -232,7 +268,7 @@
       // se já estava rodando sem som (passou o mouse), o clique só liga o som e volta ao começo, sem recarregar nada
       const jaRodava = !!iframe && pronto;
       comSom = true;
-      garantirIframe();
+      garantirIframe(false);
       enviar("unMute");
       enviar("setVolume", [100]);
       if (jaRodava) { enviar("seekTo", [0, true]); tempoAtual = 0; }
@@ -245,7 +281,14 @@
     }
     function parar() {
       comSom = false;
+      enviar("mute");
       pausar();
+    }
+    function aquecer() {
+      if (iframe || !visivel || !permitido() || document.hidden) return;
+      const carregados = todos.filter(function (p) { return p.temIframe(); }).length;
+      if (carregados >= MAX_AQUECIDOS) return;
+      garantirIframe(true);
     }
 
     toque.addEventListener("mouseenter", function () { if (temMouse.matches) tocarMudo(); });
@@ -257,7 +300,7 @@
       if (capa.classList.contains("so-youtube")) { window.open(link, "_blank", "noopener"); return; }
       if (comSom) { parar(); return; }
       // só recria o player se ele nunca respondeu (travado); se está carregando, o clique só liga o som e não perde tempo
-      if (iframe && !recebeu) descarregar();
+      if (iframe && !recebeu && Date.now() - criadoEm > 4000) descarregar();
       ligarSom();
     }
     toque.addEventListener("click", alternar);
@@ -270,7 +313,13 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entradas) {
         visivel = entradas[0].isIntersecting;
-        if (!visivel && (comSom || tocando)) parar();
+        if (!visivel) {
+          // saiu da tela: para (ninguém fica ouvindo sem ver) e libera o player
+          comSom = false;
+          descarregar();
+        } else if (temMouse.matches && !economiaDeDados && !iframe) {
+          agendarAquecer(api);
+        }
       }, { threshold: 0.2 }).observe(capa);
     }
 
@@ -279,6 +328,7 @@
       estaComSom: function () { return comSom; },
       estaTocando: function () { return tocando; },
       temIframe: function () { return !!iframe; },
+      aquecer: aquecer,
       descarregar: descarregar,
       aoReceber: function (d) {
         recebeu = true;
@@ -289,6 +339,10 @@
           if (typeof d.info.duration === "number" && d.info.duration > 0) duracaoAtual = d.info.duration;
         } else if (d.event === "onStateChange" && typeof d.info === "number") {
           estadoAtual = d.info;
+        }
+        if (preparando && estadoAtual === 1) {
+          preparando = false;
+          if (!tocando) { enviar("pauseVideo"); enviar("seekTo", [0, true]); tempoAtual = 0; preparado = true; }
         }
         if (estadoAtual === 1 && !legendasDesligadas) {
           legendasDesligadas = true; // uma vez por vez que o vídeo começa
@@ -309,13 +363,13 @@
           }
         }
         // O vídeo só aparece por cima da capa quando já está rodando de verdade (sem quadro preto no começo).
-        if (tocando && estadoAtual === 1 && tempoAtual > 0.25) {
-          // só mostra depois de rodar estável por um instante
+        // Player já preparado (vídeo baixado e parado no começo) aparece quase na hora; o frio espera rodar estável.
+        if (tocando && estadoAtual === 1 && tempoAtual > (preparado ? 0 : 0.25)) {
           if (!timerRevelar && !capa.classList.contains("tocando")) {
             timerRevelar = setTimeout(function () {
               timerRevelar = null;
               if (tocando && estadoAtual === 1) { capa.classList.add("tocando"); capa.classList.remove("sem-autoplay"); atualizarSelo(); }
-            }, 700);
+            }, preparado ? 80 : 350);
           }
         } else if (estadoAtual !== 1 && estadoAtual !== -1) {
           clearTimeout(timerRevelar);

@@ -62,12 +62,13 @@
       capa.setAttribute("aria-label", Idiomas.t("destaques.assistir", { t: video.titulo }));
     }
 
-    const chips = document.createElement("div");
-    chips.className = "vitrine-chips";
-    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", Idiomas.t("nichos.emBreve")));
-    if (video.marca) chips.appendChild(criarTexto("span", "vitrine-chip", video.marca));
-    if (video.destaque) chips.appendChild(criarTexto("span", "vitrine-chip vitrine-chip-destaque", video.destaque));
-    capa.appendChild(chips);
+    // por cima do vídeo não vai nome de marca nem "destaque": o nome fica embaixo do card
+    if (emBreve) {
+      const chips = document.createElement("div");
+      chips.className = "vitrine-chips";
+      chips.appendChild(criarTexto("span", "vitrine-chip", Idiomas.t("nichos.emBreve")));
+      capa.appendChild(chips);
+    }
 
     if (emBreve) {
       capa.appendChild(criarTexto("span", "vitrine-marca-dagua", "p.b."));
