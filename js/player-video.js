@@ -8,8 +8,8 @@
 
   const todos = [];          // todos os players da página
   const porJanela = new Map(); // janela do iframe -> player (para ouvir o que o YouTube responde)
-  const MAX_IFRAMES = 12;    // quantos vídeos ficam carregados ao mesmo tempo
-  const MAX_AQUECIDOS = 8;   // quantos vídeos da tela ficam preparados (pausados) para tocar na hora
+  const MAX_IFRAMES = 14;    // quantos vídeos ficam carregados ao mesmo tempo
+  const MAX_AQUECIDOS = 10;  // quantos vídeos da tela ficam preparados (pausados) para tocar na hora
   const temMouse = window.matchMedia("(hover: hover) and (pointer: fine)");
   const economiaDeDados = !!(navigator.connection && navigator.connection.saveData);
 
@@ -26,7 +26,7 @@
     if (!p) return;
     aquecendo = true;
     p.aquecer();
-    setTimeout(function () { aquecendo = false; proximoAquecer(); }, 350);
+    setTimeout(function () { aquecendo = false; proximoAquecer(); }, 200);
   }
 
   function t(chave, padrao) {
@@ -376,14 +376,14 @@
         // Player já preparado (vídeo baixado e parado no começo) aparece quase na hora; o frio espera rodar estável.
         // Depois de um clique (comSom) também aparece rápido: a pessoa já está ouvindo e espera ver.
         const rapido = preparado || comSom;
-        if (tocando && estadoAtual === 1 && tempoAtual > (rapido ? 0 : 0.25)) {
+        if (tocando && estadoAtual === 1 && tempoAtual > (rapido ? 0 : 0.12)) {
           clearTimeout(timerEscurecer);
           timerEscurecer = null;
           if (!timerRevelar && !capa.classList.contains("tocando")) {
             timerRevelar = setTimeout(function () {
               timerRevelar = null;
               if (tocando && estadoAtual === 1) { capa.classList.add("tocando"); capa.classList.remove("sem-autoplay"); atualizarSelo(); }
-            }, rapido ? 80 : 350);
+            }, rapido ? 80 : 220);
           }
         } else if (estadoAtual !== 1 && estadoAtual !== -1) {
           clearTimeout(timerRevelar);
