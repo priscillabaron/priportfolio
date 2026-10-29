@@ -7,14 +7,14 @@
 <link rel="icon" type="image/svg+xml" href="imagens/marca/simbolo-pb.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="imagens/marca/favicon-32.png">
 <link rel="apple-touch-icon" href="imagens/marca/apple-touch-icon.png">
-<meta name="description" content="Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
+<meta name="description" content="Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar.">
 <link rel="canonical" href="https://priscillabaron.github.io/priportfolio/">
 <!-- Ao colar o link no WhatsApp, Instagram etc. -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Priscilla Baron">
 <meta property="og:title" content="Priscilla Baron | UGC Creator">
-<meta property="og:description" content="Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar e entrega em até 72h úteis.">
+<meta property="og:description" content="Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar.">
 <meta property="og:url" content="https://priscillabaron.github.io/priportfolio/">
 <meta property="og:image" content="https://priscillabaron.github.io/priportfolio/imagens/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -185,7 +185,8 @@
   .sobre-retrato img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .hero-retrato img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
   .hero-photo .foto-placeholder { background-image: url('imagens/textura-seda-azul.jpg'); background-size: cover; background-position: center; }
-  /* Balões sobre a foto (só fatos reais) */
+  /* Balões sobre a foto (trechos reais de depoimentos) */
+  .balao[hidden] { display: none; }
   .balao { position: absolute; z-index: 2; display: flex; align-items: center; gap: 10px; max-width: 250px; background: var(--branco); border-radius: 14px; padding: 11px 16px 11px 12px; box-shadow: var(--sombra-forte); animation: flutuar 5.5s ease-in-out infinite; }
   .balao strong { display: block; font-size: .84rem; line-height: 1.25; color: var(--texto); font-weight: 800; }
   .balao small { display: block; font-size: .74rem; color: var(--texto-suave); margin-top: 2px; }
@@ -195,7 +196,7 @@
   @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
   /* Faixa de números da capa: editorial, sem caixas, números em serifado itálico, barrinha rosa e linhas separando */
   .contadores { background: var(--gelo); padding: 8px 0 0; }
-  .hero-numbers { max-width: var(--container); margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .hero-numbers { max-width: var(--container); margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
   .numero-curto { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
   .numero-curto:first-child { border-left: 0; padding-left: 0; }
   .numero-curto .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3rem, 6vw, 5.2rem); line-height: 1; display: block; letter-spacing: -.01em; }
@@ -500,19 +501,20 @@
     .contato-grid { grid-template-columns: 1fr; gap: 40px; }
   }
   @media (max-width: 760px) {
-    .hero-numbers { grid-template-columns: repeat(2, 1fr); }
-    .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 20px 12px 20px 0; }
-    .numero-curto:nth-child(-n+2) { border-top: 0; padding-top: 0; }
-    .numero-curto .numero { font-size: clamp(2.6rem, 13vw, 3.6rem); }
+    .hero-numbers { grid-template-columns: repeat(3, 1fr); padding: 0 16px; }
+    .numero-curto { padding: 8px 10px; }
+    .numero-curto .numero { font-size: clamp(2rem, 10vw, 3rem); }
+    .numero-curto .numero::after { width: 36px; margin: 12px 0 12px; }
+    .numero-curto p { font-size: .82rem; }
     .campo-duplo { grid-template-columns: 1fr; }
     .form-contato { padding: 22px; }
     #servicos, #processo, #depoimentos { padding: 64px 0; }
     .rodape-inner { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 480px) {
-    .balao { padding: 8px 12px 8px 9px; max-width: 170px; gap: 8px; }
-    .balao small { display: none; }
-    .balao strong { font-size: .72rem; }
+    .balao { padding: 7px 11px 7px 8px; max-width: 150px; gap: 7px; }
+    .balao small { font-size: .62rem; }
+    .balao strong { font-size: .7rem; }
     .balao-check { width: 22px; height: 22px; font-size: .7rem; }
     .balao-1 { top: 14px; right: 2px; }
     .balao-2 { bottom: 20px; left: 2px; }
@@ -638,7 +640,7 @@
       <div class="hero-text reveal">
         <span class="hero-selo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F4156"/><path d="M7 12.5l3.2 3.2L17 8.9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="hero.selo">Priscilla Baron · UGC Creator · Agenda aberta</span></span>
         <h1 class="hero-h1" data-i18n-html="hero.h1">Seu produto,<br>na vida <em>real</em>.</h1>
-        <p class="hero-tagline" data-i18n="hero.tagline">Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar e recebe o vídeo em até 72h úteis.</p>
+        <p class="hero-tagline" data-i18n="hero.tagline">Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar, e o prazo de entrega é combinado já no briefing.</p>
         <p class="hero-prova" id="hero-prova" data-i18n-html="hero.prova" data-videos="26" data-marcas="11"><strong>26 vídeos</strong> | <strong>11 marcas</strong> | <strong>Brasil e Chile</strong></p>
         <div class="hero-buttons">
           <a href="#contato" class="btn btn-primary" data-i18n="hero.cta">Quero um vídeo UGC</a>
@@ -650,15 +652,9 @@
         <div class="foto-placeholder hero-retrato">
           <img src="imagens/capa-priscilla-900.jpg?v=2" srcset="imagens/capa-priscilla-600.jpg?v=2 600w, imagens/capa-priscilla-900.jpg?v=2 900w, imagens/capa-priscilla-1200.jpg?v=2 1200w" sizes="(min-width: 981px) 460px, 380px" width="900" height="1125" alt="Retrato de Priscilla Baron sorrindo" data-i18n-attr="alt:hero.foto.alt" fetchpriority="high">
         </div>
-        <!-- Balões com fatos reais (sem depoimento inventado) -->
-        <div class="balao balao-1" aria-hidden="false">
-          <span class="balao-check" aria-hidden="true">✓</span>
-          <span><strong data-i18n="hero.balao1.t">Roteiro aprovado antes de gravar</strong><small data-i18n="hero.balao1.s">Sem surpresa na entrega</small></span>
-        </div>
-        <div class="balao balao-2">
-          <span class="balao-check" aria-hidden="true">✓</span>
-          <span><strong data-i18n="hero.balao2.t">Entrega em até 72h úteis</strong><small>SHEIN · Vizzela · Lippi</small></span>
-        </div>
+        <!-- Balões: trechos literais de depoimentos reais (campo "balao" em js/depoimentos-dados.js). Ficam ocultos até haver um. -->
+        <div class="balao balao-1" id="balao-1" hidden></div>
+        <div class="balao balao-2" id="balao-2" hidden></div>
       </div>
     </div>
   </section>
@@ -706,7 +702,7 @@
         <p data-i18n-html="sobre.p2">Meu processo começa com uma pergunta: <strong>como o seu cliente usaria esse produto na vida real?</strong> Daí sai o roteiro, que você aprova antes de eu gravar, e o vídeo, pensado para <strong>orgânico ou anúncio</strong> e entregue em até <strong>72h úteis</strong>.</p>
         <div class="sobre-pilulas">
           <span class="sobre-pilula sobre-pilula-azul" data-i18n-html="sobre.pilula2">Brasil <span class="bandeira bandeira-br" role="img" aria-label="Brasil"></span> · Chile <span class="bandeira bandeira-cl" role="img" aria-label="Chile"></span></span>
-          <span class="sobre-pilula" data-i18n="sobre.pilula3">Entrega em 72h úteis</span>
+          <span class="sobre-pilula" data-i18n="sobre.pilula3">Roteiro aprovado antes de gravar</span>
         </div>
       </div>
     </div>
@@ -769,7 +765,7 @@
         <li><span class="processo-num">01</span><h3 data-i18n="processo.1.t">Briefing</h3><p data-i18n="processo.1.d">Entendo o produto, o público e o objetivo do vídeo: orgânico ou anúncio.</p></li>
         <li><span class="processo-num">02</span><h3 data-i18n="processo.2.t">Roteiro</h3><p data-i18n="processo.2.d">Envio gancho, falas e cenas para você aprovar antes de eu gravar.</p></li>
         <li><span class="processo-num">03</span><h3 data-i18n="processo.3.t">Gravação</h3><p data-i18n="processo.3.d">Captação vertical, com variações de gancho quando o vídeo for para anúncio.</p></li>
-        <li><span class="processo-num">04</span><h3 data-i18n="processo.4.t">Entrega</h3><p data-i18n="processo.4.d">Em até 72h úteis após a aprovação do roteiro, com 1 rodada de revisão.</p></li>
+        <li><span class="processo-num">04</span><h3 data-i18n="processo.4.t">Entrega</h3><p id="processo-entrega" data-i18n="processo.4.d">No prazo combinado no briefing, com 1 rodada de revisão.</p></li>
         <li><span class="processo-num">05</span><h3 data-i18n="processo.5.t">Uso</h3><p data-i18n="processo.5.d">Combinamos onde e por quanto tempo o vídeo vai rodar: orgânico, anúncio ou site.</p></li>
       </ol>
       <p class="processo-cta reveal"><a href="#contato" class="btn btn-primary" data-i18n="processo.cta">Começar pelo briefing →</a></p>
@@ -831,18 +827,15 @@
               <option value="Unboxing" data-i18n="contato.precisa.3">Unboxing</option>
               <option value="Fotos do produto" data-i18n="contato.precisa.4">Fotos do produto</option>
               <option value="Pacote mensal" data-i18n="contato.precisa.5">Pacote mensal</option>
+              <option value="Clips" data-i18n="contato.precisa.7">Clips</option>
+              <option value="TikTok" data-i18n="contato.precisa.8">TikTok</option>
+              <option value="Publicidade" data-i18n="contato.precisa.9">Publicidade</option>
               <option value="Ainda não sei" data-i18n="contato.precisa.6">Ainda não sei</option>
             </select>
           </div>
           <div class="campo">
             <label for="campo-prazo" data-i18n="contato.prazo">Para quando?</label>
-            <select id="campo-prazo" name="prazo">
-              <option value="" data-i18n="contato.selecione">Selecione</option>
-              <option value="Até 2 semanas" data-i18n="contato.prazo.1">Até 2 semanas</option>
-              <option value="Este mês" data-i18n="contato.prazo.2">Este mês</option>
-              <option value="Próximo mês" data-i18n="contato.prazo.3">Próximo mês</option>
-              <option value="Sem data definida" data-i18n="contato.prazo.4">Sem data definida</option>
-            </select>
+            <input type="text" id="campo-prazo" name="prazo" maxlength="80" autocomplete="off" placeholder="Ex.: até dia 15, este mês" data-i18n-attr="placeholder:contato.prazo.ph">
           </div>
         </div>
         <div class="campo">
@@ -890,6 +883,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/banco.js"></script>
 <script src="js/idiomas.js"></script>
+<script src="config/site.js"></script>
 <script src="config/barra-topo.js"></script>
 <script src="js/barra-topo.js"></script>
 <script src="js/depoimentos-dados.js"></script>
@@ -945,8 +939,7 @@
   const METRICAS_HERO = [
     { rotulo: "metrica.videos", valor: QTD_VIDEOS, textoPlaceholder: null },
     { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true }, // Brasil e Chile (o rótulo cita os dois, com as bandeiras)
-    { rotulo: "metrica.prazo", valor: "72h", textoPlaceholder: "72h" }
+    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true } // Brasil e Chile (o rótulo cita os dois, com as bandeiras)
   ];
 
   // Canais de contato
@@ -1284,6 +1277,49 @@
   let esperaFaixa = null;
   window.addEventListener("resize", function () { clearTimeout(esperaFaixa); esperaFaixa = setTimeout(montarFaixaServicos, 250); });
 
+  // Etapa 04 do Processo: só cita um prazo se config/site.js tiver "prazoEntrega" preenchido
+  (function prazoDaEntrega() {
+    const cfg = (window.SITE_CONFIG || {}).prazoEntrega;
+    const el = document.getElementById("processo-entrega");
+    if (!el || !cfg) return;
+    function aplicar() {
+      const prazo = typeof cfg === "string" ? cfg : (cfg[Idiomas.atual()] || cfg.pt || "");
+      if (!prazo) return;
+      el.dataset.i18n = "processo.4.d.prazo";
+      el.dataset.prazo = prazo;
+      el.textContent = Idiomas.t("processo.4.d.prazo", { prazo: prazo });
+    }
+    aplicar();
+    Idiomas.aoMudar(aplicar);
+  })();
+
+  // Balões da capa: trechos literais de depoimentos reais (campo "balao"). Sem trecho válido, o balão fica oculto.
+  (function montarBaloes() {
+    const norm = function (s) { return String(s || "").replace(/\s+/g, " ").trim(); };
+    const trechos = (window.DEPOIMENTOS_DADOS || []).filter(function (d) {
+      if (!d.balao) return false;
+      if (norm(d.texto).indexOf(norm(d.balao)) === -1) {
+        console.warn("Balão ignorado: o trecho precisa estar escrito igualzinho no texto do depoimento (" + (d.marca || "sem marca") + ").");
+        return false;
+      }
+      return true;
+    }).slice(0, 2);
+    trechos.forEach(function (d, i) {
+      const balao = document.getElementById("balao-" + (i + 1));
+      if (!balao) return;
+      const check = criarEl("span", "balao-check", "✓");
+      check.setAttribute("aria-hidden", "true");
+      const corpo = document.createElement("span");
+      const frase = document.createElement("strong");
+      frase.textContent = "“" + norm(d.balao) + "”";
+      corpo.appendChild(frase);
+      if (d.marca) { const m = document.createElement("small"); m.textContent = d.marca; corpo.appendChild(m); }
+      balao.appendChild(check);
+      balao.appendChild(corpo);
+      balao.hidden = false;
+    });
+  })();
+
   // Depoimentos: a seção só aparece quando há pelo menos um depoimento real em js/depoimentos-dados.js
   (function montarDepoimentos() {
     const dados = window.DEPOIMENTOS_DADOS || [];
@@ -1450,7 +1486,7 @@
     const email = document.getElementById("campo-email").value.trim();
     const marca = document.getElementById("campo-marca").value.trim();
     const precisa = document.getElementById("campo-precisa").value;
-    const prazo = document.getElementById("campo-prazo").value;
+    const prazo = document.getElementById("campo-prazo").value.trim();
     const texto = document.getElementById("campo-mensagem").value.trim();
 
     // A tabela leads_site tem nome, e-mail e mensagem; os campos novos vão no começo da mensagem (aparecem no painel).

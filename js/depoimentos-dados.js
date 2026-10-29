@@ -11,7 +11,10 @@
      titulo: "TÍTULO CURTO EM CAIXA ALTA",
      texto: "O texto do depoimento, exatamente como a marca escreveu.",
      resultado: "",   // opcional: um resultado em destaque (só se for real)
-     legenda: ""       // opcional: uma linha pequena explicando o resultado
+     legenda: "",      // opcional: uma linha pequena explicando o resultado
+     balao: ""         // opcional: um trecho de até cerca de 5 palavras, COPIADO IGUALZINHO do "texto" acima.
+                       // Aparece num balão flutuante na foto da capa (só os 2 primeiros depoimentos com "balao").
+                       // Se o trecho não estiver literalmente dentro do "texto", o balão não aparece.
    }
 */
 window.DEPOIMENTOS_DADOS = [

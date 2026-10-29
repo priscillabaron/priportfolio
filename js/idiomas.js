@@ -12,9 +12,9 @@
     /* ---- Página ---- */
     "meta.titulo": ["Priscilla Baron | UGC Creator", "Priscilla Baron | UGC Creator", "Priscilla Baron | UGC Creator"],
     "meta.descricao": [
-      "Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar e entrega em até 72h úteis.",
-      "Portfolio of Priscilla Baron, UGC Creator. UGC videos for home & decor, beauty, tech and lifestyle, with the script approved before filming and delivery within 72 business hours.",
-      "Portafolio de Priscilla Baron, UGC Creator. Videos UGC para casa y decoración, belleza, tecnología y lifestyle, con guion aprobado antes de grabar y entrega en hasta 72 h hábiles."
+      "Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar.",
+      "Portfolio of Priscilla Baron, UGC Creator. UGC videos for home & decor, beauty, tech and lifestyle, with the script approved before filming.",
+      "Portafolio de Priscilla Baron, UGC Creator. Videos UGC para casa y decoración, belleza, tecnología y lifestyle, con guion aprobado antes de grabar."
     ],
     "pular": ["Pular para o conteúdo", "Skip to content", "Ir al contenido"],
 
@@ -41,10 +41,10 @@
     "barra.msg.youtube": ["vídeo para YouTube", "video for YouTube", "video para YouTube"],
     "barra.msg.ads": ["vídeo para ads", "video for ads", "video para ads"],
     "barra.msg.criativos": ["criativos de {data} prontos antes do pico", "{data} creatives ready before the peak", "creativos de {data} listos antes del pico"],
-    "barra.msg.entrega": [
-      "entrega em até 72h úteis após a aprovação do roteiro",
-      "delivery within 72 business hours after script approval",
-      "entrega en hasta 72 h hábiles tras la aprobación del guion"
+    "barra.msg.roteiro": [
+      "roteiro aprovado por você antes de eu gravar",
+      "script approved by you before I film",
+      "guion aprobado por ti antes de grabar"
     ],
     "barra.mes.1": ["janeiro", "January", "enero"],
     "barra.mes.2": ["fevereiro", "February", "febrero"],
@@ -84,9 +84,9 @@
     "hero.selo": ["Priscilla Baron · UGC Creator · Agenda aberta", "Priscilla Baron · UGC Creator · Open schedule", "Priscilla Baron · UGC Creator · Agenda abierta"],
     "hero.h1": ["Seu produto,<br>na vida <em>real</em>.", "Your product,<br>in <em>real</em> life.", "Tu producto,<br>en la vida <em>real</em>."],
     "hero.tagline": [
-      "Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar e recebe o vídeo em até 72h úteis.",
-      "Scripted UGC videos for organic and ads. You approve the script before I film and get the video within 72 business hours.",
-      "Videos UGC con guion para orgánico y anuncios. Tú apruebas el guion antes de grabar y recibes el video en hasta 72 h hábiles."
+      "Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar, e o prazo de entrega é combinado já no briefing.",
+      "Scripted UGC videos for organic and ads. You approve the script before I film, and the delivery date is agreed in the briefing.",
+      "Videos UGC con guion para orgánico y anuncios. Tú apruebas el guion antes de grabar, y el plazo de entrega se acuerda ya en el briefing."
     ],
     "hero.prova": [
       "<strong>{videos} vídeos</strong> | <strong>{marcas} marcas</strong> | <strong>Brasil e Chile</strong>",
@@ -96,9 +96,6 @@
     "hero.cta": ["Quero um vídeo UGC", "I want a UGC video", "Quiero un video UGC"],
     "hero.ver": ["Ver trabalhos →", "See my work →", "Ver trabajos →"],
     "hero.foto.alt": ["Retrato de Priscilla Baron sorrindo", "Portrait of Priscilla Baron smiling", "Retrato de Priscilla Baron sonriendo"],
-    "hero.balao1.t": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
-    "hero.balao1.s": ["Sem surpresa na entrega", "No surprises at delivery", "Sin sorpresas en la entrega"],
-    "hero.balao2.t": ["Entrega em até 72h úteis", "Delivery within 72 business hours", "Entrega en hasta 72 h hábiles"],
     "hero.numeros.aria": ["Resumo em números", "Summary in numbers", "Resumen en números"],
     "faixa.1": ["VÍDEO UGC", "UGC VIDEO", "VIDEO UGC"],
     "faixa.2": ["CRIATIVOS PARA ANÚNCIO", "AD CREATIVES", "CREATIVOS PARA ANUNCIOS"],
@@ -129,7 +126,7 @@
       "Mi proceso empieza con una pregunta: <strong>¿cómo usaría tu cliente este producto en la vida real?</strong> De ahí sale el guion, que tú apruebas antes de grabar, y el video, pensado para <strong>orgánico o anuncio</strong> y entregado en hasta <strong>72 h hábiles</strong>."
     ],
     "sobre.pilula2": ["Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
-    "sobre.pilula3": ["Entrega em 72h úteis", "Delivery in 72 business hours", "Entrega en 72 h hábiles"],
+    "sobre.pilula3": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
     /* ---- Destaques ---- */
     "destaques.eyebrow": ["Portfólio", "Portfolio", "Portafolio"],
     "destaques.titulo": ["Trabalhos em <em>destaque</em>", "Featured <em>work</em>", "Trabajos <em>destacados</em>"],
@@ -278,7 +275,8 @@
     "processo.3.t": ["Gravação", "Filming", "Grabación"],
     "processo.3.d": ["Captação vertical, com variações de gancho quando o vídeo for para anúncio.", "Vertical filming, with hook variations when the video is for ads.", "Grabación vertical, con variaciones de gancho cuando el video es para anuncios."],
     "processo.4.t": ["Entrega", "Delivery", "Entrega"],
-    "processo.4.d": ["Em até 72h úteis após a aprovação do roteiro, com 1 rodada de revisão.", "Within 72 business hours after script approval, with 1 round of revisions.", "En hasta 72 h hábiles tras la aprobación del guion, con 1 ronda de revisión."],
+    "processo.4.d": ["No prazo combinado no briefing, com 1 rodada de revisão.", "On the date agreed in the briefing, with 1 round of revisions.", "En el plazo acordado en el briefing, con 1 ronda de revisión."],
+    "processo.4.d.prazo": ["Em {prazo}, com 1 rodada de revisão.", "Within {prazo}, with 1 round of revisions.", "En {prazo}, con 1 ronda de revisión."],
     "processo.5.t": ["Uso", "Usage", "Uso"],
     "processo.5.d": ["Combinamos onde e por quanto tempo o vídeo vai rodar: orgânico, anúncio ou site.", "We agree on where and for how long the video will run: organic, ads or website.", "Acordamos dónde y por cuánto tiempo se usará el video: orgánico, anuncio o sitio web."],
     "processo.cta": ["Começar pelo briefing →", "Start with the briefing →", "Empezar por el briefing →"],
@@ -292,7 +290,6 @@
     "metrica.videos": ["vídeos entregues", "videos delivered", "videos entregados"],
     "metrica.marcas": ["marcas atendidas", "brands served", "marcas atendidas"],
     "metrica.paises": ["países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> e Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "countries: Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brazil\"></span> and Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> y Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
-    "metrica.prazo": ["úteis para entrega", "business hours to deliver", "horas hábiles para la entrega"],
 
     /* ---- Contato ---- */
     "contato.eyebrow": ["Contato", "Contact", "Contacto"],
@@ -317,10 +314,10 @@
     "contato.precisa.4": ["Fotos do produto", "Product photos", "Fotos del producto"],
     "contato.precisa.5": ["Pacote mensal", "Monthly package", "Paquete mensual"],
     "contato.precisa.6": ["Ainda não sei", "I don't know yet", "Aún no lo sé"],
-    "contato.prazo.1": ["Até 2 semanas", "Within 2 weeks", "En hasta 2 semanas"],
-    "contato.prazo.2": ["Este mês", "This month", "Este mes"],
-    "contato.prazo.3": ["Próximo mês", "Next month", "Próximo mes"],
-    "contato.prazo.4": ["Sem data definida", "No set date", "Sin fecha definida"],
+    "contato.prazo.ph": ["Ex.: até dia 15, este mês", "E.g. by the 15th, this month", "Ej.: hasta el día 15, este mes"],
+    "contato.precisa.7": ["Clips", "Clips", "Clips"],
+    "contato.precisa.8": ["TikTok", "TikTok", "TikTok"],
+    "contato.precisa.9": ["Publicidade", "Advertising", "Publicidad"],
     "contato.mensagem": ["Conta sobre o projeto", "Tell me about the project", "Cuéntame sobre el proyecto"],
     "contato.mensagem.ph": [
       "Produto, onde o vídeo vai rodar (orgânico, anúncio, site) e qualquer referência que você goste…",

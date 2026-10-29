@@ -83,7 +83,7 @@
       Idiomas.t("barra.msg.ads", p, idioma)
     ];
     if (c.dentro) lista.push(Idiomas.t("barra.msg.criativos", p, idioma));
-    lista.push(Idiomas.t("barra.msg.entrega", p, idioma));
+    lista.push(Idiomas.t("barra.msg.roteiro", p, idioma));
     return lista;
   }
 
