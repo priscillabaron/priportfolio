@@ -231,6 +231,9 @@
   .sobre-titulo { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: clamp(2.3rem, 4.6vw, 3.6rem); line-height: 1.08; letter-spacing: -.01em; color: var(--cor-azul-forte); margin: 0 0 24px; }
   .sobre-titulo em { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; color: #7A5068; }
   .sobre-texto p strong { color: var(--cor-azul-forte); font-weight: 700; }
+  .sobre-citacao { margin: 26px 0 0; padding: 4px 0 4px 20px; border-left: 3px solid #E4566A; }
+  .sobre-texto .sobre-citacao p { margin: 0; font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-size: 1.12rem; line-height: 1.55; color: var(--cor-azul-forte); }
+  .sobre-citacao cite { display: block; margin-top: 10px; font-style: normal; font-weight: 700; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: #7A5068; }
   .sobre-pilulas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .sobre-pilula { display: inline-flex; align-items: center; gap: 4px; padding: 14px 24px; border-radius: 999px; background: #ececec; border: 1px solid #dcdcdc; color: var(--texto); font-weight: 600; font-size: .95rem; }
   .sobre-pilula-azul { background: #dfe8ef; border-color: #b9cad8; color: var(--cor-azul-forte); }
@@ -698,8 +701,12 @@
       <div class="sobre-texto reveal">
         <span class="eyebrow-linha" data-i18n="sobre.eyebrow">Sobre mim</span>
         <h2 class="sobre-titulo" data-i18n-html="sobre.titulo">Oie, sou a <em>Pri Baron</em></h2>
-        <p class="sobre-numeros" data-i18n-html="sobre.p1" data-videos="26" data-marcas="11">Sou UGC Creator e crio vídeos para marcas de <strong>casa e decoração, beleza, tecnologia e lifestyle</strong>. Já entreguei <strong>26 vídeos</strong> para <strong>11 marcas</strong> no <strong>Brasil e no Chile</strong>, entre elas <strong>SHEIN, Vizzela e Lippi</strong>.</p>
-        <p data-i18n-html="sobre.p2">Meu processo começa com uma pergunta: <strong>como o seu cliente usaria esse produto na vida real?</strong> Daí sai o roteiro, que você aprova antes de eu gravar, e o vídeo, pensado para <strong>orgânico ou anúncio</strong> e entregue em até <strong>72h úteis</strong>.</p>
+        <p data-i18n-html="sobre.p1">Criadora UGC e influenciadora que transforma <strong>bem-estar, esporte, lifestyle e viagens</strong> em histórias que vendem naturalmente.</p>
+        <p data-i18n-html="sobre.p2">Com uma comunicação leve, autêntica e estratégica, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam.</p>
+        <blockquote class="sobre-citacao">
+          <p>&ldquo;<span data-i18n="sobre.citacao">Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma.</span>&rdquo;</p>
+          <cite>Pri Baron</cite>
+        </blockquote>
         <div class="sobre-pilulas">
           <span class="sobre-pilula sobre-pilula-azul" data-i18n-html="sobre.pilula2">Brasil <span class="bandeira bandeira-br" role="img" aria-label="Brasil"></span> · Chile <span class="bandeira bandeira-cl" role="img" aria-label="Chile"></span></span>
           <span class="sobre-pilula" data-i18n="sobre.pilula3">Roteiro aprovado antes de gravar</span>

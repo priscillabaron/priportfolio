@@ -116,14 +116,19 @@
       "Hola, soy <em>Pri Baron</em>"
     ],
     "sobre.p1": [
-      "Sou UGC Creator e crio vídeos para marcas de <strong>casa e decoração, beleza, tecnologia e lifestyle</strong>. Já entreguei <strong>{videos} vídeos</strong> para <strong>{marcas} marcas</strong> no <strong>Brasil e no Chile</strong>, entre elas <strong>SHEIN, Vizzela e Lippi</strong>.",
-      "I'm a UGC Creator and I make videos for brands in <strong>home & decor, beauty, tech and lifestyle</strong>. I've delivered <strong>{videos} videos</strong> for <strong>{marcas} brands</strong> in <strong>Brazil and Chile</strong>, including <strong>SHEIN, Vizzela and Lippi</strong>.",
-      "Soy UGC Creator y hago videos para marcas de <strong>casa y decoración, belleza, tecnología y lifestyle</strong>. He entregado <strong>{videos} videos</strong> para <strong>{marcas} marcas</strong> en <strong>Brasil y Chile</strong>, entre ellas <strong>SHEIN, Vizzela y Lippi</strong>."
+      "Criadora UGC e influenciadora que transforma <strong>bem-estar, esporte, lifestyle e viagens</strong> em histórias que vendem naturalmente.",
+      "UGC creator and influencer who turns <strong>wellness, sports, lifestyle and travel</strong> into stories that sell naturally.",
+      "Creadora UGC e influencer que transforma <strong>bienestar, deporte, lifestyle y viajes</strong> en historias que venden de forma natural."
     ],
     "sobre.p2": [
-      "Meu processo começa com uma pergunta: <strong>como o seu cliente usaria esse produto na vida real?</strong> Daí sai o roteiro, que você aprova antes de eu gravar, e o vídeo, pensado para <strong>orgânico ou anúncio</strong> e entregue em até <strong>72h úteis</strong>.",
-      "My process starts with one question: <strong>how would your customer use this product in real life?</strong> That shapes the script, which you approve before I film, and the video, made for <strong>organic or ads</strong> and delivered within <strong>72 business hours</strong>.",
-      "Mi proceso empieza con una pregunta: <strong>¿cómo usaría tu cliente este producto en la vida real?</strong> De ahí sale el guion, que tú apruebas antes de grabar, y el video, pensado para <strong>orgánico o anuncio</strong> y entregado en hasta <strong>72 h hábiles</strong>."
+      "Com uma comunicação leve, autêntica e estratégica, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam.",
+      "With light, authentic and strategic communication, I connect brands and people through real stories that inspire and perform.",
+      "Con una comunicación ligera, auténtica y estratégica, conecto marcas y personas a través de narrativas reales que inspiran y rinden."
+    ],
+    "sobre.citacao": [
+      "Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma.",
+      "Every video I make is designed to deliver results, connection and brand memory, because good content doesn't just delight, it convinces and transforms.",
+      "Cada video que produzco está pensado para generar resultado, conexión y memoria de marca, porque un buen contenido no solo encanta, convence y transforma."
     ],
     "sobre.pilula2": ["Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
     "sobre.pilula3": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
