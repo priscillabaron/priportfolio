@@ -31,8 +31,7 @@ window.DEPOIMENTOS_DADOS = [
       pt: "Amei!!!! Muito feliz que gostaram! Obrigada pelo carinho no vídeo.",
       en: "Loved it!!!! So happy you liked it! Thank you for the love on the video.",
       es: "¡Me encantó!!!! ¡Muy feliz de que les gustara! Gracias por el cariño en el video."
-    },
-    balao: { pt: "Muito feliz que gostaram", en: "So happy you liked it", es: "Muy feliz de que les gustara" }
+    }
   },
   {
     marca: "RQ Stay",
@@ -44,8 +43,7 @@ window.DEPOIMENTOS_DADOS = [
       pt: "Queremos agradecer pelo excelente conteúdo que vocês criaram e por compartilhar a experiência de vocês com a comunidade. Temos certeza de que será de grande valor para quem está pensando em visitar o Chile.",
       en: "We want to thank you for the excellent content you created and for sharing your experience with your community. We are sure it will be of great value to anyone thinking of visiting Chile.",
       es: "Queremos agradecerles por el excelente contenido que han creado y por compartir su experiencia con su comunidad. Estamos seguros de que será de gran valor para quienes estén pensando en visitar Chile."
-    },
-    balao: { pt: "excelente conteúdo que vocês criaram", en: "excellent content you created", es: "excelente contenido que han creado" }
+    }
   },
   {
     marca: "Lippi",
@@ -57,7 +55,6 @@ window.DEPOIMENTOS_DADOS = [
       pt: "Muito bem feito! Gostei bastante, é um trabalho muito bom. Desejamos sucesso e esperamos fazer mais colaborações se vocês voltarem ao Chile.",
       en: "Very well done! I liked it a lot, it's a very good piece of work. We wish you success and hope to do more collaborations if you return to Chile.",
       es: "Muy bien hecho! Me gustó bastante, es un muy buen trabajo. Que tengan éxito y esperemos volver a hacer mas colaboraciones si regresan a Chile."
-    },
-    balao: { pt: "é um trabalho muito bom", en: "it's a very good piece of work", es: "es un muy buen trabajo" }
+    }
   }
 ];
