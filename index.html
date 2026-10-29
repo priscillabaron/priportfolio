@@ -430,6 +430,16 @@
   .processo-linha li { position: relative; padding: 0 22px 0 0; }
   .processo-linha li::before { content: ''; position: absolute; top: 22px; left: 62px; right: 12px; height: 1px; background: #cfd6df; }
   .processo-linha li:last-child::before { display: none; }
+  /* Animação: ao chegar na tela, cada etapa aparece em sequência e a linha vai se desenhando até a próxima (só roda uma vez) */
+  .processo-linha li { --d: 0s; }
+  .processo-linha li:nth-child(2) { --d: .55s; }
+  .processo-linha li:nth-child(3) { --d: 1.1s; }
+  .processo-linha li:nth-child(4) { --d: 1.65s; }
+  .processo-linha li:nth-child(5) { --d: 2.2s; }
+  .processo-linha li::before { transform: scaleX(0); transform-origin: left center; transition: transform .6s cubic-bezier(.4, .1, .2, 1) calc(var(--d) + .3s); }
+  .processo-linha .processo-num, .processo-linha h3, .processo-linha li p { opacity: 0; transform: translateY(10px); transition: opacity .6s ease var(--d), transform .6s ease var(--d); }
+  .processo-linha.visivel li::before { transform: scaleX(1); }
+  .processo-linha.visivel .processo-num, .processo-linha.visivel h3, .processo-linha.visivel li p { opacity: 1; transform: none; }
   .processo-num { display: block; font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2.6rem; line-height: 1; color: var(--cor-coral); margin-bottom: 14px; }
   .processo-linha h3 { font-size: 1.1rem; margin-bottom: 8px; }
   .processo-linha p { font-size: .92rem; margin: 0; }
@@ -525,7 +535,8 @@
     .servicos-texto .eyebrow-linha { justify-content: center; }
     .processo-linha { grid-template-columns: 1fr; gap: 28px; }
     .processo-linha li { padding: 0 0 0 66px; }
-    .processo-linha li::before { top: 52px; bottom: -22px; left: 22px; right: auto; width: 1px; height: auto; }
+    .processo-linha li::before { top: 52px; bottom: -22px; left: 22px; right: auto; width: 1px; height: auto; transform: scaleY(0); transform-origin: center top; }
+    .processo-linha.visivel li::before { transform: scaleY(1); }
     .processo-num { position: absolute; left: 0; top: 0; margin: 0; }
     .contato-grid { grid-template-columns: 1fr; gap: 40px; }
   }
@@ -564,6 +575,8 @@
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .marcas-track, .faixa-servicos-track, .balao { animation: none; }
+    .processo-linha li::before { transform: none; transition: none; }
+    .processo-linha .processo-num, .processo-linha h3, .processo-linha li p { opacity: 1; transform: none; transition: none; }
     * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 
