@@ -289,7 +289,7 @@
     /* ---- Contadores ---- */
     "metrica.videos": ["vídeos entregues", "videos delivered", "videos entregados"],
     "metrica.marcas": ["marcas atendidas", "brands served", "marcas atendidas"],
-    "metrica.paises": ["países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> e Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "countries: Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brazil\"></span> and Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> y Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
+    "metrica.paises": ["países trabalhados: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> e Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "countries worked in: Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brazil\"></span> and Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "países trabajados: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> y Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
 
     /* ---- Contato ---- */
     "contato.eyebrow": ["Contato", "Contact", "Contacto"],
