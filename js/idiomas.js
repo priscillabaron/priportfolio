@@ -121,7 +121,7 @@
     "nicho.restaurantes-e-cafeterias.nome": ["Restaurantes & Cafeterias", "Restaurants & Cafés", "Restaurantes y Cafeterías"],
     "nicho.beleza.nome": ["Beleza", "Beauty", "Belleza"],
     "nicho.tech-e-apps.nome": ["Tech & Apps", "Tech & Apps", "Tech y Apps"],
-    "nicho.alimentacao-e-suplementacao.nome": ["Alimentação e Suplementação", "Food & Supplements", "Alimentación y Suplementación"],
+    "nicho.alimentacao-e-suplementacao.nome": ["Alimentação Saudável e Suplementação", "Healthy Food & Supplements", "Alimentación Saludable y Suplementación"],
     "nicho.viagem.nome": ["Viagem", "Travel", "Viajes"],
     "nicho.passeios-em-familia.nome": ["Passeios em Família", "Family Outings", "Paseos en Familia"],
     "nicho.clips-e-tiktok-shop.nome": ["Clips & TikTok Shop", "Clips & TikTok Shop", "Clips y TikTok Shop"],

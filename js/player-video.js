@@ -225,13 +225,17 @@
     // mostrar por um instante os botões e o título dele.
     function pausar() {
       descarregar();
-    }    function ligarSom() {
+    }
+    function ligarSom() {
       // só um vídeo com som por vez
       todos.forEach(function (p) { if (p !== api && p.estaComSom()) p.parar(); });
+      // se já estava rodando sem som (passou o mouse), o clique só liga o som e volta ao começo, sem recarregar nada
+      const jaRodava = !!iframe && pronto;
       comSom = true;
       garantirIframe();
       enviar("unMute");
       enviar("setVolume", [100]);
+      if (jaRodava) { enviar("seekTo", [0, true]); tempoAtual = 0; }
       enviar("playVideo");
       tocando = true;
       garantirVisivel();
@@ -252,8 +256,8 @@
       e.stopPropagation();
       if (capa.classList.contains("so-youtube")) { window.open(link, "_blank", "noopener"); return; }
       if (comSom) { parar(); return; }
-      // se o player carregou mas não começou sozinho, cria de novo agora, dentro do clique (o clique libera a reprodução)
-      if (iframe && !capa.classList.contains("tocando")) descarregar();
+      // só recria o player se ele nunca respondeu (travado); se está carregando, o clique só liga o som e não perde tempo
+      if (iframe && !recebeu) descarregar();
       ligarSom();
     }
     toque.addEventListener("click", alternar);
