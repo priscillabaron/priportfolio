@@ -8,8 +8,8 @@
 
   const todos = [];          // todos os players da página
   const porJanela = new Map(); // janela do iframe -> player (para ouvir o que o YouTube responde)
-  const MAX_IFRAMES = 14;    // quantos vídeos ficam carregados ao mesmo tempo
-  const MAX_AQUECIDOS = 10;  // quantos vídeos da tela ficam preparados (pausados) para tocar na hora
+  const MAX_IFRAMES = 16;    // quantos vídeos ficam carregados ao mesmo tempo
+  const MAX_AQUECIDOS = 12;  // quantos vídeos (da tela e logo abaixo dela) ficam preparados para tocar na hora
   // "any-hover": notebook com tela de toque também conta (o mouse é reconhecido pelo tipo do evento, mais abaixo)
   const temMouse = window.matchMedia("(any-hover: hover)");
   const economiaDeDados = !!(navigator.connection && navigator.connection.saveData);
@@ -23,6 +23,8 @@
   }
   function proximoAquecer() {
     if (aquecendo) return;
+    // prepara primeiro o que está mais perto do meio da tela
+    filaAquecer.sort(function (a, b) { return a.distancia() - b.distancia(); });
     const p = filaAquecer.shift();
     if (!p) return;
     aquecendo = true;
@@ -72,6 +74,7 @@
     let comSom = false;
     let tocando = false;
     let visivel = true;
+    let perto = false;      // está na tela ou logo perto dela
     let estadoAtual = -1;   // último estado que o YouTube informou (1 = rodando, 3 = carregando, 2 = pausado)
     let tempoAtual = 0;     // quanto do vídeo já passou, em segundos
     let legendasDesligadas = false;
@@ -297,10 +300,24 @@
       enviar("mute");
       pausar();
     }
+    function distancia() {
+      const r = capa.getBoundingClientRect();
+      return Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+    }
     function aquecer() {
-      if (iframe || !visivel || !permitido() || document.hidden) return;
-      const carregados = todos.filter(function (p) { return p.temIframe(); }).length;
-      if (carregados >= MAX_AQUECIDOS) return;
+      if (iframe || !perto || !permitido() || document.hidden) return;
+      const carregados = todos.filter(function (p) { return p.temIframe(); });
+      if (carregados.length >= MAX_AQUECIDOS) {
+        // cheio: troca o preparado que está mais longe da tela por este, se este estiver mais perto
+        const meu = distancia();
+        let longe = null;
+        carregados.forEach(function (p) {
+          if (p.estaComSom() || p.estaTocando()) return;
+          if (!longe || p.distancia() > longe.distancia()) longe = p;
+        });
+        if (!longe || longe.distancia() <= meu) return;
+        longe.descarregar();
+      }
       garantirIframe(true);
     }
 
@@ -328,14 +345,23 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entradas) {
         visivel = entradas[0].isIntersecting;
-        if (!visivel) {
-          // saiu da tela: para (ninguém fica ouvindo sem ver) e libera o player
+        if (!visivel && (comSom || tocando)) {
+          // saiu da tela: para (ninguém fica ouvindo sem ver)
           comSom = false;
-          descarregar();
-        } else if (temMouse.matches && !economiaDeDados && !iframe) {
-          agendarAquecer(api);
+          pausar();
         }
       }, { threshold: 0.2 }).observe(capa);
+      // Prepara também o que está logo abaixo da tela (e um pouco dos lados), para já estar pronto quando a pessoa chegar lá.
+      new IntersectionObserver(function (entradas) {
+        perto = entradas[0].isIntersecting;
+        if (perto) {
+          if (temMouse.matches && !economiaDeDados && !iframe) agendarAquecer(api);
+        } else {
+          // ficou longe da tela: libera o player
+          comSom = false;
+          descarregar();
+        }
+      }, { rootMargin: "300px 300px 800px 300px" }).observe(capa);
     }
 
     const api = {
@@ -344,6 +370,8 @@
       estaTocando: function () { return tocando; },
       temIframe: function () { return !!iframe; },
       aquecer: aquecer,
+      distancia: distancia,
+      precisaAquecer: function () { return !iframe && perto && permitido() && !document.hidden; },
       descarregar: descarregar,
       aoReceber: function (d) {
         recebeu = true;
@@ -408,6 +436,13 @@
     };
     todos.push(api);
     return api;
+  }
+
+  // De tempos em tempos, prepara o que ficou para trás (ex.: a fila estava cheia quando chegou perto da tela).
+  if (temMouse.matches && !economiaDeDados) {
+    setInterval(function () {
+      todos.forEach(function (p) { if (p.precisaAquecer()) agendarAquecer(p); });
+    }, 1200);
   }
 
   function algumComSom() {
