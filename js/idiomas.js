@@ -91,6 +91,7 @@
     "hero.cta": ["Quero um vídeo UGC", "I want a UGC video", "Quiero un video UGC"],
     "hero.ver": ["Ver trabalhos →", "See my work →", "Ver trabajos →"],
     "hero.foto.alt": ["Retrato de Priscilla Baron sorrindo", "Portrait of Priscilla Baron smiling", "Retrato de Priscilla Baron sonriendo"],
+    "hero.balao.ola": ["Olá, que bom te ter por aqui!", "Hi, so glad you're here!", "¡Hola, qué bueno tenerte por aquí!"],
     "hero.numeros.aria": ["Resumo em números", "Summary in numbers", "Resumen en números"],
     "faixa.1": ["VÍDEO UGC", "UGC VIDEO", "VIDEO UGC"],
     "faixa.2": ["CRIATIVOS PARA ANÚNCIO", "AD CREATIVES", "CREATIVOS PARA ANUNCIOS"],

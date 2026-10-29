@@ -652,8 +652,11 @@
         <div class="foto-placeholder hero-retrato">
           <img src="imagens/capa-priscilla-900.jpg?v=2" srcset="imagens/capa-priscilla-600.jpg?v=2 600w, imagens/capa-priscilla-900.jpg?v=2 900w, imagens/capa-priscilla-1200.jpg?v=2 1200w" sizes="(min-width: 981px) 460px, 380px" width="900" height="1125" alt="Retrato de Priscilla Baron sorrindo" data-i18n-attr="alt:hero.foto.alt" fetchpriority="high">
         </div>
-        <!-- Balões: trechos literais de depoimentos reais (campo "balao" em js/depoimentos-dados.js). Ficam ocultos até haver um. -->
-        <div class="balao balao-1" id="balao-1" hidden></div>
+        <!-- Balão 1: saudação fixa. Balão 2: trecho literal de um depoimento real (campo "balao" em js/depoimentos-dados.js); fica oculto até haver um. -->
+        <div class="balao balao-1" id="balao-1">
+          <span class="balao-check" aria-hidden="true">✓</span>
+          <span><strong data-i18n="hero.balao.ola">Olá, que bom te ter por aqui!</strong></span>
+        </div>
         <div class="balao balao-2" id="balao-2" hidden></div>
       </div>
     </div>
@@ -1101,7 +1104,7 @@
     abas.className = "vitrine-abas";
     abas.setAttribute("aria-label", Idiomas.t("nichos.nav"));
     nichosDados.forEach(function (dado) {
-      const a = criarTexto("a", "vitrine-aba", nomeExibido(dado) + (dado.videos.length ? " (" + dado.videos.length + ")" : ""));
+      const a = criarTexto("a", "vitrine-aba", nomeExibido(dado));
       a.href = "#nicho-" + Nichos.slug(dado.nome);
       abas.appendChild(a);
     });
@@ -1134,7 +1137,6 @@
     identificacao.className = "vitrine-identificacao";
     identificacao.appendChild(criarTexto("span", "vitrine-numero", doisDigitos(indice + 1)));
     identificacao.appendChild(montarTituloNicho(nomeTela));
-    if (dado.videos.length) identificacao.appendChild(criarTexto("span", "vitrine-contagem", doisDigitos(dado.videos.length)));
     topo.appendChild(identificacao);
 
     const setas = document.createElement("div");
@@ -1307,9 +1309,9 @@
         return false;
       }
       return true;
-    }).slice(0, 2);
-    trechos.forEach(function (d, i) {
-      const balao = document.getElementById("balao-" + (i + 1));
+    }).slice(0, 1);
+    trechos.forEach(function (d) {
+      const balao = document.getElementById("balao-2");
       if (!balao) return;
       const check = criarEl("span", "balao-check", "✓");
       check.setAttribute("aria-hidden", "true");
