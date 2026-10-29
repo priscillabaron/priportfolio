@@ -196,35 +196,11 @@
       "Una combinación de formatos entregados cada mes, con calendario previsible."
     ],
 
-    /* ---- Números e depoimentos ---- */
-    "numeros.eyebrow": ["Prova", "Proof", "Prueba"],
-    "numeros.titulo": ["Números e <em>depoimentos</em>", "Numbers and <em>testimonials</em>", "Números y <em>testimonios</em>"],
-    "numeros.texto": [
-      "O que os números mostram e o que as marcas dizem sobre trabalhar comigo.",
-      "What the numbers show and what brands say about working with me.",
-      "Lo que muestran los números y lo que dicen las marcas sobre trabajar conmigo."
-    ],
+    /* ---- Contadores ---- */
     "metrica.videos": ["vídeos entregues", "videos delivered", "videos entregados"],
     "metrica.marcas": ["marcas atendidas", "brands served", "marcas atendidas"],
-    "metrica.views": ["views somadas", "combined views", "vistas acumuladas"],
     "metrica.paises": ["países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> e Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "countries: Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brazil\"></span> and Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "países: Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> y Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
-    "metrica.extra": ["TROQUE ESTE RÓTULO", "CHANGE THIS LABEL", "CAMBIA ESTA ETIQUETA"],
-    "numeros.resultados": ["Resultados de campanha", "Campaign results", "Resultados de campañas"],
-    "numeros.depoimentos": ["O que dizem sobre mim", "What people say about me", "Lo que dicen de mí"],
-    "resultado.marca": ["Marca {n}", "Brand {n}", "Marca {n}"],
-    "resultado.titulo": ["Resultado a definir", "Result to be defined", "Resultado por definir"],
-    "resultado.desc": [
-      "Descreva aqui o resultado real dessa campanha.",
-      "Describe the real result of this campaign here.",
-      "Describe aquí el resultado real de esta campaña."
-    ],
-    "depoimento.texto": [
-      "Escreva aqui o depoimento real desse cliente sobre o trabalho.",
-      "Write the client's real testimonial about the work here.",
-      "Escribe aquí el testimonio real de este cliente sobre el trabajo."
-    ],
-    "depoimento.nome": ["Cliente {n}", "Client {n}", "Cliente {n}"],
-    "depoimento.empresa": ["Empresa {n}", "Company {n}", "Empresa {n}"],
+    "metrica.prazo": ["úteis para entrega", "business hours to deliver", "horas hábiles para la entrega"],
 
     /* ---- Contato ---- */
     "contato.eyebrow": ["Contato", "Contact", "Contacto"],
@@ -244,14 +220,14 @@
     "contato.mensagem": ["Mensagem", "Message", "Mensaje"],
     "contato.enviar": ["Enviar mensagem", "Send message", "Enviar mensaje"],
     "contato.ok": [
-      "Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!",
+      "Mensagem enviada! Assim que eu vir, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!",
       "Message sent! As soon as I see it, I will reply by email or WhatsApp. Thank you for reaching out!",
       "¡Mensaje enviado! En cuanto lo vea, te respondo por correo o WhatsApp. ¡Gracias por escribirme!"
     ],
     "contato.erro": [
-      "Não consegui enviar agora. Tenta de novo em instantes ou me chama direto pelo WhatsApp.",
-      "I could not send it right now. Try again in a moment or message me directly on WhatsApp.",
-      "No pude enviarlo ahora. Inténtalo de nuevo en unos instantes o escríbeme directo por WhatsApp."
+      "Não consegui enviar agora. Me chama no WhatsApp: (11) 99697-5223.",
+      "I could not send it right now. Message me on WhatsApp: +55 (11) 99697-5223.",
+      "No pude enviarlo ahora. Escríbeme por WhatsApp: +55 (11) 99697-5223."
     ],
     "canal.email": ["E-mail", "Email", "Correo"],
 

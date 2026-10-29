@@ -152,7 +152,7 @@
     border: 1px solid var(--borda);
   }
   /* Faixa de números da capa: editorial, sem caixas, números em serifado itálico, barrinha rosa e linhas separando */
-  .hero-numbers { max-width: var(--container); margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .hero-numbers { max-width: var(--container); margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
   .numero-curto { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
   .numero-curto:first-child { border-left: 0; padding-left: 0; }
   .numero-curto .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3.4rem, 7vw, 6rem); line-height: 1; display: block; letter-spacing: -.01em; }
@@ -303,38 +303,9 @@
   .servico-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
   .servico-card p { font-size: .92rem; margin: 0; }
 
-  /* ===== NÚMEROS E DEPOIMENTOS ===== */
-  #numeros { padding: 100px 0; }
-  /* ===== NÚMEROS: faixa editorial, sem caixas, números no serifado ===== */
-  .metricas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 72px; align-items: stretch; }
-  .metrica-card { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
-  .metrica-card:first-child { border-left: 0; padding-left: 0; }
-  .metrica-card .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3.6rem, 8vw, 6.6rem); line-height: 1; display: block; letter-spacing: -.01em; }
-  .metrica-card:nth-child(1) .numero { color: #7A5068; }
-  .metrica-card:nth-child(2) .numero { color: #86A0C4; }
-  .metrica-card:nth-child(3) .numero { color: var(--cor-azul-forte); }
-  .metrica-card .numero::after { content: ''; display: block; width: 50px; height: 4px; border-radius: 2px; background: #E4566A; margin: 16px 0 18px; }
-  .metrica-card p { color: var(--texto-suave); margin: 0; font-size: clamp(.95rem, 1.5vw, 1.1rem); font-weight: 500; line-height: 1.4; }
   .bandeira { display: inline-block; width: 1.3em; height: .92em; border-radius: 2px; background-size: cover; background-position: center; vertical-align: -.14em; margin: 0 .1em; box-shadow: 0 0 0 1px rgba(0,0,0,.14); }
   .bandeira-br { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14'%3E%3Crect width='20' height='14' fill='%23009C3B'/%3E%3Cpath d='M10 1.3 18.4 7 10 12.7 1.6 7z' fill='%23FFDF00'/%3E%3Ccircle cx='10' cy='7' r='3.4' fill='%23002776'/%3E%3Cpath d='M6.8 7.7Q10 6.1 13.2 7.7' stroke='%23fff' stroke-width='.8' fill='none'/%3E%3C/svg%3E"); }
   .bandeira-cl { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Crect width='30' height='20' fill='%23fff'/%3E%3Crect y='10' width='30' height='10' fill='%23D52B1E'/%3E%3Crect width='10' height='10' fill='%230039A6'/%3E%3Cpolygon points='5,1.9 5.71,4.03 7.95,4.04 6.14,5.37 6.82,7.51 5,6.2 3.18,7.51 3.86,5.37 2.05,4.04 4.29,4.03' fill='%23fff'/%3E%3C/svg%3E"); }
-  @media (max-width: 760px) {
-    .metricas-grid { grid-template-columns: 1fr; margin-bottom: 56px; }
-    .metrica-card, .metrica-card:first-child { border-left: 0; padding: 22px 0; border-top: 1px solid #cfd6df; }
-    .metrica-card:first-child { border-top: 0; padding-top: 0; }
-  }
-  .subtitulo-bloco { font-weight: 800; font-size: 1.3rem; text-align: center; margin: 0 0 28px; }
-  .resultados-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 64px; }
-  .resultado-card { background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; box-shadow: var(--sombra); }
-  .resultado-marca { font-weight: 700; color: var(--cor-azul-forte); text-transform: uppercase; font-size: .78rem; letter-spacing: .06em; margin-bottom: 8px; }
-  .resultado-titulo { font-weight: 800; font-size: 1.15rem; margin-bottom: 6px; }
-  .resultado-desc { font-size: .9rem; margin: 0; }
-  .depoimentos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .depoimento-card { background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 22px; }
-  .depoimento-aspas { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2.4rem; color: var(--cor-coral); line-height: 1; display: block; margin-bottom: 6px; }
-  .depoimento-texto { font-size: .9rem; margin-bottom: 14px; }
-  .depoimento-autor { font-weight: 800; font-size: .9rem; color: var(--texto); }
-  .depoimento-empresa { font-size: .8rem; color: var(--texto-suave); }
 
   /* ===== CONTATO ===== */
   #contato { padding: 100px 0; background: var(--branco); }
@@ -417,8 +388,6 @@
     .destaques-texto { text-align: center; }
     .destaques-texto p { margin-left: auto; margin-right: auto; }
     .eyebrow-linha { justify-content: center; }
-    .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
-    .resultados-grid { grid-template-columns: 1fr; }
     .contato-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 1100px) {
@@ -459,14 +428,14 @@
     .hero-numbers { grid-template-columns: 1fr; }
     .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 22px 0; }
     .numero-curto:first-child { border-top: 0; padding-top: 0; }
-    .servicos-grid, .depoimentos-grid { grid-template-columns: 1fr; }
+    .servicos-grid { grid-template-columns: 1fr; }
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
     .hero { padding: 40px 0 28px; }
     .marcas-track span.tem-logo { width: 70px; height: 70px; }
     .marcas-legenda { letter-spacing: .16em; gap: 12px; }
     .marcas-legenda::before, .marcas-legenda::after { flex-basis: 28px; }
-    #sobre, #destaques, #trabalhos, #servicos, #numeros, #contato { padding: 64px 0; }
+    #sobre, #destaques, #trabalhos, #servicos, #contato { padding: 64px 0; }
   }
 </style>
 </head>
@@ -596,24 +565,9 @@
     </div>
   </section>
 
-  <!-- ===== 6. NÚMEROS E DEPOIMENTOS ===== -->
-  <section id="numeros">
-    <div class="container">
-      <div class="secao-titulo reveal">
-        <span class="eyebrow" data-i18n="numeros.eyebrow">Prova</span>
-        <h2 data-i18n-html="numeros.titulo">Números e <em>depoimentos</em></h2>
-        <p data-i18n="numeros.texto">O que os números mostram e o que as marcas dizem sobre trabalhar comigo.</p>
-      </div>
-
-      <div class="metricas-grid" id="metricas-grid"></div>
-
-      <h3 class="subtitulo-bloco reveal" data-i18n="numeros.resultados">Resultados de campanha</h3>
-      <div class="resultados-grid" id="resultados-grid"></div>
-
-      <h3 class="subtitulo-bloco reveal" data-i18n="numeros.depoimentos">O que dizem sobre mim</h3>
-      <div class="depoimentos-grid" id="depoimentos-grid"></div>
-    </div>
-  </section>
+  <!-- A antiga seção "Números e depoimentos" saiu: os contadores já aparecem uma vez só, logo abaixo da capa,
+       e os cards de resultado e depoimento eram só modelos sem texto real. REATIVAR quando houver depoimentos/resultados
+       reais (os depoimentos voltam pela seção #depoimentos, que aparece sozinha quando houver pelo menos um). -->
 
   <!-- ===== 7. VAMOS CONSTRUIR ISSO JUNTOS ===== -->
   <section id="contato">
@@ -739,27 +693,15 @@
     { numero: "06", chave: "servico.6" }
   ];
 
-  // Métricas com contador animado (seção 6). "marcas atendidas" é calculado
-  // automaticamente a partir da lista MARCAS acima — as demais são placeholders (XXX):
-  // troque pelo número real antes de publicar.
-  const METRICAS = [
-    { rotulo: "metrica.videos", valor: 26, textoPlaceholder: null },
-    { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true } // Brasil e Chile (o rótulo cita os dois, com as bandeiras)
-  ];
-
-  // Os mesmos três números resumidos, exibidos logo na capa
+  // Contadores animados (logo abaixo da capa, uma vez só). "marcas atendidas" vem sozinho da lista MARCAS acima.
+  // Só entram números reais. "fixo" mostra o valor direto, sem animação.
+  const QTD_VIDEOS = 26;
   const METRICAS_HERO = [
-    { rotulo: "metrica.videos", valor: 26, textoPlaceholder: null },
+    { rotulo: "metrica.videos", valor: QTD_VIDEOS, textoPlaceholder: null },
     { rotulo: "metrica.marcas", valor: MARCAS.length, textoPlaceholder: null },
-    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true }
+    { rotulo: "metrica.paises", valor: 2, textoPlaceholder: null, html: true }, // Brasil e Chile (o rótulo cita os dois, com as bandeiras)
+    { rotulo: "metrica.prazo", valor: "72h", textoPlaceholder: "72h" }
   ];
-
-  // Resultados de campanha (seção 6)
-  const RESULTADOS = [{ n: "01" }, { n: "02" }, { n: "03" }];
-
-  // Depoimentos (seção 6)
-  const DEPOIMENTOS = [{ n: "01" }, { n: "02" }, { n: "03" }, { n: "04" }];
 
   // Canais de contato
   const CONTATO = {
@@ -807,7 +749,8 @@
       span.textContent = placeholder;
     } else {
       span.dataset.count = String(valor);
-      span.textContent = "0";
+      // já nasce com o valor final: se a animação não rodar (JS falhou, movimento reduzido), o número certo continua lá
+      span.textContent = String(valor);
     }
     wrap.appendChild(span);
     wrap.appendChild(html ? criarI18nHtml("p", null, rotulo) : criarI18n("p", null, rotulo));
@@ -837,6 +780,7 @@
       img.width = 300;
       img.height = 300;
       img.decoding = "async";
+      img.loading = "lazy";
       span.appendChild(img);
     } else {
       span.textContent = marca.nome;
@@ -1052,43 +996,6 @@
     servicosGridEl.appendChild(card);
   });
 
-  // Métricas (seção números)
-  const metricasGridEl = document.getElementById("metricas-grid");
-  METRICAS.forEach(function (m) {
-    const card = criarEl("div", "metrica-card reveal");
-    const span = criarEl("span", "numero");
-    if (m.textoPlaceholder) {
-      span.textContent = m.textoPlaceholder;
-    } else {
-      span.dataset.count = String(m.valor);
-      span.textContent = "0";
-    }
-    card.appendChild(span);
-    card.appendChild(m.html ? criarI18nHtml("p", null, m.rotulo) : criarI18n("p", null, m.rotulo));
-    metricasGridEl.appendChild(card);
-  });
-
-  // Resultados de campanha
-  const resultadosGridEl = document.getElementById("resultados-grid");
-  RESULTADOS.forEach(function (r) {
-    const card = criarEl("div", "resultado-card reveal");
-    card.appendChild(criarI18n("span", "resultado-marca", "resultado.marca", { n: r.n }));
-    card.appendChild(criarI18n("p", "resultado-titulo", "resultado.titulo"));
-    card.appendChild(criarI18n("p", "resultado-desc", "resultado.desc"));
-    resultadosGridEl.appendChild(card);
-  });
-
-  // Depoimentos
-  const depoimentosGridEl = document.getElementById("depoimentos-grid");
-  DEPOIMENTOS.forEach(function (d) {
-    const card = criarEl("div", "depoimento-card reveal");
-    card.appendChild(criarEl("span", "depoimento-aspas", "“"));
-    card.appendChild(criarI18n("p", "depoimento-texto", "depoimento.texto"));
-    card.appendChild(criarI18n("p", "depoimento-autor", "depoimento.nome", { n: d.n }));
-    card.appendChild(criarI18n("p", "depoimento-empresa", "depoimento.empresa", { n: d.n }));
-    depoimentosGridEl.appendChild(card);
-  });
-
   // Canais de contato
   document.getElementById("canal-whatsapp").href = "https://wa.me/" + CONTATO.whatsappNumero;
   document.getElementById("canal-whatsapp").querySelector(".canal-sub").textContent = CONTATO.whatsappExibicao;
@@ -1285,6 +1192,9 @@
     if (primeiroCampo) primeiroCampo.focus();
   }
 
+  // REATIVAR quando o mídia kit estiver pronto: o card abria sozinho 7 segundos depois de a página carregar
+  // e cobria os vídeos. Para voltar, tire este comentário (e use abrirModalCaptura() onde fizer sentido).
+  /*
   try {
     if (!sessionStorage.getItem(CHAVE_SESSAO)) {
       setTimeout(function () {
@@ -1293,8 +1203,9 @@
       }, 7000);
     }
   } catch (erro) {
-    // sessionStorage indisponível (ex.: navegação privada) — o card simplesmente não é exibido
+    // sessionStorage indisponível (ex.: navegação privada): o card simplesmente não é exibido
   }
+  */
 
   // Idioma: preenche os textos e redesenha o que é montado por JavaScript quando a pessoa troca.
   Idiomas.aoMudar(function () {
