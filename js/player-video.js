@@ -9,7 +9,8 @@
   const todos = [];          // todos os players da página
   const porJanela = new Map(); // janela do iframe -> player (para ouvir o que o YouTube responde)
   const MAX_IFRAMES = 16;    // quantos vídeos ficam carregados ao mesmo tempo
-  const MAX_AQUECIDOS = 12;  // quantos vídeos (da tela e logo abaixo dela) ficam preparados para tocar na hora
+  // quantos vídeos (da tela e logo abaixo dela) ficam preparados para tocar na hora; computador com pouca memória prepara menos
+  const MAX_AQUECIDOS = (navigator.deviceMemory && navigator.deviceMemory <= 4) ? 4 : 10;
   // "any-hover": notebook com tela de toque também conta (o mouse é reconhecido pelo tipo do evento, mais abaixo)
   const temMouse = window.matchMedia("(any-hover: hover)");
   const economiaDeDados = !!(navigator.connection && navigator.connection.saveData);
