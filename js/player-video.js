@@ -77,6 +77,7 @@
     let duracaoAtual = 0;
     let reiniciando = false;
     let timerRevelar = null;
+    let timerEscurecer = null;
     let timerFalha = null;
     let recebeu = false;    // o YouTube já respondeu alguma coisa?
     let criadoEm = 0;       // quando o player atual foi criado
@@ -204,6 +205,8 @@
       legendasDesligadas = false;
       clearTimeout(timerRevelar);
       timerRevelar = null;
+      clearTimeout(timerEscurecer);
+      timerEscurecer = null;
       clearTimeout(timerMostrar);
       clearTimeout(timerFalha);
       capa.classList.remove("tocando", "com-som", "sem-autoplay", "so-youtube");
@@ -257,6 +260,8 @@
       enviar("pauseVideo");
       clearTimeout(timerRevelar);
       timerRevelar = null;
+      clearTimeout(timerEscurecer);
+      timerEscurecer = null;
       clearTimeout(timerMostrar);
       clearTimeout(timerFalha);
       capa.classList.remove("tocando", "com-som", "sem-autoplay", "so-youtube");
@@ -271,7 +276,8 @@
       garantirIframe(false);
       enviar("unMute");
       enviar("setVolume", [100]);
-      if (jaRodava) { enviar("seekTo", [0, true]); tempoAtual = 0; }
+      // volta ao começo só se já passou um pouco (se acabou de começar, já está no começo)
+      if (jaRodava && tempoAtual > 0.6) { enviar("seekTo", [0, true]); tempoAtual = 0; }
       enviar("playVideo");
       tocando = true;
       garantirVisivel();
@@ -335,7 +341,11 @@
         if (d.event === "onReady" || d.event === "initialDelivery" || d.event === "infoDelivery" || d.event === "onStateChange") liberarFila();
         if (d.info && typeof d.info === "object") {
           if (typeof d.info.playerState === "number") estadoAtual = d.info.playerState;
-          if (typeof d.info.currentTime === "number") tempoAtual = d.info.currentTime;
+          if (typeof d.info.currentTime === "number") {
+            // se o tempo está andando, o vídeo está rodando (mesmo que o aviso de estado tenha se perdido)
+            if (tocando && d.info.currentTime > tempoAtual + 0.1 && estadoAtual !== 1) estadoAtual = 1;
+            tempoAtual = d.info.currentTime;
+          }
           if (typeof d.info.duration === "number" && d.info.duration > 0) duracaoAtual = d.info.duration;
         } else if (d.event === "onStateChange" && typeof d.info === "number") {
           estadoAtual = d.info;
@@ -364,17 +374,26 @@
         }
         // O vídeo só aparece por cima da capa quando já está rodando de verdade (sem quadro preto no começo).
         // Player já preparado (vídeo baixado e parado no começo) aparece quase na hora; o frio espera rodar estável.
-        if (tocando && estadoAtual === 1 && tempoAtual > (preparado ? 0 : 0.25)) {
+        // Depois de um clique (comSom) também aparece rápido: a pessoa já está ouvindo e espera ver.
+        const rapido = preparado || comSom;
+        if (tocando && estadoAtual === 1 && tempoAtual > (rapido ? 0 : 0.25)) {
+          clearTimeout(timerEscurecer);
+          timerEscurecer = null;
           if (!timerRevelar && !capa.classList.contains("tocando")) {
             timerRevelar = setTimeout(function () {
               timerRevelar = null;
               if (tocando && estadoAtual === 1) { capa.classList.add("tocando"); capa.classList.remove("sem-autoplay"); atualizarSelo(); }
-            }, preparado ? 80 : 350);
+            }, rapido ? 80 : 350);
           }
         } else if (estadoAtual !== 1 && estadoAtual !== -1) {
           clearTimeout(timerRevelar);
           timerRevelar = null;
-          capa.classList.remove("tocando");
+          // carregando por um instante (ex.: voltou ao começo): mantém o vídeo na tela em vez de piscar a capa
+          if (estadoAtual === 3 && tocando && capa.classList.contains("tocando")) {
+            if (!timerEscurecer) timerEscurecer = setTimeout(function () { timerEscurecer = null; if (estadoAtual !== 1) capa.classList.remove("tocando"); }, 2500);
+          } else {
+            capa.classList.remove("tocando");
+          }
         }
       }
     };
