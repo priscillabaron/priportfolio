@@ -148,7 +148,9 @@
       "Cada linha é um nicho. Escolha o seu e deslize para ver mais.",
       "Each row is a niche. Pick yours and swipe to see more.",
       "Cada fila es un nicho. Elige el tuyo y desliza para ver más."
-    ],    "nichos.nav": ["Ir para um nicho", "Jump to a niche", "Ir a un nicho"],
+    ],    "outros.eyebrow": ["Outros formatos", "Other formats", "Otros formatos"],
+    "outros.titulo": ["Clips & <em>TikTok Shop</em>", "Clips & <em>TikTok Shop</em>", "Clips & <em>TikTok Shop</em>"],
+    "nichos.nav": ["Ir para um nicho", "Jump to a niche", "Ir a un nicho"],
     "nichos.regiao": ["Nicho: {n}", "Niche: {n}", "Nicho: {n}"],
     "nichos.faixa": ["Vídeos de {n}", "Videos in {n}", "Videos de {n}"],
     "nichos.anterior": ["Vídeos anteriores de {n}", "Previous videos in {n}", "Videos anteriores de {n}"],

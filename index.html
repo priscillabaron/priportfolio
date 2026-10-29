@@ -273,6 +273,14 @@
   .destaques-seta-ant { left: 0; }
   .destaques-seta-prox { right: 0; }
   .destaques-palco.sem-setas .destaques-seta { display: none; }
+  /* ===== OUTROS FORMATOS (Clips & TikTok Shop) ===== */
+  #outros-formatos { padding: 100px 0; background: var(--gelo); }
+  #outros-formatos[hidden] { display: none; }
+  .outros-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 56px; align-items: center; }
+  .outros-texto h2 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.05; }
+  .outros-texto p { font-size: 1.05rem; max-width: 30em; }
+  .outros-videos { display: grid; grid-template-columns: repeat(2, minmax(0, 240px)); gap: 20px; justify-content: center; }
+
   /* ===== TRABALHOS ===== */
   #trabalhos { padding: 100px 0; }
 
@@ -501,6 +509,10 @@
   @media (max-width: 980px) {
     .balao-1 { right: -6px; }
     .balao-2 { left: -6px; }
+    .outros-layout { grid-template-columns: 1fr; gap: 36px; }
+    .outros-texto { text-align: center; }
+    .outros-texto p { margin-left: auto; margin-right: auto; }
+    .outros-texto .eyebrow-linha { justify-content: center; }
     .servicos-layout { grid-template-columns: 1fr; gap: 36px; }
     .servicos-texto { position: static; text-align: center; }
     .servicos-texto p { margin-left: auto; margin-right: auto; }
@@ -759,6 +771,18 @@
         <p class="vitrine-intro" data-i18n="nichos.intro">Cada linha é um nicho. Escolha o seu e deslize para ver mais.</p>
       </header>
       <div id="nichos-lista"></div>
+    </div>
+  </section>
+
+  <!-- ===== OUTROS FORMATOS (Clips & TikTok Shop): os vídeos vêm do nicho "Clips & TikTok Shop" no painel; a seção some se não houver nenhum ===== -->
+  <section id="outros-formatos" hidden>
+    <div class="container outros-layout">
+      <div class="outros-texto reveal">
+        <span class="eyebrow-linha" data-i18n="outros.eyebrow">Outros formatos</span>
+        <h2 data-i18n-html="outros.titulo">Clips &amp; <em>TikTok Shop</em></h2>
+        <p data-i18n="nicho.clips-e-tiktok-shop.desc">Clips para marketplace</p>
+      </div>
+      <div class="outros-videos reveal" id="outros-videos"></div>
     </div>
   </section>
 
@@ -1096,7 +1120,19 @@
 
   function doisDigitos(n) { return String(n).padStart(2, "0"); }
 
-  function renderizarNichos(videos) {
+  // Clips & TikTok Shop: seção própria "Outros formatos", fora da lista de nichos
+  const CHAVE_CLIPS = chaveNicho("Clips & TikTok Shop");
+  function renderizarOutrosFormatos(clips) {
+    const secao = document.getElementById("outros-formatos");
+    const area = document.getElementById("outros-videos");
+    area.textContent = "";
+    clips.forEach(function (v, k) { area.appendChild(montarCartaoNicho(v, k, false)); });
+    secao.hidden = clips.length === 0;
+  }
+
+  function renderizarNichos(todosVideos) {
+    renderizarOutrosFormatos(todosVideos.filter(function (v) { return chaveNicho(v.nicho) === CHAVE_CLIPS; }));
+    const videos = todosVideos.filter(function (v) { return chaveNicho(v.nicho) !== CHAVE_CLIPS; });
     const porChave = {};
     videos.forEach(function (v) {
       const k = chaveNicho(v.nicho) || "outros";

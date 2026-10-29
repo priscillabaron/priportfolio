@@ -7,9 +7,9 @@
   // no campo "nicho" do painel (acento, maiúscula e "&" ou "e" não importam).
   const lista = [
     "Casa & Decoração", "Beleza", "Tech & Apps", "Alimentação e Suplementação",
-    "Moda & Acessórios", "Viagens e Passeios", "Gastronomia", "Lojas e Mercados",
-    "Clips & TikTok Shop"
+    "Moda & Acessórios", "Viagens e Passeios", "Gastronomia", "Lojas e Mercados"
   ];
+  // "Clips & TikTok Shop" não é um nicho da lista: aparece numa seção própria, "Outros formatos" (index.html).
   const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
   const MOSTRAR_MARCA_NO_CARD = true; // marca em cima e embaixo do vídeo (vem do campo "marca" de cada vídeo no painel)
 
