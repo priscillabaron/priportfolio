@@ -92,6 +92,7 @@
         s.capa.tabIndex = d === 0 ? 0 : -1;
         if (d !== 0 && s.player) s.player.parar(); // o que saiu do meio para de tocar
       });
+      if (window.PlayerVideo) PlayerVideo.reavaliar(); // no celular, o que entrou no meio começa a rodar sem som
     }
     function ir(novo) {
       atual = ((novo % total) + total) % total;
@@ -126,7 +127,8 @@
     function reiniciar() {
       if (timer) clearInterval(timer);
       timer = null;
-      if (prefereReduzir || emBreve || total < 2) return;
+      // no celular o vídeo do meio já roda sozinho: o carrossel só passa quando a pessoa desliza o dedo ou toca nas setas
+      if (prefereReduzir || emBreve || total < 2 || (window.PlayerVideo && PlayerVideo.autoNoToque)) return;
       timer = setInterval(function () {
         // não passa sozinho enquanto alguém está ouvindo um vídeo
         if (!pausado && visivel && !document.hidden && !(window.PlayerVideo && PlayerVideo.algumComSom())) ir(atual + 1);

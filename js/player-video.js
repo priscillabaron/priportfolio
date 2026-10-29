@@ -33,6 +33,26 @@
     setTimeout(function () { aquecendo = false; proximoAquecer(); }, 200);
   }
 
+  // No celular (sem mouse não existe "passar o mouse"), o vídeo que está no meio da tela roda sozinho, sem som, um por vez.
+  // Tocar nele liga o som, igual ao clique no computador. Respeita "economia de dados" e "menos movimento".
+  const autoNoToque = !temMouse.matches && !economiaDeDados && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let timerReavaliar = null;
+  function reavaliar() {
+    if (!autoNoToque) return;
+    clearTimeout(timerReavaliar);
+    timerReavaliar = setTimeout(function () {
+      if (document.hidden) return;
+      let escolhido = null;
+      todos.forEach(function (p) {
+        if (p.ratio() < 0.6 || !p.permitidoAgora()) return;
+        if (!escolhido || p.distancia2d() < escolhido.distancia2d()) escolhido = p;
+      });
+      todos.forEach(function (p) { if (p !== escolhido && p.estaTocando() && !p.estaComSom()) p.pausarMudo(); });
+      if (escolhido && !algumComSom() && !escolhido.estaTocando()) escolhido.tocarMudo();
+    }, 200);
+  }
+  document.addEventListener("visibilitychange", reavaliar);
+
   function t(chave, padrao) {
     try { if (window.Idiomas && Idiomas.existe(chave)) return Idiomas.t(chave); } catch (e) { /* usa o padrão */ }
     return padrao;
@@ -88,6 +108,7 @@
     let criadoEm = 0;       // quando o player atual foi criado
     let preparando = false; // player carregado só para ficar pronto (pausa sozinho no começo)
     let preparado = false;  // já pausou no começo com o vídeo baixado: dá play na hora
+    let ratioVisivel = 0;   // fração do vídeo que está na tela
 
     capa.classList.add("pv");
     capa.setAttribute("role", "button");
@@ -305,6 +326,10 @@
       const r = capa.getBoundingClientRect();
       return Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
     }
+    function distancia2d() {
+      const r = capa.getBoundingClientRect();
+      return Math.abs(r.top + r.height / 2 - window.innerHeight / 2) + Math.abs(r.left + r.width / 2 - window.innerWidth / 2);
+    }
     function aquecer() {
       if (iframe || !perto || !permitido() || document.hidden) return;
       const carregados = todos.filter(function (p) { return p.temIframe(); });
@@ -352,6 +377,13 @@
           pausar();
         }
       }, { threshold: 0.2 }).observe(capa);
+      // quanto do vídeo está na tela (só usado no celular, para escolher qual roda sozinho)
+      if (autoNoToque) {
+        new IntersectionObserver(function (entradas) {
+          ratioVisivel = entradas[0].intersectionRatio;
+          reavaliar();
+        }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] }).observe(capa);
+      }
       // Prepara também o que está logo abaixo da tela (e um pouco dos lados), para já estar pronto quando a pessoa chegar lá.
       new IntersectionObserver(function (entradas) {
         perto = entradas[0].isIntersecting;
@@ -372,6 +404,11 @@
       temIframe: function () { return !!iframe; },
       aquecer: aquecer,
       distancia: distancia,
+      distancia2d: distancia2d,
+      ratio: function () { return ratioVisivel; },
+      permitidoAgora: permitido,
+      tocarMudo: tocarMudo,
+      pausarMudo: function () { if (!comSom) pausar(); },
       precisaAquecer: function () { return !iframe && perto && permitido() && !document.hidden; },
       descarregar: descarregar,
       aoReceber: function (d) {
@@ -450,5 +487,5 @@
     return todos.some(function (p) { return p.estaComSom(); });
   }
 
-  window.PlayerVideo = { anexar: anexar, idDoVideo: idDoVideo, algumComSom: algumComSom };
+  window.PlayerVideo = { anexar: anexar, idDoVideo: idDoVideo, algumComSom: algumComSom, reavaliar: reavaliar, autoNoToque: autoNoToque };
 })();
