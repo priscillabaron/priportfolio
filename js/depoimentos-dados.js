@@ -12,7 +12,7 @@
      nicho: "Casa & Decoração",               // opcional: linha pequena em caixa alta (nome do nicho, traduzido sozinho)
      // "texto" (e "balao") podem ser uma frase só ou { pt: "...", en: "...", es: "..." }: cada idioma do site mostra o seu.
      texto: { pt: "O texto como a marca escreveu.", en: "The same text, translated.", es: "El mismo texto, traducido." },
-     nota: 5,          // opcional: estrelas de 1 a 5, SÓ se a marca deu uma nota
+     nota: 5,          // opcional: estrelas de 1 a 5. Para tirar as estrelas de um depoimento, apague esta linha.
      resultado: "",    // opcional: um resultado em destaque (só se for real)
      legenda: "",      // opcional: uma linha pequena explicando o resultado
      balao: ""         // opcional: um trecho de até cerca de 5 palavras, COPIADO IGUALZINHO do "texto" acima.
@@ -25,6 +25,7 @@ window.DEPOIMENTOS_DADOS = [
     marca: "Sweet Quarantine",
     logo: "logos/web/sweet-quarantine.png",
     nicho: "Gastronomia",
+    nota: 5,
     // Original em português; as versões em inglês e espanhol são traduções fiéis.
     texto: {
       pt: "Amei!!!! Muito feliz que gostaram! Obrigada pelo carinho no vídeo.",
@@ -37,6 +38,7 @@ window.DEPOIMENTOS_DADOS = [
     marca: "RQ Stay",
     logo: "logos/web/rq-stay.png",
     nicho: "Viagens e Passeios",
+    nota: 5,
     // Original em espanhol; as versões em português e inglês são traduções fiéis.
     texto: {
       pt: "Queremos agradecer pelo excelente conteúdo que vocês criaram e por compartilhar a experiência de vocês com a comunidade. Temos certeza de que será de grande valor para quem está pensando em visitar o Chile.",
@@ -49,6 +51,7 @@ window.DEPOIMENTOS_DADOS = [
     marca: "Lippi",
     logo: "logos/web/uppi.png",
     nicho: "Moda & Acessórios",
+    nota: 5,
     // Original em espanhol; as versões em português e inglês são traduções fiéis.
     texto: {
       pt: "Muito bem feito! Gostei bastante, é um trabalho muito bom. Desejamos sucesso e esperamos fazer mais colaborações se vocês voltarem ao Chile.",

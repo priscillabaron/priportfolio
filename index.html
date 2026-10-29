@@ -429,19 +429,22 @@
   .depoimentos-titulo h2 { font-size: clamp(2rem, 4.4vw, 3.3rem); line-height: 1.05; margin: 0; }
   .depoimentos-sub { max-width: 22em; margin: 0 0 6px; font-size: 1.05rem; color: var(--texto-suave); }
   .depoimentos-palco { position: relative; }
-  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 64px; scrollbar-width: none; padding: 64px 64px 4px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
+  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 1fr); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 64px; scrollbar-width: none; padding: 64px 64px 4px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
   .depoimentos-faixa::-webkit-scrollbar { display: none; }
   /* setas redondas por cima das pontas da faixa */
   .depoimentos-seta { position: absolute; top: calc(50% + 32px); transform: translateY(-50%); z-index: 2; width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); font-size: 1.3rem; display: grid; place-items: center; box-shadow: var(--sombra); }
   #depoimentos-ant { left: 0; }
   #depoimentos-prox { right: 0; }
+  /* até 3 depoimentos cabem na tela: sem setas e sem a borda esmaecida (as setas voltam sozinhas com 4 ou mais) */
+  .depoimentos-palco.sem-setas .depoimentos-seta { display: none; }
+  .depoimentos-palco.sem-setas .depoimentos-faixa { padding-left: 0; padding-right: 0; -webkit-mask-image: none; mask-image: none; }
   .depoimentos-seta:hover { border-color: var(--cor-azul-forte); }
   .dep-card { position: relative; scroll-snap-align: start; background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 66px 26px 26px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
   .dep-logo { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 0 0 8px rgba(255,255,255,.75), var(--sombra); display: flex; align-items: center; justify-content: center; }
   .dep-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
   .dep-logo-letra { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: 2.6rem; color: var(--cor-azul-forte); }
   .dep-arroba { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: 1.1rem; color: var(--cor-azul-forte); overflow-wrap: anywhere; }
-  .dep-estrelas { color: var(--cor-azul-forte); letter-spacing: .18em; font-size: .9rem; }
+  .dep-estrelas { color: var(--cor-azul-forte); letter-spacing: .22em; font-size: 1rem; line-height: 1; }
   .dep-titulo { margin: 0; font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
   .dep-texto { margin: 0; font-size: .98rem; color: var(--texto-suave); }
   .dep-linha { border: 0; border-top: 1px solid var(--borda); margin: 4px 0 0; }
@@ -1416,6 +1419,7 @@
       const passo = primeiro ? primeiro.getBoundingClientRect().width + 20 : 300;
       faixa.scrollBy({ left: direcao * passo, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
     }
+    faixa.parentElement.classList.toggle("sem-setas", dados.length <= 3);
     desenhar();
     Idiomas.aoMudar(desenhar);
     document.getElementById("depoimentos-ant").addEventListener("click", function () { rolarDep(-1); });
