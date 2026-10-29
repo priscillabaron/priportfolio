@@ -52,9 +52,9 @@ window.DEPOIMENTOS_DADOS = [
     nota: 5,
     // Original em espanhol; as versões em português e inglês são traduções fiéis.
     texto: {
-      pt: "Muito bem feito! Gostei bastante, é um trabalho muito bom. Desejamos sucesso e esperamos fazer mais colaborações se vocês voltarem ao Chile.",
-      en: "Very well done! I liked it a lot, it's a very good piece of work. We wish you success and hope to do more collaborations if you return to Chile.",
-      es: "Muy bien hecho! Me gustó bastante, es un muy buen trabajo. Que tengan éxito y esperemos volver a hacer mas colaboraciones si regresan a Chile."
+      pt: "Estamos muito felizes em ver que vocês gostaram dos produtos e que o conteúdo teve boa receptividade do público, parabéns por isso. Ficamos atentos para quando quiserem fazer mais coisas.",
+      en: "We are very happy to see that you liked the products and that the content was well received by the audience, congratulations on that. We look forward to whenever you want to do more.",
+      es: "Estamos muy contentos de ver que les gustaron los productos y que el contenido ha tenido buena acogida del público, felicitaciones por eso. Quedamos atentos para cuando quieran hacer mas cosas."
     }
   }
 ];
