@@ -10,11 +10,11 @@
 
   const LINHAS = {
     /* ---- Página ---- */
-    "meta.titulo": ["Priscilla Baron | Portfólio UGC Creator", "Priscilla Baron | UGC Creator Portfolio", "Priscilla Baron | Portafolio de UGC Creator"],
+    "meta.titulo": ["Priscilla Baron | UGC Creator", "Priscilla Baron | UGC Creator", "Priscilla Baron | UGC Creator"],
     "meta.descricao": [
-      "Portfólio de Priscilla Baron, UGC Creator: vídeos autênticos, cortes para anúncio e conteúdo de marca, com roteiro aprovado antes de gravar e entrega em até 72h úteis.",
-      "Portfolio of Priscilla Baron, UGC Creator: authentic videos, ad cuts and branded content, with the script approved before filming and delivery within 72 business hours.",
-      "Portafolio de Priscilla Baron, UGC Creator: videos auténticos, cortes para anuncios y contenido de marca, con guion aprobado antes de grabar y entrega en hasta 72 h hábiles."
+      "Portfólio de Priscilla Baron, UGC Creator. Vídeos UGC para casa e decoração, beleza, tecnologia e lifestyle, com roteiro aprovado antes de gravar e entrega em até 72h úteis.",
+      "Portfolio of Priscilla Baron, UGC Creator. UGC videos for home & decor, beauty, tech and lifestyle, with the script approved before filming and delivery within 72 business hours.",
+      "Portafolio de Priscilla Baron, UGC Creator. Videos UGC para casa y decoración, belleza, tecnología y lifestyle, con guion aprobado antes de grabar y entrega en hasta 72 h hábiles."
     ],
     "pular": ["Pular para o conteúdo", "Skip to content", "Ir al contenido"],
 
@@ -81,18 +81,34 @@
 
     /* ---- Capa ---- */
     "hero.aria": ["Apresentação", "Introduction", "Presentación"],
+    "hero.selo": ["Priscilla Baron · UGC Creator · Agenda aberta", "Priscilla Baron · UGC Creator · Open schedule", "Priscilla Baron · UGC Creator · Agenda abierta"],
+    "hero.h1": ["Seu produto,<br>na vida <em>real</em>.", "Your product,<br>in <em>real</em> life.", "Tu producto,<br>en la vida <em>real</em>."],
     "hero.tagline": [
-      "Crio vídeos autênticos que fazem a sua marca conversar de verdade com quem realmente compra, do roteiro à entrega.",
-      "I create authentic videos that help your brand truly connect with the people who actually buy, from script to delivery.",
-      "Creo videos auténticos que hacen que tu marca conecte de verdad con quienes realmente compran, del guion a la entrega."
+      "Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar e recebe o vídeo em até 72h úteis.",
+      "Scripted UGC videos for organic and ads. You approve the script before I film and get the video within 72 business hours.",
+      "Videos UGC con guion para orgánico y anuncios. Tú apruebas el guion antes de grabar y recibes el video en hasta 72 h hábiles."
     ],
-    "hero.falar": ["Falar comigo", "Talk to me", "Hablemos"],
-    "hero.ver": ["Ver os trabalhos", "See my work", "Ver mis trabajos"],
+    "hero.prova": [
+      "<strong>{videos} vídeos</strong> | <strong>{marcas} marcas</strong> | <strong>Brasil e Chile</strong>",
+      "<strong>{videos} videos</strong> | <strong>{marcas} brands</strong> | <strong>Brazil and Chile</strong>",
+      "<strong>{videos} videos</strong> | <strong>{marcas} marcas</strong> | <strong>Brasil y Chile</strong>"
+    ],
+    "hero.cta": ["Quero um vídeo UGC", "I want a UGC video", "Quiero un video UGC"],
+    "hero.ver": ["Ver trabalhos →", "See my work →", "Ver trabajos →"],
     "hero.foto.alt": ["Retrato de Priscilla Baron sorrindo", "Portrait of Priscilla Baron smiling", "Retrato de Priscilla Baron sonriendo"],
-    "hero.selo": ["sob consulta", "on request", "a consultar"],
+    "hero.balao1.t": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
+    "hero.balao1.s": ["Sem surpresa na entrega", "No surprises at delivery", "Sin sorpresas en la entrega"],
+    "hero.balao2.t": ["Entrega em até 72h úteis", "Delivery within 72 business hours", "Entrega en hasta 72 h hábiles"],
     "hero.numeros.aria": ["Resumo em números", "Summary in numbers", "Resumen en números"],
-    "marcas.aria": ["Marcas que já atendi", "Brands I have worked with", "Marcas con las que he trabajado"],
-    "marcas.legenda": ["Marcas que confiam no meu trabalho", "Brands that trust my work", "Marcas que confían en mi trabajo"],
+    "faixa.1": ["VÍDEO UGC", "UGC VIDEO", "VIDEO UGC"],
+    "faixa.2": ["CRIATIVOS PARA ANÚNCIO", "AD CREATIVES", "CREATIVOS PARA ANUNCIOS"],
+    "faixa.3": ["UNBOXING", "UNBOXING", "UNBOXING"],
+    "faixa.4": ["FOTOS DE PRODUTO", "PRODUCT PHOTOS", "FOTOS DE PRODUCTO"],
+    "faixa.5": ["ROTEIRO ESTRATÉGICO", "STRATEGIC SCRIPT", "GUION ESTRATÉGICO"],
+    "faixa.6": ["CONTEÚDO PARA E-COMMERCE", "E-COMMERCE CONTENT", "CONTENIDO PARA E-COMMERCE"],
+    "faixa.7": ["PACOTE MENSAL", "MONTHLY PACKAGE", "PAQUETE MENSUAL"],
+    "marcas.aria": ["Marcas com quem já trabalhei", "Brands I have worked with", "Marcas con las que he trabajado"],
+    "marcas.legenda": ["Marcas com quem já trabalhei", "Brands I have worked with", "Marcas con las que he trabajado"],
 
     /* ---- Sobre ---- */
     "sobre.foto.alt": ["Priscilla Baron na neve, de jaqueta lilás", "Priscilla Baron in the snow, wearing a lilac jacket", "Priscilla Baron en la nieve, con una chaqueta lila"],
@@ -103,47 +119,38 @@
       "Hola, soy <em>Pri Baron</em>"
     ],
     "sobre.p1": [
-      "Tenho <strong>25 anos</strong>, sou <strong>criadora UGC e influenciadora</strong>, já trabalhei com <strong>11 marcas</strong> no <strong>Brasil e Chile</strong>, transformando conteúdos de bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.",
-      "I'm <strong>25 years old</strong>, a <strong>UGC creator and influencer</strong>, and I've worked with <strong>11 brands</strong> in <strong>Brazil and Chile</strong>, turning wellness, sports, lifestyle and travel content into stories that sell naturally.",
-      "Tengo <strong>25 años</strong>, soy <strong>creadora UGC e influencer</strong>, he trabajado con <strong>11 marcas</strong> en <strong>Brasil y Chile</strong>, transformando contenido de bienestar, deporte, lifestyle y viajes en historias que venden de forma natural."
+      "Sou UGC Creator e crio vídeos para marcas de <strong>casa e decoração, beleza, tecnologia e lifestyle</strong>. Já entreguei <strong>{videos} vídeos</strong> para <strong>{marcas} marcas</strong> no <strong>Brasil e no Chile</strong>, entre elas <strong>SHEIN, Vizzela e Lippi</strong>.",
+      "I'm a UGC Creator and I make videos for brands in <strong>home & decor, beauty, tech and lifestyle</strong>. I've delivered <strong>{videos} videos</strong> for <strong>{marcas} brands</strong> in <strong>Brazil and Chile</strong>, including <strong>SHEIN, Vizzela and Lippi</strong>.",
+      "Soy UGC Creator y hago videos para marcas de <strong>casa y decoración, belleza, tecnología y lifestyle</strong>. He entregado <strong>{videos} videos</strong> para <strong>{marcas} marcas</strong> en <strong>Brasil y Chile</strong>, entre ellas <strong>SHEIN, Vizzela y Lippi</strong>."
     ],
     "sobre.p2": [
-      "Tenho uma comunicação <strong>leve, autêntica e estratégica</strong>, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam. Também produzo <strong>conteúdos em família</strong>, com passeios e momentos reais do dia a dia.",
-      "I have a <strong>light, authentic and strategic</strong> way of communicating, I connect brands and people through real narratives that inspire and perform. I also create <strong>family content</strong>, with outings and real everyday moments.",
-      "Tengo una comunicación <strong>ligera, auténtica y estratégica</strong>, conecto marcas y personas a través de narrativas reales que inspiran y rinden. También produzco <strong>contenido en familia</strong>, con paseos y momentos reales del día a día."
+      "Meu processo começa com uma pergunta: <strong>como o seu cliente usaria esse produto na vida real?</strong> Daí sai o roteiro, que você aprova antes de eu gravar, e o vídeo, pensado para <strong>orgânico ou anúncio</strong> e entregue em até <strong>72h úteis</strong>.",
+      "My process starts with one question: <strong>how would your customer use this product in real life?</strong> That shapes the script, which you approve before I film, and the video, made for <strong>organic or ads</strong> and delivered within <strong>72 business hours</strong>.",
+      "Mi proceso empieza con una pregunta: <strong>¿cómo usaría tu cliente este producto en la vida real?</strong> De ahí sale el guion, que tú apruebas antes de grabar, y el video, pensado para <strong>orgánico o anuncio</strong> y entregado en hasta <strong>72 h hábiles</strong>."
     ],
-    "sobre.pilula1": ["11 marcas parceiras", "11 partner brands", "11 marcas aliadas"],
     "sobre.pilula2": ["Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brazil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>", "Brasil <span class=\"bandeira bandeira-br\" role=\"img\" aria-label=\"Brasil\"></span> · Chile <span class=\"bandeira bandeira-cl\" role=\"img\" aria-label=\"Chile\"></span>"],
-    "sobre.citacao": [
-      "“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)",
-      "“Every video I produce is designed to generate results, connection and brand memory, because good content doesn't just delight, it convinces and transforms” (Pri Baron)",
-      "“Cada video que produzo está pensado para generar resultados, conexión y recuerdo de marca, porque el buen contenido no solo encanta, convence y transforma” (Pri Baron)"
-    ],    "sobre.promessa1": ["Roteiro aprovado antes de gravar", "Script approved before filming", "Guion aprobado antes de grabar"],
-    "sobre.promessa2": ["Uma rodada de ajuste inclusa", "One round of revisions included", "Una ronda de ajustes incluida"],
-    "sobre.promessa3": ["Entrega em até 72 horas úteis", "Delivery within 72 business hours", "Entrega en hasta 72 horas hábiles"],
-
+    "sobre.pilula3": ["Entrega em 72h úteis", "Delivery in 72 business hours", "Entrega en 72 h hábiles"],
     /* ---- Destaques ---- */
     "destaques.eyebrow": ["Portfólio", "Portfolio", "Portafolio"],
-    "destaques.titulo": ["Conteúdos de <em>destaque</em>", "Featured <em>content</em>", "Contenidos <em>destacados</em>"],
+    "destaques.titulo": ["Trabalhos em <em>destaque</em>", "Featured <em>work</em>", "Trabajos <em>destacados</em>"],
     "destaques.texto": [
-      "Os vídeos que mais representam o meu trabalho e os resultados que já entreguei.",
-      "The videos that best represent my work and the results I have delivered.",
-      "Los videos que mejor representan mi trabajo y los resultados que he entregado."
+      "Uma amostra dos formatos que eu mais entrego: unboxing, testemunho, demonstração e lifestyle. Cada vídeo foi roteirizado antes da gravação.",
+      "A sample of the formats I deliver most: unboxing, testimonial, demonstration and lifestyle. Every video was scripted before filming.",
+      "Una muestra de los formatos que más entrego: unboxing, testimonio, demostración y lifestyle. Cada video tuvo guion antes de grabarse."
     ],
-    "destaques.assistir": ["{t}, assistir vídeo", "{t}, watch video", "{t}, ver video"],
+    "destaques.cta": ["Quero um vídeo assim →", "I want a video like this →", "Quiero un video así →"],    "destaques.assistir": ["{t}, assistir vídeo", "{t}, watch video", "{t}, ver video"],
     "destaques.slide": ["Vídeo {i} de {n}", "Video {i} of {n}", "Video {i} de {n}"],
     "destaques.carrossel": ["Vídeos em destaque", "Featured videos", "Videos destacados"],
     "destaques.anterior": ["Vídeo anterior", "Previous video", "Video anterior"],
     "destaques.proximo": ["Próximo vídeo", "Next video", "Próximo video"],
     /* ---- Vitrine de nichos ---- */
-    "nichos.eyebrow": ["Vitrine", "Showcase", "Vitrina"],
-    "nichos.titulo": ["Meus <em>nichos</em>", "My <em>niches</em>", "Mis <em>nichos</em>"],
+    "nichos.eyebrow": ["Nichos", "Niches", "Nichos"],
+    "nichos.titulo": ["Qual é o nicho da <em>sua marca</em>?", "What is your <em>brand's</em> niche?", "¿Cuál es el nicho de <em>tu marca</em>?"],
     "nichos.intro": [
-      "Conteúdos que já criei, separados por nicho. Escolha um nicho nos botões ou role para ver todos. Use as setas ou arraste para ver mais.",
-      "Content I have created, organized by niche. Pick a niche with the buttons or scroll to see them all. Use the arrows or swipe to see more.",
-      "Contenido que ya he creado, separado por nicho. Elige un nicho en los botones o desplázate para verlos todos. Usa las flechas o desliza para ver más."
-    ],
-    "nichos.nav": ["Ir para um nicho", "Jump to a niche", "Ir a un nicho"],
+      "Cada linha é um nicho. Escolha o seu e deslize para ver mais.",
+      "Each row is a niche. Pick yours and swipe to see more.",
+      "Cada fila es un nicho. Elige el tuyo y desliza para ver más."
+    ],    "nichos.nav": ["Ir para um nicho", "Jump to a niche", "Ir a un nicho"],
     "nichos.regiao": ["Nicho: {n}", "Niche: {n}", "Nicho: {n}"],
     "nichos.faixa": ["Vídeos de {n}", "Videos in {n}", "Videos de {n}"],
     "nichos.anterior": ["Vídeos anteriores de {n}", "Previous videos in {n}", "Videos anteriores de {n}"],
@@ -188,6 +195,18 @@
     "nicho.clips-e-tiktok-shop.desc": ["Achadinhos e produtos em vídeos curtos", "Finds and products in short videos", "Hallazgos y productos en videos cortos"],
     "nicho.lojas-e-mercados.desc": ["Lojas, shoppings e mercados para visitar", "Stores, malls and markets to visit", "Tiendas, centros comerciales y mercados para visitar"],
 
+    /* ---- Formatos dos vídeos (campo "tipo" de cada vídeo no painel) ---- */
+    "formato.unboxing": ["Unboxing", "Unboxing", "Unboxing"],
+    "formato.testemunho": ["Testemunho", "Testimonial", "Testimonio"],
+    "formato.review": ["Review", "Review", "Reseña"],
+    "formato.demonstracao": ["Demonstração", "Demonstration", "Demostración"],
+    "formato.problema-solucao": ["Problema × Solução", "Problem × Solution", "Problema × Solución"],
+    "formato.tutorial": ["Tutorial", "Tutorial", "Tutorial"],
+    "formato.lifestyle": ["Lifestyle", "Lifestyle", "Lifestyle"],
+    "formato.viagem": ["Viagem", "Travel", "Viaje"],
+    "formato.trend": ["Trend", "Trend", "Trend"],
+    "formato.anuncio": ["Anúncio", "Ad", "Anuncio"],
+
     /* ---- Player dos vídeos ---- */
     "video.ouvir": ["Clique para ouvir", "Click to listen", "Haz clic para escuchar"],
     "video.assistir": ["Clique para assistir", "Click to watch", "Haz clic para ver"],
@@ -198,47 +217,77 @@
     "servicos.eyebrow": ["Serviços", "Services", "Servicios"],
     "servicos.titulo": ["Como eu te <em>ajudo</em>", "How I can <em>help</em>", "Cómo te <em>ayudo</em>"],
     "servicos.texto": [
-      "Formatos prontos pra encaixar na sua estratégia de conteúdo.",
-      "Ready-made formats to fit into your content strategy.",
-      "Formatos listos para encajar en tu estrategia de contenido."
+      "Cada formato resolve um objetivo: <strong>vender</strong>, <strong>anunciar</strong> ou <strong>fortalecer a marca</strong>. Me conta o seu e eu monto o pacote certo para você.",
+      "Each format serves a goal: <strong>selling</strong>, <strong>advertising</strong> or <strong>strengthening the brand</strong>. Tell me yours and I'll build the right package for you.",
+      "Cada formato resuelve un objetivo: <strong>vender</strong>, <strong>anunciar</strong> o <strong>fortalecer la marca</strong>. Cuéntame el tuyo y armo el paquete ideal para ti."
     ],
+    "servicos.cta": ["Montar meu pacote →", "Build my package →", "Armar mi paquete →"],
+    "servicos.nota": [
+      "Valores sob consulta, de acordo com a quantidade de vídeos, os formatos e os direitos de uso.",
+      "Prices on request, based on the number of videos, the formats and the usage rights.",
+      "Valores a consultar, según la cantidad de videos, los formatos y los derechos de uso."
+    ],
+    "servico.obj.vender": ["VENDER", "SELL", "VENDER"],
+    "servico.obj.anunciar": ["ANUNCIAR", "ADVERTISE", "ANUNCIAR"],
+    "servico.obj.marca": ["MARCA", "BRAND", "MARCA"],
     "servico.1.titulo": ["Vídeo UGC", "UGC video", "Video UGC"],
     "servico.1.desc": [
-      "Vídeo autêntico, roteirizado e gravado como um conteúdo real de rede social.",
-      "Authentic video, scripted and shot like real social media content.",
-      "Video auténtico, con guion y grabado como un contenido real de redes sociales."
+      "Vídeo roteirizado e gravado como conteúdo real de rede social, do jeito que o seu cliente usaria o produto.",
+      "A scripted video shot like real social media content, the way your customer would actually use the product.",
+      "Video con guion, grabado como contenido real de redes sociales, tal como tu cliente usaría el producto."
     ],
-    "servico.2.titulo": ["Corte para anúncio", "Ad cut", "Corte para anuncio"],
+    "servico.2.titulo": ["Unboxing", "Unboxing", "Unboxing"],
     "servico.2.desc": [
-      "Edição pensada para performance em tráfego pago, com gancho nos primeiros segundos.",
-      "Editing designed for paid-traffic performance, with a hook in the first seconds.",
-      "Edición pensada para el rendimiento en tráfico pago, con gancho en los primeros segundos."
-    ],
-    "servico.3.titulo": ["Fotos do produto", "Product photos", "Fotos del producto"],
-    "servico.3.desc": [
-      "Imagens estáticas com boa luz e composição para loja, anúncio ou site.",
-      "Still images with good light and composition for stores, ads or websites.",
-      "Imágenes estáticas con buena luz y composición para tienda, anuncio o sitio web."
-    ],
-    "servico.4.titulo": ["Unboxing", "Unboxing", "Unboxing"],
-    "servico.4.desc": [
       "Abertura e primeira impressão real do produto, do jeito que o público gosta de ver.",
       "Opening and real first impression of the product, the way audiences like to see it.",
       "Apertura y primera impresión real del producto, como le gusta ver al público."
     ],
+    "servico.3.titulo": ["Fotos do produto", "Product photos", "Fotos del producto"],
+    "servico.3.desc": [
+      "Imagens com boa luz e composição para loja, marketplace, anúncio ou site.",
+      "Images with good light and composition for your store, marketplace, ad or website.",
+      "Imágenes con buena luz y composición para tienda, marketplace, anuncio o sitio web."
+    ],
+    "servico.4.titulo": ["Criativos para anúncio", "Ad creatives", "Creativos para anuncio"],
+    "servico.4.desc": [
+      "Versões com ganchos diferentes para testar no Meta e no TikTok. Direitos de uso em mídia paga são orçados à parte, conforme período e canais.",
+      "Versions with different hooks to test on Meta and TikTok. Paid-media usage rights are quoted separately, based on period and channels.",
+      "Versiones con distintos ganchos para probar en Meta y TikTok. Los derechos de uso en medios pagos se cotizan aparte, según período y canales."
+    ],
     "servico.5.titulo": ["Publicação no meu perfil", "Post on my profile", "Publicación en mi perfil"],
     "servico.5.desc": [
-      "O conteúdo é publicado no meu Instagram, gerando alcance orgânico para a marca.",
-      "The content is posted on my Instagram, generating organic reach for the brand.",
-      "El contenido se publica en mi Instagram y genera alcance orgánico para la marca."
+      "Opcional: além do vídeo para a sua marca, publico no meu Instagram para gerar alcance orgânico.",
+      "Optional: besides the video for your brand, I post it on my Instagram to generate organic reach.",
+      "Opcional: además del video para tu marca, lo publico en mi Instagram para generar alcance orgánico."
     ],
     "servico.6.titulo": ["Pacote mensal", "Monthly package", "Paquete mensual"],
     "servico.6.desc": [
-      "Combinação de formatos entregues todo mês, com previsibilidade de calendário.",
+      "Combinação de formatos entregue todo mês, com previsibilidade de calendário.",
       "A mix of formats delivered every month, with a predictable calendar.",
       "Una combinación de formatos entregados cada mes, con calendario previsible."
     ],
 
+    /* ---- Processo ---- */
+    "processo.eyebrow": ["Processo", "Process", "Proceso"],
+    "processo.titulo": ["Como eu <em>trabalho</em>", "How I <em>work</em>", "Cómo <em>trabajo</em>"],
+    "processo.texto": ["Do briefing à entrega, você sabe exatamente o que esperar.", "From briefing to delivery, you know exactly what to expect.", "Del briefing a la entrega, sabes exactamente qué esperar."],
+    "processo.1.t": ["Briefing", "Briefing", "Briefing"],
+    "processo.1.d": ["Entendo o produto, o público e o objetivo do vídeo: orgânico ou anúncio.", "I get to know the product, the audience and the goal of the video: organic or ads.", "Entiendo el producto, el público y el objetivo del video: orgánico o anuncio."],
+    "processo.2.t": ["Roteiro", "Script", "Guion"],
+    "processo.2.d": ["Envio gancho, falas e cenas para você aprovar antes de eu gravar.", "I send the hook, lines and scenes for you to approve before I film.", "Envío gancho, diálogos y escenas para que apruebes antes de grabar."],
+    "processo.3.t": ["Gravação", "Filming", "Grabación"],
+    "processo.3.d": ["Captação vertical, com variações de gancho quando o vídeo for para anúncio.", "Vertical filming, with hook variations when the video is for ads.", "Grabación vertical, con variaciones de gancho cuando el video es para anuncios."],
+    "processo.4.t": ["Entrega", "Delivery", "Entrega"],
+    "processo.4.d": ["Em até 72h úteis após a aprovação do roteiro, com 1 rodada de revisão.", "Within 72 business hours after script approval, with 1 round of revisions.", "En hasta 72 h hábiles tras la aprobación del guion, con 1 ronda de revisión."],
+    "processo.5.t": ["Uso", "Usage", "Uso"],
+    "processo.5.d": ["Combinamos onde e por quanto tempo o vídeo vai rodar: orgânico, anúncio ou site.", "We agree on where and for how long the video will run: organic, ads or website.", "Acordamos dónde y por cuánto tiempo se usará el video: orgánico, anuncio o sitio web."],
+    "processo.cta": ["Começar pelo briefing →", "Start with the briefing →", "Empezar por el briefing →"],
+
+    /* ---- Depoimentos (seção escondida até haver depoimento real) ---- */
+    "depoimentos.eyebrow": ["Depoimentos", "Testimonials", "Testimonios"],
+    "depoimentos.titulo": ["O que dizem sobre o <em>trabalho</em>", "What they say about the <em>work</em>", "Lo que dicen del <em>trabajo</em>"],
+    "depoimentos.anterior": ["Depoimento anterior", "Previous testimonial", "Testimonio anterior"],
+    "depoimentos.proximo": ["Próximo depoimento", "Next testimonial", "Siguiente testimonio"],
     /* ---- Contadores ---- */
     "metrica.videos": ["vídeos entregues", "videos delivered", "videos entregados"],
     "metrica.marcas": ["marcas atendidas", "brands served", "marcas atendidas"],
@@ -249,19 +298,36 @@
     "contato.eyebrow": ["Contato", "Contact", "Contacto"],
     "contato.titulo": ["Vamos construir isso <em>juntos</em>?", "Shall we build this <em>together</em>?", "¿Construimos esto <em>juntos</em>?"],
     "contato.texto": [
-      "Quero entender a sua marca, sua ideia e transformar isso em um conteúdo real, com intenção e estratégia. Um conteúdo especial que faça sentido para você e para o seu público.",
-      "I want to understand your brand and your idea and turn them into real content, with intention and strategy. Special content that makes sense for you and for your audience.",
-      "Quiero entender tu marca, tu idea y convertirlas en un contenido real, con intención y estrategia. Un contenido especial que tenga sentido para ti y para tu público."
+      "Me conta sobre a sua marca e o que você quer alcançar. Respondo em até 48h.",
+      "Tell me about your brand and what you want to achieve. I reply within 48 hours.",
+      "Cuéntame sobre tu marca y lo que quieres lograr. Respondo en hasta 48 horas."
     ],
-    "contato.texto2": [
-      "Conta um pouco sobre sua marca e qual tipo de conteúdo você precisa. <strong>Respondo em até 48h.</strong>",
-      "Tell me a bit about your brand and what kind of content you need. <strong>I reply within 48 hours.</strong>",
-      "Cuéntame un poco sobre tu marca y qué tipo de contenido necesitas. <strong>Respondo en hasta 48 horas.</strong>"
-    ],
-    "contato.perfil": ["Conhecer o @entracomigo", "Visit @entracomigo", "Conocer @entracomigo"],    "contato.nome": ["Nome", "Name", "Nombre"],
+    "contato.nome": ["Nome", "Name", "Nombre"],
+    "contato.nome.ph": ["Seu nome", "Your name", "Tu nombre"],
     "contato.email": ["E-mail", "Email", "Correo electrónico"],
-    "contato.mensagem": ["Mensagem", "Message", "Mensaje"],
-    "contato.enviar": ["Enviar mensagem", "Send message", "Enviar mensaje"],
+    "contato.email.ph": ["voce@marca.com", "you@brand.com", "tu@marca.com"],
+    "contato.marca": ["Marca / Empresa", "Brand / Company", "Marca / Empresa"],
+    "contato.marca.ph": ["Nome da marca", "Brand name", "Nombre de la marca"],
+    "contato.precisa": ["O que você precisa?", "What do you need?", "¿Qué necesitas?"],
+    "contato.prazo": ["Para quando?", "By when?", "¿Para cuándo?"],
+    "contato.selecione": ["Selecione", "Select", "Selecciona"],
+    "contato.precisa.1": ["Vídeo UGC", "UGC video", "Video UGC"],
+    "contato.precisa.2": ["Criativos para anúncio", "Ad creatives", "Creativos para anuncio"],
+    "contato.precisa.3": ["Unboxing", "Unboxing", "Unboxing"],
+    "contato.precisa.4": ["Fotos do produto", "Product photos", "Fotos del producto"],
+    "contato.precisa.5": ["Pacote mensal", "Monthly package", "Paquete mensual"],
+    "contato.precisa.6": ["Ainda não sei", "I don't know yet", "Aún no lo sé"],
+    "contato.prazo.1": ["Até 2 semanas", "Within 2 weeks", "En hasta 2 semanas"],
+    "contato.prazo.2": ["Este mês", "This month", "Este mes"],
+    "contato.prazo.3": ["Próximo mês", "Next month", "Próximo mes"],
+    "contato.prazo.4": ["Sem data definida", "No set date", "Sin fecha definida"],
+    "contato.mensagem": ["Conta sobre o projeto", "Tell me about the project", "Cuéntame sobre el proyecto"],
+    "contato.mensagem.ph": [
+      "Produto, onde o vídeo vai rodar (orgânico, anúncio, site) e qualquer referência que você goste…",
+      "Product, where the video will run (organic, ads, website) and any references you like…",
+      "Producto, dónde se usará el video (orgánico, anuncio, sitio web) y cualquier referencia que te guste…"
+    ],
+    "contato.enviar": ["Enviar mensagem ↗", "Send message ↗", "Enviar mensaje ↗"],
     "contato.ok": [
       "Mensagem enviada! Assim que eu vir, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!",
       "Message sent! As soon as I see it, I will reply by email or WhatsApp. Thank you for reaching out!",
@@ -272,16 +338,14 @@
       "I could not send it right now. Message me on WhatsApp: +55 (11) 99697-5223.",
       "No pude enviarlo ahora. Escríbeme por WhatsApp: +55 (11) 99697-5223."
     ],
+    "contato.erro.link": ["Abrir o WhatsApp", "Open WhatsApp", "Abrir WhatsApp"],
+    "contato.wa": ["Oi, Pri! Vim pelo seu portfólio. Sou da marca {marca}.", "Hi, Pri! I came from your portfolio. I'm from the brand {marca}.", "¡Hola, Pri! Vengo de tu portafolio. Soy de la marca {marca}."],
+    "contato.wa.precisa": ["Preciso de: {v}.", "I need: {v}.", "Necesito: {v}."],
+    "contato.wa.prazo": ["Para quando: {v}.", "By when: {v}.", "Para cuándo: {v}."],
     "canal.email": ["E-mail", "Email", "Correo"],
 
     /* ---- Rodapé ---- */
-    "rodape.email": ["E-mail", "Email", "Correo"],
-    "rodape.copyright": [
-      "© {ano} Priscilla Baron. Todos os direitos reservados.",
-      "© {ano} Priscilla Baron. All rights reserved.",
-      "© {ano} Priscilla Baron. Todos los derechos reservados."
-    ],
-
+    "rodape.copy": ["© {ano}", "© {ano}", "© {ano}"],
     /* ---- Card de mídia kit ---- */
     "modal.fechar": ["Fechar", "Close", "Cerrar"],
     "modal.titulo": ["Quer meu mídia kit completo?", "Want my full media kit?", "¿Quieres mi media kit completo?"],

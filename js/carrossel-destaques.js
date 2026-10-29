@@ -49,8 +49,12 @@
       : null;
     slide.appendChild(capa);
 
-    if (item.destaque) slide.appendChild(el("p", "destaques-metrica", item.destaque));
-    if (item.titulo) slide.appendChild(el("p", "destaques-legenda", item.titulo));
+    // Abaixo do vídeo: o formato em negrito (campo "tipo"), o contexto (campo "contexto", ou o título) e, só se for real, a métrica.
+    // O campo "destaque" só marca que o vídeo entra aqui; o texto dele não aparece.
+    if (item.tipo && !emBreve) slide.appendChild(el("p", "destaques-tipo", window.Nichos ? Nichos.formato(item.tipo) : item.tipo));
+    const contexto = item.contexto || item.titulo;
+    if (contexto) slide.appendChild(el("p", "destaques-legenda", contexto));
+    if (item.metrica) slide.appendChild(el("p", "destaques-metrica", item.metrica));
     return { el: slide, capa: capa, player: player };
   }
 

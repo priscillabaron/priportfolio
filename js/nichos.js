@@ -11,6 +11,7 @@
     "Gastronomia", "Lojas e Mercados", "Datas Especiais"
   ];
   const FUNDOS_CARTAO =["#E8E1DA", "#E2E8EC", "#EEE4DE", "#E5E3E6"];
+  const MOSTRAR_MARCA_NO_CARD = true; // marca em cima e embaixo do vídeo (vem do campo "marca" de cada vídeo no painel)
 
   function chave(t) {
     return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
@@ -62,13 +63,14 @@
       capa.setAttribute("aria-label", Idiomas.t("destaques.assistir", { t: video.titulo }));
     }
 
-    // por cima do vídeo não vai nome de marca nem "destaque": o nome fica embaixo do card
-    if (emBreve) {
-      const chips = document.createElement("div");
-      chips.className = "vitrine-chips";
-      chips.appendChild(criarTexto("span", "vitrine-chip", Idiomas.t("nichos.emBreve")));
-      capa.appendChild(chips);
-    }
+    // No topo: tag branca com a marca e, só se houver um número real (campo "metrica"), uma segunda tag escura.
+    // Para tirar a marca de cima dos vídeos, troque MOSTRAR_MARCA_NO_CARD por false.
+    const chips = document.createElement("div");
+    chips.className = "vitrine-chips";
+    if (emBreve) chips.appendChild(criarTexto("span", "vitrine-chip", Idiomas.t("nichos.emBreve")));
+    if (!emBreve && MOSTRAR_MARCA_NO_CARD && video.marca) chips.appendChild(criarTexto("span", "vitrine-chip", video.marca));
+    if (!emBreve && video.metrica) chips.appendChild(criarTexto("span", "vitrine-chip vitrine-chip-destaque", video.metrica));
+    if (chips.children.length) capa.appendChild(chips);
 
     if (emBreve) {
       capa.appendChild(criarTexto("span", "vitrine-marca-dagua", "p.b."));
@@ -79,11 +81,12 @@
       play.setAttribute("aria-hidden", "true");
       capa.appendChild(play);
     }
-    // Só o nicho, pequeno, por cima do vídeo (embaixo). O nome da marca e do produto fica embaixo do card.
-    if (!emBreve && video.nicho) {
+    // Rodapé do card, sobre um degradê escuro: a marca em negrito e o formato em texto pequeno (o nicho já está no título da linha).
+    if (!emBreve && ((MOSTRAR_MARCA_NO_CARD && video.marca) || video.tipo)) {
       const info = document.createElement("div");
       info.className = "vitrine-info";
-      info.appendChild(criarTexto("span", "vitrine-info-nicho", nome(String(video.nicho).trim())));
+      if (MOSTRAR_MARCA_NO_CARD && video.marca) info.appendChild(criarTexto("span", "vitrine-info-marca", video.marca));
+      if (video.tipo) info.appendChild(criarTexto("span", "vitrine-info-tipo", formato(video.tipo)));
       capa.appendChild(info);
     }
     if (rodaAqui) PlayerVideo.anexar(capa, video.link, { titulo: video.titulo });
@@ -106,6 +109,11 @@
     const k = "nicho." + slug(nomePt) + ".desc";
     return Idiomas.existe(k) ? Idiomas.t(k) : "";
   }
+  // Formato do vídeo (Unboxing, Testemunho...) no idioma atual; se não tiver tradução, aparece como foi escrito no painel.
+  function formato(nomePt) {
+    const k = "formato." + slug(nomePt);
+    return Idiomas.existe(k) ? Idiomas.t(k) : nomePt;
+  }
 
-  window.Nichos = { lista: lista, chave: chave, slug: slug, descricao: descricao, nome: nome, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
+  window.Nichos = { lista: lista, chave: chave, slug: slug, descricao: descricao, nome: nome, formato: formato, criarTexto: criarTexto, montarTitulo: montarTitulo, montarCartao: montarCartao };
 })();

@@ -150,11 +150,17 @@
   }
   .hero-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
   .eyebrow { color: var(--cor-azul-forte); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; display: inline-block; margin-bottom: 14px; background: var(--cor-clara); padding: 6px 14px; border-radius: 100px; }
-  .hero .eyebrow { background: var(--branco); }
-  .hero-text h1 { margin: 10px 0 22px; line-height: 0; }
-  .hero-text h1 img { display: block; width: clamp(250px, 34vw, 400px); height: auto; margin-left: -4px; }
+  .hero { overflow-x: clip; }
+  .hero-selo { display: inline-flex; align-items: center; gap: 10px; background: var(--branco); padding: 7px 16px 7px 8px; border-radius: 999px; font-weight: 700; font-size: .8rem; letter-spacing: .04em; color: var(--texto); box-shadow: var(--sombra); margin-bottom: 22px; }
+  .hero-selo svg { flex-shrink: 0; }
+  .hero-h1 { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: clamp(2.7rem, 6.2vw, 4.9rem); line-height: 1.04; letter-spacing: -.015em; color: var(--cor-azul-forte); margin: 0 0 20px; }
+  .hero-h1 em { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; color: #7A5068; }
   .hero-tagline { font-size: 1.15rem; max-width: 520px; }
-  .hero-buttons { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+  .hero-prova { margin: 0 0 4px; font-size: .95rem; color: #8896a5; }
+  .hero-prova strong { color: var(--cor-azul-forte); font-weight: 800; }
+  .hero-buttons { display: flex; align-items: center; gap: 22px; margin-top: 26px; flex-wrap: wrap; }
+  .hero-link { font-weight: 700; color: var(--cor-azul-forte); padding: 12px 2px; border-bottom: 2px solid transparent; transition: border-color .15s ease; }
+  .hero-link:hover { border-color: var(--cor-azul-forte); }
   .hero-photo { position: relative; }
   .foto-placeholder {
     aspect-ratio: 4 / 5; border-radius: var(--raio); background: linear-gradient(150deg, var(--gelo) 0%, var(--cor-clara) 35%, var(--cor-azul) 65%, var(--cor-azul-forte) 130%);
@@ -166,24 +172,29 @@
   .sobre-retrato img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .hero-retrato img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
   .hero-photo .foto-placeholder { background-image: url('imagens/textura-seda-azul.jpg'); background-size: cover; background-position: center; }
-  .tag-selo {
-    position: absolute; top: 18px; right: -10px; background: var(--branco); color: var(--texto);
-    padding: 8px 16px; border-radius: 100px; font-weight: 700; font-size: .78rem; box-shadow: var(--sombra);
-    border: 1px solid var(--borda);
-  }
+  /* Balões sobre a foto (só fatos reais) */
+  .balao { position: absolute; z-index: 2; display: flex; align-items: center; gap: 10px; max-width: 250px; background: var(--branco); border-radius: 14px; padding: 11px 16px 11px 12px; box-shadow: var(--sombra-forte); animation: flutuar 5.5s ease-in-out infinite; }
+  .balao strong { display: block; font-size: .84rem; line-height: 1.25; color: var(--texto); font-weight: 800; }
+  .balao small { display: block; font-size: .74rem; color: var(--texto-suave); margin-top: 2px; }
+  .balao-check { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--cor-azul-forte); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800; }
+  .balao-1 { top: 28px; right: -28px; }
+  .balao-2 { bottom: 44px; left: -34px; animation-delay: -2.7s; }
+  @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
   /* Faixa de números da capa: editorial, sem caixas, números em serifado itálico, barrinha rosa e linhas separando */
-  .hero-numbers { max-width: var(--container); margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .contadores { background: var(--gelo); padding: 8px 0 0; }
+  .hero-numbers { max-width: var(--container); margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
   .numero-curto { text-align: left; padding: 8px clamp(20px, 4vw, 56px); border-left: 1px solid #cfd6df; }
   .numero-curto:first-child { border-left: 0; padding-left: 0; }
-  .numero-curto .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3.4rem, 7vw, 6rem); line-height: 1; display: block; letter-spacing: -.01em; }
+  .numero-curto .numero { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; font-size: clamp(3rem, 6vw, 5.2rem); line-height: 1; display: block; letter-spacing: -.01em; }
   .numero-curto:nth-child(1) .numero { color: #7A5068; }
   .numero-curto:nth-child(2) .numero { color: #86A0C4; }
   .numero-curto:nth-child(3) .numero { color: var(--cor-azul-forte); }
+  .numero-curto:nth-child(4) .numero { color: #7A5068; }
   .numero-curto .numero::after { content: ''; display: block; width: 50px; height: 4px; border-radius: 2px; background: #E4566A; margin: 16px 0 18px; }
   .numero-curto p { margin: 0; font-size: clamp(.95rem, 1.5vw, 1.1rem); font-weight: 500; line-height: 1.4; color: var(--texto-suave); }
 
   /* ===== FAIXA DE MARCAS ===== */
-  .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 48px; }
+  .marcas-faixa { border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda); background: var(--gelo); overflow: hidden; padding: 28px 0 32px; margin-top: 40px; }
   .marcas-legenda { display: flex; align-items: center; justify-content: center; gap: 20px; text-align: center; color: var(--texto-suave); font-weight: 700; font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; margin: 0 0 22px; padding: 0 16px; }
   .marcas-legenda::before, .marcas-legenda::after { content: ''; flex: 0 1 72px; height: 1px; background: #CFC4BC; }
   .marcas-faixa-mascara { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%); }
@@ -209,7 +220,6 @@
   .sobre-pilulas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .sobre-pilula { display: inline-flex; align-items: center; gap: 4px; padding: 14px 24px; border-radius: 999px; background: #ececec; border: 1px solid #dcdcdc; color: var(--texto); font-weight: 600; font-size: .95rem; }
   .sobre-pilula-azul { background: #dfe8ef; border-color: #b9cad8; color: var(--cor-azul-forte); }
-  .sobre-citacao { margin: 22px 0 0; padding: 0 0 0 18px; border-left: 3px solid var(--cor-azul-forte); font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.25rem; line-height: 1.45; color: var(--texto-suave); }
   .promessas { display: grid; gap: 14px; margin: 24px 0; }
   .promessas li { display: flex; align-items: flex-start; gap: 12px; background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio-pequeno); padding: 14px 18px; box-shadow: var(--sombra); }
   .promessas .marca-check { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--cor-azul-forte); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; }
@@ -289,8 +299,9 @@
   .vitrine-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255,252,250,.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra); }
   .vitrine-play::after { content: ''; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--ameixa); margin-left: 4px; }
   /* Só o nicho, pequeno, por cima do vídeo, embaixo */
-  .vitrine-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none; padding: 30px 14px 12px; color: #fff; background: linear-gradient(to top, rgba(18,12,16,.5) 0%, rgba(18,12,16,0) 100%); }
-  .vitrine-info-nicho { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.9); text-shadow: 0 1px 4px rgba(0,0,0,.4); }  /* ===== PLAYER DOS VÍDEOS (roda aqui mesmo; js/player-video.js) ===== */
+  .vitrine-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none; padding: 46px 14px 14px; color: #fff; background: linear-gradient(to top, rgba(18,12,16,.72) 0%, rgba(18,12,16,0) 100%); }
+  .vitrine-info-marca { display: block; font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.45); }
+  .vitrine-info-tipo { display: block; margin-top: 2px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,.88); text-shadow: 0 1px 4px rgba(0,0,0,.45); }  /* ===== PLAYER DOS VÍDEOS (roda aqui mesmo; js/player-video.js) ===== */
   .pv { cursor: pointer; background-color: #1d1d1d; isolation: isolate; }
   .pv-foto { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; object-fit: cover; z-index: 0; }
   /* O player é bem largo e fica centralizado e cortado dos lados. O vídeo vertical aparece no meio, no tamanho
@@ -316,54 +327,23 @@
   .vitrine-legenda-formato { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--azul-rotulo); white-space: nowrap; }
 
   /* ===== SERVIÇOS ===== */
-  #servicos { padding: 100px 0; background: var(--branco); }
-  .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .servico-card { background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 28px; }
-  .servico-numero { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2.4rem; color: var(--cor-coral); display: block; margin-bottom: 6px; }
-  .servico-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-  .servico-card p { font-size: .92rem; margin: 0; }
 
   .bandeira { display: inline-block; width: 1.3em; height: .92em; border-radius: 2px; background-size: cover; background-position: center; vertical-align: -.14em; margin: 0 .1em; box-shadow: 0 0 0 1px rgba(0,0,0,.14); }
   .bandeira-br { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14'%3E%3Crect width='20' height='14' fill='%23009C3B'/%3E%3Cpath d='M10 1.3 18.4 7 10 12.7 1.6 7z' fill='%23FFDF00'/%3E%3Ccircle cx='10' cy='7' r='3.4' fill='%23002776'/%3E%3Cpath d='M6.8 7.7Q10 6.1 13.2 7.7' stroke='%23fff' stroke-width='.8' fill='none'/%3E%3C/svg%3E"); }
   .bandeira-cl { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Crect width='30' height='20' fill='%23fff'/%3E%3Crect y='10' width='30' height='10' fill='%23D52B1E'/%3E%3Crect width='10' height='10' fill='%230039A6'/%3E%3Cpolygon points='5,1.9 5.71,4.03 7.95,4.04 6.14,5.37 6.82,7.51 5,6.2 3.18,7.51 3.86,5.37 2.05,4.04 4.29,4.03' fill='%23fff'/%3E%3C/svg%3E"); }
 
   /* ===== CONTATO ===== */
-  #contato { padding: 100px 0; background: var(--branco); }
-  .contato-grid { display: grid; grid-template-columns: 1fr .8fr; gap: 48px; align-items: start; }
-  .btn-perfil { display: inline-flex; align-items: center; gap: 10px; margin: 6px 0 28px; }
-  #contato .reveal > p strong { color: var(--cor-azul-forte); }
-  .form-contato { display: grid; gap: 16px; }
-  .campo { display: grid; gap: 6px; }
-  .campo label { font-weight: 700; font-size: .9rem; }
-  .campo input, .campo textarea {
     padding: 14px 16px; border: 1px solid var(--borda); border-radius: var(--raio-pequeno);
     font-family: inherit; font-size: .95rem; background: var(--gelo); color: var(--texto); resize: vertical;
   }
-  .campo input:focus, .campo textarea:focus { outline: none; border-color: var(--cor-azul-forte); background: var(--branco); box-shadow: 0 0 0 3px var(--cor-clara); }
-  .confirmacao-envio {
     margin-top: 6px; background: var(--cor-clara); color: var(--cor-mauve); font-weight: 700;
     padding: 14px 18px; border-radius: var(--raio-pequeno); display: none;
   }
-  .confirmacao-envio.visivel { display: block; }
-  .contato-canais { display: grid; gap: 14px; }
-  .canal-card {
     display: flex; align-items: center; gap: 14px; background: var(--gelo); border: 1px solid var(--borda);
     border-radius: var(--raio-pequeno); padding: 16px 18px; font-weight: 700; transition: border-color .15s ease, transform .15s ease;
   }
-  .canal-card:hover { border-color: var(--cor-azul-forte); transform: translateX(4px); }
-  .canal-icone { width: 40px; height: 40px; border-radius: 50%; background: var(--cor-azul-forte); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
-  .canal-sub { display: block; font-weight: 500; color: var(--texto-suave); font-size: .82rem; }
 
   /* ===== RODAPÉ ===== */
-  .rodape { background: #212D3C; color: #d7e3ec; padding: 48px 0 28px; }
-  .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
-  .rodape-nome { display: flex; align-items: center; gap: 12px; }
-  .rodape-nome img { height: 53px; width: auto; display: block; }
-  .rodape-nome .logo-nome { font-size: .7rem; color: #f4e9e2; }
-  .rodape-redes { display: flex; gap: 18px; flex-wrap: wrap; }
-  .rodape-redes a { font-weight: 600; font-size: .9rem; }
-  .rodape-redes a:hover { color: var(--cor-pessego); }
-  .rodape-copyright { font-size: .8rem; color: #8fa3b3; width: 100%; text-align: center; margin-top: 28px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; }
 
   /* ===== MODAL DE CAPTURA ===== */
   .modal-overlay {
@@ -386,6 +366,147 @@
   .modal-confirmacao { display: none; background: var(--cor-clara); color: var(--cor-mauve); font-weight: 700; padding: 14px; border-radius: var(--raio-pequeno); }
   .modal-confirmacao.visivel { display: block; }
 
+  /* ===== FAIXA ANIMADA DE SERVIÇOS ===== */
+  .faixa-servicos { background: var(--cor-azul-forte); color: #F5EFEB; overflow: hidden; padding: 17px 0; }
+  .faixa-servicos-track { display: flex; width: max-content; animation: faixa-rolar var(--duracao, 40s) linear infinite; will-change: transform; }
+  .faixa-servicos:hover .faixa-servicos-track { animation-play-state: paused; }
+  .faixa-servicos-grupo { display: flex; align-items: center; flex-shrink: 0; }
+  .faixa-servicos-grupo span { font-size: .8rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; }
+  .faixa-servicos-grupo i { font-style: normal; color: #E4566A; font-size: .7rem; margin: 0 28px; }
+  @keyframes faixa-rolar { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--grupo, 50%))); } }
+
+  /* ===== DESTAQUES: botão e linhas abaixo do vídeo ===== */
+  .destaques-cta { margin-top: 10px; }
+  .destaques-tipo { margin: 16px 0 2px; font-weight: 800; font-size: 1rem; color: var(--cor-azul-forte); }
+
+  /* ===== SERVIÇOS ===== */
+  #servicos { padding: 100px 0; background: var(--branco); }
+  .servicos-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
+  .servicos-texto { position: sticky; top: calc(var(--header-h) + 24px); }
+  .servicos-texto h2 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.05; }
+  .servicos-texto p { font-size: 1.05rem; max-width: 30em; }
+  .servicos-texto p strong { color: var(--cor-azul-forte); }
+  .servicos-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .servico-card { background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; }
+  .servico-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+  .servico-card p { font-size: .92rem; margin: 0; }
+  .servico-pill { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .14em; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .servico-pill-vender { background: #dfe8ef; color: var(--cor-azul-forte); }
+  .servico-pill-anunciar { background: #7A5068; color: #fff; }
+  .servico-pill-marca { background: #F5E4DC; color: #7A5068; }
+  .servicos-nota { text-align: center; margin-top: 36px; margin-bottom: 0; font-size: .92rem; }
+
+  /* ===== PROCESSO ===== */
+  #processo { padding: 100px 0; }
+  .processo-linha { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: etapa; }
+  .processo-linha li { position: relative; padding: 0 22px 0 0; }
+  .processo-linha li::before { content: ''; position: absolute; top: 22px; left: 62px; right: 12px; height: 1px; background: #cfd6df; }
+  .processo-linha li:last-child::before { display: none; }
+  .processo-num { display: block; font-family: 'Instrument Serif', serif; font-style: italic; font-size: 2.6rem; line-height: 1; color: var(--cor-coral); margin-bottom: 14px; }
+  .processo-linha h3 { font-size: 1.1rem; margin-bottom: 8px; }
+  .processo-linha p { font-size: .92rem; margin: 0; }
+  .processo-cta { text-align: center; margin: 52px 0 0; }
+
+  /* ===== DEPOIMENTOS (escondida até haver um depoimento real) ===== */
+  #depoimentos { padding: 100px 0; background: var(--branco); }
+  #depoimentos[hidden] { display: none; }
+  .depoimentos-palco { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .depoimentos-faixa::-webkit-scrollbar { display: none; }
+  .depoimentos-seta { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); font-size: 1.1rem; display: grid; place-items: center; }
+  .depoimentos-seta:hover { border-color: var(--cor-azul-forte); }
+  .dep-card { scroll-snap-align: start; background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 26px; display: flex; flex-direction: column; gap: 14px; }
+  .dep-topo { display: flex; align-items: center; gap: 12px; }
+  .dep-logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #fff; border: 1px solid var(--borda); flex-shrink: 0; }
+  .dep-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .dep-arroba { font-weight: 700; color: var(--cor-azul-forte); }
+  .dep-titulo { margin: 0; font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--texto); }
+  .dep-texto { margin: 0; font-size: .98rem; color: var(--texto-suave); }
+  .dep-linha { border: 0; border-top: 1px solid var(--borda); margin: 4px 0 0; }
+  .dep-resultado { margin: 0; font-family: 'Instrument Serif', serif; font-size: 1.7rem; line-height: 1.1; color: var(--cor-azul-forte); }
+  .dep-legenda { margin: 0; font-size: .82rem; }
+
+  /* ===== CONTATO (seção escura) ===== */
+  #contato { padding: 100px 0; background: var(--cor-azul-forte); color: #F5EFEB; --destaque-claro: #F2A7B2; }
+  .contato-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+  #contato .eyebrow-linha { color: var(--destaque-claro); }
+  #contato h2 { font-family: 'Playfair Display', 'Instrument Serif', serif; font-weight: 800; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: 1.08; letter-spacing: -.01em; color: #F5EFEB; margin: 0 0 20px; }
+  #contato h2 em { font-family: 'Playfair Display', 'Instrument Serif', serif; font-style: italic; font-weight: 800; color: var(--destaque-claro); }
+  #contato .contato-texto p { color: rgba(245,239,235,.88); font-size: 1.08rem; max-width: 28em; }
+  .contato-lista { display: grid; gap: 20px; margin-top: 34px; }
+  .contato-lista a { display: flex; align-items: center; gap: 16px; color: #F5EFEB; }
+  .contato-lista a:hover .canal-icone { background: #E4566A; border-color: #E4566A; }
+  .canal-icone { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s ease, border-color .15s ease; }
+  .canal-rotulo { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; opacity: .72; }
+  .canal-sub { display: block; font-weight: 600; font-size: 1.02rem; color: #fff; overflow-wrap: anywhere; }
+  .form-contato { display: grid; gap: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); border-radius: 22px; padding: 32px; }
+  .campo { display: grid; gap: 6px; }
+  .campo-duplo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .campo label { font-weight: 700; font-size: .88rem; }
+  .campo input, .campo textarea, .campo select { padding: 14px 16px; border: 1px solid var(--borda); border-radius: var(--raio-pequeno); font-family: inherit; font-size: .95rem; background: var(--gelo); color: var(--texto); resize: vertical; width: 100%; }
+  .campo input:focus, .campo textarea:focus, .campo select:focus { outline: none; border-color: var(--cor-azul-forte); background: var(--branco); box-shadow: 0 0 0 3px var(--cor-clara); }
+  #contato .campo label { color: #F5EFEB; }
+  #contato .campo input, #contato .campo textarea, #contato .campo select { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3); color: #fff; }
+  #contato .campo input::placeholder, #contato .campo textarea::placeholder { color: rgba(245,239,235,.62); }
+  #contato .campo input:focus, #contato .campo textarea:focus, #contato .campo select:focus { border-color: var(--destaque-claro); background: rgba(255,255,255,.13); box-shadow: 0 0 0 3px rgba(242,167,178,.28); }
+  #contato .campo select { appearance: none; -webkit-appearance: none; padding-right: 42px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23F5EFEB' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+  #contato .campo select option { color: #1b1f1d; background: #fff; }
+  #contato a:focus-visible, #contato button:focus-visible, #contato input:focus-visible, #contato select:focus-visible, #contato textarea:focus-visible { outline: 3px solid var(--destaque-claro); outline-offset: 3px; }
+  .campo-armadilha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .btn-claro { background: #F5EFEB; color: var(--cor-azul-forte); box-shadow: none; justify-self: start; }
+  .btn-claro:hover { transform: translateY(-2px); background: #fff; }
+  .btn-claro:disabled { opacity: .6; cursor: default; transform: none; }
+  .confirmacao-envio { margin: 0; padding: 14px 18px; border-radius: var(--raio-pequeno); font-weight: 700; display: none; background: rgba(255,255,255,.14); color: #fff; }
+  .confirmacao-envio.visivel { display: block; }
+  .confirmacao-envio.erro { background: #fbe9e7; color: #9b2c20; }
+  .confirmacao-envio.erro a { color: #9b2c20; text-decoration: underline; }
+
+  /* ===== RODAPÉ ===== */
+  .rodape { background: var(--cor-azul-forte); border-top: 1px solid rgba(255,255,255,.16); color: #F5EFEB; padding: 40px 0; }
+  .rodape-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 22px; }
+  .rodape-nome { display: flex; align-items: center; gap: 14px; }
+  .rodape-nome img { height: 53px; width: auto; display: block; }
+  .rodape-nome .logo-nome { font-size: .7rem; color: #F5EFEB; display: block; }
+  .rodape-cargo { display: block; margin-top: 6px; font-size: .68rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; opacity: .8; }
+  .rodape-redes { display: flex; align-items: center; gap: 12px 26px; flex-wrap: wrap; }
+  .rodape-redes a, .rodape-redes span { font-weight: 700; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: #F5EFEB; overflow-wrap: anywhere; }
+  .rodape-redes a:hover { color: #F2A7B2; }
+  .rodape-redes span { opacity: .75; }
+
+  @media (max-width: 980px) {
+    .balao-1 { right: -6px; }
+    .balao-2 { left: -6px; }
+    .servicos-layout { grid-template-columns: 1fr; gap: 36px; }
+    .servicos-texto { position: static; text-align: center; }
+    .servicos-texto p { margin-left: auto; margin-right: auto; }
+    .servicos-texto .eyebrow-linha { justify-content: center; }
+    .processo-linha { grid-template-columns: 1fr; gap: 28px; }
+    .processo-linha li { padding: 0 0 0 66px; }
+    .processo-linha li::before { top: 52px; bottom: -22px; left: 22px; right: auto; width: 1px; height: auto; }
+    .processo-num { position: absolute; left: 0; top: 0; margin: 0; }
+    .contato-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 760px) {
+    .hero-numbers { grid-template-columns: repeat(2, 1fr); }
+    .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 20px 12px 20px 0; }
+    .numero-curto:nth-child(-n+2) { border-top: 0; padding-top: 0; }
+    .numero-curto .numero { font-size: clamp(2.6rem, 13vw, 3.6rem); }
+    .campo-duplo { grid-template-columns: 1fr; }
+    .form-contato { padding: 22px; }
+    #servicos, #processo, #depoimentos { padding: 64px 0; }
+    .rodape-inner { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 480px) {
+    .balao { padding: 8px 12px 8px 9px; max-width: 170px; gap: 8px; }
+    .balao small { display: none; }
+    .balao strong { font-size: .72rem; }
+    .balao-check { width: 22px; height: 22px; font-size: .7rem; }
+    .balao-1 { top: 14px; right: 2px; }
+    .balao-2 { bottom: 20px; left: 2px; }
+    .hero-selo { font-size: .7rem; }
+    .servicos-grid { grid-template-columns: 1fr; }
+  }
+
   /* ===== ANIMAÇÃO DE ENTRADA ===== */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.visivel { opacity: 1; transform: translateY(0); }
@@ -393,7 +514,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
-    .marcas-track { animation: none; }
+    .marcas-track, .faixa-servicos-track, .balao { animation: none; }
     * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 
@@ -445,9 +566,9 @@
     .logo { gap: 8px; }
     .logo img { height: 40px; }
     .logo-nome { font-size: .56rem; letter-spacing: .24em; }
-    .hero-numbers { grid-template-columns: 1fr; }
-    .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 22px 0; }
-    .numero-curto:first-child { border-top: 0; padding-top: 0; }
+    .hero-numbers { grid-template-columns: repeat(2, 1fr); }
+    .numero-curto, .numero-curto:first-child { border-left: 0; border-top: 1px solid #cfd6df; padding: 20px 12px 20px 0; }
+    .numero-curto:nth-child(-n+2) { border-top: 0; padding-top: 0; }
     .servicos-grid { grid-template-columns: 1fr; }
     .destaques-palco { --w: 215px; }
     .destaques-seta { width: 38px; height: 38px; }
@@ -502,12 +623,13 @@
   <section id="topo" class="hero" aria-label="Apresentação" data-i18n-attr="aria-label:hero.aria">
     <div class="hero-inner">
       <div class="hero-text reveal">
-        <span class="eyebrow">UGC Creator</span>
-        <h1><img src="imagens/marca/logo-nome.svg" alt="Priscilla Baron" width="400" height="198"></h1>
-        <p class="hero-tagline" data-i18n="hero.tagline">Crio vídeos autênticos que fazem a sua marca conversar de verdade com quem realmente compra, do roteiro à entrega.</p>
+        <span class="hero-selo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F4156"/><path d="M7 12.5l3.2 3.2L17 8.9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="hero.selo">Priscilla Baron · UGC Creator · Agenda aberta</span></span>
+        <h1 class="hero-h1" data-i18n-html="hero.h1">Seu produto,<br>na vida <em>real</em>.</h1>
+        <p class="hero-tagline" data-i18n="hero.tagline">Vídeos UGC roteirizados para orgânico e anúncio. Você aprova o roteiro antes de eu gravar e recebe o vídeo em até 72h úteis.</p>
+        <p class="hero-prova" id="hero-prova" data-i18n-html="hero.prova" data-videos="26" data-marcas="11"><strong>26 vídeos</strong> | <strong>11 marcas</strong> | <strong>Brasil e Chile</strong></p>
         <div class="hero-buttons">
-          <a href="#contato" class="btn btn-primary" data-i18n="hero.falar">Falar comigo</a>
-          <a href="#trabalhos" class="btn btn-outline" data-i18n="hero.ver">Ver os trabalhos</a>
+          <a href="#contato" class="btn btn-primary" data-i18n="hero.cta">Quero um vídeo UGC</a>
+          <a href="#destaques" class="hero-link" data-i18n="hero.ver">Ver trabalhos →</a>
         </div>
       </div>
       <div class="hero-photo reveal">
@@ -515,14 +637,41 @@
         <div class="foto-placeholder hero-retrato">
           <img src="imagens/capa-priscilla-900.jpg?v=2" srcset="imagens/capa-priscilla-600.jpg?v=2 600w, imagens/capa-priscilla-900.jpg?v=2 900w, imagens/capa-priscilla-1200.jpg?v=2 1200w" sizes="(min-width: 981px) 460px, 380px" width="900" height="1125" alt="Retrato de Priscilla Baron sorrindo" data-i18n-attr="alt:hero.foto.alt" fetchpriority="high">
         </div>
-        <span class="tag-selo" data-i18n="hero.selo">sob consulta</span>
+        <!-- Balões com fatos reais (sem depoimento inventado) -->
+        <div class="balao balao-1" aria-hidden="false">
+          <span class="balao-check" aria-hidden="true">✓</span>
+          <span><strong data-i18n="hero.balao1.t">Roteiro aprovado antes de gravar</strong><small data-i18n="hero.balao1.s">Sem surpresa na entrega</small></span>
+        </div>
+        <div class="balao balao-2">
+          <span class="balao-check" aria-hidden="true">✓</span>
+          <span><strong data-i18n="hero.balao2.t">Entrega em até 72h úteis</strong><small>SHEIN · Vizzela · Lippi</small></span>
+        </div>
       </div>
     </div>
-    <div class="hero-numbers" id="hero-numeros" aria-label="Resumo em números" data-i18n-attr="aria-label:hero.numeros.aria"></div>
+  </section>
+
+  <!-- Faixa animada de serviços (js repete o grupo até cobrir a tela) -->
+  <div class="faixa-servicos" id="faixa-servicos" role="region" aria-label="Serviços" data-i18n-attr="aria-label:servicos.eyebrow">
+    <div class="faixa-servicos-track" id="faixa-servicos-track">
+      <span class="faixa-servicos-grupo">
+        <span data-i18n="faixa.1">VÍDEO UGC</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.2">CRIATIVOS PARA ANÚNCIO</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.3">UNBOXING</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.4">FOTOS DE PRODUTO</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.5">ROTEIRO ESTRATÉGICO</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.6">CONTEÚDO PARA E-COMMERCE</span><i aria-hidden="true">◆</i>
+        <span data-i18n="faixa.7">PACOTE MENSAL</span><i aria-hidden="true">◆</i>
+      </span>
+    </div>
+  </div>
+
+  <!-- Contadores (uma vez só). Só números reais. -->
+  <section class="contadores" aria-label="Resumo em números" data-i18n-attr="aria-label:hero.numeros.aria">
+    <div class="hero-numbers" id="hero-numeros"></div>
   </section>
 
   <div class="marcas-faixa" aria-label="Marcas que já atendi" data-i18n-attr="aria-label:marcas.aria">
-    <p class="marcas-legenda" data-i18n="marcas.legenda">Marcas que confiam no meu trabalho</p>
+    <p class="marcas-legenda" data-i18n="marcas.legenda">Marcas com quem já trabalhei</p>
     <div class="marcas-faixa-mascara">
       <div class="marcas-track" id="marcas-track"></div>
     </div>
@@ -540,13 +689,13 @@
       <div class="sobre-texto reveal">
         <span class="eyebrow-linha" data-i18n="sobre.eyebrow">Sobre mim</span>
         <h2 class="sobre-titulo" data-i18n-html="sobre.titulo">Oie, sou a <em>Pri Baron</em></h2>
-        <p data-i18n-html="sobre.p1">Tenho <strong>25 anos</strong>, sou <strong>criadora UGC e influenciadora</strong>, já trabalhei com <strong>11 marcas</strong> no <strong>Brasil e Chile</strong>, transformando conteúdos de bem-estar, esporte, lifestyle e viagens em histórias que vendem naturalmente.</p>
-        <p data-i18n-html="sobre.p2">Tenho uma comunicação <strong>leve, autêntica e estratégica</strong>, conecto marcas e pessoas por meio de narrativas reais que inspiram e performam. Também produzo <strong>conteúdos em família</strong>, com passeios e momentos reais do dia a dia.</p>
-        <blockquote class="sobre-citacao" data-i18n="sobre.citacao">“Cada vídeo que produzo é pensado para gerar resultado, conexão e memória de marca, porque conteúdo bom não só encanta, ele convence e transforma” (Pri Baron)</blockquote>
+        <p class="sobre-numeros" data-i18n-html="sobre.p1" data-videos="26" data-marcas="11">Sou UGC Creator e crio vídeos para marcas de <strong>casa e decoração, beleza, tecnologia e lifestyle</strong>. Já entreguei <strong>26 vídeos</strong> para <strong>11 marcas</strong> no <strong>Brasil e no Chile</strong>, entre elas <strong>SHEIN, Vizzela e Lippi</strong>.</p>
+        <p data-i18n-html="sobre.p2">Meu processo começa com uma pergunta: <strong>como o seu cliente usaria esse produto na vida real?</strong> Daí sai o roteiro, que você aprova antes de eu gravar, e o vídeo, pensado para <strong>orgânico ou anúncio</strong> e entregue em até <strong>72h úteis</strong>.</p>
         <div class="sobre-pilulas">
-          <span class="sobre-pilula sobre-pilula-azul" data-i18n="sobre.pilula1">11 marcas parceiras</span>
-          <span class="sobre-pilula" data-i18n-html="sobre.pilula2">Brasil <span class="bandeira bandeira-br" role="img" aria-label="Brasil"></span> · Chile <span class="bandeira bandeira-cl" role="img" aria-label="Chile"></span></span>
-        </div>      </div>
+          <span class="sobre-pilula sobre-pilula-azul" data-i18n-html="sobre.pilula2">Brasil <span class="bandeira bandeira-br" role="img" aria-label="Brasil"></span> · Chile <span class="bandeira bandeira-cl" role="img" aria-label="Chile"></span></span>
+          <span class="sobre-pilula" data-i18n="sobre.pilula3">Entrega em 72h úteis</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -555,8 +704,9 @@
     <div class="container destaques-layout">
       <div class="destaques-texto reveal">
         <span class="eyebrow-linha" data-i18n="destaques.eyebrow">Portfólio</span>
-        <h2 data-i18n-html="destaques.titulo">Conteúdos de <em>destaque</em></h2>
-        <p data-i18n="destaques.texto">Os vídeos que mais representam o meu trabalho e os resultados que já entreguei.</p>
+        <h2 data-i18n-html="destaques.titulo">Trabalhos em <em>destaque</em></h2>
+        <p data-i18n="destaques.texto">Uma amostra dos formatos que eu mais entrego: unboxing, testemunho, demonstração e lifestyle. Cada vídeo foi roteirizado antes da gravação.</p>
+        <a href="#contato" class="btn btn-primary destaques-cta" data-i18n="destaques.cta">Quero um vídeo assim →</a>
       </div>
       <!-- Os vídeos entram aqui via JavaScript (js/carrossel-destaques.js), a partir dos vídeos com o campo "destaque" preenchido no painel. -->
       <div class="destaques-palco reveal" id="destaques-palco" role="region" aria-roledescription="carousel">
@@ -571,10 +721,10 @@
     <div class="container">
       <header class="vitrine-cab reveal">
         <div>
-          <span class="vitrine-eyebrow" data-i18n="nichos.eyebrow">Vitrine</span>
-          <h2 data-i18n-html="nichos.titulo">Meus <em>nichos</em></h2>
+          <span class="vitrine-eyebrow" data-i18n="nichos.eyebrow">Nichos</span>
+          <h2 data-i18n-html="nichos.titulo">Qual é o nicho da <em>sua marca</em>?</h2>
         </div>
-        <p class="vitrine-intro" data-i18n="nichos.intro">Conteúdos que já criei, separados por nicho. Escolha um nicho nos botões ou role para ver todos. Use as setas ou arraste para ver mais.</p>
+        <p class="vitrine-intro" data-i18n="nichos.intro">Cada linha é um nicho. Escolha o seu e deslize para ver mais.</p>
       </header>
       <div id="nichos-lista"></div>
     </div>
@@ -582,13 +732,49 @@
 
   <!-- ===== 5. COMO EU TE AJUDO ===== -->
   <section id="servicos">
-    <div class="container">
-      <div class="secao-titulo reveal">
-        <span class="eyebrow" data-i18n="servicos.eyebrow">Serviços</span>
+    <div class="container servicos-layout">
+      <div class="servicos-texto reveal">
+        <span class="eyebrow-linha" data-i18n="servicos.eyebrow">Serviços</span>
         <h2 data-i18n-html="servicos.titulo">Como eu te <em>ajudo</em></h2>
-        <p data-i18n="servicos.texto">Formatos prontos pra encaixar na sua estratégia de conteúdo.</p>
+        <p data-i18n-html="servicos.texto">Cada formato resolve um objetivo: <strong>vender</strong>, <strong>anunciar</strong> ou <strong>fortalecer a marca</strong>. Me conta o seu e eu monto o pacote certo para você.</p>
+        <a href="#contato" class="btn btn-primary" data-i18n="servicos.cta">Montar meu pacote →</a>
       </div>
       <div class="servicos-grid" id="servicos-grid"></div>
+    </div>
+    <p class="servicos-nota container reveal" data-i18n="servicos.nota">Valores sob consulta, de acordo com a quantidade de vídeos, os formatos e os direitos de uso.</p>
+  </section>
+
+  <!-- ===== PROCESSO ===== -->
+  <section id="processo">
+    <div class="container">
+      <div class="secao-titulo reveal">
+        <span class="eyebrow" data-i18n="processo.eyebrow">Processo</span>
+        <h2 data-i18n-html="processo.titulo">Como eu <em>trabalho</em></h2>
+        <p data-i18n="processo.texto">Do briefing à entrega, você sabe exatamente o que esperar.</p>
+      </div>
+      <ol class="processo-linha reveal">
+        <li><span class="processo-num">01</span><h3 data-i18n="processo.1.t">Briefing</h3><p data-i18n="processo.1.d">Entendo o produto, o público e o objetivo do vídeo: orgânico ou anúncio.</p></li>
+        <li><span class="processo-num">02</span><h3 data-i18n="processo.2.t">Roteiro</h3><p data-i18n="processo.2.d">Envio gancho, falas e cenas para você aprovar antes de eu gravar.</p></li>
+        <li><span class="processo-num">03</span><h3 data-i18n="processo.3.t">Gravação</h3><p data-i18n="processo.3.d">Captação vertical, com variações de gancho quando o vídeo for para anúncio.</p></li>
+        <li><span class="processo-num">04</span><h3 data-i18n="processo.4.t">Entrega</h3><p data-i18n="processo.4.d">Em até 72h úteis após a aprovação do roteiro, com 1 rodada de revisão.</p></li>
+        <li><span class="processo-num">05</span><h3 data-i18n="processo.5.t">Uso</h3><p data-i18n="processo.5.d">Combinamos onde e por quanto tempo o vídeo vai rodar: orgânico, anúncio ou site.</p></li>
+      </ol>
+      <p class="processo-cta reveal"><a href="#contato" class="btn btn-primary" data-i18n="processo.cta">Começar pelo briefing →</a></p>
+    </div>
+  </section>
+
+  <!-- ===== DEPOIMENTOS: a seção fica escondida enquanto não houver depoimento real em js/depoimentos-dados.js ===== -->
+  <section id="depoimentos" hidden>
+    <div class="container">
+      <div class="secao-titulo reveal">
+        <span class="eyebrow" data-i18n="depoimentos.eyebrow">Depoimentos</span>
+        <h2 data-i18n-html="depoimentos.titulo">O que dizem sobre o <em>trabalho</em></h2>
+      </div>
+      <div class="depoimentos-palco">
+        <button type="button" class="depoimentos-seta" id="depoimentos-ant" aria-label="Depoimento anterior" data-i18n-attr="aria-label:depoimentos.anterior">←</button>
+        <div class="depoimentos-faixa" id="depoimentos-faixa"></div>
+        <button type="button" class="depoimentos-seta" id="depoimentos-prox" aria-label="Próximo depoimento" data-i18n-attr="aria-label:depoimentos.proximo">→</button>
+      </div>
     </div>
   </section>
 
@@ -599,46 +785,62 @@
   <!-- ===== 7. VAMOS CONSTRUIR ISSO JUNTOS ===== -->
   <section id="contato">
     <div class="container contato-grid">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="contato.eyebrow">Contato</span>
+      <div class="contato-texto reveal">
+        <span class="eyebrow-linha" data-i18n="contato.eyebrow">Contato</span>
         <h2 data-i18n-html="contato.titulo">Vamos construir isso <em>juntos</em>?</h2>
-        <p data-i18n="contato.texto">Quero entender a sua marca, sua ideia e transformar isso em um conteúdo real, com intenção e estratégia. Um conteúdo especial que faça sentido para você e para o seu público.</p>
-        <p data-i18n-html="contato.texto2">Conta um pouco sobre sua marca e qual tipo de conteúdo você precisa. <strong>Respondo em até 48h.</strong></p>
-        <a class="btn btn-outline btn-perfil" href="https://www.instagram.com/entracomigo/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
-          <span data-i18n="contato.perfil">Conhecer o @entracomigo</span>
-        </a>
-        <form class="form-contato" id="form-contato" novalidate>
-          <div class="campo">
-            <label for="campo-nome" data-i18n="contato.nome">Nome</label>
-            <input type="text" id="campo-nome" name="nome" autocomplete="name" required>
-          </div>
-          <div class="campo">
-            <label for="campo-email" data-i18n="contato.email">E-mail</label>
-            <input type="email" id="campo-email" name="email" autocomplete="email" required>
-          </div>
-          <div class="campo">
-            <label for="campo-mensagem" data-i18n="contato.mensagem">Mensagem</label>
-            <textarea id="campo-mensagem" name="mensagem" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" data-i18n="contato.enviar">Enviar mensagem</button>
-          <p class="confirmacao-envio" id="confirmacao-envio" role="status" data-i18n="contato.ok">Mensagem enviada! Assim que eu ver, te respondo por e-mail ou WhatsApp. Obrigada pelo contato!</p>
-        </form>
+        <p data-i18n="contato.texto">Me conta sobre a sua marca e o que você quer alcançar. Respondo em até 48h.</p>
+        <ul class="contato-lista">
+          <li><a id="canal-email" href="mailto:pribaronparcerias@gmail.com?subject=Parceria%20UGC"><span class="canal-icone" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span><span class="canal-rotulo" data-i18n="canal.email">E-mail</span><span class="canal-sub">pribaronparcerias@gmail.com</span></span></a></li>
+          <li><a id="canal-instagram" href="https://www.instagram.com/entracomigo/" target="_blank" rel="noopener"><span class="canal-icone" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></span><span><span class="canal-rotulo">Instagram</span><span class="canal-sub">@entracomigo</span></span></a></li>
+          <li><a id="canal-whatsapp" href="https://wa.me/5511996975223" target="_blank" rel="noopener"><span class="canal-icone" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M9 8.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-2-1-.8.6a3.2 3.2 0 0 1-1.6-1.6l.6-.8-1-2z" fill="currentColor" stroke="none"/></svg></span><span><span class="canal-rotulo">WhatsApp</span><span class="canal-sub">(11) 99697-5223</span></span></a></li>
+        </ul>
       </div>
-      <div class="contato-canais reveal">
-        <a class="canal-card" id="canal-whatsapp" href="#" target="_blank" rel="noopener">
-          <span class="canal-icone" aria-hidden="true">📱</span>
-          <span>WhatsApp<span class="canal-sub">(00) 00000-0000</span></span>
-        </a>
-        <a class="canal-card" id="canal-email" href="#">
-          <span class="canal-icone" aria-hidden="true">✉️</span>
-          <span><span data-i18n="canal.email">E-mail</span><span class="canal-sub">seuemail@email.com</span></span>
-        </a>
-        <a class="canal-card" id="canal-instagram" href="#" target="_blank" rel="noopener">
-          <span class="canal-icone" aria-hidden="true">📷</span>
-          <span>Instagram<span class="canal-sub">@seuusuario</span></span>
-        </a>
-      </div>
+      <form class="form-contato reveal" id="form-contato" novalidate>
+        <div class="campo">
+          <label for="campo-nome" data-i18n="contato.nome">Nome</label>
+          <input type="text" id="campo-nome" name="nome" autocomplete="name" required placeholder="Seu nome" data-i18n-attr="placeholder:contato.nome.ph">
+        </div>
+        <div class="campo">
+          <label for="campo-email" data-i18n="contato.email">E-mail</label>
+          <input type="email" id="campo-email" name="email" autocomplete="email" required placeholder="voce@marca.com" data-i18n-attr="placeholder:contato.email.ph">
+        </div>
+        <div class="campo">
+          <label for="campo-marca" data-i18n="contato.marca">Marca / Empresa</label>
+          <input type="text" id="campo-marca" name="marca" autocomplete="organization" required placeholder="Nome da marca" data-i18n-attr="placeholder:contato.marca.ph">
+        </div>
+        <div class="campo-duplo">
+          <div class="campo">
+            <label for="campo-precisa" data-i18n="contato.precisa">O que você precisa?</label>
+            <select id="campo-precisa" name="precisa">
+              <option value="" data-i18n="contato.selecione">Selecione</option>
+              <option value="Vídeo UGC" data-i18n="contato.precisa.1">Vídeo UGC</option>
+              <option value="Criativos para anúncio" data-i18n="contato.precisa.2">Criativos para anúncio</option>
+              <option value="Unboxing" data-i18n="contato.precisa.3">Unboxing</option>
+              <option value="Fotos do produto" data-i18n="contato.precisa.4">Fotos do produto</option>
+              <option value="Pacote mensal" data-i18n="contato.precisa.5">Pacote mensal</option>
+              <option value="Ainda não sei" data-i18n="contato.precisa.6">Ainda não sei</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="campo-prazo" data-i18n="contato.prazo">Para quando?</label>
+            <select id="campo-prazo" name="prazo">
+              <option value="" data-i18n="contato.selecione">Selecione</option>
+              <option value="Até 2 semanas" data-i18n="contato.prazo.1">Até 2 semanas</option>
+              <option value="Este mês" data-i18n="contato.prazo.2">Este mês</option>
+              <option value="Próximo mês" data-i18n="contato.prazo.3">Próximo mês</option>
+              <option value="Sem data definida" data-i18n="contato.prazo.4">Sem data definida</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="campo-mensagem" data-i18n="contato.mensagem">Conta sobre o projeto</label>
+          <textarea id="campo-mensagem" name="mensagem" rows="4" placeholder="Produto, onde o vídeo vai rodar (orgânico, anúncio, site) e qualquer referência que você goste…" data-i18n-attr="placeholder:contato.mensagem.ph"></textarea>
+        </div>
+        <!-- campo-armadilha contra robôs: gente de verdade não vê nem preenche -->
+        <div class="campo-armadilha" aria-hidden="true"><label>Não preencha <input type="text" name="site" id="campo-site" tabindex="-1" autocomplete="off"></label></div>
+        <button type="submit" class="btn btn-claro" data-i18n="contato.enviar">Enviar mensagem ↗</button>
+        <p class="confirmacao-envio" id="confirmacao-envio" role="status"></p>
+      </form>
     </div>
   </section>
 </main>
@@ -646,9 +848,8 @@
 <!-- ===== 8. RODAPÉ ===== -->
 <footer class="rodape">
   <div class="container rodape-inner">
-    <span class="rodape-nome" aria-label="Priscilla Baron"><img src="imagens/marca/simbolo-pb-branco.svg" alt="" width="84" height="53" loading="lazy"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></span>
+    <span class="rodape-nome"><img src="imagens/marca/simbolo-pb-branco.svg" alt="Logo p.b. Priscilla Baron" width="84" height="53" loading="lazy"><span><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span><span class="rodape-cargo">UGC Creator</span></span></span>
     <div class="rodape-redes" id="rodape-redes"></div>
-    <p class="rodape-copyright" data-i18n="rodape.copyright">© Priscilla Baron. Todos os direitos reservados.</p>
   </div>
 </footer>
 
@@ -678,6 +879,7 @@
 <script src="js/idiomas.js"></script>
 <script src="config/barra-topo.js"></script>
 <script src="js/barra-topo.js"></script>
+<script src="js/depoimentos-dados.js"></script>
 <script src="js/player-video.js"></script>
 <script src="js/nichos.js"></script>
 <script src="js/carrossel-destaques.js"></script>
@@ -693,33 +895,35 @@
   // Cada item vira um card branco arredondado. Se tiver o logo, coloque o arquivo dentro
   // da pasta "logos" (já existe nessa pasta) e informe o caminho em "logo": "logos/arquivo.png".
   // Sem logo, deixe "logo: null" e o nome da marca aparece como texto no card.
+  // VERIFICAR: o arquivo uppi.png mostra o logo "Uppi". O briefing fala em "Lippi" nessa posição; confirme qual é a marca certa
+  // e, se for Lippi, troque o arquivo e o nome abaixo.
   const MARCAS = [
+    { nome: "Sublyme", logo: "logos/web/sublyme.png" },
+    { nome: "Vizzela", logo: "logos/web/vizzela.png" },
+    { nome: "Sweet Quarantine", logo: "logos/web/sweet-quarantine.png" },
     { nome: "Uppi", logo: "logos/web/uppi.png" },
     { nome: "Caffeine Army", logo: "logos/web/caffeine-army.png" },
     { nome: "Tia Sônia", logo: "logos/web/tia-sonia.png" },
     { nome: "Norte Sul Chile", logo: "logos/web/norte-sul-chile.png" },
     { nome: "RQ Stay", logo: "logos/web/rq-stay.png" },
     { nome: "Parksnet", logo: "logos/web/parksnet.png" },
-    { nome: "CityPlan", logo: "logos/web/cityplan-go.png" },
-    { nome: "Shein", logo: "logos/web/shein.png" },
-    { nome: "Sublyme", logo: "logos/web/sublyme.png" },
-    { nome: "Vizzela", logo: "logos/web/vizzela.png" },
-    { nome: "Sweet Quarantine", logo: "logos/web/sweet-quarantine.png" }
+    { nome: "Cityplan Go", logo: "logos/web/cityplan-go.png" },
+    { nome: "SHEIN", logo: "logos/web/shein.png" }
   ];
 
   // Os "Conteúdos de destaque" e os "Trabalhos por nicho" não ficam mais
   // fixos aqui: eles vêm da tabela "videos" no Supabase, editada pelo painel
   // em /admin. Veja a função carregarVideosDoSite(), mais abaixo.
 
-  // Serviços oferecidos (seção 5)
-  // Os textos de cada serviço (título e descrição) ficam em js/idiomas.js, nas chaves servico.1 a servico.6.
+  // Serviços oferecidos. Os textos (título e descrição) ficam em js/idiomas.js, nas chaves servico.1 a servico.6.
+  // "objetivo" define a etiqueta colorida do card: vender, anunciar ou marca.
   const SERVICOS = [
-    { numero: "01", chave: "servico.1" },
-    { numero: "02", chave: "servico.2" },
-    { numero: "03", chave: "servico.3" },
-    { numero: "04", chave: "servico.4" },
-    { numero: "05", chave: "servico.5" },
-    { numero: "06", chave: "servico.6" }
+    { chave: "servico.1", objetivo: "vender" },
+    { chave: "servico.2", objetivo: "vender" },
+    { chave: "servico.3", objetivo: "vender" },
+    { chave: "servico.4", objetivo: "anunciar" },
+    { chave: "servico.5", objetivo: "marca" },
+    { chave: "servico.6", objetivo: "marca" }
   ];
 
   // Contadores animados (logo abaixo da capa, uma vez só). "marcas atendidas" vem sozinho da lista MARCAS acima.
@@ -737,8 +941,7 @@
     whatsappNumero: "5511996975223",
     whatsappExibicao: "(11) 99697-5223",
     email: "pribaronparcerias@gmail.com",
-    instagramUsuario: "@entracomigo",
-    cidade: "Sua Cidade"
+    instagramUsuario: "@entracomigo"
   };
 
   /* =====================================================================
@@ -805,7 +1008,7 @@
       span.classList.add("tem-logo");
       const img = document.createElement("img");
       img.src = marca.logo;
-      img.alt = repetido ? "" : marca.nome;
+      img.alt = repetido ? "" : "Logo " + marca.nome;
       img.width = 300;
       img.height = 300;
       img.decoding = "async";
@@ -888,7 +1091,7 @@
     abas.className = "vitrine-abas";
     abas.setAttribute("aria-label", Idiomas.t("nichos.nav"));
     nichosDados.forEach(function (dado) {
-      const a = criarTexto("a", "vitrine-aba", nomeExibido(dado));
+      const a = criarTexto("a", "vitrine-aba", nomeExibido(dado) + (dado.videos.length ? " (" + dado.videos.length + ")" : ""));
       a.href = "#nicho-" + Nichos.slug(dado.nome);
       abas.appendChild(a);
     });
@@ -1019,35 +1222,107 @@
   const servicosGridEl = document.getElementById("servicos-grid");
   SERVICOS.forEach(function (s) {
     const card = criarEl("div", "servico-card reveal");
-    card.appendChild(criarEl("span", "servico-numero", s.numero));
+    card.appendChild(criarI18n("span", "servico-pill servico-pill-" + s.objetivo, "servico.obj." + s.objetivo));
     card.appendChild(criarI18n("h3", null, s.chave + ".titulo"));
     card.appendChild(criarI18n("p", null, s.chave + ".desc"));
     servicosGridEl.appendChild(card);
   });
 
-  // Canais de contato
-  document.getElementById("canal-whatsapp").href = "https://wa.me/" + CONTATO.whatsappNumero;
-  document.getElementById("canal-whatsapp").querySelector(".canal-sub").textContent = CONTATO.whatsappExibicao;
-  document.getElementById("canal-email").href = "mailto:" + CONTATO.email;
-  document.getElementById("canal-email").querySelector(".canal-sub").textContent = CONTATO.email;
-  document.getElementById("canal-instagram").href = "https://instagram.com/" + CONTATO.instagramUsuario.replace("@", "");
-  document.getElementById("canal-instagram").querySelector(".canal-sub").textContent = CONTATO.instagramUsuario;
-
-  // Rodapé — redes sociais e ano
+  // Contatos: os links ficam direto no HTML (seção Contato). Aqui só o rodapé.
   const rodapeRedesEl = document.getElementById("rodape-redes");
   const redes = [
-    { texto: "Instagram " + CONTATO.instagramUsuario, href: "https://instagram.com/" + CONTATO.instagramUsuario.replace("@", "") },
-    { texto: "WhatsApp", href: "https://wa.me/" + CONTATO.whatsappNumero },
-    { texto: "E-mail", href: "mailto:" + CONTATO.email, chave: "rodape.email" }
+    { texto: CONTATO.email, href: "mailto:" + CONTATO.email },
+    { texto: "Instagram", href: "https://instagram.com/" + CONTATO.instagramUsuario.replace("@", "") },
+    { texto: "WhatsApp", href: "https://wa.me/" + CONTATO.whatsappNumero }
   ];
   redes.forEach(function (r) {
     const a = document.createElement("a");
     a.href = r.href;
-    a.textContent = r.chave ? Idiomas.t(r.chave) : r.texto;
-    if (r.chave) a.dataset.i18n = r.chave;
+    a.textContent = r.texto;
     if (r.href.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
     rodapeRedesEl.appendChild(a);
   });
+  rodapeRedesEl.appendChild(criarI18n("span", null, "rodape.copy")); // "© 2026": o ano vem sozinho
+
+  // Os números que aparecem dentro de textos (capa e Sobre) vêm das mesmas contas dos contadores
+  document.querySelectorAll("[data-marcas]").forEach(function (el) {
+    el.dataset.marcas = String(MARCAS.length);
+    el.dataset.videos = String(QTD_VIDEOS);
+  });
+
+  // Faixa animada de serviços: repete o grupo até cobrir a tela mais uma volta, para nunca aparecer buraco
+  const faixaServicosTrack = document.getElementById("faixa-servicos-track");
+  function montarFaixaServicos() {
+    faixaServicosTrack.querySelectorAll("[data-clone]").forEach(function (c) { c.remove(); });
+    const grupo = faixaServicosTrack.querySelector(".faixa-servicos-grupo");
+    const largura = grupo.getBoundingClientRect().width;
+    if (!largura) return;
+    const copias = Math.ceil(window.innerWidth / largura) + 1;
+    for (let k = 0; k < copias; k++) {
+      const c = grupo.cloneNode(true);
+      c.dataset.clone = "1";
+      c.setAttribute("aria-hidden", "true");
+      faixaServicosTrack.appendChild(c);
+    }
+    faixaServicosTrack.style.setProperty("--grupo", largura + "px");
+    faixaServicosTrack.style.setProperty("--duracao", (largura / 55) + "s");
+  }
+  window.addEventListener("load", montarFaixaServicos);
+  let esperaFaixa = null;
+  window.addEventListener("resize", function () { clearTimeout(esperaFaixa); esperaFaixa = setTimeout(montarFaixaServicos, 250); });
+
+  // Depoimentos: a seção só aparece quando há pelo menos um depoimento real em js/depoimentos-dados.js
+  (function montarDepoimentos() {
+    const dados = window.DEPOIMENTOS_DADOS || [];
+    const secao = document.getElementById("depoimentos");
+    if (!dados.length || !secao) return;
+    const faixa = document.getElementById("depoimentos-faixa");
+    dados.forEach(function (d) {
+      const card = criarEl("article", "dep-card");
+      const topo = criarEl("div", "dep-topo");
+      if (d.logo) {
+        const logo = criarEl("span", "dep-logo");
+        const img = document.createElement("img");
+        img.src = d.logo;
+        img.alt = "Logo " + (d.marca || "");
+        img.loading = "lazy";
+        img.decoding = "async";
+        logo.appendChild(img);
+        topo.appendChild(logo);
+      }
+      if (d.instagram) {
+        const a = criarEl("a", "dep-arroba");
+        a.textContent = d.instagram;
+        a.href = "https://instagram.com/" + d.instagram.replace("@", "");
+        a.target = "_blank";
+        a.rel = "noopener";
+        topo.appendChild(a);
+      } else if (d.marca) {
+        const nomeMarca = criarEl("span", "dep-arroba");
+        nomeMarca.textContent = d.marca;
+        topo.appendChild(nomeMarca);
+      }
+      card.appendChild(topo);
+      if (d.titulo) { const h = criarEl("h3", "dep-titulo"); h.textContent = d.titulo; card.appendChild(h); }
+      const texto = criarEl("p", "dep-texto");
+      texto.textContent = d.texto || "";
+      card.appendChild(texto);
+      if (d.resultado || d.legenda) {
+        card.appendChild(criarEl("hr", "dep-linha"));
+        if (d.resultado) { const r = criarEl("p", "dep-resultado"); r.textContent = d.resultado; card.appendChild(r); }
+        if (d.legenda) { const g = criarEl("p", "dep-legenda"); g.textContent = d.legenda; card.appendChild(g); }
+      }
+      faixa.appendChild(card);
+    });
+    function rolarDep(direcao) {
+      const primeiro = faixa.children[0];
+      const passo = primeiro ? primeiro.getBoundingClientRect().width + 20 : 300;
+      faixa.scrollBy({ left: direcao * passo, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
+    }
+    document.getElementById("depoimentos-ant").addEventListener("click", function () { rolarDep(-1); });
+    document.getElementById("depoimentos-prox").addEventListener("click", function () { rolarDep(1); });
+    secao.hidden = false;
+  })();
 
   /* =====================================================================
      NAVEGAÇÃO / MENU SANDUÍCHE / ROLAGEM SUAVE
@@ -1129,18 +1404,55 @@
   carregarVideosDoSite();
 
   /* =====================================================================
-     FORMULÁRIO DE CONTATO — grava um lead novo na tabela "marcas"
+     FORMULÁRIO DE CONTATO — grava um lead novo na tabela "leads_site" (aparece na aba Portfólio do admin)
      ===================================================================== */
 
   const formContato = document.getElementById("form-contato");
   const confirmacaoEnvio = document.getElementById("confirmacao-envio");
+
+  // Mostra o resultado do envio. Erro vem com um link que abre o WhatsApp já com a mensagem montada.
+  function mostrarResultadoEnvio(ok, linkWhatsapp) {
+    confirmacaoEnvio.classList.toggle("erro", !ok);
+    confirmacaoEnvio.textContent = Idiomas.t(ok ? "contato.ok" : "contato.erro");
+    confirmacaoEnvio.dataset.i18n = ok ? "contato.ok" : "contato.erro";
+    if (!ok && linkWhatsapp) {
+      const a = document.createElement("a");
+      a.href = linkWhatsapp;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = " " + Idiomas.t("contato.erro.link");
+      confirmacaoEnvio.appendChild(a);
+    }
+    confirmacaoEnvio.classList.add("visivel");
+  }
+
   formContato.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (!formContato.checkValidity()) { formContato.reportValidity(); return; }
 
+    // Campo-armadilha: só robôs preenchem. Finge que deu certo e não envia nada.
+    if (document.getElementById("campo-site").value.trim() !== "") { mostrarResultadoEnvio(true); formContato.reset(); return; }
+
     const nome = document.getElementById("campo-nome").value.trim();
     const email = document.getElementById("campo-email").value.trim();
-    const mensagem = document.getElementById("campo-mensagem").value.trim();
+    const marca = document.getElementById("campo-marca").value.trim();
+    const precisa = document.getElementById("campo-precisa").value;
+    const prazo = document.getElementById("campo-prazo").value;
+    const texto = document.getElementById("campo-mensagem").value.trim();
+
+    // A tabela leads_site tem nome, e-mail e mensagem; os campos novos vão no começo da mensagem (aparecem no painel).
+    const linhas = ["Marca: " + marca];
+    if (precisa) linhas.push("Precisa de: " + precisa);
+    if (prazo) linhas.push("Para quando: " + prazo);
+    if (texto) linhas.push("", texto);
+    const mensagem = linhas.join("\n").slice(0, 4800);
+
+    // Se não der para enviar, o visitante ainda consegue falar comigo: link do WhatsApp com tudo preenchido.
+    const partesWa = [Idiomas.t("contato.wa", { marca: marca })];
+    if (precisa) partesWa.push(Idiomas.t("contato.wa.precisa", { v: precisa }));
+    if (prazo) partesWa.push(Idiomas.t("contato.wa.prazo", { v: prazo }));
+    if (texto) partesWa.push(texto);
+    const linkWhatsapp = "https://wa.me/" + CONTATO.whatsappNumero + "?text=" + encodeURIComponent(partesWa.join(" ").slice(0, 900));
 
     const botaoEnviar = formContato.querySelector("button[type=submit]");
     botaoEnviar.disabled = true;
@@ -1156,27 +1468,20 @@
       // Se a tabela nova ainda não foi criada, guarda em marcas pra não perder o contato.
       if (resultado.error && (resultado.error.code === "PGRST205" || resultado.error.code === "42P01")) {
         resultado = await window.bancoCliente.from("marcas").insert({
-          nome: nome,
+          nome: marca || nome,
           email: email,
-          obs: mensagem,
+          obs: "Contato: " + nome + "\n" + mensagem,
           situacao: "lead",
           ultimo_contato: new Date().toISOString().slice(0, 10)
         });
       }
       if (resultado.error) throw resultado.error;
-      confirmacaoEnvio.style.background = "";
-      confirmacaoEnvio.style.color = "";
-      confirmacaoEnvio.dataset.i18n = "contato.ok";
-      confirmacaoEnvio.textContent = Idiomas.t("contato.ok");
-      confirmacaoEnvio.classList.add("visivel");
+      // "enviada" só aparece quando o banco confirmou que gravou
+      mostrarResultadoEnvio(true);
       formContato.reset();
     } catch (erro) {
       console.error("Não consegui salvar sua mensagem:", erro);
-      confirmacaoEnvio.style.background = "#fbe9e7";
-      confirmacaoEnvio.style.color = "#c0392b";
-      confirmacaoEnvio.dataset.i18n = "contato.erro";
-      confirmacaoEnvio.textContent = Idiomas.t("contato.erro");
-      confirmacaoEnvio.classList.add("visivel");
+      mostrarResultadoEnvio(false, linkWhatsapp);
     } finally {
       botaoEnviar.disabled = false;
     }
