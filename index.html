@@ -425,10 +425,16 @@
   /* ===== DEPOIMENTOS (escondida até haver um depoimento real) ===== */
   #depoimentos { padding: 100px 0; background: var(--branco); }
   #depoimentos[hidden] { display: none; }
-  .depoimentos-palco { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; }
-  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 64px 0 4px; }
+  .depoimentos-topo { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 8px; }
+  .depoimentos-titulo h2 { font-size: clamp(2rem, 4.4vw, 3.3rem); line-height: 1.05; margin: 0; }
+  .depoimentos-sub { max-width: 22em; margin: 0 0 6px; font-size: 1.05rem; color: var(--texto-suave); }
+  .depoimentos-palco { position: relative; }
+  .depoimentos-faixa { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 380px); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 64px; scrollbar-width: none; padding: 64px 64px 4px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
   .depoimentos-faixa::-webkit-scrollbar { display: none; }
-  .depoimentos-seta { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); font-size: 1.1rem; display: grid; place-items: center; }
+  /* setas redondas por cima das pontas da faixa */
+  .depoimentos-seta { position: absolute; top: calc(50% + 32px); transform: translateY(-50%); z-index: 2; width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--borda); background: var(--branco); color: var(--texto); font-size: 1.3rem; display: grid; place-items: center; box-shadow: var(--sombra); }
+  #depoimentos-ant { left: 0; }
+  #depoimentos-prox { right: 0; }
   .depoimentos-seta:hover { border-color: var(--cor-azul-forte); }
   .dep-card { position: relative; scroll-snap-align: start; background: var(--gelo); border: 1px solid var(--borda); border-radius: var(--raio); padding: 66px 26px 26px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
   .dep-logo { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 0 0 8px rgba(255,255,255,.75), var(--sombra); display: flex; align-items: center; justify-content: center; }
@@ -511,6 +517,11 @@
     .campo-duplo { grid-template-columns: 1fr; }
     .form-contato { padding: 22px; }
     #servicos, #processo, #depoimentos { padding: 64px 0; }
+    .depoimentos-topo { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .depoimentos-faixa { padding: 64px 12px 4px; scroll-padding-left: 12px; -webkit-mask-image: none; mask-image: none; }
+    .depoimentos-seta { width: 44px; height: 44px; top: 24px; }
+    #depoimentos-ant { left: auto; right: 62px; }
+    #depoimentos-prox { right: 8px; }
     .rodape-inner { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 480px) {
@@ -783,9 +794,12 @@
   <!-- ===== DEPOIMENTOS: a seção fica escondida enquanto não houver depoimento real em js/depoimentos-dados.js ===== -->
   <section id="depoimentos" hidden>
     <div class="container">
-      <div class="secao-titulo reveal">
-        <span class="eyebrow" data-i18n="depoimentos.eyebrow">Depoimentos</span>
-        <h2 data-i18n-html="depoimentos.titulo">O que dizem sobre o <em>trabalho</em></h2>
+      <div class="depoimentos-topo reveal">
+        <div class="depoimentos-titulo">
+          <span class="eyebrow-linha" data-i18n="depoimentos.eyebrow">Depoimentos</span>
+          <h2 data-i18n-html="depoimentos.titulo">O que dizem sobre o <em>trabalho</em></h2>
+        </div>
+        <p class="depoimentos-sub" data-i18n="depoimentos.sub">Feedbacks de marcas com quem já trabalhei.</p>
       </div>
       <div class="depoimentos-palco">
         <button type="button" class="depoimentos-seta" id="depoimentos-ant" aria-label="Depoimento anterior" data-i18n-attr="aria-label:depoimentos.anterior">←</button>
@@ -1300,97 +1314,110 @@
     Idiomas.aoMudar(aplicar);
   })();
 
-  // Balões da capa: trechos literais de depoimentos reais (campo "balao"). Sem trecho válido, o balão fica oculto.
-  (function montarBaloes() {
-    const norm = function (s) { return String(s || "").replace(/\s+/g, " ").trim(); };
-    const trechos = (window.DEPOIMENTOS_DADOS || []).filter(function (d) {
-      if (!d.balao) return false;
-      if (norm(d.texto).indexOf(norm(d.balao)) === -1) {
-        console.warn("Balão ignorado: o trecho precisa estar escrito igualzinho no texto do depoimento (" + (d.marca || "sem marca") + ").");
-        return false;
-      }
-      return true;
-    }).slice(0, 1);
-    trechos.forEach(function (d) {
-      const balao = document.getElementById("balao-2");
-      if (!balao) return;
-      const check = criarEl("span", "balao-check", "✓");
-      check.setAttribute("aria-hidden", "true");
-      const corpo = document.createElement("span");
-      const frase = document.createElement("strong");
-      frase.textContent = "“" + norm(d.balao) + "”";
-      corpo.appendChild(frase);
-      if (d.marca) { const m = document.createElement("small"); m.textContent = d.marca; corpo.appendChild(m); }
-      balao.appendChild(check);
-      balao.appendChild(corpo);
-      balao.hidden = false;
-    });
-  })();
-
-  // Depoimentos: a seção só aparece quando há pelo menos um depoimento real em js/depoimentos-dados.js
+  // Depoimentos e balão da capa. Os dados vêm de js/depoimentos-dados.js. "texto" e "balao" podem ser uma frase só
+  // ou { pt, en, es }: o site mostra a do idioma escolhido e refaz tudo quando o idioma muda.
+  // A seção só aparece quando há pelo menos um depoimento; o balão só aparece se o trecho estiver literalmente dentro do texto.
   (function montarDepoimentos() {
     const dados = window.DEPOIMENTOS_DADOS || [];
     const secao = document.getElementById("depoimentos");
     if (!dados.length || !secao) return;
     const faixa = document.getElementById("depoimentos-faixa");
-    dados.forEach(function (d) {
-      const card = criarEl("article", "dep-card");
-      // Círculo no topo do cartão: o logo da marca; sem logo, a inicial da marca; sem marca, aspas
-      const logo = criarEl("span", "dep-logo");
-      logo.setAttribute("aria-hidden", d.logo ? "false" : "true");
-      if (d.logo) {
-        const img = document.createElement("img");
-        img.src = d.logo;
-        img.alt = "Logo " + (d.marca || "");
-        img.loading = "lazy";
-        img.decoding = "async";
-        logo.appendChild(img);
-      } else {
-        logo.classList.add("dep-logo-letra");
-        logo.textContent = d.marca ? d.marca.trim().charAt(0).toUpperCase() : "“";
-      }
-      card.appendChild(logo);
-      if (d.instagram) {
-        const a = criarEl("a", "dep-arroba");
-        a.textContent = d.instagram;
-        a.href = "https://instagram.com/" + d.instagram.replace("@", "");
-        a.target = "_blank";
-        a.rel = "noopener";
-        card.appendChild(a);
-      } else if (d.marca) {
-        const nomeMarca = criarEl("span", "dep-arroba");
-        nomeMarca.textContent = d.marca;
-        card.appendChild(nomeMarca);
-      }
-      // Estrelas só se a marca deu uma nota (campo "nota", de 1 a 5)
-      if (d.nota >= 1 && d.nota <= 5) {
-        const est = criarEl("span", "dep-estrelas");
-        est.textContent = "★".repeat(Math.round(d.nota));
-        est.setAttribute("role", "img");
-        est.setAttribute("aria-label", d.nota + " / 5");
-        card.appendChild(est);
-      }
-      // Linha pequena em caixa alta: o nicho do trabalho (traduzido sozinho) ou um "titulo" escrito à mão
-      if (d.nicho) { const h = criarEl("h3", "dep-titulo"); h.dataset.nicho = d.nicho; h.textContent = Nichos.nome(d.nicho); card.appendChild(h); }
-      else if (d.titulo) { const h = criarEl("h3", "dep-titulo"); h.textContent = d.titulo; card.appendChild(h); }
-      const texto = criarEl("p", "dep-texto");
-      texto.textContent = d.texto || "";
-      card.appendChild(texto);
-      if (d.resultado || d.legenda) {
-        card.appendChild(criarEl("hr", "dep-linha"));
-        if (d.resultado) { const r = criarEl("p", "dep-resultado"); r.textContent = d.resultado; card.appendChild(r); }
-        if (d.legenda) { const g = criarEl("p", "dep-legenda"); g.textContent = d.legenda; card.appendChild(g); }
-      }
-      faixa.appendChild(card);
-    });
+    const norm = function (s) { return String(s || "").replace(/\s+/g, " ").trim(); };
+    function no(valor) {
+      if (valor && typeof valor === "object") return valor[Idiomas.atual()] || valor.pt || "";
+      return valor || "";
+    }
+
+    function desenharCartoes() {
+      faixa.textContent = "";
+      dados.forEach(function (d) {
+        const card = criarEl("article", "dep-card");
+        // Círculo no topo do cartão: o logo da marca; sem logo, a inicial da marca; sem marca, aspas
+        const logo = criarEl("span", "dep-logo");
+        logo.setAttribute("aria-hidden", d.logo ? "false" : "true");
+        if (d.logo) {
+          const img = document.createElement("img");
+          img.src = d.logo;
+          img.alt = "Logo " + (d.marca || "");
+          img.loading = "lazy";
+          img.decoding = "async";
+          logo.appendChild(img);
+        } else {
+          logo.classList.add("dep-logo-letra");
+          logo.textContent = d.marca ? d.marca.trim().charAt(0).toUpperCase() : "“";
+        }
+        card.appendChild(logo);
+        if (d.instagram) {
+          const a = criarEl("a", "dep-arroba");
+          a.textContent = d.instagram;
+          a.href = "https://instagram.com/" + d.instagram.replace("@", "");
+          a.target = "_blank";
+          a.rel = "noopener";
+          card.appendChild(a);
+        } else if (d.marca) {
+          const nomeMarca = criarEl("span", "dep-arroba");
+          nomeMarca.textContent = d.marca;
+          card.appendChild(nomeMarca);
+        }
+        // Estrelas só se a marca deu uma nota (campo "nota", de 1 a 5)
+        if (d.nota >= 1 && d.nota <= 5) {
+          const est = criarEl("span", "dep-estrelas");
+          est.textContent = "★".repeat(Math.round(d.nota));
+          est.setAttribute("role", "img");
+          est.setAttribute("aria-label", d.nota + " / 5");
+          card.appendChild(est);
+        }
+        // Linha pequena em caixa alta: o nicho do trabalho (traduzido sozinho) ou um "titulo" escrito à mão
+        if (d.nicho) { const h = criarEl("h3", "dep-titulo"); h.textContent = Nichos.nome(d.nicho); card.appendChild(h); }
+        else if (d.titulo) { const h = criarEl("h3", "dep-titulo"); h.textContent = no(d.titulo); card.appendChild(h); }
+        const texto = criarEl("p", "dep-texto");
+        texto.textContent = no(d.texto);
+        card.appendChild(texto);
+        if (d.resultado || d.legenda) {
+          card.appendChild(criarEl("hr", "dep-linha"));
+          if (d.resultado) { const r = criarEl("p", "dep-resultado"); r.textContent = no(d.resultado); card.appendChild(r); }
+          if (d.legenda) { const g = criarEl("p", "dep-legenda"); g.textContent = no(d.legenda); card.appendChild(g); }
+        }
+        faixa.appendChild(card);
+      });
+    }
+
+    // Balão do canto inferior esquerdo da capa: o trecho do primeiro depoimento que tiver "balao" válido
+    function desenharBalao() {
+      const balao = document.getElementById("balao-2");
+      if (!balao) return;
+      balao.hidden = true;
+      balao.textContent = "";
+      const d = dados.find(function (x) {
+        const trecho = norm(no(x.balao));
+        if (!trecho) return false;
+        if (norm(no(x.texto)).indexOf(trecho) === -1) {
+          console.warn("Balão ignorado: o trecho precisa estar escrito igualzinho no texto do depoimento (" + (x.marca || "sem marca") + ").");
+          return false;
+        }
+        return true;
+      });
+      if (!d) return;
+      const check = criarEl("span", "balao-check", "✓");
+      check.setAttribute("aria-hidden", "true");
+      const corpo = document.createElement("span");
+      const frase = document.createElement("strong");
+      frase.textContent = "“" + norm(no(d.balao)) + "”";
+      corpo.appendChild(frase);
+      if (d.marca) { const m = document.createElement("small"); m.textContent = d.marca; corpo.appendChild(m); }
+      balao.appendChild(check);
+      balao.appendChild(corpo);
+      balao.hidden = false;
+    }
+
+    function desenhar() { desenharCartoes(); desenharBalao(); }
     function rolarDep(direcao) {
       const primeiro = faixa.children[0];
       const passo = primeiro ? primeiro.getBoundingClientRect().width + 20 : 300;
       faixa.scrollBy({ left: direcao * passo, behavior: prefereReduzirMovimento ? "auto" : "smooth" });
     }
-    Idiomas.aoMudar(function () {
-      faixa.querySelectorAll(".dep-titulo[data-nicho]").forEach(function (h) { h.textContent = Nichos.nome(h.dataset.nicho); });
-    });
+    desenhar();
+    Idiomas.aoMudar(desenhar);
     document.getElementById("depoimentos-ant").addEventListener("click", function () { rolarDep(-1); });
     document.getElementById("depoimentos-prox").addEventListener("click", function () { rolarDep(1); });
     secao.hidden = false;
