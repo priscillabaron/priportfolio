@@ -17,11 +17,54 @@
       "Portafolio de Priscilla Baron, UGC Creator: videos auténticos, cortes para anuncios y contenido de marca, con guion aprobado antes de grabar y entrega en hasta 72 h hábiles."
     ],
     "pular": ["Pular para o conteúdo", "Skip to content", "Ir al contenido"],
-    "faixa.entrega": [
-      "🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro",
-      "🚚 Delivery within <strong>72 business hours</strong> after script approval",
-      "🚚 Entrega en hasta <strong>72 h hábiles</strong> tras la aprobación del guion"
+
+    /* ---- Barra do topo (js/barra-topo.js) ---- */
+    "barra.aria": ["Avisos e reserva de agenda", "Notices and booking", "Avisos y reserva de agenda"],
+    "barra.agenda": ["AGENDA ABERTA", "OPEN SCHEDULE", "AGENDA ABIERTA"],
+    "barra.contagem.varios": ["Faltam {n} dias {prep} {data}", "{n} days to {data}", "Faltan {n} días para {data}"],
+    "barra.contagem.um": ["Falta 1 dia {prep} {data}", "1 day to {data}", "Falta 1 día para {data}"],
+    "barra.contagem.hoje": ["É hoje: {data}!", "It's today: {data}!", "¡Es hoy: {data}!"],
+    "barra.selo.curto": ["{data} · {n} DIAS", "{data} · {n} DAYS", "{data} · {n} DÍAS"],
+    "barra.selo.um": ["{data} · 1 DIA", "{data} · 1 DAY", "{data} · 1 DÍA"],
+    "barra.selo.hoje": ["{data} · HOJE", "{data} · TODAY", "{data} · HOY"],
+    "barra.reservar": ["reservar agenda →", "book your spot →", "reservar agenda →"],
+    "barra.wa": [
+      "Oi, Pri! Vi seu portfólio e quero reservar vídeos para {mes}.",
+      "Hi, Pri! I saw your portfolio and I want to book videos for {mes}.",
+      "¡Hola, Pri! Vi tu portafolio y quiero reservar videos para {mes}."
     ],
+    "barra.msg.ultimas": ["últimas vagas para {mes}", "last spots for {mes}", "últimos cupos para {mes}"],
+    "barra.msg.abertas": ["agenda aberta para {mes}", "schedule open for {mes}", "agenda abierta para {mes}"],
+    "barra.msg.reserve": ["reserve seus vídeos para {mes}", "book your videos for {mes}", "reserva tus videos para {mes}"],
+    "barra.msg.instagram": ["vídeo para Instagram", "video for Instagram", "video para Instagram"],
+    "barra.msg.tiktok": ["vídeo para TikTok", "video for TikTok", "video para TikTok"],
+    "barra.msg.youtube": ["vídeo para YouTube", "video for YouTube", "video para YouTube"],
+    "barra.msg.ads": ["vídeo para ads", "video for ads", "video para ads"],
+    "barra.msg.criativos": ["criativos de {data} prontos antes do pico", "{data} creatives ready before the peak", "creativos de {data} listos antes del pico"],
+    "barra.msg.entrega": [
+      "entrega em até 72h úteis após a aprovação do roteiro",
+      "delivery within 72 business hours after script approval",
+      "entrega en hasta 72 h hábiles tras la aprobación del guion"
+    ],
+    "barra.mes.1": ["janeiro", "January", "enero"],
+    "barra.mes.2": ["fevereiro", "February", "febrero"],
+    "barra.mes.3": ["março", "March", "marzo"],
+    "barra.mes.4": ["abril", "April", "abril"],
+    "barra.mes.5": ["maio", "May", "mayo"],
+    "barra.mes.6": ["junho", "June", "junio"],
+    "barra.mes.7": ["julho", "July", "julio"],
+    "barra.mes.8": ["agosto", "August", "agosto"],
+    "barra.mes.9": ["setembro", "September", "septiembre"],
+    "barra.mes.10": ["outubro", "October", "octubre"],
+    "barra.mes.11": ["novembro", "November", "noviembre"],
+    "barra.mes.12": ["dezembro", "December", "diciembre"],
+    "barra.data.consumidor": ["Dia do Consumidor", "Consumer Day", "Día del Consumidor"],
+    "barra.data.maes": ["Dia das Mães", "Mother's Day", "Día de las Madres"],
+    "barra.data.namorados": ["Dia dos Namorados", "Valentine's Day", "Día de los Enamorados"],
+    "barra.data.pais": ["Dia dos Pais", "Father's Day", "Día de los Padres"],
+    "barra.data.criancas": ["Dia das Crianças", "Children's Day", "Día de los Niños"],
+    "barra.data.blackfriday": ["Black Friday", "Black Friday", "Black Friday"],
+    "barra.data.natal": ["Natal", "Christmas", "Navidad"],
 
     /* ---- Menu ---- */
     "nav.aria": ["Menu principal", "Main menu", "Menú principal"],
@@ -29,10 +72,10 @@
     "menu.abrir": ["Abrir menu", "Open menu", "Abrir menú"],
     "menu.fechar": ["Fechar menu", "Close menu", "Cerrar menú"],
     "nav.sobre": ["Sobre", "About", "Sobre mí"],
-    "nav.destaques": ["Destaques", "Highlights", "Destacados"],
     "nav.trabalhos": ["Trabalhos", "Work", "Trabajos"],
     "nav.servicos": ["Serviços", "Services", "Servicios"],
-    "nav.numeros": ["Números", "Numbers", "Números"],
+    "nav.processo": ["Processo", "Process", "Proceso"],
+    "nav.contato": ["Contato", "Contact", "Contacto"],
     "nav.cta": ["Trabalhe comigo", "Work with me", "Trabaja conmigo"],
     "idioma.aria": ["Idioma", "Language", "Idioma"],
 
@@ -278,8 +321,10 @@
   }
 
   // Devolve o texto da chave no idioma atual. {n}, {t}... são trocados pelos valores de "params".
-  function t(chave, params) {
-    let texto = dicionario[atual][chave];
+  // "idioma" é opcional e só serve para os testes (pedir o texto em português mesmo com a página em inglês).
+  function t(chave, params, idioma) {
+    const lingua = CODIGOS.indexOf(idioma) !== -1 ? idioma : atual;
+    let texto = dicionario[lingua][chave];
     if (texto === undefined) texto = dicionario.pt[chave];
     if (texto === undefined) return chave;
     const valores = Object.assign({ ano: new Date().getFullYear() }, params || {});

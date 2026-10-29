@@ -90,11 +90,31 @@
 
   /* ===== HEADER / RIBBON / NAV ===== */
   .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
-  .ribbon-72h {
-    background: var(--cor-azul-forte); color: #fff; text-align: center; font-size: .8rem;
-    font-weight: 600; letter-spacing: .02em; padding: 8px 16px;
+  /* Barra do topo: selo da data + contagem + mensagem que troca + link para reservar */
+  .barra-topo {
+    background: var(--cor-azul-forte); color: #fff; font-size: .8rem; font-weight: 600; letter-spacing: .02em;
+    padding: 6px 16px; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 12px;
   }
-  .ribbon-72h strong { font-weight: 800; }
+  .barra-topo[hidden], .barra-topo [hidden] { display: none; }
+  .barra-selo { flex-shrink: 0; background: #7A5068; color: #fff; font-size: .68rem; font-weight: 800; letter-spacing: .12em; padding: 4px 11px; border-radius: 999px; white-space: nowrap; }
+  .barra-selo-curto { display: none; }
+  .barra-contagem { font-weight: 800; white-space: nowrap; }
+  .barra-sep { opacity: .55; }
+  /* as mensagens ficam empilhadas no mesmo lugar; a barra tem a largura da maior e nada pula quando troca */
+  .barra-msgs { display: grid; align-items: center; min-width: 0; overflow: hidden; height: 1.6em; }
+  .barra-msg { grid-area: 1 / 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; opacity: 0; transform: translateY(100%); transition: opacity .35s ease, transform .35s ease; }
+  .barra-msg.ativa { opacity: 1; transform: translateY(0); }
+  .barra-msg.saindo { opacity: 0; transform: translateY(-100%); }
+  .barra-link { flex-shrink: 0; font-weight: 700; white-space: nowrap; color: #fff; border-bottom: 1px solid rgba(255,255,255,.5); }
+  .barra-link:hover { border-color: #fff; }
+  @media (max-width: 480px) {
+    .barra-topo { gap: 8px; padding: 6px 12px; }
+    .barra-selo-longo, .barra-contagem, .barra-sep { display: none; }
+    .barra-selo-curto { display: inline; }
+    .barra-msgs { flex: 1; }
+    .barra-link { font-size: 0; border: 0; }
+    .barra-link::after { content: '→'; font-size: 1.1rem; }
+  }
   .navbar { background: rgba(246,247,245,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borda); }
   .nav-inner { max-width: var(--container); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
   .logo { display: flex; align-items: center; gap: 10px; }
@@ -443,7 +463,14 @@
 <a href="#conteudo-principal" class="skip-link" data-i18n="pular">Pular para o conteúdo</a>
 
 <header class="site-header">
-  <div class="ribbon-72h" data-i18n-html="faixa.entrega">🚚 Entrega em até <strong>72h úteis</strong> após aprovação do roteiro</div>
+  <!-- Barra do topo: js/barra-topo.js escolhe sozinho a próxima data especial, conta os dias e troca as mensagens (config/barra-topo.js). -->
+  <div class="barra-topo" id="barra-topo" role="region" aria-label="Avisos e reserva de agenda" data-i18n-attr="aria-label:barra.aria">
+    <span class="barra-selo" id="barra-selo" hidden><span id="barra-selo-longo" class="barra-selo-longo"></span><span id="barra-selo-curto" class="barra-selo-curto"></span></span>
+    <strong class="barra-contagem" id="barra-contagem" hidden></strong>
+    <span class="barra-sep" id="barra-sep" aria-hidden="true" hidden>·</span>
+    <span class="barra-msgs" id="barra-msgs" aria-live="off"></span>
+    <a class="barra-link" id="barra-link" href="https://wa.me/5511996975223" target="_blank" rel="noopener"></a>
+  </div>
   <nav class="navbar" aria-label="Menu principal" data-i18n-attr="aria-label:nav.aria">
     <div class="nav-inner">
       <a href="#topo" class="logo" aria-label="Priscilla Baron, ir para o topo" data-i18n-attr="aria-label:logo.aria"><img src="imagens/marca/simbolo-pb.svg" alt="" width="72" height="46"><span class="logo-nome" aria-hidden="true">Priscilla<br>Baron</span></a>
@@ -452,10 +479,10 @@
       </button>
       <ul id="menu-principal" class="nav-links">
         <li><a href="#sobre" data-i18n="nav.sobre">Sobre</a></li>
-        <li><a href="#destaques" data-i18n="nav.destaques">Destaques</a></li>
         <li><a href="#trabalhos" data-i18n="nav.trabalhos">Trabalhos</a></li>
         <li><a href="#servicos" data-i18n="nav.servicos">Serviços</a></li>
-        <li><a href="#numeros" data-i18n="nav.numeros">Números</a></li>
+        <li><a href="#processo" data-i18n="nav.processo">Processo</a></li>
+        <li><a href="#contato" data-i18n="nav.contato">Contato</a></li>
         <li class="so-mobile"><a href="#contato" class="nav-cta" data-i18n="nav.cta">Trabalhe comigo</a></li>
       </ul>
       <div class="nav-direita">
@@ -649,6 +676,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/banco.js"></script>
 <script src="js/idiomas.js"></script>
+<script src="config/barra-topo.js"></script>
+<script src="js/barra-topo.js"></script>
 <script src="js/player-video.js"></script>
 <script src="js/nichos.js"></script>
 <script src="js/carrossel-destaques.js"></script>
