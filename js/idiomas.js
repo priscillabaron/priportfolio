@@ -297,7 +297,7 @@
 
     /* ---- Depoimentos (seção escondida até haver depoimento real) ---- */
     "depoimentos.eyebrow": ["Depoimentos", "Testimonials", "Testimonios"],
-    "depoimentos.titulo": ["O que dizem sobre o <em>trabalho</em>", "What they say about the <em>work</em>", "Lo que dicen del <em>trabajo</em>"],
+    "depoimentos.titulo": ["O que dizem sobre o meu <em>trabalho</em>", "What they say about my <em>work</em>", "Lo que dicen de mi <em>trabajo</em>"],
     "depoimentos.sub": ["Feedbacks de marcas com quem já trabalhei.", "Feedback from brands I have worked with.", "Comentarios de marcas con las que he trabajado."],
     "depoimentos.anterior": ["Depoimento anterior", "Previous testimonial", "Testimonio anterior"],
     "depoimentos.proximo": ["Próximo depoimento", "Next testimonial", "Siguiente testimonio"],
