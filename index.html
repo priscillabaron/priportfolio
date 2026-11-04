@@ -335,7 +335,8 @@
      certo (sem zoom), e tudo que o YouTube desenha nas bordas (título, foto do canal, logo, "Shorts", menu) fica
      fora da área visível. A capa fica por baixo e o vídeo aparece por cima só enquanto está rodando. */
   /* o player é 3x maior que o card e reduzido por transform: o YouTube escolhe a qualidade pelo tamanho do player, então vem em HD */
-  .pv-iframe { position: absolute; top: 0; left: 50%; width: 2280%; height: 300%; transform: translateX(-50%) scale(.3333); transform-origin: 50% 0; border: 0; display: block; z-index: 1; pointer-events: none; background: #000; opacity: 0; transition: opacity .25s ease; }
+  /* O vídeo é 3,5% maior que o card e centralizado: o que passa fica cortado (overflow do card), então qualquer filete preto na borda do vídeo some */
+  .pv-iframe { position: absolute; top: -100%; left: 50%; width: 2280%; height: 300%; transform: translateX(-50%) scale(.345); transform-origin: 50% 50%; border: 0; display: block; z-index: 1; pointer-events: none; background: #000; opacity: 0; transition: opacity .25s ease; }
   .pv.tocando .pv-iframe { opacity: 1; }
   .pv-toque { position: absolute; inset: 0; z-index: 3; }
   /* play: só aparece quando o navegador não deixa o vídeo começar sozinho; clicar sempre inicia */
