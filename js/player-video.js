@@ -204,6 +204,8 @@
       iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
       iframe.setAttribute("tabindex", "-1");
       iframe.setAttribute("aria-hidden", "true");
+      // "inert": o vídeo não recebe mouse nem foco, então o YouTube não mostra o ícone de pausa quando o mouse passa por cima
+      iframe.setAttribute("inert", "");
       iframe.className = "pv-iframe";
       iframe.addEventListener("load", function () {
         porJanela.set(iframe.contentWindow, api);
