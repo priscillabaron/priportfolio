@@ -46,6 +46,7 @@
     if (!sessao) return; // já foi redirecionado pro login
 
     await iniciarModulo("Portfólio", window.AdminPortfolio);
+    await iniciarModulo("Mídia Kit E.C", window.AdminMidiaKit);
     await iniciarModulo("Marcas", window.AdminMarcas);
     await iniciarModulo("Prospecção", window.AdminProspeccao);
     await iniciarModulo("Calendário", window.AdminCalendario);
